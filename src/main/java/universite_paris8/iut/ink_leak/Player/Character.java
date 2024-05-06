@@ -1,4 +1,4 @@
-package universite_paris8.iut.Ink_Link.Player;
+package universite_paris8.iut.ink_leak.Player;
 
 public class Character {
 

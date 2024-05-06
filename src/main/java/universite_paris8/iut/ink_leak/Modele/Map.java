@@ -1,4 +1,4 @@
-package universite_paris8.iut.Ink_Leak.Modele.Modele;
+package universite_paris8.iut.ink_leak.Modele;
 
 public class Map {
 

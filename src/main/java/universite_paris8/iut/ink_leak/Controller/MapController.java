@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
@@ -15,6 +16,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import universite_paris8.iut.ink_leak.Player.Character;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,6 +32,13 @@ public class MapController implements Initializable {
 
     @FXML
     private TilePane tuileMap;
+    public static Character character;
+    @FXML
+    public BorderPane toutenhaut;
+    @FXML
+    private Pane PlayerID;
+    private int PlayerSpeed;
+
 
     @FXML
     protected void onHelloButtonClick() {
@@ -47,6 +57,18 @@ public class MapController implements Initializable {
                 creerTuile(env.getMap(i,j));
             }
         }
+        character = new Character("LePlayer", 100, 50, 20, 50);
+
+        Pane PlayerID = (Pane) toutenhaut.lookup("#PlayerID");
+
+        Circle circle = new Circle();
+        circle.setCenterX(0);
+        circle.setCenterY(0);
+        circle.setRadius(character.getSize());
+        circle.setId(character.getName());
+
+        PlayerID.getChildren().add(circle);
+
 
     }
 
@@ -77,5 +99,31 @@ public class MapController implements Initializable {
         // ils ont le meme identifiant
 
 
+    }
+
+    public static int getCharacterSpeed() {
+        return character.getCharacterSpeed();
+    }
+    @FXML
+    protected void moove() {
+
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        PlayerSpeed = getCharacterSpeed();
+
+        PlayerID.setOnKeyPressed(e -> {
+
+            if (e.getCode() == KeyCode.UP) {
+                circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
+            } else if (e.getCode() == KeyCode.DOWN) {
+                circle.setTranslateY(circle.getTranslateY() + PlayerSpeed);
+
+            } else if (e.getCode() == KeyCode.LEFT) {
+                circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
+
+            } else if (e.getCode() == KeyCode.RIGHT) {
+                circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
+
+            }
+        });
     }
 }

@@ -1,12 +1,9 @@
 package universite_paris8.iut.ink_leak;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class Main extends Application {
@@ -20,7 +17,7 @@ public class Main extends Application {
 
 
         Scene scene = new Scene(root, 1080, 720);
-        stage.setTitle("Heldlo!d!!!!!!");
+        stage.setTitle("Ink Leak");
         stage.setScene(scene);
         stage.show();
 

@@ -20,11 +20,10 @@ import universite_paris8.iut.ink_leak.Player.Character;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-
 public class MapController implements Initializable {
     private Map env;
     @FXML
@@ -55,7 +54,7 @@ public class MapController implements Initializable {
 
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j));
+                creerTuile(env.getMap(i,j),i,j);
             }
         }
         character = new Character("LePlayer", 100, 50, 30, 7);
@@ -73,7 +72,7 @@ public class MapController implements Initializable {
 
     }
 
-    private void creerTuile(int tuile) {
+    private void creerTuile(int tuile,int x,int y) {
         //System.out.println("ajouter sprite");
         Pane pane;
 
@@ -125,6 +124,7 @@ public class MapController implements Initializable {
                 circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
             } else if (e.getCode() == KeyCode.RIGHT) {
                 circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
+
             }
                 }
             }, 0, 5, TimeUnit.MILLISECONDS);
@@ -136,5 +136,17 @@ public class MapController implements Initializable {
             executorService.shutdownNow();
             executorService = null;
         }
+    }
+
+    private boolean peutAller(double x, double y) {
+
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        double xa = circle.localToScene(circle.getBoundsInLocal()).getMinX();
+        double ya = circle.localToScene(circle.getBoundsInLocal()).getMinY();
+        System.out.println("Coordonnées absolues du cercle : (" + xa + ", " + ya + ")");
+
+
+
+        return true;
     }
 }

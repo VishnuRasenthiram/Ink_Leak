@@ -54,7 +54,7 @@ public class MapController implements Initializable {
 
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j));
+                creerTuile(env.getMap(i,j),i,j);
             }
         }
         character = new Character("LePlayer", 100, 50, 20, 50);
@@ -72,7 +72,7 @@ public class MapController implements Initializable {
 
     }
 
-    private void creerTuile(int tuile) {
+    private void creerTuile(int tuile,int x,int y) {
         //System.out.println("ajouter sprite");
         Pane pane;
 
@@ -80,18 +80,22 @@ public class MapController implements Initializable {
             pane= new Pane();
             Rectangle r =new Rectangle(32,32);
             r.setFill(Color.RED);
+
+            r.setId("lave");
             pane.getChildren().add(r);
         }
         else if (tuile==2){
             pane= new Pane();
             Rectangle r =new Rectangle(32,32);
             r.setFill(Color.BLUE);
+
             pane.getChildren().add(r);
         }
         else{
             pane= new Pane();
             Rectangle r =new Rectangle(32,32);
             r.setFill(Color.GRAY);
+
             pane.getChildren().add(r);
         }
 
@@ -112,18 +116,30 @@ public class MapController implements Initializable {
 
         PlayerID.setOnKeyPressed(e -> {
 
-            if (e.getCode() == KeyCode.UP) {
+            if (e.getCode() == KeyCode.UP && peutAller(circle.getTranslateX(),circle.getTranslateY() - PlayerSpeed)) {
                 circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
-            } else if (e.getCode() == KeyCode.DOWN) {
+            } else if (e.getCode() == KeyCode.DOWN && peutAller(circle.getTranslateX(),circle.getTranslateY() + PlayerSpeed)) {
                 circle.setTranslateY(circle.getTranslateY() + PlayerSpeed);
 
-            } else if (e.getCode() == KeyCode.LEFT) {
+            } else if (e.getCode() == KeyCode.LEFT && peutAller(circle.getTranslateX()- PlayerSpeed,circle.getTranslateY() )) {
                 circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
 
-            } else if (e.getCode() == KeyCode.RIGHT) {
+            } else if (e.getCode() == KeyCode.RIGHT && peutAller(circle.getTranslateX()+ PlayerSpeed,circle.getTranslateY() )) {
                 circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
 
             }
         });
+    }
+
+    private boolean peutAller(double x, double y) {
+
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        double xa = circle.localToScene(circle.getBoundsInLocal()).getMinX();
+        double ya = circle.localToScene(circle.getBoundsInLocal()).getMinY();
+        System.out.println("Coordonnées absolues du cercle : (" + xa + ", " + ya + ")");
+
+
+
+        return true;
     }
 }

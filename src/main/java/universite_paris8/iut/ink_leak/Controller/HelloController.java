@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak;
+package universite_paris8.iut.ink_leak.Controller;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;

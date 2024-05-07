@@ -1,4 +1,4 @@
-package universite_paris8.iut;
+package universite_paris8.iut.ink_leak.Controlleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

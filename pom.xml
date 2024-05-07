@@ -64,7 +64,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>universite_paris8.iut.ink_leak/universite_paris8.iut.ink_leak.HelloApplication
+                            <mainClass>universite_paris8.iut.ink_leak/universite_paris8.iut.ink_leak.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

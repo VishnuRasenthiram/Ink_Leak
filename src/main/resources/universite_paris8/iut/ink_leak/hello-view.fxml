@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="universite_paris8.iut.ink_leak.Controller.HelloController">
+      fx:controller="universite_paris8.iut.ink_leak.Controller.PlayerController">
 
     <Pane fx:id="PlayerID" focusTraversable="true" onKeyPressed="#moove">
 

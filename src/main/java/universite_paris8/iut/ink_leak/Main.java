@@ -9,25 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("terrain.fxml"));
         Pane root = fxmlLoader.load();
 
-        Pane PlayerID = (Pane) root.lookup("#PlayerID");
 
-        Circle circle = new Circle();
-        circle.setCenterX(300.0f);
-        circle.setCenterY(135.0f);
-        circle.setRadius(100.0f);
-        circle.setId("LePlayer");
 
-        PlayerID.getChildren().add(circle);
-
-        Scene scene = new Scene(root, 620, 840);
+        Scene scene = new Scene(root, 1080, 720);
         stage.setTitle("Heldlo!d!!!!!!");
         stage.setScene(scene);
         stage.show();

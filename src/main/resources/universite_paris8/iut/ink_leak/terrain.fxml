@@ -5,8 +5,8 @@
 
 <BorderPane fx:id="toutenhaut"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.ink_leak.Controller.MapController" >
    <center>
-      <Pane fx:id="PlayerID" focusTraversable="true" onKeyPressed="#moove" onKeyReleased="#stop" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER" >
-         <TilePane fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
+      <Pane  fx:id="PlayerID" focusTraversable="true" onKeyPressed="#moove" onKeyReleased="#stop" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER" >
+         <TilePane  fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
 
          </TilePane>
       </Pane>

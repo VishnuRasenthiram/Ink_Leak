@@ -20,11 +20,10 @@ import universite_paris8.iut.ink_leak.Player.Character;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-
 public class MapController implements Initializable {
     private Map env;
     @FXML
@@ -55,10 +54,10 @@ public class MapController implements Initializable {
 
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j));
+                creerTuile(env.getMap(i,j),i,j);
             }
         }
-        character = new Character("LePlayer", 100, 50, 30, 7);
+        character = new Character("LePlayer", 100, 50, 20, 3);
 
         Pane PlayerID = (Pane) toutenhaut.lookup("#PlayerID");
 
@@ -73,7 +72,7 @@ public class MapController implements Initializable {
 
     }
 
-    private void creerTuile(int tuile) {
+    private void creerTuile(int tuile,int x,int y) {
         //System.out.println("ajouter sprite");
         Pane pane;
 
@@ -81,6 +80,7 @@ public class MapController implements Initializable {
             pane= new Pane();
             Rectangle r =new Rectangle(32,32);
             r.setFill(Color.RED);
+            pane.setId("rouge");
             pane.getChildren().add(r);
         }
         else if (tuile==2){
@@ -105,6 +105,9 @@ public class MapController implements Initializable {
     public static int getCharacterSpeed() {
         return character.getCharacterSpeed();
     }
+    private static int getCharacterSize() {
+        return character.getSize();
+    }
     @FXML
     protected void moove() {
 
@@ -112,20 +115,35 @@ public class MapController implements Initializable {
         PlayerSpeed = getCharacterSpeed();
 
         PlayerID.setOnKeyPressed(e -> {
+
+            double newPoseX;
+            double newPoseY;
+
             if (executorService != null) return;
             executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(new Runnable() {
+                double x = circle.localToScene(circle.getBoundsInLocal()).getMinX();
+                double y = circle.localToScene(circle.getBoundsInLocal()).getMinY();
                 @Override
                 public void run() {
-            if (e.getCode() == KeyCode.UP) {
-                circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
-            } else if (e.getCode() == KeyCode.DOWN) {
-                circle.setTranslateY(circle.getTranslateY() + PlayerSpeed);
-            } else if (e.getCode() == KeyCode.LEFT) {
-                circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
-            } else if (e.getCode() == KeyCode.RIGHT) {
-                circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
-            }
+                    System.out.println("x : " + x + " y : " + y);
+                    x = circle.localToScene(circle.getBoundsInLocal()).getMinX();
+                    y = circle.localToScene(circle.getBoundsInLocal()).getMinY();
+
+                    if (e.getCode() == KeyCode.UP) {
+                        if(peutAller(x,y - PlayerSpeed))
+                            circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
+                    } else if (e.getCode() == KeyCode.DOWN) {
+                        if(peutAller(x,y + PlayerSpeed))
+                            circle.setTranslateY(circle.getTranslateY() + PlayerSpeed);
+                    } else if (e.getCode() == KeyCode.LEFT) {
+                        if(peutAller(x - PlayerSpeed,y))
+                            circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
+                    } else if (e.getCode() == KeyCode.RIGHT) {
+                        if(peutAller(x + PlayerSpeed,y))
+                            circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
+
+                    }
                 }
             }, 0, 5, TimeUnit.MILLISECONDS);
         });
@@ -136,5 +154,30 @@ public class MapController implements Initializable {
             executorService.shutdownNow();
             executorService = null;
         }
+    }
+
+    private boolean peutAller(double x, double y) {
+        // System.out.println("x : " + x + " y : " + y + "LE ROND");
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        double radius = getCharacterSize();
+
+        for (Node tuile : tuileMap.getChildren()) {
+            if (tuile.getId() != null) {
+                double xb = tuile.localToScene(tuile.getBoundsInLocal()).getMinX();
+                double yb = tuile.localToScene(tuile.getBoundsInLocal()).getMinY();
+                double width = tuile.localToScene(tuile.getBoundsInLocal()).getWidth();
+                double height = tuile.localToScene(tuile.getBoundsInLocal()).getHeight();
+
+                xb -= width/1.6; // va savoir pourquoi 1.6, ça devrait etre 2 mais ça marche mieux avec 1.7
+                yb -= width/1.6;
+
+                if (x + radius >= xb  && x - radius <= xb + width  && y + radius >= yb && y - radius <= yb + height) {
+                    System.out.println("Collision");
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

@@ -1,21 +1,19 @@
 package universite_paris8.iut.ink_leak.Player;
 
-import javafx.scene.transform.Shear;
-
 public class Entité {
     protected String name;
     protected int health;
     protected int strength;
-    protected int characterSpeed;
+    protected int speed;
 
-    public Entité(String name, int health, int strength, int characterSpeed) {
+    public Entité(String name, int health, int strength, int speed) {
         this.name = name;
         this.health = health;
         this.strength = strength;
-        this.characterSpeed = characterSpeed;
+        this.speed = speed;
     }
-    public int getCharacterSpeed() {
-        return characterSpeed;
+    public int getSpeed() {
+        return speed;
     }
     public String getName() {
         return name;

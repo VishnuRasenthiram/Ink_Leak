@@ -1,14 +1,17 @@
 package universite_paris8.iut.ink_leak.Player;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Entité {
     protected String name;
-    protected int health;
+    protected IntegerProperty health;
     protected int strength;
     protected int speed;
 
     public Entité(String name, int health, int strength, int speed) {
         this.name = name;
-        this.health = health;
+        this.health = new SimpleIntegerProperty(health);
         this.strength = strength;
         this.speed = speed;
     }
@@ -23,12 +26,8 @@ public class Entité {
         this.name = name;
     }
 
-    public int getHealth() {
+    public final IntegerProperty HealthProperty() {
         return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public int getStrength() {

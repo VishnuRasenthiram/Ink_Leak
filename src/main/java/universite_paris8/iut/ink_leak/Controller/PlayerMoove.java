@@ -48,7 +48,9 @@ public class PlayerMoove {
                         System.out.println("x : " + x + " y : " + y);
                         x = circle.localToScene(circle.getBoundsInLocal()).getMinX();
                         y = circle.localToScene(circle.getBoundsInLocal()).getMinY();
-
+                        if (caseBleue(x, y)) {
+                            character.HealthProperty().setValue(character.HealthProperty().get() - 1);
+                        }
                         if (e.getCode() == KeyCode.UP) {
                             if(peutAller(x,y - PlayerSpeed))
                                 circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
@@ -73,6 +75,30 @@ public class PlayerMoove {
             executorService.shutdownNow();
             executorService = null;
         }
+    }
+
+    private boolean caseBleue(double x, double y) {
+        double radius = getCharacterSize();
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        for (Node tuile : tuileMap.getChildren()) {
+            if (Objects.equals(tuile.getId(), "bleu")) {
+                double xb = tuile.localToScene(tuile.getBoundsInLocal()).getMinX();
+                double yb = tuile.localToScene(tuile.getBoundsInLocal()).getMinY();
+                double width = tuile.localToScene(tuile.getBoundsInLocal()).getWidth();
+                double height = tuile.localToScene(tuile.getBoundsInLocal()).getHeight();
+
+                xb -= width/1.6;
+                yb -= width/1.6;
+
+                if (x + radius >= xb  && x - radius <= xb + width  && y + radius >= yb && y - radius <= yb + height) {
+                    System.out.println("Dégâts");
+                    return false;
+                }
+
+            }
+        }
+
+        return true;
     }
     private boolean peutAller(double x, double y) {
         double radius = getCharacterSize();

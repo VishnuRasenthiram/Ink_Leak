@@ -3,6 +3,7 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -24,6 +25,8 @@ public class MapController extends PlayerMoove implements Initializable {
     private TilePane tuileMap;
     @FXML
     public BorderPane mainPane;
+    @FXML
+    public ProgressBar vie;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,6 +40,7 @@ public class MapController extends PlayerMoove implements Initializable {
             }
         }
         character = new Character("LePlayer", 100, 50, 20, 3);
+        vie.progressProperty().bind(character.HealthProperty());
 
         Pane PlayerID = (Pane) mainPane.lookup("#PlayerID");
 
@@ -64,6 +68,7 @@ public class MapController extends PlayerMoove implements Initializable {
             pane= new Pane();
             Rectangle r =new Rectangle(32,32);
             r.setFill(Color.BLUE);
+            pane.setId("bleu");
             pane.getChildren().add(r);
         }
         else{

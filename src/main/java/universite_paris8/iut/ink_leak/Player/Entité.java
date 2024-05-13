@@ -1,5 +1,7 @@
 package universite_paris8.iut.ink_leak.Player;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.transform.Shear;
 
 public class Entité {
@@ -7,13 +9,42 @@ public class Entité {
     protected int health;
     protected int strength;
     protected int characterSpeed;
+    protected DoubleProperty posXProperty;
+    protected DoubleProperty posYProperty;
 
     public Entité(String name, int health, int strength, int characterSpeed) {
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.characterSpeed = characterSpeed;
+        posXProperty = new SimpleDoubleProperty();
+        posYProperty = new SimpleDoubleProperty();
     }
+
+    public double getPosX() {
+        return posXProperty.getValue();
+    }
+
+    public DoubleProperty posXProperty() {
+        return posXProperty;
+    }
+
+    public void setPosXProperty(double posXProperty) {
+        this.posXProperty.setValue(posXProperty);
+    }
+
+    public double getPosY() {
+        return posYProperty.getValue();
+    }
+
+    public DoubleProperty posYProperty() {
+        return posYProperty;
+    }
+
+    public void setPosYProperty(double posYProperty) {
+        this.posYProperty.set(posYProperty);
+    }
+
     public int getCharacterSpeed() {
         return characterSpeed;
     }

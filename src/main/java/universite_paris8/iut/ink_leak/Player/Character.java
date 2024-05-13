@@ -5,7 +5,7 @@ public class Character extends Entité{
         private int size;
 
         public Character(String name, int health, int strength, int size, int CharacterSpeed) {
-            super(name, health, strength, CharacterSpeed );
+            super(name, health, strength, CharacterSpeed);
             this.size = size;
         }
 

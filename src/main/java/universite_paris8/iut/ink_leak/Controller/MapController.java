@@ -1,4 +1,7 @@
 package universite_paris8.iut.ink_leak.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
@@ -8,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
@@ -25,6 +29,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 public class MapController implements Initializable {
+
+    private Timeline gameLoop;
+
+    private int temps;
+
+
+    @FXML
+    private Circle leCercle;
+
     private Map env;
     @FXML
     private Label welcomeText;
@@ -48,7 +61,9 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        initAnimation();
+        // demarre l'animation
+        gameLoop.play();
         this.env= new Map();
 
 
@@ -56,22 +71,54 @@ public class MapController implements Initializable {
             for (int j = 0; j < env.getMap()[i].length; j++) {
                 creerTuile(env.getMap(i,j),i,j);
             }
+
         }
-        character = new Character("LePlayer", 100, 50, 20, 3);
+        Circle circle2 = new Circle(3);
+        character = new Character("LePlayer", 100, 50, 20, 2);
 
-        Pane PlayerID = (Pane) toutenhaut.lookup("#PlayerID");
 
-        Circle circle = new Circle();
-        circle.setCenterX(0);
-        circle.setCenterY(0);
-        circle.setRadius(character.getSize());
-        circle.setId(character.getName());
 
-        PlayerID.getChildren().add(circle);
+        System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
+
+
+
+        circle2.setId(character.getName());
+        circle2.translateXProperty().bindBidirectional(character.posXProperty());
+        circle2.translateYProperty().bindBidirectional(character.posYProperty());
+        PlayerID.getChildren().add(circle2);
+        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+        System.out.println((circle.localToScene(circle.getBoundsInLocal()).getMinX()));
+
+
 
 
     }
+    private void initAnimation() {
+        gameLoop = new Timeline();
+        temps=0;
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+        KeyFrame kf = new KeyFrame(
+                // on définit le FPS (nbre de frame par seconde)
+                Duration.seconds(0.017),
+                // on définit ce qui se passe à chaque frame
+                // c'est un eventHandler d'ou le lambda
+                (ev ->{
+                    if(temps==100){
+                        System.out.println("fini");
+                        gameLoop.stop();
+                    }
+                    else if (temps%5==0){
+                        System.out.println("un tour");
+                        leCercle.setLayoutX(leCercle.getLayoutX()+5);
+                        leCercle.setLayoutY(leCercle.getLayoutY()+5);
+
+                    }
+                    temps++;
+                })
+        );
+        gameLoop.getKeyFrames().add(kf);
+    }
     private void creerTuile(int tuile,int x,int y) {
         //System.out.println("ajouter sprite");
         Pane pane;
@@ -108,45 +155,52 @@ public class MapController implements Initializable {
     private static int getCharacterSize() {
         return character.getSize();
     }
+
     @FXML
-    protected void moove() {
+    public void moove() {
+        try {
+            Circle circle = (Circle) PlayerID.lookup("#LePlayer");
+            PlayerSpeed = getCharacterSpeed();
 
-        Circle circle = (Circle) PlayerID.lookup("#LePlayer");
-        PlayerSpeed = getCharacterSpeed();
+            PlayerID.setOnKeyPressed(e -> {
 
-        PlayerID.setOnKeyPressed(e -> {
+                if (executorService != null) return;
 
-            double newPoseX;
-            double newPoseY;
+                executorService = Executors.newSingleThreadScheduledExecutor();
+                executorService.scheduleAtFixedRate(() -> {
+                    Platform.runLater(() -> {
+                        double x = character.getPosX();
+                        double y = character.getPosY();
 
-            if (executorService != null) return;
-            executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(new Runnable() {
-                double x = circle.localToScene(circle.getBoundsInLocal()).getMinX();
-                double y = circle.localToScene(circle.getBoundsInLocal()).getMinY();
-                @Override
-                public void run() {
-                    System.out.println("x : " + x + " y : " + y);
-                    x = circle.localToScene(circle.getBoundsInLocal()).getMinX();
-                    y = circle.localToScene(circle.getBoundsInLocal()).getMinY();
 
-                    if (e.getCode() == KeyCode.UP) {
-                        if(peutAller(x,y - PlayerSpeed))
-                            circle.setTranslateY(circle.getTranslateY() - PlayerSpeed);
-                    } else if (e.getCode() == KeyCode.DOWN) {
-                        if(peutAller(x,y + PlayerSpeed))
-                            circle.setTranslateY(circle.getTranslateY() + PlayerSpeed);
-                    } else if (e.getCode() == KeyCode.LEFT) {
-                        if(peutAller(x - PlayerSpeed,y))
-                            circle.setTranslateX(circle.getTranslateX() - PlayerSpeed);
-                    } else if (e.getCode() == KeyCode.RIGHT) {
-                        if(peutAller(x + PlayerSpeed,y))
-                            circle.setTranslateX(circle.getTranslateX() + PlayerSpeed);
+                        if (e.getCode() == KeyCode.UP) {
+                            if(peutAller(x,y - PlayerSpeed)) {
+                                character.setPosYProperty(character.getPosY() - PlayerSpeed);
+                            }
+                        }
+                        if (e.getCode() == KeyCode.DOWN) {
+                            if(peutAller(x,y + PlayerSpeed)) {
+                                character.setPosYProperty(character.getPosY() + PlayerSpeed);
+                            }
+                        }
+                        if (e.getCode() == KeyCode.LEFT) {
+                            if(peutAller(x - PlayerSpeed,y)) {
+                                character.setPosXProperty(character.getPosX() - PlayerSpeed);
+                            }
+                        }
+                        if (e.getCode() == KeyCode.RIGHT) {
+                            if(peutAller(x + PlayerSpeed,y))
+                            {
+                                character.setPosXProperty(character.getPosX() + PlayerSpeed);
+                            }
 
-                    }
-                }
-            }, 0, 5, TimeUnit.MILLISECONDS);
-        });
+                        }
+                    });
+                }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     @FXML
     protected void stop() {

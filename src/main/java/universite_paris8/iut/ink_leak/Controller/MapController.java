@@ -35,7 +35,7 @@ public class MapController implements Initializable {
 
     @FXML
     private TilePane tuileMap;
-    public static Character character;
+    public  Character character;
     @FXML
     public BorderPane toutenhaut;
     @FXML
@@ -60,12 +60,16 @@ public class MapController implements Initializable {
         System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
         circle.setCenterX(0);
         circle.setCenterY(0);
+        //circle.setTranslateX(300);
+       // circle.setTranslateY(300);
         circle.setRadius(character.getSize());
         circle.setId(character.getName());
 
         character.setPosXProperty(circle.localToScene(circle.getBoundsInLocal()).getMinX());
         circle.translateXProperty().bind(character.posXProperty());
         circle.translateYProperty().bind(character.posYProperty());
+        character.setPosYProperty(character.getPosY() + 100);
+        character.setPosXProperty(character.getPosX() + 300);
         PlayerPane.getChildren().add(circle);
 
 
@@ -101,20 +105,19 @@ public class MapController implements Initializable {
 
     }
     private static ScheduledExecutorService executorService;
-    public static int getCharacterSpeed() {
+    public  int getCharacterSpeed() {
         return character.getCharacterSpeed();
     }
-    private static int getCharacterSize() {
+    private int getCharacterSize() {
         return character.getSize();
     }
 
     @FXML
     public void moove() {
         try {
-            Circle circle = (Circle) PlayerPane.lookup("#LePlayer");
             PlayerSpeed = getCharacterSpeed();
-            PlayerPane.setOnKeyPressed(e -> {
 
+            PlayerPane.setOnKeyPressed(e -> {
                 if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
@@ -122,6 +125,7 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = character.getPosX();
                         double y = character.getPosY();
+
                         System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
                         if (e.getCode() == KeyCode.UP) {
                             if(peutAller(x,y - PlayerSpeed)) {
@@ -160,12 +164,13 @@ public class MapController implements Initializable {
     }
 
     private boolean peutAller(double x, double y) {
-        Circle circle = (Circle) PlayerPane.lookup("#LePlayer");
         double radius = getCharacterSize();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
-
+        if (EstDansMap(x, y)) {
+            return false;
+        }
         for (Node tuile : tuileMap.getChildren()) {
-            if (tuile.getId() != null) {
+            if (tuile.getId()== "rouge") {
                 Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());
                 double xb = boundsInParent.getMinX();
                 double yb = boundsInParent.getMinY();
@@ -191,6 +196,22 @@ public class MapController implements Initializable {
 
         return true;
     }
+    private boolean EstDansMap(double x, double y) {
+        TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
+        Bounds boundsInParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
+
+        double radius = getCharacterSize();
+
+        double xb = boundsInParent.getMinX();
+        double yb = boundsInParent.getMinY();
+        double width = boundsInParent.getWidth();
+        double height = boundsInParent.getHeight();
+
+        if (x - radius >= xb && x + radius <= xb + width && y - radius >= yb && y + radius <= yb + height) {
+            return false;
+        }
+        return true;
+    }
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
@@ -202,12 +223,12 @@ public class MapController implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==100){
-                        System.out.println("fini");
+                    if(temps==1000){
+                 //       System.out.println("fini");
                         gameLoop.stop();
                     }
                     else if (temps%5==0){
-                        System.out.println("un tour");
+                 //       System.out.println("un tour");
                         leCercle.setLayoutX(leCercle.getLayoutX()+5);
                         leCercle.setLayoutY(leCercle.getLayoutY()+5);
 

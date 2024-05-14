@@ -35,7 +35,7 @@ public class MapController implements Initializable {
 
     @FXML
     private TilePane tuileMap;
-    public static Character character;
+    public  Character character;
     @FXML
     public BorderPane toutenhaut;
     @FXML
@@ -101,10 +101,10 @@ public class MapController implements Initializable {
 
     }
     private static ScheduledExecutorService executorService;
-    public static int getCharacterSpeed() {
+    public  int getCharacterSpeed() {
         return character.getCharacterSpeed();
     }
-    private static int getCharacterSize() {
+    private int getCharacterSize() {
         return character.getSize();
     }
 
@@ -165,7 +165,7 @@ public class MapController implements Initializable {
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
 
         for (Node tuile : tuileMap.getChildren()) {
-            if (tuile.getId() != null) {
+            if (tuile.getId()== "rouge") {
                 Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());
                 double xb = boundsInParent.getMinX();
                 double yb = boundsInParent.getMinY();
@@ -202,7 +202,7 @@ public class MapController implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==100){
+                    if(temps==1000){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
@@ -217,4 +217,7 @@ public class MapController implements Initializable {
         );
         gameLoop.getKeyFrames().add(kf);
     }
+
+
+
 }

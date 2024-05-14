@@ -24,14 +24,14 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import universite_paris8.iut.ink_leak.Player.Entité;
 public class MapController implements Initializable {
     private Timeline gameLoop;
     private int temps;
     @FXML
     private Circle leCercle;
     private Map env;
-    @FXML
-    private Label welcomeText;
 
     @FXML
     private TilePane tuileMap;
@@ -43,11 +43,9 @@ public class MapController implements Initializable {
     private int PlayerSpeed;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         this.env= new Map();
         initAnimation();
         gameLoop.play();
-
 
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
@@ -128,22 +126,22 @@ public class MapController implements Initializable {
 
                         System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
                         if (e.getCode() == KeyCode.UP) {
-                            if(peutAller(x,y - PlayerSpeed)) {
+                            if(character.peutAller(x,y - PlayerSpeed, PlayerPane)) {
                                 character.setPosYProperty(character.getPosY() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.DOWN) {
-                            if(peutAller(x,y + PlayerSpeed)) {
+                            if(character.peutAller(x,y + PlayerSpeed, PlayerPane)) {
                                 character.setPosYProperty(character.getPosY() + PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.LEFT) {
-                            if(peutAller(x - PlayerSpeed,y)) {
+                            if(character.peutAller(x - PlayerSpeed,y, PlayerPane)) {
                                 character.setPosXProperty(character.getPosX() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.RIGHT) {
-                            if(peutAller(x + PlayerSpeed,y))
+                            if(character.peutAller(x + PlayerSpeed,y, PlayerPane))
                             {
                                 character.setPosXProperty(character.getPosX() + PlayerSpeed);
                             }
@@ -163,55 +161,6 @@ public class MapController implements Initializable {
         }
     }
 
-    private boolean peutAller(double x, double y) {
-        double radius = getCharacterSize();
-        TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
-        if (EstDansMap(x, y)) {
-            return false;
-        }
-        for (Node tuile : tuileMap.getChildren()) {
-            if (tuile.getId()== "rouge") {
-                Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());
-                double xb = boundsInParent.getMinX();
-                double yb = boundsInParent.getMinY();
-                double width = boundsInParent.getWidth();
-                double height = boundsInParent.getHeight();
-
-                if (x + radius >= xb && x - radius <= xb + width && y + radius >= yb && y - radius <= yb + height) {
-                    // Crée un rectangle transparent avec une bordure rouge
-                    Rectangle collisionRect = new Rectangle(xb, yb, width, height);
-                    collisionRect.setFill(Color.TRANSPARENT);
-                    collisionRect.setStroke(Color.BLUE);
-                    collisionRect.setStrokeWidth(2);
-
-                    // Ajoute le rectangle à la scène
-                    PlayerPane.getChildren().add(collisionRect);
-
-
-
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-    private boolean EstDansMap(double x, double y) {
-        TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
-        Bounds boundsInParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
-
-        double radius = getCharacterSize();
-
-        double xb = boundsInParent.getMinX();
-        double yb = boundsInParent.getMinY();
-        double width = boundsInParent.getWidth();
-        double height = boundsInParent.getHeight();
-
-        if (x - radius >= xb && x + radius <= xb + width && y - radius >= yb && y + radius <= yb + height) {
-            return false;
-        }
-        return true;
-    }
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;

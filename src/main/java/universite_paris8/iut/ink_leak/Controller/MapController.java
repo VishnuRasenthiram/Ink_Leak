@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -17,8 +19,10 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.ink_leak.Player.Character;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 
+
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,11 +39,11 @@ public class MapController implements Initializable {
 
     @FXML
     private TilePane tuileMap;
-    public  Character character;
+    public Joueur joueur;
     @FXML
-    public BorderPane toutenhaut;
+    public BorderPane mainBorderPane;
     @FXML
-    private Pane PlayerPane;
+    private Pane mainPane;
     private int PlayerSpeed;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,46 +58,48 @@ public class MapController implements Initializable {
                 creerTuile(env.getMap(i,j),i,j);
             }
         }
-        Circle circle = new Circle();
-        character = new Character("LePlayer", 100, 50, 20, 2);
 
-        System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
-        circle.setCenterX(0);
-        circle.setCenterY(0);
-        circle.setRadius(character.getSize());
-        circle.setId(character.getName());
+        joueur = new Joueur("LePlayer", 100, 50, 32, 2);
 
-        character.setPosXProperty(circle.localToScene(circle.getBoundsInLocal()).getMinX());
-        circle.translateXProperty().bind(character.posXProperty());
-        circle.translateYProperty().bind(character.posYProperty());
-        PlayerPane.getChildren().add(circle);
+        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+
+
+        Pane Joueur=new Pane();
+        Joueur.setId(joueur.getName());
+        ImageView imageview= new ImageView();
+        imageview.setFitHeight(32);
+        imageview.setFitWidth(32);
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_down.png").toURI().toString()));
+        Joueur.getChildren().add(imageview);
+        joueur.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
+        Joueur.translateXProperty().bind(joueur.posXProperty());
+        Joueur.translateYProperty().bind(joueur.posYProperty());
+
+
+        mainPane.getChildren().add(Joueur);
 
 
     }
 
-    private void creerTuile(int tuile,int x,int y) {
+    private void creerTuile(int tuile,int x,int y){
 
-        Pane pane;
+        Pane pane= new Pane();
+        ImageView imageview= new ImageView();
+        imageview.setFitHeight(32);
+        imageview.setFitWidth(32);
+        if(tuile==0){
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
 
-        if(tuile==1){
-            pane= new Pane();
-            Rectangle r =new Rectangle(32,32);
-            r.setFill(Color.RED);
+        } else if (tuile==1) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/corridors/corridor_upward.png").toURI().toString()));
             pane.setId("rouge");
-            pane.getChildren().add(r);
+        } else if (tuile==2) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
         }
-        else if (tuile==2){
-            pane= new Pane();
-            Rectangle r =new Rectangle(32,32);
-            r.setFill(Color.BLUE);
-            pane.getChildren().add(r);
-        }
-        else{
-            pane= new Pane();
-            Rectangle r =new Rectangle(32,32);
-            r.setFill(Color.GRAY);
-            pane.getChildren().add(r);
-        }
+
+
+        pane.getChildren().add(imageview);
+
 
         tuileMap.getChildren().add(pane);
 
@@ -102,46 +108,46 @@ public class MapController implements Initializable {
     }
     private static ScheduledExecutorService executorService;
     public  int getCharacterSpeed() {
-        return character.getCharacterSpeed();
+        return joueur.getCharacterSpeed();
     }
     private int getCharacterSize() {
-        return character.getSize();
+        return joueur.getSize();
     }
 
     @FXML
     public void moove() {
         try {
-            Circle circle = (Circle) PlayerPane.lookup("#LePlayer");
+            Pane circle = (Pane) mainPane.lookup("#LePlayer");
             PlayerSpeed = getCharacterSpeed();
-            PlayerPane.setOnKeyPressed(e -> {
+            mainPane.setOnKeyPressed(e -> {
 
                 if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.scheduleAtFixedRate(() -> {
                     Platform.runLater(() -> {
-                        double x = character.getPosX();
-                        double y = character.getPosY();
-                        System.out.println("x:"+character.getPosX() +"y:"+character.getPosY());
+                        double x = joueur.getPosX();
+                        double y = joueur.getPosY();
+                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
                         if (e.getCode() == KeyCode.UP) {
                             if(peutAller(x,y - PlayerSpeed)) {
-                                character.setPosYProperty(character.getPosY() - PlayerSpeed);
+                                joueur.setPosYProperty(joueur.getPosY() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.DOWN) {
                             if(peutAller(x,y + PlayerSpeed)) {
-                                character.setPosYProperty(character.getPosY() + PlayerSpeed);
+                                joueur.setPosYProperty(joueur.getPosY() + PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.LEFT) {
                             if(peutAller(x - PlayerSpeed,y)) {
-                                character.setPosXProperty(character.getPosX() - PlayerSpeed);
+                                joueur.setPosXProperty(joueur.getPosX() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.RIGHT) {
                             if(peutAller(x + PlayerSpeed,y))
                             {
-                                character.setPosXProperty(character.getPosX() + PlayerSpeed);
+                                joueur.setPosXProperty(joueur.getPosX() + PlayerSpeed);
                             }
                         }
                     });
@@ -160,9 +166,9 @@ public class MapController implements Initializable {
     }
 
     private boolean peutAller(double x, double y) {
-        Circle circle = (Circle) PlayerPane.lookup("#LePlayer");
+        Pane circle = (Pane) mainPane.lookup("#LePlayer");
         double radius = getCharacterSize();
-        TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
+        TilePane tuileMap = (TilePane) mainPane.lookup("#tuileMap");
 
         for (Node tuile : tuileMap.getChildren()) {
             if (tuile.getId()== "rouge") {
@@ -180,7 +186,7 @@ public class MapController implements Initializable {
                     collisionRect.setStrokeWidth(2);
 
                     // Ajoute le rectangle à la scène
-                    PlayerPane.getChildren().add(collisionRect);
+                    mainPane.getChildren().add(collisionRect);
 
 
 
@@ -202,7 +208,7 @@ public class MapController implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==1000){
+                    if(temps==1){
                         System.out.println("fini");
                         gameLoop.stop();
                     }

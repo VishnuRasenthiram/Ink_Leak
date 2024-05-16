@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Map {
 
-    private IntegerProperty[][] map;
+    private int[][] map;
 
     public Map(){
         int[][] tab={
@@ -31,24 +31,24 @@ public class Map {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
         };
 
-        this.map=new IntegerProperty[tab.length][tab[0].length];
+        this.map=new int[tab.length][tab[0].length];
         for(int i=0;i<tab.length;i++){
             for(int j=0;j<tab[0].length;j++){
-                this.map[i][j]=new SimpleIntegerProperty(tab[i][j]);
+                this.map[i][j]=tab[i][j];
             }
         }
     }
 
-    public IntegerProperty[][] getMap(){
+    public int[][] getMap(){
         return this.map;
     }
 
-    public void setMap(IntegerProperty[][] tab){
+    public void setMap(int[][] tab){
         this.map=tab;
     }
 
     public int getMap(int i, int j){
-        return this.map[i][j].getValue();
+        return this.map[i][j];
     }
 
 

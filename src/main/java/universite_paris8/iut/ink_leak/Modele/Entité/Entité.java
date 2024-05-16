@@ -1,8 +1,7 @@
-package universite_paris8.iut.ink_leak.Player;
+package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.transform.Shear;
 
 public class Entité {
     protected String name;

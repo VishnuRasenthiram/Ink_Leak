@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -32,9 +34,7 @@ public class MapController implements Initializable {
     @FXML
     private Circle leCercle;
     private Map env;
-    @FXML
-    private Label welcomeText;
-
+    
     @FXML
     private TilePane tuileMap;
     public Joueur joueur;
@@ -73,9 +73,9 @@ public class MapController implements Initializable {
         Joueur.translateXProperty().bind(joueur.posXProperty());
         Joueur.translateYProperty().bind(joueur.posYProperty());
 
-
         mainPane.getChildren().add(Joueur);
-
+        joueur.setPosYProperty(joueur.getPosY() + 50);
+        joueur.setPosXProperty(joueur.getPosX() + 300);
 
     }
 
@@ -105,10 +105,10 @@ public class MapController implements Initializable {
 
     }
     private static ScheduledExecutorService executorService;
-    public  int getCharacterSpeed() {
+    public  int getjoueurSpeed() {
         return joueur.getCharacterSpeed();
     }
-    private int getCharacterSize() {
+    private int getjoueurSize() {
         return joueur.getSize();
     }
 
@@ -116,7 +116,7 @@ public class MapController implements Initializable {
     public void moove() {
         try {
             Pane circle = (Pane) mainPane.lookup("#LePlayer");
-            PlayerSpeed = getCharacterSpeed();
+            PlayerSpeed = getjoueurSpeed();
             mainPane.setOnKeyPressed(e -> {
 
                 if (executorService != null) return;
@@ -126,26 +126,28 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
                         if (e.getCode() == KeyCode.UP) {
-                            if(character.peutAller(x,y - PlayerSpeed, PlayerPane)) {
-                                character.setPosYProperty(character.getPosY() - PlayerSpeed);
+                            //System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+
+                            if(joueur.peutAller(x,y - PlayerSpeed, mainPane)) {
+
+                                joueur.setPosYProperty(joueur.getPosY() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.DOWN) {
-                            if(character.peutAller(x,y + PlayerSpeed, PlayerPane)) {
-                                character.setPosYProperty(character.getPosY() + PlayerSpeed);
+                            if(joueur.peutAller(x,y + PlayerSpeed, mainPane)) {
+                                joueur.setPosYProperty(joueur.getPosY() + PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.LEFT) {
-                            if(character.peutAller(x - PlayerSpeed,y, PlayerPane)) {
-                                character.setPosXProperty(character.getPosX() - PlayerSpeed);
+                            if(joueur.peutAller(x - PlayerSpeed,y, mainPane)) {
+                                joueur.setPosXProperty(joueur.getPosX() - PlayerSpeed);
                             }
                         }
                         if (e.getCode() == KeyCode.RIGHT) {
-                            if(character.peutAller(x + PlayerSpeed,y, PlayerPane))
+                            if(joueur.peutAller(x + PlayerSpeed,y, mainPane))
                             {
-                                character.setPosXProperty(character.getPosX() + PlayerSpeed);
+                                joueur.setPosXProperty(joueur.getPosX() + PlayerSpeed);
                             }
                         }
                     });

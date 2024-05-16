@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Player;
+package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -88,9 +88,12 @@ public class Entité {
     public boolean peutAller(double x, double y, Pane PlayerPane) {
         double radius = getSize();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
+        System.out.println("xerererer");
+
         if (EstDansMap(x, y, PlayerPane)) {
             return false;
         }
+        System.out.println("xsfsfsffs");
         for (Node tuile : tuileMap.getChildren()) {
             if (tuile.getId() == "rouge") {
                 Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());

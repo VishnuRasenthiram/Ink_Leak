@@ -1,7 +1,9 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -15,7 +17,8 @@ public class Entité {
     protected int size;
 
     protected String name;
-    protected int health;
+    protected IntegerProperty pvProperty;
+    private IntegerProperty orientationProperty;
     protected int strength;
     protected int characterSpeed;
     protected DoubleProperty posXProperty;
@@ -23,12 +26,13 @@ public class Entité {
 
     public Entité(String name, int health, int strength, int characterSpeed, int size) {
         this.name = name;
-        this.health = health;
+        this.pvProperty=new SimpleIntegerProperty(health);
         this.strength = strength;
         this.characterSpeed = characterSpeed;
         this.size = size;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
+        this.orientationProperty = new SimpleIntegerProperty(0);
     }
 
     public double getPosX() {
@@ -37,6 +41,18 @@ public class Entité {
 
     public DoubleProperty posXProperty() {
         return posXProperty;
+    }
+
+    public int getOrientationProperty() {
+        return orientationProperty.get();
+    }
+
+    public IntegerProperty orientationPropertyProperty() {
+        return orientationProperty;
+    }
+
+    public void setOrientationProperty(int orientationProperty) {
+        this.orientationProperty.set(orientationProperty);
     }
 
     public void setPosXProperty(double posXProperty) {
@@ -67,13 +83,16 @@ public class Entité {
     }
 
     public int getHealth() {
-        return health;
+        return pvProperty.getValue();
     }
 
     public void setHealth(int health) {
-        this.health = health;
+        this.pvProperty.setValue(health);
     }
 
+    public IntegerProperty getPvProperty(){
+        return pvProperty;
+    }
     public int getStrength() {
         return strength;
     }
@@ -84,16 +103,13 @@ public class Entité {
     public int getSize() {
         return size;
     }
-
     public boolean peutAller(double x, double y, Pane PlayerPane) {
         double radius = getSize();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
-        System.out.println("xerererer");
 
         if (EstDansMap(x, y, PlayerPane)) {
             return false;
         }
-        System.out.println("xsfsfsffs");
         for (Node tuile : tuileMap.getChildren()) {
             if (tuile.getId() == "rouge") {
                 Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());
@@ -102,7 +118,7 @@ public class Entité {
                 double width = boundsInParent.getWidth();
                 double height = boundsInParent.getHeight();
 
-                if (x + radius >= xb && x - radius <= xb + width && y + radius >= yb && y - radius <= yb + height) {
+                if (x + radius >= xb && x - radius <= xb + width - getSize() && y + radius >= yb && y - radius <= yb + height - getSize()) {
                     // Crée un rectangle transparent avec une bordure rouge
                     Rectangle collisionRect = new Rectangle(xb, yb, width, height);
                     collisionRect.setFill(Color.TRANSPARENT);
@@ -132,7 +148,8 @@ public class Entité {
         double width = boundsInParent.getWidth();
         double height = boundsInParent.getHeight();
 
-        if (x - radius >= xb && x + radius <= xb + width && y - radius >= yb && y + radius <= yb + height) {
+        if (x - radius >= xb - getSize() && x + radius <= xb + width && y - radius >= yb - getSize() && y + radius <= yb + height) {
+
             return false;
         }
         return true;

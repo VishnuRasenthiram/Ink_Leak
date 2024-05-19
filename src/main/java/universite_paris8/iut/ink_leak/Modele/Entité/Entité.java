@@ -20,15 +20,15 @@ public class Entité {
     protected IntegerProperty pvProperty;
     private IntegerProperty orientationProperty;
     protected int strength;
-    protected int characterSpeed;
+    protected int Speed;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
 
-    public Entité(String name, int health, int strength, int characterSpeed, int size) {
+    public Entité(String name, int health, int strength, int Speed, int size) {
         this.name = name;
         this.pvProperty=new SimpleIntegerProperty(health);
         this.strength = strength;
-        this.characterSpeed = characterSpeed;
+        this.Speed = Speed;
         this.size = size;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
@@ -72,7 +72,7 @@ public class Entité {
     }
 
     public int getCharacterSpeed() {
-        return characterSpeed;
+        return Speed;
     }
     public String getName() {
         return name;

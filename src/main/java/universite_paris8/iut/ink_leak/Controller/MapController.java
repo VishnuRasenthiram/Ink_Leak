@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -29,6 +30,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 public class MapController implements Initializable {
+    private static ScheduledExecutorService executorService;
     private Timeline gameLoop;
     private int temps;
     @FXML
@@ -76,7 +78,6 @@ public class MapController implements Initializable {
         mainPane.getChildren().add(Joueur);
         joueur.setPosYProperty(joueur.getPosY() + 50);
         joueur.setPosXProperty(joueur.getPosX() + 300);
-
     }
 
     private void creerTuile(int tuile,int x,int y){
@@ -104,7 +105,7 @@ public class MapController implements Initializable {
 
 
     }
-    private static ScheduledExecutorService executorService;
+
     public  int getjoueurSpeed() {
         return joueur.getCharacterSpeed();
     }
@@ -126,8 +127,9 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
+                      //  System.out.println("x:"+ joueur.getPosX() +" y:"+ joueur.getPosY());
+
                         if (e.getCode() == KeyCode.UP) {
-                            //System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
 
                             if(joueur.peutAller(x,y - PlayerSpeed, mainPane)) {
 
@@ -172,15 +174,17 @@ public class MapController implements Initializable {
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.017),
+                Duration.seconds(0.007),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==1){
+                    if(temps==1000){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
                     else if (temps%5==0){
+                        EnnemieSpawner.spawnEnnemie(mainPane);
+
                  //       System.out.println("un tour");
                         leCercle.setLayoutX(leCercle.getLayoutX()+5);
                         leCercle.setLayoutY(leCercle.getLayoutY()+5);

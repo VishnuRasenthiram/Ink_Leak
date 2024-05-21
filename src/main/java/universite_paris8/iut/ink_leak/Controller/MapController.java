@@ -16,6 +16,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -36,7 +37,7 @@ public class MapController implements Initializable {
     @FXML
     private Circle leCercle;
     private Map env;
-    
+
     @FXML
     private TilePane tuileMap;
     public Joueur joueur;
@@ -172,25 +173,31 @@ public class MapController implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+        final int[] is = {0};
+
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.007),
+                Duration.seconds(0.1),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
+
                     if(temps==1000){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
-                    else if (temps%5==0){
-                        EnnemieSpawner.spawnEnnemie(mainPane);
+                    else if (temps%500==0){
+                        EnnemieSpawner.spawnEnnemie(mainPane, is[0]);
 
                  //       System.out.println("un tour");
                         leCercle.setLayoutX(leCercle.getLayoutX()+5);
                         leCercle.setLayoutY(leCercle.getLayoutY()+5);
+                    } else if (temps%2 == 0) {
+                        EnnemieSpawner.ActiverMob( mainPane);
 
                     }
                     temps++;
+                    is[0]++;
                 })
         );
         gameLoop.getKeyFrames().add(kf);

@@ -1,5 +1,8 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -12,15 +15,21 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Shear;
+import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Entité {
-    protected int size;
 
     protected String name;
     protected IntegerProperty pvProperty;
     private IntegerProperty orientationProperty;
     protected int strength;
     protected int Speed;
+    protected int size;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
 
@@ -105,6 +114,8 @@ public class Entité {
     }
     public boolean peutAller(double x, double y, Pane PlayerPane) {
         double radius = getSize();
+       // System.out.println(getSize());
+
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
 
         if (EstDansMap(x, y, PlayerPane)) {
@@ -153,5 +164,123 @@ public class Entité {
             return false;
         }
         return true;
+    }
+    private static ScheduledExecutorService executorService;
+    public Entité mob;
+    private static int random = (int) (Math.random() * 4);
+
+    public  int getjoueurSpeed(Entité mob) {
+        return mob.getCharacterSpeed();
+    }
+    private Timeline gameLoop;
+    private int temps;
+    @FXML
+    public void moove(Entité mob, Pane mainPane) {
+        gameLoop = new Timeline();
+        temps=0;
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        int Speed = mob.getSize();
+                    random = (int) (Math.random() * 4);
+                    double x = mob.getPosX();
+                    double y = mob.getPosY();
+
+                    if (random == 0) {
+
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(x,mob.getPosY() - 1, mainPane)) {
+                                            if (temps == Speed) {
+
+                                                gameLoop.stop();
+                                            }
+                                            mob.setPosYProperty(mob.getPosY() - 1);
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+
+                    }
+                    if (random == 1) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(x,mob.getPosY() + 1, mainPane)) {
+                                        if(temps== Speed){
+                                            gameLoop.stop();
+                                        }
+                                            mob.setPosYProperty(mob.getPosY() + 1);
+                                        temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+                    }
+                    if (random == 2) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+
+                                        if(mob.peutAller(mob.getPosX() - 1,y, mainPane)) {
+                                            if (temps == Speed) {
+                                                gameLoop.stop();
+                                            }
+                                            mob.setPosXProperty(mob.getPosX() - 1);
+
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+
+                    }
+                    if (random == 3) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(mob.getPosX() + 1,y, mainPane)) {
+                                            if (temps == Speed) {
+                                                gameLoop.stop();
+                                                
+                                            }
+                                            mob.setPosXProperty(mob.getPosX() + 1);
+
+
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+                    }
+
+
+
+
+
     }
 }

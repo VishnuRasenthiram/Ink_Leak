@@ -1,11 +1,13 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Entité {
     protected String name;
-    protected int health;
+    protected IntegerProperty health;
     protected int strength;
     protected int characterSpeed;
     protected DoubleProperty posXProperty;
@@ -13,7 +15,7 @@ public class Entité {
 
     public Entité(String name, int health, int strength, int characterSpeed) {
         this.name = name;
-        this.health = health;
+        this.health = new SimpleIntegerProperty(health);
         this.strength = strength;
         this.characterSpeed = characterSpeed;
         posXProperty = new SimpleDoubleProperty();
@@ -55,12 +57,12 @@ public class Entité {
         this.name = name;
     }
 
-    public int getHealth() {
+    public final IntegerProperty getHealth() {
         return health;
     }
 
     public void setHealth(int health) {
-        this.health = health;
+        this.health.setValue(health);
     }
 
     public int getStrength() {
@@ -70,4 +72,6 @@ public class Entité {
     public void setStrength(int strength) {
         this.strength = strength;
     }
+
+    public void setCharacterSpeed(int speed) { this.characterSpeed = speed; }
 }

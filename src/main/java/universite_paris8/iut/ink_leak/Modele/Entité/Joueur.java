@@ -18,10 +18,11 @@ public class Joueur extends Entité{
         }
 
         public void prendre_degat(int degat) {
+            if (this.health.getValue() - degat < 0) { this.health.setValue(0); }
             if (System.currentTimeMillis() - dernier_degat >= invincibilite) {
                 this.health.setValue(this.health.getValue() - degat);
                 this.dernier_degat = System.currentTimeMillis();
-        }
+            }
     }
 
     }

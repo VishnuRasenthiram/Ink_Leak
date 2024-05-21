@@ -30,11 +30,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 public class MapController implements Initializable {
     private Timeline gameLoop;
+    private Timeline pvloop;
     private int temps;
     @FXML
     private Circle leCercle;
     private Map env;
-    
+    @FXML
+    private Label welcomeText;
+    public Entité entité;
     @FXML
     private TilePane tuileMap;
     public Joueur joueur;
@@ -43,6 +46,8 @@ public class MapController implements Initializable {
     @FXML
     private Pane mainPane;
     private int PlayerSpeed;
+    @FXML
+    private Pane flacons;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -57,7 +62,13 @@ public class MapController implements Initializable {
             }
         }
 
-        joueur = new Joueur("LePlayer", 100, 50, 32, 2);
+        joueur = new Joueur("LePlayer", 6, 1, 32, 1);
+        ImageView imageflacons= new ImageView();
+        imageflacons.setId("vie");
+        imageflacons.setFitHeight(32);
+        imageflacons.setFitWidth(192);
+        imageflacons.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString()));
+        flacons.getChildren().add(imageflacons);
 
         System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
 
@@ -105,10 +116,10 @@ public class MapController implements Initializable {
 
     }
     private static ScheduledExecutorService executorService;
-    public  int getjoueurSpeed() {
+    public  int getCharacterSpeed() {
         return joueur.getCharacterSpeed();
     }
-    private int getjoueurSize() {
+    private int getCharacterSize() {
         return joueur.getSize();
     }
 
@@ -116,7 +127,7 @@ public class MapController implements Initializable {
     public void moove() {
         try {
             Pane circle = (Pane) mainPane.lookup("#LePlayer");
-            PlayerSpeed = getjoueurSpeed();
+            PlayerSpeed = getCharacterSpeed();
             mainPane.setOnKeyPressed(e -> {
 
                 if (executorService != null) return;
@@ -126,26 +137,27 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        if (e.getCode() == KeyCode.UP) {
-                            //System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
-
-                            if(joueur.peutAller(x,y - PlayerSpeed, mainPane)) {
-
+                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+                        if(e.getCode() == KeyCode.SHIFT) {
+                            PlayerSpeed = 2;
+                        }
+                        if (e.getCode() == KeyCode.Z) {
+                            if(peutAller(x,y - PlayerSpeed)) {
                                 joueur.setPosYProperty(joueur.getPosY() - PlayerSpeed);
                             }
                         }
-                        if (e.getCode() == KeyCode.DOWN) {
-                            if(joueur.peutAller(x,y + PlayerSpeed, mainPane)) {
+                        if (e.getCode() == KeyCode.S) {
+                            if(peutAller(x,y + PlayerSpeed)) {
                                 joueur.setPosYProperty(joueur.getPosY() + PlayerSpeed);
                             }
                         }
-                        if (e.getCode() == KeyCode.LEFT) {
-                            if(joueur.peutAller(x - PlayerSpeed,y, mainPane)) {
+                        if (e.getCode() == KeyCode.Q) {
+                            if(peutAller(x - PlayerSpeed,y)) {
                                 joueur.setPosXProperty(joueur.getPosX() - PlayerSpeed);
                             }
                         }
-                        if (e.getCode() == KeyCode.RIGHT) {
-                            if(joueur.peutAller(x + PlayerSpeed,y, mainPane))
+                        if (e.getCode() == KeyCode.D) {
+                            if(peutAller(x + PlayerSpeed,y))
                             {
                                 joueur.setPosXProperty(joueur.getPosX() + PlayerSpeed);
                             }
@@ -160,30 +172,66 @@ public class MapController implements Initializable {
     @FXML
     protected void stop() {
         if (executorService != null) {
+            joueur.setCharacterSpeed(1);
             executorService.shutdownNow();
             executorService = null;
         }
     }
 
-    private void initAnimation() {
+    private boolean peutAller(double x, double y) {
+        ImageView barre = (ImageView) mainBorderPane.lookup("#vie");
+        double radius = getCharacterSize();
+        TilePane tuileMap = (TilePane) mainPane.lookup("#tuileMap");
+
+        for (Node tuile : tuileMap.getChildren()) {
+            Bounds boundsInParent = tuile.localToParent(tuile.getBoundsInLocal());
+            double xb = boundsInParent.getMinX();
+            double yb = boundsInParent.getMinY();
+            double width = boundsInParent.getWidth();
+            double height = boundsInParent.getHeight();
+
+            boolean joueur_sur_case = x + radius >= xb && x - radius <= xb + width && y + radius >= yb && y - radius <= yb + height;
+
+            if (tuile.getId() == "rouge") {
+                if (joueur_sur_case) {
+                    // Crée un rectangle transparent avec une bordure rouge
+                    Rectangle collisionRect = new Rectangle(xb, yb, width, height);
+                    collisionRect.setFill(Color.TRANSPARENT);
+                    collisionRect.setStroke(Color.RED);
+                    collisionRect.setStrokeWidth(1);
+                    // Ajoute le rectangle à la scène
+                    mainPane.getChildren().add(collisionRect);
+
+                    return false;
+                }
+            }
+
+            if (tuile.getId() == "bleue") {
+                if (joueur_sur_case) {
+                    joueur.prendre_degat(1);
+                    barre.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_" + joueur.getHealth().getValue() + ".png").toURI().toString()));
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void gameLoop() {
         gameLoop = new Timeline();
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.017),
+                Duration.seconds(0.0017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==1){
-                        System.out.println("fini");
-                        gameLoop.stop();
-                    }
-                    else if (temps%5==0){
-                 //       System.out.println("un tour");
-                        leCercle.setLayoutX(leCercle.getLayoutX()+5);
-                        leCercle.setLayoutY(leCercle.getLayoutY()+5);
+                    if (temps%5==0){
+                        double x = joueur.getPosX();
+                        double y = joueur.getPosY();
+                        peutAller(x, y);
 
                     }
                     temps++;
@@ -191,4 +239,7 @@ public class MapController implements Initializable {
         );
         gameLoop.getKeyFrames().add(kf);
     }
+
+
+
 }

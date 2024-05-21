@@ -4,32 +4,20 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Shear;
 
 public class Entité {
-    protected int size;
-
     protected String name;
-    protected IntegerProperty pvProperty;
-    private IntegerProperty orientationProperty;
+    protected IntegerProperty health;
     protected int strength;
     protected int characterSpeed;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
 
-    public Entité(String name, int health, int strength, int characterSpeed, int size) {
+    public Entité(String name, int health, int strength, int characterSpeed) {
         this.name = name;
-        this.pvProperty=new SimpleIntegerProperty(health);
+        this.health = new SimpleIntegerProperty(health);
         this.strength = strength;
         this.characterSpeed = characterSpeed;
-        this.size = size;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
         this.orientationProperty = new SimpleIntegerProperty(0);
@@ -82,17 +70,14 @@ public class Entité {
         this.name = name;
     }
 
-    public int getHealth() {
-        return pvProperty.getValue();
+    public final IntegerProperty getHealth() {
+        return health;
     }
 
     public void setHealth(int health) {
-        this.pvProperty.setValue(health);
+        this.health.setValue(health);
     }
 
-    public IntegerProperty getPvProperty(){
-        return pvProperty;
-    }
     public int getStrength() {
         return strength;
     }
@@ -154,4 +139,6 @@ public class Entité {
         }
         return true;
     }
+
+    public void setCharacterSpeed(int speed) { this.characterSpeed = speed; }
 }

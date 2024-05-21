@@ -8,12 +8,16 @@
    <center>
       <Pane  fx:id="mainPane" focusTraversable="true" onKeyPressed="#moove" onKeyReleased="#stop" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER" >
          <TilePane  fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
+
          </TilePane>
       </Pane>
    </center>
    <top>
       <Label text="Ink Leak" BorderPane.alignment="CENTER" />
    </top>
+   <bottom>
+      <Pane fx:id="flacons"></Pane>
+   </bottom>
    <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
       <children>
          <Circle fx:id="leCercle" fill="DODGERBLUE" layoutX="400.0" layoutY="200.0" radius="32.0" stroke="BLACK" strokeType="INSIDE" />

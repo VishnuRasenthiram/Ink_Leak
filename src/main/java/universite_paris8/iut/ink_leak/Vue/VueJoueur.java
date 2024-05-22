@@ -1,11 +1,9 @@
 package universite_paris8.iut.ink_leak.Vue;
-
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
-
 import java.io.File;
 
 public class VueJoueur {
@@ -18,7 +16,7 @@ public class VueJoueur {
 
     public void créeSpriteJoueur(Joueur joueur){
         Pane Joueur=new Pane();
-        Joueur.setId(joueur.getName());
+        Joueur.setId(joueur.getNom_entite());
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);

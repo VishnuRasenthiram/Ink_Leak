@@ -1,39 +1,33 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Shear;
-
-import java.io.File;
 
 public abstract class Entité {
-    protected int size;
+    protected int taille_entite;
 
-    protected String name;
-    protected IntegerProperty health;
+    protected String nom_entite;
+    protected IntegerProperty vie_entiteProperty;
     private IntegerProperty orientationProperty;
-    protected int strength;
-    protected int characterSpeed;
+    protected int attaque_entite;
+    protected int vitesse_entite;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
     protected char direction;
 
     public Entité(String name, int health, int strength, int characterSpeed) {
-        this.name = name;
-        this.health = new SimpleIntegerProperty(health);
-        this.strength = strength;
-        this.characterSpeed = characterSpeed;
-        this.size = size;
+        this.nom_entite = name;
+        this.vie_entiteProperty = new SimpleIntegerProperty(health);
+        this.attaque_entite = strength;
+        this.vitesse_entite = characterSpeed;
+        this.taille_entite = taille_entite;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
         this.orientationProperty = new SimpleIntegerProperty(0);
@@ -76,42 +70,42 @@ public abstract class Entité {
         this.posYProperty.set(posYProperty);
     }
 
-    public int getCharacterSpeed() {
-        return characterSpeed;
+    public int getVitesse_entite() {
+        return vitesse_entite;
     }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getNom_entite() {
+        return nom_entite;
     }
 
-    public IntegerProperty getHealth() {
-        return health;
+    public void setNom_entite(String nom_entite) {
+        this.nom_entite = nom_entite;
     }
 
-    public void setHealth(int health) {
-        this.health.setValue(health);
+    public IntegerProperty getVie_entiteProperty() {
+        return vie_entiteProperty;
     }
 
-    public int getStrength() {
-        return strength;
+    public void setVie_entiteProperty(int vie_entiteProperty) {
+        this.vie_entiteProperty.setValue(vie_entiteProperty);
     }
 
-    public void setStrength(int strength) {
-        this.strength = strength;
+    public int getAttaque_entite() {
+        return attaque_entite;
     }
 
-    public void setCharacterSpeed(int speed) { this.characterSpeed = speed; }
-    public int getSize() {
-        return size;
+    public void setAttaque_entite(int attaque_entite) {
+        this.attaque_entite = attaque_entite;
+    }
+
+    public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
+    public int getTaille_joueur() {
+        return taille_entite;
     }
     public boolean peutAller(double x, double y, Pane PlayerPane) {
-        double radius = getSize();
+        double radius = getTaille_joueur();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
 
-        if (EstDansMap(x, y, PlayerPane)) {
+        if (estDansMap(x, y, PlayerPane)) {
             return false;
         }
         for (Node tuile : tuileMap.getChildren()) {
@@ -122,7 +116,7 @@ public abstract class Entité {
             double width = boundsInParent.getWidth();
             double height = boundsInParent.getHeight();
 
-            boolean joueur_sur_case = x + radius >= xb && x - radius <= xb + width - getSize() && y + radius >= yb && y - radius <= yb + height - getSize();
+            boolean joueur_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_joueur() && y + radius >= yb && y - radius <= yb + height - getTaille_joueur();
 
             if (tuile.getId() == "rouge") {
 
@@ -152,18 +146,18 @@ public abstract class Entité {
 
         return true;
     }
-    private boolean EstDansMap(double x, double y, Pane PlayerPane) {
+    private boolean estDansMap(double x, double y, Pane PlayerPane) {
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
         Bounds boundsInParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
 
-        double radius = getSize();
+        double radius = getTaille_joueur();
 
         double xb = boundsInParent.getMinX();
         double yb = boundsInParent.getMinY();
         double width = boundsInParent.getWidth();
         double height = boundsInParent.getHeight();
 
-        if (x - radius >= xb - getSize() && x + radius <= xb + width && y - radius >= yb - getSize() && y + radius <= yb + height) {
+        if (x - radius >= xb - getTaille_joueur() && x + radius <= xb + width && y - radius >= yb - getTaille_joueur() && y + radius <= yb + height) {
 
             return false;
         }

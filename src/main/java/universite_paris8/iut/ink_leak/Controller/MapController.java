@@ -3,6 +3,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
@@ -20,6 +21,10 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Vue.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueMap;
+
+
 import java.io.File;
 import java.net.URL;
 import java.sql.Time;
@@ -30,11 +35,10 @@ import java.util.concurrent.TimeUnit;
 
 public class MapController implements Initializable {
     private Timeline gameLoop;
-    private Timeline attaqueVisible;
     private int temps;
     @FXML
     private Circle leCercle;
-    private Map env;
+    private Map map;
     @FXML
     private Label welcomeText;
     public Entité entité;
@@ -51,24 +55,16 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.env= new Map();
-        gameLoop();
+        this.map= new Map();
+        VueMap vueMap= new VueMap(tuileMap);
+        VueJoueur ink= new VueJoueur(mainPane);
+
+        vueMap.initMap(map);
+        initAnimation();
         gameLoop.play();
 
-        for (int i = 0; i < env.getMap().length; i++) {
-            for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j),i,j);
-            }
-        }
-
-        joueur = new Joueur("LePlayer", 6, 1, 32, 1);
-        ImageView imageflacons= new ImageView();
-        imageflacons.setId("vie");
-        imageflacons.setFitHeight(32);
-        imageflacons.setFitWidth(192);
-        imageflacons.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString()));
-        flacons.getChildren().add(imageflacons);
-
+        this.joueur = new Joueur("LePlayer", 100, 50, 32, 2);
+        ink.créeSpriteJoueur(joueur);
         System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
 
 
@@ -91,20 +87,8 @@ public class MapController implements Initializable {
 
     private void creerTuile(int tuile,int x,int y){
 
-        Pane pane= new Pane();
-        ImageView imageview= new ImageView();
-        imageview.setFitHeight(32);
-        imageview.setFitWidth(32);
-        if(tuile==0){
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
-            pane.setId("sol");
-        } else if (tuile==1) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/corridors/corridor_upward.png").toURI().toString()));
-            pane.setId("rouge");
-        } else if (tuile==2) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
-            pane.setId("bleue");
-        }
+
+    }
 
 
         pane.getChildren().add(imageview);
@@ -179,7 +163,6 @@ public class MapController implements Initializable {
     @FXML
     protected void stop() {
         if (executorService != null) {
-            joueur.setCharacterSpeed(1);
             executorService.shutdownNow();
             executorService = null;
         }

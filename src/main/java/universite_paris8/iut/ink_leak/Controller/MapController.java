@@ -20,6 +20,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Vue.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueMap;
 
 
 import java.io.File;
@@ -33,8 +35,7 @@ public class MapController implements Initializable {
     private int temps;
     @FXML
     private Circle leCercle;
-    private Map env;
-    
+    private Map map;
     @FXML
     private TilePane tuileMap;
     public Joueur joueur;
@@ -46,64 +47,24 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.env= new Map();
+        this.map= new Map();
+        VueMap vueMap= new VueMap(tuileMap);
+        VueJoueur ink= new VueJoueur(mainPane);
+
+        vueMap.initMap(map);
         initAnimation();
         gameLoop.play();
 
-
-        for (int i = 0; i < env.getMap().length; i++) {
-            for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j),i,j);
-            }
-        }
-
-        joueur = new Joueur("LePlayer", 100, 50, 32, 2);
-
+        this.joueur = new Joueur("LePlayer", 100, 50, 32, 2);
+        ink.créeSpriteJoueur(joueur);
         System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
 
 
-        Pane Joueur=new Pane();
-        Joueur.setId(joueur.getName());
-        ImageView imageview= new ImageView();
-        imageview.setFitHeight(32);
-        imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_down.png").toURI().toString()));
-        Joueur.getChildren().add(imageview);
-        joueur.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
-        Joueur.translateXProperty().bind(joueur.posXProperty());
-        Joueur.translateYProperty().bind(joueur.posYProperty());
-
-        mainPane.getChildren().add(Joueur);
-        joueur.setPosYProperty(joueur.getPosY() + 50);
-        joueur.setPosXProperty(joueur.getPosX() + 300);
-
-    }
-
-    private void creerTuile(int tuile,int x,int y){
-
-        Pane pane= new Pane();
-        ImageView imageview= new ImageView();
-        imageview.setFitHeight(32);
-        imageview.setFitWidth(32);
-        if(tuile==0){
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
-
-        } else if (tuile==1) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/corridors/corridor_upward.png").toURI().toString()));
-            pane.setId("rouge");
-        } else if (tuile==2) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
-        }
-
-
-        pane.getChildren().add(imageview);
-
-
-        tuileMap.getChildren().add(pane);
-
 
 
     }
+
+
     private static ScheduledExecutorService executorService;
     public  int getjoueurSpeed() {
         return joueur.getCharacterSpeed();
@@ -172,11 +133,11 @@ public class MapController implements Initializable {
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.017),
+                Duration.seconds(0.006),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==1){
+                    if(temps==100){
                         System.out.println("fini");
                         gameLoop.stop();
                     }

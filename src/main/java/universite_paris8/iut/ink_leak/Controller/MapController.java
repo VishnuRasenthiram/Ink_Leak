@@ -22,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MapController implements Initializable {
     private Timeline gameLoop;
-    private Timeline pvloop;
+    private Timeline attaqueVisible;
     private int temps;
     @FXML
     private Circle leCercle;
@@ -53,7 +54,6 @@ public class MapController implements Initializable {
         this.env= new Map();
         gameLoop();
         gameLoop.play();
-
 
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
@@ -124,7 +124,7 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    public void moove() {
+    public void action() {
         try {
             Pane circle = (Pane) mainPane.lookup("#LePlayer");
             PlayerSpeed = getCharacterSpeed();
@@ -144,23 +144,30 @@ public class MapController implements Initializable {
                         if (e.getCode() == KeyCode.Z) {
                             if(peutAller(x,y - PlayerSpeed)) {
                                 joueur.setPosYProperty(joueur.getPosY() - PlayerSpeed);
+                                joueur.setDirection('N');
                             }
                         }
                         if (e.getCode() == KeyCode.S) {
                             if(peutAller(x,y + PlayerSpeed)) {
                                 joueur.setPosYProperty(joueur.getPosY() + PlayerSpeed);
+                                joueur.setDirection('S');
                             }
                         }
                         if (e.getCode() == KeyCode.Q) {
                             if(peutAller(x - PlayerSpeed,y)) {
                                 joueur.setPosXProperty(joueur.getPosX() - PlayerSpeed);
+                                joueur.setDirection('O');
                             }
                         }
                         if (e.getCode() == KeyCode.D) {
                             if(peutAller(x + PlayerSpeed,y))
                             {
                                 joueur.setPosXProperty(joueur.getPosX() + PlayerSpeed);
+                                joueur.setDirection('E');
                             }
+                        }
+                        if (e.getCode() == KeyCode.J) {
+                            attaquer();
                         }
                     });
                 }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
@@ -215,6 +222,40 @@ public class MapController implements Initializable {
         }
 
         return true;
+    }
+
+    private void attaquer() {
+        attaqueVisible = new Timeline();
+        long temps = System.currentTimeMillis();
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.0001), (ev -> {
+            Pane Attaque=new Pane();
+            ImageView imageview= new ImageView();
+            imageview.setFitHeight(32);
+            imageview.setFitWidth(32);
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
+            Attaque.getChildren().add(imageview);
+            mainPane.getChildren().add(Attaque);
+            if (joueur.getDirection() == 'N') {
+                Attaque.setTranslateX(joueur.getPosX());
+                Attaque.setTranslateY(joueur.getPosY() - 32);
+            }
+            else if (joueur.getDirection() == 'S') {
+                Attaque.setTranslateX(joueur.getPosX());
+                Attaque.setTranslateY(joueur.getPosY() + 32);
+            }
+            else if (joueur.getDirection() == 'E') {
+                Attaque.setTranslateX(joueur.getPosX() + 32);
+                Attaque.setTranslateY(joueur.getPosY());
+            }
+            else {
+                Attaque.setTranslateX(joueur.getPosX() - 32);
+                Attaque.setTranslateY(joueur.getPosY());
+            }
+            if (temps >= System.currentTimeMillis() + 1000) { mainPane.getChildren().remove(Attaque); }
+        }));
+        attaqueVisible.getKeyFrames().add(kf);
+        attaqueVisible.play();
+
     }
 
     private void gameLoop() {

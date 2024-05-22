@@ -1,12 +1,10 @@
 package universite_paris8.iut.ink_leak.Vue;
-
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
 import java.io.File;
 
 public class VueMap {

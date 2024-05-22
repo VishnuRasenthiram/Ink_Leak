@@ -5,7 +5,6 @@ public class Joueur extends Entité{
         private int size;
         protected long invincibilite;
         protected long dernier_degat;
-        protected char direction;
 
         public Joueur(String name, int health, int strength, int size, int CharacterSpeed) {
             super(name, health, strength, CharacterSpeed);
@@ -29,6 +28,6 @@ public class Joueur extends Entité{
                 this.health.setValue(this.health.getValue() - degat);
                 this.dernier_degat = System.currentTimeMillis();
             }
-    }
+        }
 
     }

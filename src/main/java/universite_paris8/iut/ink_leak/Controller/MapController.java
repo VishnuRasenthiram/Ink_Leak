@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 public class MapController implements Initializable {
     private Timeline gameLoop;
-    private Timeline attaqueVisible;
     private int temps;
     private Map map;
     @FXML
@@ -117,37 +116,33 @@ public class MapController implements Initializable {
     }
 
     private void attaquer() {
-        attaqueVisible = new Timeline();
-        long temps = System.currentTimeMillis();
-        KeyFrame kf = new KeyFrame(Duration.seconds(0.0001), (ev -> {
-            Pane Attaque=new Pane();
-            ImageView imageview= new ImageView();
-            imageview.setFitHeight(32);
-            imageview.setFitWidth(32);
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
-            Attaque.getChildren().add(imageview);
-            mainPane.getChildren().add(Attaque);
-            if (joueur.getDirection() == 'N') {
-                Attaque.setTranslateX(joueur.getPosX());
-                Attaque.setTranslateY(joueur.getPosY() - 32);
-            }
-            else if (joueur.getDirection() == 'S') {
-                Attaque.setTranslateX(joueur.getPosX());
-                Attaque.setTranslateY(joueur.getPosY() + 32);
-            }
-            else if (joueur.getDirection() == 'E') {
-                Attaque.setTranslateX(joueur.getPosX() + 32);
-                Attaque.setTranslateY(joueur.getPosY());
-            }
-            else {
-                Attaque.setTranslateX(joueur.getPosX() - 32);
-                Attaque.setTranslateY(joueur.getPosY());
-            }
-            if (temps >= System.currentTimeMillis() + 1000) { mainPane.getChildren().remove(Attaque); }
-        }));
-        attaqueVisible.getKeyFrames().add(kf);
+        Pane Attaque=new Pane();
+        ImageView imageview= new ImageView();
+        imageview.setFitHeight(32);
+        imageview.setFitWidth(32);
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
+        Attaque.getChildren().add(imageview);
+        mainPane.getChildren().add(Attaque);
+        if (joueur.getDirection() == 'N') {
+            Attaque.setTranslateX(joueur.getPosX());
+            Attaque.setTranslateY(joueur.getPosY() - 32);
+        }
+        else if (joueur.getDirection() == 'S') {
+            Attaque.setTranslateX(joueur.getPosX());
+            Attaque.setTranslateY(joueur.getPosY() + 32);
+        }
+        else if (joueur.getDirection() == 'E') {
+            Attaque.setTranslateX(joueur.getPosX() + 32);
+            Attaque.setTranslateY(joueur.getPosY());
+        }
+        else {
+            Attaque.setTranslateX(joueur.getPosX() - 32);
+            Attaque.setTranslateY(joueur.getPosY());
+        }
+        Timeline attaqueVisible = new Timeline(
+                new KeyFrame(Duration.millis(300), ev -> mainPane.getChildren().remove(Attaque))
+        );
         attaqueVisible.play();
-
     }
 
     private void gameLoop() {

@@ -49,15 +49,9 @@ public class MapController implements Initializable {
 
         this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
         ink.créeSpriteJoueur(joueur);
-        ink.créeSpriteVie(6);
-        joueur.getVie_entiteProperty().addListener((obs,old,nouv)->{
-            System.out.println(obs);
-            Pane vie = (Pane)mainPane.lookup("vie");
-            mainPane.getChildren().remove(vie);
-            ink.créeSpriteVie((int)nouv);
-        });
+        ink.créeSpriteVie(joueur);
 
-        }
+        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());}
 
     private static ScheduledExecutorService executorService;
 
@@ -67,7 +61,7 @@ public class MapController implements Initializable {
             Pane circle = (Pane) mainPane.lookup("#LePlayer");
             vitesse_joueur = joueur.getVitesse_entite();
             mainPane.setOnKeyPressed(e -> {
-
+                System.out.println(e);
                 if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
@@ -75,7 +69,7 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-
+                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
                         if(e.getCode() == KeyCode.SHIFT) {
                             vitesse_joueur = 2;
                         }

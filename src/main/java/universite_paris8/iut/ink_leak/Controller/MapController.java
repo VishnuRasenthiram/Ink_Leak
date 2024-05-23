@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
@@ -23,6 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class MapController implements Initializable {
+    private static ScheduledExecutorService executorService;
     private Timeline gameLoop;
     private int temps;
     private Map map;
@@ -165,9 +168,12 @@ public class MapController implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+        final int[] is = {0};
+
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
                 Duration.seconds(0.0017),
+                Duration.seconds(0.1),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
@@ -176,8 +182,22 @@ public class MapController implements Initializable {
                         double y = joueur.getPosY();
                         joueur.peutAller(x, y, mainPane);
 
+                    if(temps==1000){
+                        System.out.println("fini");
+                        gameLoop.stop();
+                    }
+                    else if (temps%500==0){
+                        EnnemieSpawner.spawnEnnemie(mainPane, is[0]);
+
+                 //       System.out.println("un tour");
+                        leCercle.setLayoutX(leCercle.getLayoutX()+5);
+                        leCercle.setLayoutY(leCercle.getLayoutY()+5);
+                    } else if (temps%2 == 0) {
+                        EnnemieSpawner.ActiverMob( mainPane);
+
                     }
                     temps++;
+                    is[0]++;
                 })
         );
         gameLoop.getKeyFrames().add(kf);

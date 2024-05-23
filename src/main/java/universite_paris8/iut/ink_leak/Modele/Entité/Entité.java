@@ -1,5 +1,10 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
-import javafx.beans.property.*;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -166,6 +171,124 @@ public abstract class Entité {
             return false;
         }
         return true;
+    }
+    private static ScheduledExecutorService executorService;
+    public Entité mob;
+    private static int random = (int) (Math.random() * 4);
+
+    public  int getjoueurSpeed(Entité mob) {
+        return mob.getCharacterSpeed();
+    }
+    private Timeline gameLoop;
+    private int temps;
+    @FXML
+    public void moove(Entité mob, Pane mainPane) {
+        gameLoop = new Timeline();
+        temps=0;
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        int Speed = mob.getSize();
+                    random = (int) (Math.random() * 4);
+                    double x = mob.getPosX();
+                    double y = mob.getPosY();
+
+                    if (random == 0) {
+
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(x,mob.getPosY() - 1, mainPane)) {
+                                            if (temps == Speed) {
+
+                                                gameLoop.stop();
+                                            }
+                                            mob.setPosYProperty(mob.getPosY() - 1);
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+
+                    }
+                    if (random == 1) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(x,mob.getPosY() + 1, mainPane)) {
+                                        if(temps== Speed){
+                                            gameLoop.stop();
+                                        }
+                                            mob.setPosYProperty(mob.getPosY() + 1);
+                                        temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+                    }
+                    if (random == 2) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+
+                                        if(mob.peutAller(mob.getPosX() - 1,y, mainPane)) {
+                                            if (temps == Speed) {
+                                                gameLoop.stop();
+                                            }
+                                            mob.setPosXProperty(mob.getPosX() - 1);
+
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+
+
+                    }
+                    if (random == 3) {
+
+                            KeyFrame kf = new KeyFrame(
+                                    // on définit le FPS (nbre de frame par seconde)
+                                    Duration.seconds(0.01),
+                                    // on définit ce qui se passe à chaque frame
+                                    // c'est un eventHandler d'ou le lambda
+                                    (ev ->{
+                                        if(mob.peutAller(mob.getPosX() + 1,y, mainPane)) {
+                                            if (temps == Speed) {
+                                                gameLoop.stop();
+
+                                            }
+                                            mob.setPosXProperty(mob.getPosX() + 1);
+
+
+                                            temps++;
+                                        }
+                                    })
+                            );
+                            gameLoop.getKeyFrames().add(kf);
+                            gameLoop.play();
+                    }
+
+
+
+
+
     }
 
     public abstract void prendre_degat(int degat);

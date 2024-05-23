@@ -70,69 +70,17 @@ public class MapController implements Initializable {
 
     }
 
-    private static ScheduledExecutorService executorService;
+
 
     @FXML
     public void action() {
-        try {
-            Pane circle = (Pane) mainPane.lookup("#LePlayer");
-            vitesse_joueur = joueur.getVitesse_entite();
-            mainPane.setOnKeyPressed(e -> {
-                System.out.println(e);
-                if (executorService != null) return;
-
-                executorService = Executors.newSingleThreadScheduledExecutor();
-                executorService.scheduleAtFixedRate(() -> {
-                    Platform.runLater(() -> {
-                        double x = joueur.getPosX();
-                        double y = joueur.getPosY();
-
-                        if(e.getCode() == KeyCode.SHIFT) {
-                            vitesse_joueur = 2;
-                        }
-                        if (e.getCode() == KeyCode.Z) {
-                            if(joueur.peutAller(x,y - vitesse_joueur, mainPane)) {
-                                joueur.setPosYProperty(joueur.getPosY() - vitesse_joueur);
-                                joueur.setOrientationProperty("N");
-                            }
-                        }
-                        if (e.getCode() == KeyCode.S) {
-                            if(joueur.peutAller(x,y + vitesse_joueur, mainPane)) {
-                                joueur.setPosYProperty(joueur.getPosY() + vitesse_joueur);
-                                joueur.setOrientationProperty("S");
-                            }
-                        }
-                        if (e.getCode() == KeyCode.Q) {
-                            if(joueur.peutAller(x - vitesse_joueur,y, mainPane)) {
-                                joueur.setPosXProperty(joueur.getPosX() - vitesse_joueur);
-                                joueur.setOrientationProperty("O");
-                            }
-                        }
-                        if (e.getCode() == KeyCode.D) {
-                            if(joueur.peutAller(x + vitesse_joueur,y, mainPane))
-                            {
-                                joueur.setPosXProperty(joueur.getPosX() + vitesse_joueur);
-                                joueur.setOrientationProperty("E");
-                            }
-                        }
-                        if (e.getCode() == KeyCode.J) {
-                            attaquer();
-                        }
-                    });
-                }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        joueur.déplacement(mainPane);
     }
     @FXML
     protected void stop() {
-        if (executorService != null) {
-            executorService.shutdownNow();
-            executorService = null;
-        }
+        joueur.stop(mainPane);
     }
-
+/*
     private void attaquer() {
         Pane Attaque=new Pane();
         ImageView imageview= new ImageView();
@@ -162,7 +110,7 @@ public class MapController implements Initializable {
         );
         attaqueVisible.play();
     }
-
+*/
     private void gameLoop() {
         gameLoop = new Timeline();
         temps=0;
@@ -172,28 +120,27 @@ public class MapController implements Initializable {
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.0017),
-                Duration.seconds(0.1),
+                Duration.seconds(0.01),
+
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
-                (ev ->{
-                    if (temps%5==0){
+                (ev -> {
+                    if (temps % 5 == 0) {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
                         joueur.peutAller(x, y, mainPane);
 
-                    if(temps==1000){
-                        System.out.println("fini");
-                        gameLoop.stop();
-                    }
-                    else if (temps%500==0){
-                        EnnemieSpawner.spawnEnnemie(mainPane, is[0]);
+                        if (temps == 10000) {
+                            System.out.println("fini");
+                            gameLoop.stop();
+                        } else if (temps % 500 == 0) {
+                            EnnemieSpawner.spawnEnnemie(mainPane, is[0]);
 
-                 //       System.out.println("un tour");
-                        leCercle.setLayoutX(leCercle.getLayoutX()+5);
-                        leCercle.setLayoutY(leCercle.getLayoutY()+5);
-                    } else if (temps%2 == 0) {
-                        EnnemieSpawner.ActiverMob( mainPane);
+                        } else if (temps % 2 == 0) {
+                            EnnemieSpawner.ActiverMob(mainPane);
+
+
+                        }
 
                     }
                     temps++;

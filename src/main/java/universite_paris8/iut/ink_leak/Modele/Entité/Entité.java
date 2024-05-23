@@ -1,9 +1,8 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -11,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public abstract class Entité {
     protected int taille_entite;
@@ -24,11 +24,11 @@ public abstract class Entité {
     protected DoubleProperty posYProperty;
 
 
-    public Entité(String name, int health, int strength, int characterSpeed) {
-        this.nom_entite = name;
-        this.vie_entiteProperty = new SimpleIntegerProperty(health);
-        this.attaque_entite = strength;
-        this.vitesse_entite = characterSpeed;
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, int vitesse_entite) {
+        this.nom_entite = nom_entite;
+        this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
+        this.attaque_entite = attaque_entite;
+        this.vitesse_entite = vitesse_entite;
         this.taille_entite = taille_entite;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
@@ -107,12 +107,12 @@ public abstract class Entité {
 
     public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
 
-    public int getTaille_joueur() {
+    public int getTaille_entite() {
         return taille_entite;
     }
 
     public boolean peutAller(double x, double y, Pane PlayerPane) {
-        double radius = getTaille_joueur();
+        double radius = getTaille_entite();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
 
         if (estDansMap(x, y, PlayerPane)) {
@@ -126,7 +126,7 @@ public abstract class Entité {
             double width = boundsInParent.getWidth();
             double height = boundsInParent.getHeight();
 
-            boolean entite_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_joueur() && y + radius >= yb && y - radius <= yb + height - getTaille_joueur();
+            boolean entite_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_entite() && y + radius >= yb && y - radius <= yb + height - getTaille_entite();
 
             if (tuile.getId() == "rouge") {
 
@@ -159,137 +159,23 @@ public abstract class Entité {
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
         Bounds boundsInParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
 
-        double radius = getTaille_joueur();
+        double radius = getTaille_entite();
 
         double xb = boundsInParent.getMinX();
         double yb = boundsInParent.getMinY();
         double width = boundsInParent.getWidth();
         double height = boundsInParent.getHeight();
 
-        if (x - radius >= xb - getTaille_joueur() && x + radius <= xb + width && y - radius >= yb - getTaille_joueur() && y + radius <= yb + height) {
+        if (x - radius >= xb - getTaille_entite() && x + radius <= xb + width && y - radius >= yb - getTaille_entite() && y + radius <= yb + height) {
 
             return false;
         }
         return true;
     }
-    private static ScheduledExecutorService executorService;
-    public Entité mob;
-    private static int random = (int) (Math.random() * 4);
-
-    public  int getjoueurSpeed(Entité mob) {
-        return mob.getCharacterSpeed();
-    }
-    private Timeline gameLoop;
-    private int temps;
-    @FXML
-    public void moove(Entité mob, Pane mainPane) {
-        gameLoop = new Timeline();
-        temps=0;
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
-
-        int Speed = mob.getSize();
-                    random = (int) (Math.random() * 4);
-                    double x = mob.getPosX();
-                    double y = mob.getPosY();
-
-                    if (random == 0) {
-
-
-                            KeyFrame kf = new KeyFrame(
-                                    // on définit le FPS (nbre de frame par seconde)
-                                    Duration.seconds(0.01),
-                                    // on définit ce qui se passe à chaque frame
-                                    // c'est un eventHandler d'ou le lambda
-                                    (ev ->{
-                                        if(mob.peutAller(x,mob.getPosY() - 1, mainPane)) {
-                                            if (temps == Speed) {
-
-                                                gameLoop.stop();
-                                            }
-                                            mob.setPosYProperty(mob.getPosY() - 1);
-                                            temps++;
-                                        }
-                                    })
-                            );
-                            gameLoop.getKeyFrames().add(kf);
-                            gameLoop.play();
-
-
-                    }
-                    if (random == 1) {
-
-                            KeyFrame kf = new KeyFrame(
-                                    // on définit le FPS (nbre de frame par seconde)
-                                    Duration.seconds(0.01),
-                                    // on définit ce qui se passe à chaque frame
-                                    // c'est un eventHandler d'ou le lambda
-                                    (ev ->{
-                                        if(mob.peutAller(x,mob.getPosY() + 1, mainPane)) {
-                                        if(temps== Speed){
-                                            gameLoop.stop();
-                                        }
-                                            mob.setPosYProperty(mob.getPosY() + 1);
-                                        temps++;
-                                        }
-                                    })
-                            );
-                            gameLoop.getKeyFrames().add(kf);
-                            gameLoop.play();
-
-                    }
-                    if (random == 2) {
-
-                            KeyFrame kf = new KeyFrame(
-                                    // on définit le FPS (nbre de frame par seconde)
-                                    Duration.seconds(0.01),
-                                    // on définit ce qui se passe à chaque frame
-                                    // c'est un eventHandler d'ou le lambda
-                                    (ev ->{
-
-                                        if(mob.peutAller(mob.getPosX() - 1,y, mainPane)) {
-                                            if (temps == Speed) {
-                                                gameLoop.stop();
-                                            }
-                                            mob.setPosXProperty(mob.getPosX() - 1);
-
-                                            temps++;
-                                        }
-                                    })
-                            );
-                            gameLoop.getKeyFrames().add(kf);
-                            gameLoop.play();
-
-
-                    }
-                    if (random == 3) {
-
-                            KeyFrame kf = new KeyFrame(
-                                    // on définit le FPS (nbre de frame par seconde)
-                                    Duration.seconds(0.01),
-                                    // on définit ce qui se passe à chaque frame
-                                    // c'est un eventHandler d'ou le lambda
-                                    (ev ->{
-                                        if(mob.peutAller(mob.getPosX() + 1,y, mainPane)) {
-                                            if (temps == Speed) {
-                                                gameLoop.stop();
-
-                                            }
-                                            mob.setPosXProperty(mob.getPosX() + 1);
-
-
-                                            temps++;
-                                        }
-                                    })
-                            );
-                            gameLoop.getKeyFrames().add(kf);
-                            gameLoop.play();
-                    }
 
 
 
-
-
-    }
+    public abstract void déplacement(Pane mainPane);
 
     public abstract void prendre_degat(int degat);
 

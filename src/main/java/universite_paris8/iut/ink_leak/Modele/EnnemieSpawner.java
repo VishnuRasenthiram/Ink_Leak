@@ -20,10 +20,10 @@ import static java.lang.Thread.sleep;
 public class EnnemieSpawner {
     public static List<Slime> slimes = new ArrayList<>(); // Liste pour stocker tous les slimes
 
-    //public static Slime slime;
-  public static void ActiverMob(Pane mainPane){
-      for (Entité mob : slimes) { // Parcourir la liste de slimes
-          mob.moove(mob, mainPane); // Faire bouger chaque slime
+
+    public static void ActiverMob(Pane mainPane){
+      for (Entité mob : slimes) {
+          mob.déplacement(mainPane);
       }
     }
 
@@ -35,7 +35,7 @@ public class EnnemieSpawner {
 
         Pane Slime =new Pane();
 
-        Slime.setId(slime.getName());
+        Slime.setId(slime.getNom_entite());
 
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
@@ -52,17 +52,9 @@ public class EnnemieSpawner {
         slime.setPosYProperty(slime.getPosY() + 50);
         slime.setPosXProperty(slime.getPosX() + 300);
 
-        // Ajouter un rectangle transparent avec des contours bleus
-        Rectangle rect = new Rectangle();
-        rect.setWidth(imageview.getFitWidth());
-        rect.setHeight(imageview.getFitHeight());
-        rect.setArcWidth(5);
-        rect.setArcHeight(5);
-        rect.setStroke(Color.BLUE);
-        rect.setStrokeWidth(2);
-        rect.setFill(Color.TRANSPARENT);
 
-        Slime.getChildren().add(rect);
+
+
     }
 
 }

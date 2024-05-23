@@ -31,4 +31,9 @@ public class Joueur extends Entité{
             }
         }
 
+        public void gagner_vie (int nb_vie_gagnee) {
+            if (this.vie_entiteProperty.getValue() + nb_vie_gagnee > 6) { this.vie_entiteProperty.setValue(6); }
+            else this.setVie_entiteProperty(vie_entiteProperty.getValue() + nb_vie_gagnee);
+        }
+
     }

@@ -21,15 +21,14 @@ public class VueJoueur {
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_down.png").toURI().toString()));
+        imageview.setImage(new Image(orientationToFile(joueur.getOrientationProperty()).toURI().toString()));
         Joueur.getChildren().add(imageview);
         joueur.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
         Joueur.translateXProperty().bind(joueur.posXProperty());
         Joueur.translateYProperty().bind(joueur.posYProperty());
 
         mainPane.getChildren().add(Joueur);
-        joueur.setPosYProperty(joueur.getPosY() + 50);
-        joueur.setPosXProperty(joueur.getPosX() + 300);
+
     }
 
     public void créeSpriteVie(Joueur joueur) {
@@ -47,6 +46,25 @@ public class VueJoueur {
 
         joueur.getVie_entiteProperty().addListener(new VieObs(imageView, joueur));
 
+    }
+
+    public File orientationToFile(String orientation){
+
+        switch (orientation){
+
+            case "N":
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_up.png");
+
+            case "O":
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_left.png");
+
+            case "E":
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_right.png");
+
+            default:
+                return  new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idles/entity_idle_down.png");
+
+        }
     }
 
 }

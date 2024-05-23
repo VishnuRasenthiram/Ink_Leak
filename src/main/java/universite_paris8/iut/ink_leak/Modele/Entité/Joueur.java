@@ -11,16 +11,14 @@ public class Joueur extends Entité{
             this.taille_joueur = taille_joueur;
             this.invincibilite = 1000;
             this.dernier_degat = -invincibilite;
-            this.direction = 'S';
+
         }
 
         public int getTaille_joueur() {
             return taille_joueur;
         }
 
-        public char getDirection() { return direction; }
 
-        public void setDirection(char nv_direction) { this.direction = nv_direction; }
 
         public void prendre_degat(int degat) {
             if (this.vie_entiteProperty.getValue() - degat < 0) { this.vie_entiteProperty.setValue(0); }

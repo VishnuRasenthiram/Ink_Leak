@@ -1,8 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -15,12 +12,12 @@ public abstract class Entité {
 
     protected String nom_entite;
     protected IntegerProperty vie_entiteProperty;
-    private IntegerProperty orientationProperty;
+    private StringProperty orientationProperty;
     protected int attaque_entite;
     protected int vitesse_entite;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
-    protected char direction;
+
 
     public Entité(String name, int health, int strength, int characterSpeed) {
         this.nom_entite = name;
@@ -30,8 +27,8 @@ public abstract class Entité {
         this.taille_entite = taille_entite;
         posXProperty = new SimpleDoubleProperty();
         posYProperty = new SimpleDoubleProperty();
-        this.orientationProperty = new SimpleIntegerProperty(0);
-        this.direction = 'S';
+        this.orientationProperty = new SimpleStringProperty("S");
+
     }
 
     public double getPosX() {
@@ -42,15 +39,15 @@ public abstract class Entité {
         return posXProperty;
     }
 
-    public int getOrientationProperty() {
+    public String getOrientationProperty() {
         return orientationProperty.get();
     }
 
-    public IntegerProperty orientationPropertyProperty() {
+    public StringProperty orientationProperty() {
         return orientationProperty;
     }
 
-    public void setOrientationProperty(int orientationProperty) {
+    public void setOrientationProperty(String orientationProperty) {
         this.orientationProperty.set(orientationProperty);
     }
 
@@ -70,9 +67,15 @@ public abstract class Entité {
         this.posYProperty.set(posYProperty);
     }
 
+    public void setEmplacement(double x , double y ){
+        setPosXProperty(x);
+        setPosYProperty(y);
+    }
+
     public int getVitesse_entite() {
         return vitesse_entite;
     }
+
     public String getNom_entite() {
         return nom_entite;
     }
@@ -98,9 +101,11 @@ public abstract class Entité {
     }
 
     public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
+
     public int getTaille_joueur() {
         return taille_entite;
     }
+
     public boolean peutAller(double x, double y, Pane PlayerPane) {
         double radius = getTaille_joueur();
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");

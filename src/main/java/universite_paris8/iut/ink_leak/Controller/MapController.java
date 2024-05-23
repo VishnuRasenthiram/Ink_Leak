@@ -49,9 +49,23 @@ public class MapController implements Initializable {
 
         this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
         ink.créeSpriteJoueur(joueur);
+        joueur.setEmplacement(30,200);
         ink.créeSpriteVie(joueur);
+        joueur.orientationProperty().addListener((obs,old,nouv)->{
 
-        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());}
+            Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
+            p.getChildren().remove(0);
+            ImageView imageview= new ImageView();
+            imageview.setFitHeight(32);
+            imageview.setFitWidth(32);
+            imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
+            p.getChildren().add(imageview);
+
+
+        });
+
+
+    }
 
     private static ScheduledExecutorService executorService;
 
@@ -69,33 +83,33 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+
                         if(e.getCode() == KeyCode.SHIFT) {
                             vitesse_joueur = 2;
                         }
                         if (e.getCode() == KeyCode.Z) {
                             if(joueur.peutAller(x,y - vitesse_joueur, mainPane)) {
                                 joueur.setPosYProperty(joueur.getPosY() - vitesse_joueur);
-                                joueur.setDirection('N');
+                                joueur.setOrientationProperty("N");
                             }
                         }
                         if (e.getCode() == KeyCode.S) {
                             if(joueur.peutAller(x,y + vitesse_joueur, mainPane)) {
                                 joueur.setPosYProperty(joueur.getPosY() + vitesse_joueur);
-                                joueur.setDirection('S');
+                                joueur.setOrientationProperty("S");
                             }
                         }
                         if (e.getCode() == KeyCode.Q) {
                             if(joueur.peutAller(x - vitesse_joueur,y, mainPane)) {
                                 joueur.setPosXProperty(joueur.getPosX() - vitesse_joueur);
-                                joueur.setDirection('O');
+                                joueur.setOrientationProperty("O");
                             }
                         }
                         if (e.getCode() == KeyCode.D) {
                             if(joueur.peutAller(x + vitesse_joueur,y, mainPane))
                             {
                                 joueur.setPosXProperty(joueur.getPosX() + vitesse_joueur);
-                                joueur.setDirection('E');
+                                joueur.setOrientationProperty("E");
                             }
                         }
                         if (e.getCode() == KeyCode.J) {
@@ -124,15 +138,15 @@ public class MapController implements Initializable {
         imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
         Attaque.getChildren().add(imageview);
         mainPane.getChildren().add(Attaque);
-        if (joueur.getDirection() == 'N') {
+        if (joueur.getOrientationProperty() == "N") {
             Attaque.setTranslateX(joueur.getPosX());
             Attaque.setTranslateY(joueur.getPosY() - 32);
         }
-        else if (joueur.getDirection() == 'S') {
+        else if (joueur.getOrientationProperty() == "S") {
             Attaque.setTranslateX(joueur.getPosX());
             Attaque.setTranslateY(joueur.getPosY() + 32);
         }
-        else if (joueur.getDirection() == 'E') {
+        else if (joueur.getOrientationProperty() == "E") {
             Attaque.setTranslateX(joueur.getPosX() + 32);
             Attaque.setTranslateY(joueur.getPosY());
         }

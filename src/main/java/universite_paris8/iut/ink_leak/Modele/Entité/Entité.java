@@ -116,11 +116,11 @@ public abstract class Entité {
             double width = boundsInParent.getWidth();
             double height = boundsInParent.getHeight();
 
-            boolean joueur_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_joueur() && y + radius >= yb && y - radius <= yb + height - getTaille_joueur();
+            boolean entite_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_joueur() && y + radius >= yb && y - radius <= yb + height - getTaille_joueur();
 
             if (tuile.getId() == "rouge") {
 
-                if (joueur_sur_case) {
+                if (entite_sur_case) {
                     // Crée un rectangle transparent avec une bordure rouge
                     Rectangle collisionRect = new Rectangle(xb, yb, width, height);
                     collisionRect.setFill(Color.TRANSPARENT);
@@ -136,10 +136,9 @@ public abstract class Entité {
                 }
             }
 
-            if (tuile.getId() == "bleue") {
-                if (joueur_sur_case) {
+            if (tuile.getId() == "bleu") {
+                if (entite_sur_case) {
                     this.prendre_degat(1);
-                    //barre.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_" + joueur.getHealth().getValue() + ".png").toURI().toString()));
                 }
             }
         }

@@ -27,6 +27,7 @@ public class Joueur extends Entité{
             if (System.currentTimeMillis() - dernier_degat >= invincibilite) {
                 this.vie_entiteProperty.setValue(this.vie_entiteProperty.getValue() - degat);
                 this.dernier_degat = System.currentTimeMillis();
+                System.out.println(this.vie_entiteProperty.getValue());
             }
         }
 

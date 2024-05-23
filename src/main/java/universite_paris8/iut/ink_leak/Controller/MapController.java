@@ -34,6 +34,8 @@ public class MapController implements Initializable {
     @FXML
     private Pane mainPane;
     private int vitesse_joueur;
+    @FXML
+    private Pane flacons;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -45,12 +47,17 @@ public class MapController implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        this.joueur = new Joueur("LePlayer", 100, 50, 32, 1);
+        this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
         ink.créeSpriteJoueur(joueur);
-        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+        ink.créeSpriteVie(6);
+        joueur.getVie_entiteProperty().addListener((obs,old,nouv)->{
+            System.out.println(obs);
+            Pane vie = (Pane)mainPane.lookup("vie");
+            mainPane.getChildren().remove(vie);
+            ink.créeSpriteVie((int)nouv);
+        });
 
-
-    }
+        }
 
     private static ScheduledExecutorService executorService;
 
@@ -60,7 +67,7 @@ public class MapController implements Initializable {
             Pane circle = (Pane) mainPane.lookup("#LePlayer");
             vitesse_joueur = joueur.getVitesse_entite();
             mainPane.setOnKeyPressed(e -> {
-                System.out.println(e);
+
                 if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
@@ -68,7 +75,7 @@ public class MapController implements Initializable {
                     Platform.runLater(() -> {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        System.out.println("x:"+ joueur.getPosX() +"y:"+ joueur.getPosY());
+
                         if(e.getCode() == KeyCode.SHIFT) {
                             vitesse_joueur = 2;
                         }
@@ -140,7 +147,7 @@ public class MapController implements Initializable {
             Attaque.setTranslateY(joueur.getPosY());
         }
         Timeline attaqueVisible = new Timeline(
-                new KeyFrame(Duration.millis(300), ev -> mainPane.getChildren().remove(Attaque))
+                new KeyFrame(Duration.millis(200), ev -> mainPane.getChildren().remove(Attaque))
         );
         attaqueVisible.play();
     }

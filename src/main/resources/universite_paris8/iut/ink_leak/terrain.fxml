@@ -15,9 +15,6 @@
    <top>
       <Label text="Ink Leak" BorderPane.alignment="CENTER" />
    </top>
-   <bottom>
-      <Pane fx:id="flacons"></Pane>
-   </bottom>
    <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
       <children>
          <Circle fx:id="leCercle" fill="DODGERBLUE" layoutX="400.0" layoutY="200.0" radius="32.0" stroke="BLACK" strokeType="INSIDE" />

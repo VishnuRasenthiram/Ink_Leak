@@ -164,4 +164,6 @@ public abstract class Entité {
     }
 
     public abstract void prendre_degat(int degat);
+
+    public abstract void gagner_vie(int nb_vie_gagnee);
 }

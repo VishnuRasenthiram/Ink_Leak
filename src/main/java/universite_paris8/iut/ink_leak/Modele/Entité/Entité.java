@@ -136,7 +136,7 @@ public abstract class Entité {
                 }
             }
 
-            if (tuile.getId() == "bleu") {
+            if (tuile.getId() == "bleue") {
                 if (entite_sur_case) {
                     this.prendre_degat(1);
                 }

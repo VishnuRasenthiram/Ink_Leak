@@ -37,7 +37,7 @@ public class VueMap {
             pane.setId("rouge");
         } else if (tuile==2) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
-            pane.setId("bleu");
+            pane.setId("bleue");
         }
 
 

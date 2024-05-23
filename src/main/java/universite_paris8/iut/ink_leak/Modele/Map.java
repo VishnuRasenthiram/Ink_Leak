@@ -1,8 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class Map {
 
     private int[][] map;

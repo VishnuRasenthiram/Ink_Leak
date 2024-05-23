@@ -1,12 +1,10 @@
 package universite_paris8.iut.ink_leak.Vue;
-
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
 import java.io.File;
 
 public class VueMap {
@@ -39,7 +37,7 @@ public class VueMap {
             pane.setId("rouge");
         } else if (tuile==2) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
-            pane.setId("bleu");
+            pane.setId("bleue");
         }
 
 

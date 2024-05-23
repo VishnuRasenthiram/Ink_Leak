@@ -67,21 +67,4 @@ public class VueJoueur {
         }
     }
 
-    public void créeSpriteVie(Joueur joueur) {
-
-        Pane vie = new Pane();
-        ImageView imageView = new ImageView();
-        imageView.setFitHeight(32);
-        imageView.setFitWidth(96);
-        imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString())));
-        vie.getChildren().add(imageView);
-
-        mainPane.getChildren().add(vie);
-        vie.setTranslateX(0);
-        vie.setTranslateY(0);
-
-        joueur.getVie_entiteProperty().addListener(new VieObs(imageView, joueur));
-
-    }
-
 }

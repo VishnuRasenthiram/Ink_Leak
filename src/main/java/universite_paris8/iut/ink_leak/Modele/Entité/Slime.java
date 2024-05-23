@@ -12,7 +12,7 @@ public class Slime extends Entité{
 
     int temps;
     public Slime(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur){
-        super(nom_joueur, vie_joueur, attaque_joueur, vitesse_joueur);
+        super(nom_joueur, vie_joueur, attaque_joueur, vitesse_joueur, taille_joueur);
     }
 
     @Override

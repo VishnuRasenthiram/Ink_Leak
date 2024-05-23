@@ -14,7 +14,6 @@ import javafx.util.Duration;
 
 public abstract class Entité {
     protected int taille_entite;
-
     protected String nom_entite;
     protected IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
@@ -24,7 +23,7 @@ public abstract class Entité {
     protected DoubleProperty posYProperty;
 
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite, int vitesse_entite) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, int vitesse_entite, int taille_entite) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -176,6 +175,8 @@ public abstract class Entité {
 
 
     public abstract void déplacement(Pane mainPane);
+
+    public boolean enContact(Pane pane1, Pane pane2) { return pane1.getBoundsInParent().intersects(pane2.getBoundsInParent()); }
 
     public abstract void prendre_degat(int degat);
 

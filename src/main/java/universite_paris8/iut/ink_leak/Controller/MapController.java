@@ -14,13 +14,12 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class MapController implements Initializable {
-    private static ScheduledExecutorService executorService;
+
     private Timeline gameLoop;
     private int temps;
     private Map map;
@@ -33,9 +32,6 @@ public class MapController implements Initializable {
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-    private int vitesse_joueur;
-    @FXML
-    private Pane flacons;
     private GenerateurEnnemis spawner;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,8 +63,6 @@ public class MapController implements Initializable {
         ink.créeSpriteVie(joueur);
 
     }
-
-
 
     @FXML
     public void action() {

@@ -126,9 +126,7 @@ public class Slime extends Entité{
     }
 
     @Override
-    public void prendre_degat(int degat) {
-        System.out.println("bbbb");
-    }
+    public void prendre_degat(int degat) { System.out.println("bbbb"); }
 
     @Override
     public void gagner_vie(int nb_vie_gagnee) {

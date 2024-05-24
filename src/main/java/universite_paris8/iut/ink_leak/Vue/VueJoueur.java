@@ -10,8 +10,11 @@ import java.io.File;
 public class VueJoueur {
     @FXML
     private Pane mainPane;
-    public VueJoueur(Pane mainPane){
+    @FXML
+    private Pane interfacePane;
+    public VueJoueur(Pane mainPane, Pane interfacePane){
         this.mainPane = mainPane;
+        this.interfacePane = interfacePane;
 
     }
 
@@ -28,6 +31,7 @@ public class VueJoueur {
         Joueur.translateYProperty().bind(joueur.posYProperty());
 
         mainPane.getChildren().add(Joueur);
+        Joueur.toFront();
 
     }
 
@@ -40,7 +44,7 @@ public class VueJoueur {
         imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString())));
         vie.getChildren().add(imageView);
 
-        mainPane.getChildren().add(vie);
+        interfacePane.getChildren().add(vie);
         vie.setTranslateX(0);
         vie.setTranslateY(0);
 

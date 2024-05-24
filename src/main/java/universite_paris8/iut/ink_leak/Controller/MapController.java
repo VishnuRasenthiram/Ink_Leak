@@ -89,7 +89,7 @@ public class MapController implements Initializable {
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/hitbox/hitbox_3.png").toURI().toString()));
         Attaque.getChildren().add(imageview);
         mainPane.getChildren().add(Attaque);
         if (joueur.getOrientationProperty() == "N") {

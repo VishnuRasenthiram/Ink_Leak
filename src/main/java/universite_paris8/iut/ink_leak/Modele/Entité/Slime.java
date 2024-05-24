@@ -20,6 +20,11 @@ public class Slime extends Entité{
     }
 
     @Override
+    public void attaque(Pane mainPane) {
+
+    }
+
+    @Override
     public void déplacement(Pane mainPane) {
         KeyFrame kf;
         int random = (int) (Math.random() * 4);

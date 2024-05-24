@@ -4,32 +4,34 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.VieObs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 
-public class VueJoueur {
-    @FXML
-    private Pane mainPane;
+public class VueJoueur extends VueEntite{
+
     public VueJoueur(Pane mainPane){
-        this.mainPane = mainPane;
+        super(mainPane);
 
     }
 
-    public void créeSpriteJoueur(Joueur joueur){
+    @Override
+    public void créeSprite(Entité entité) {
         Pane Joueur=new Pane();
-        Joueur.setId(joueur.getNom_entite());
+        Joueur.setId(entité.getNom_entite());
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(orientationToFile(joueur.getOrientationProperty()).toURI().toString()));
+        imageview.setImage(new Image(orientationToFile(entité.getOrientationProperty()).toURI().toString()));
         Joueur.getChildren().add(imageview);
-        joueur.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
-        Joueur.translateXProperty().bind(joueur.posXProperty());
-        Joueur.translateYProperty().bind(joueur.posYProperty());
+        entité.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
+        Joueur.translateXProperty().bind(entité.posXProperty());
+        Joueur.translateYProperty().bind(entité.posYProperty());
 
-        mainPane.getChildren().add(Joueur);
-
+        super.getMainPane().getChildren().add(Joueur);
     }
+
+
 
     public void créeSpriteVie(Joueur joueur) {
 
@@ -40,7 +42,7 @@ public class VueJoueur {
         imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString())));
         vie.getChildren().add(imageView);
 
-        mainPane.getChildren().add(vie);
+        super.getMainPane().getChildren().add(vie);
         vie.setTranslateX(0);
         vie.setTranslateY(0);
 

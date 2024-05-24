@@ -37,6 +37,8 @@ public class MapController implements Initializable {
     public BorderPane mainBorderPane;
     @FXML
     private Pane mainPane;
+    @FXML
+    private Pane interfacePane;
     private int vitesse_joueur;
     @FXML
     private Pane flacons;
@@ -46,7 +48,7 @@ public class MapController implements Initializable {
         this.map= new Map();
 
         VueMap vueMap= new VueMap(tuileMap);
-        VueJoueur ink= new VueJoueur(mainPane);
+        VueJoueur ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map);
         gameLoop();
@@ -55,7 +57,6 @@ public class MapController implements Initializable {
         this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
         ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
-        ink.créeSpriteVie(joueur);
         joueur.orientationProperty().addListener((obs,old,nouv)->{
 
             Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
@@ -66,9 +67,9 @@ public class MapController implements Initializable {
             imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
             p.getChildren().add(imageview);
 
-
         });
 
+        ink.créeSpriteVie(joueur);
 
     }
 

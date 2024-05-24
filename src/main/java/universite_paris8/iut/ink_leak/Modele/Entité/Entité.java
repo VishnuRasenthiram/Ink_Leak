@@ -14,6 +14,7 @@ import javafx.util.Duration;
 
 public abstract class Entité {
     protected int taille_entite;
+
     protected String nom_entite;
     protected IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
@@ -175,6 +176,8 @@ public abstract class Entité {
 
 
     public abstract void déplacement(Pane mainPane);
+
+    public boolean enContact(Pane pane1, Pane pane2) { return pane1.getBoundsInParent().intersects(pane2.getBoundsInParent()); }
 
     public abstract void prendre_degat(int degat);
 

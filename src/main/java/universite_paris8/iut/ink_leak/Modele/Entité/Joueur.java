@@ -22,7 +22,12 @@ public class Joueur extends Entité{
 
         }
 
-        public int getTaille_joueur() {
+    @Override
+    public void attaque(Pane mainPane) {
+
+    }
+
+    public int getTaille_joueur() {
             return taille_joueur;
         }
 
@@ -30,10 +35,10 @@ public class Joueur extends Entité{
     @Override
     public void déplacement(Pane mainPane) {
         try {
-            Pane circle = (Pane) mainPane.lookup("#LePlayer");
+
             int vitesse_joueur = super.getVitesse_entite();
             mainPane.setOnKeyPressed(e -> {
-                System.out.println(e);
+
                 if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
@@ -91,7 +96,6 @@ public class Joueur extends Entité{
             if (System.currentTimeMillis() - dernier_degat >= invincibilite) {
                 this.vie_entiteProperty.setValue(this.vie_entiteProperty.getValue() - degat);
                 this.dernier_degat = System.currentTimeMillis();
-                System.out.println(this.vie_entiteProperty.getValue());
             }
         }
 

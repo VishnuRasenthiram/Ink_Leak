@@ -174,7 +174,7 @@ public abstract class Entité {
     }
 
 
-
+    public abstract void attaque(Pane mainPane);
     public abstract void déplacement(Pane mainPane);
 
     public boolean enContact(Pane pane1, Pane pane2) { return pane1.getBoundsInParent().intersects(pane2.getBoundsInParent()); }

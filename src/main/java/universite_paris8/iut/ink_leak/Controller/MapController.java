@@ -1,29 +1,23 @@
 package universite_paris8.iut.ink_leak.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
-import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntite;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
-import java.io.File;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class MapController implements Initializable {
     private static ScheduledExecutorService executorService;
@@ -42,11 +36,12 @@ public class MapController implements Initializable {
     private int vitesse_joueur;
     @FXML
     private Pane flacons;
+    private GenerateurEnnemis spawner;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         this.map= new Map();
-
+        spawner= new GenerateurEnnemis();
         VueMap vueMap= new VueMap(tuileMap);
         VueJoueur ink= new VueJoueur(mainPane, interfacePane);
 
@@ -119,7 +114,7 @@ public class MapController implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        final int[] is = {0};
+
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
@@ -136,17 +131,17 @@ public class MapController implements Initializable {
                             System.out.println("fini");
                             gameLoop.stop();
                         } else if (temps % 500 == 0) {
-                            EnnemieSpawner.spawnEnnemie(mainPane, is[0],gameLoop);
+                            spawner.genererEnnemis(mainPane,gameLoop);
 
                         } else if (temps % 2 == 0) {
-                            EnnemieSpawner.ActiverMob(mainPane);
+                            spawner.ActiverMob(mainPane);
 
 
                         }
 
                     }
                     temps++;
-                    is[0]++;
+
                 })
         );
         gameLoop.getKeyFrames().add(kf);

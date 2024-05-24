@@ -9,10 +9,13 @@ import java.util.Random;
 
 public class Slime extends Entité{
     private Timeline gameLoop;
+    public static int cpt=0;
 
     int temps;
-    public Slime(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop){
-        super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur);
+    public Slime( int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop){
+
+        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur);
+        cpt++;
         this.gameLoop=gameLoop;
     }
 
@@ -23,7 +26,7 @@ public class Slime extends Entité{
         double x = super.getPosX();
         double y = super.getPosY();
         double ms=0.01;
-        System.out.println(random);
+
         if (random == 0) {
              kf = new KeyFrame(
                     Duration.millis(ms),

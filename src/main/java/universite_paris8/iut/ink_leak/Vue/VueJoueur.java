@@ -7,7 +7,7 @@ import universite_paris8.iut.ink_leak.Controller.VieObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 
-public class VueJoueur {
+public class VueJoueur extends VueEntite{
     @FXML
     private Pane mainPane;
     @FXML
@@ -18,20 +18,23 @@ public class VueJoueur {
 
     }
 
-    public void créeSpriteJoueur(Joueur joueur){
+    @Override
+    public void créeSprite(Entité entité) {
         Pane Joueur=new Pane();
-        Joueur.setId(joueur.getNom_entite());
+        Joueur.setId(entité.getNom_entite());
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(orientationToFile(joueur.getOrientationProperty()).toURI().toString()));
+        imageview.setImage(new Image(orientationToFile(entité.getOrientationProperty()).toURI().toString()));
         Joueur.getChildren().add(imageview);
-        joueur.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
-        Joueur.translateXProperty().bind(joueur.posXProperty());
-        Joueur.translateYProperty().bind(joueur.posYProperty());
+        entité.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
+        Joueur.translateXProperty().bind(entité.posXProperty());
+        Joueur.translateYProperty().bind(entité.posYProperty());
+
+        super.getMainPane().getChildren().add(Joueur);
+    }
 
         mainPane.getChildren().add(Joueur);
-        Joueur.toFront();
 
     }
 

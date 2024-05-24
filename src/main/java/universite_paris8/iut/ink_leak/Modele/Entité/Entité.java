@@ -111,7 +111,7 @@ public abstract class Entité {
     }
 
     public boolean peutAller(double x, double y, Pane PlayerPane) {
-        double radius = getTaille_entite();
+        double radius = this.taille_entite;
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
 
         if (estDansMap(x, y, PlayerPane)) {
@@ -125,7 +125,7 @@ public abstract class Entité {
             double width = boundsInParent.getWidth();
             double height = boundsInParent.getHeight();
 
-            boolean entite_sur_case = x + radius >= xb && x - radius <= xb + width - getTaille_entite() && y + radius >= yb && y - radius <= yb + height - getTaille_entite();
+            boolean entite_sur_case = x + radius >= xb && x - radius <= xb + width - this.taille_entite && y + radius >= yb && y - radius <= yb + height - this.taille_entite;
 
             if (tuile.getId() == "rouge") {
 
@@ -158,14 +158,14 @@ public abstract class Entité {
         TilePane tuileMap = (TilePane) PlayerPane.lookup("#tuileMap");
         Bounds boundsInParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
 
-        double radius = getTaille_entite();
+        double radius = this.taille_entite;
 
         double xb = boundsInParent.getMinX();
         double yb = boundsInParent.getMinY();
         double width = boundsInParent.getWidth();
         double height = boundsInParent.getHeight();
 
-        if (x - radius >= xb - getTaille_entite() && x + radius <= xb + width && y - radius >= yb - getTaille_entite() && y + radius <= yb + height) {
+        if (x - radius >= xb - this.taille_entite && x + radius <= xb + width && y - radius >= yb - this.taille_entite && y + radius <= yb + height) {
 
             return false;
         }

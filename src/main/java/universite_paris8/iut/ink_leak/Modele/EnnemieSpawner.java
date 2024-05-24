@@ -1,5 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele;
 
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -27,10 +28,10 @@ public class EnnemieSpawner {
       }
     }
 
-    public static void spawnEnnemie(Pane mainPane, int name){
+    public static void spawnEnnemie(Pane mainPane, int name, Timeline gameLoop){
         String a = String.valueOf(name);
 
-        Slime slime = new Slime(a, 50, 10, 32, 1); // Créer un nouveau slime
+        Slime slime = new Slime(a, 50, 10, 32, 1,gameLoop); // Créer un nouveau slime
         slimes.add(slime); // Ajouter le slime à la liste
 
         Pane Slime =new Pane();

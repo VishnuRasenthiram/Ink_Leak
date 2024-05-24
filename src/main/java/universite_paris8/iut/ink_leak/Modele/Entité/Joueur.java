@@ -15,7 +15,7 @@ public class Joueur extends Entité{
         protected long dernier_degat;
 
         public Joueur(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur) {
-            super(nom_joueur, vie_joueur, attaque_joueur, vitesse_joueur);
+            super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur);
             this.taille_joueur = taille_joueur;
             this.invincibilite = 1000;
             this.dernier_degat = -invincibilite;

@@ -15,6 +15,7 @@ import universite_paris8.iut.ink_leak.Modele.EnnemieSpawner;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Vue.VueEntite;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import java.io.File;
@@ -43,6 +44,7 @@ public class MapController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         this.map= new Map();
+
         VueMap vueMap= new VueMap(tuileMap);
         VueJoueur ink= new VueJoueur(mainPane);
 
@@ -51,7 +53,7 @@ public class MapController implements Initializable {
         gameLoop.play();
 
         this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
-        ink.créeSpriteJoueur(joueur);
+        ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
         ink.créeSpriteVie(joueur);
         joueur.orientationProperty().addListener((obs,old,nouv)->{
@@ -120,8 +122,7 @@ public class MapController implements Initializable {
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.01),
-
+                Duration.millis(60),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev -> {
@@ -134,7 +135,7 @@ public class MapController implements Initializable {
                             System.out.println("fini");
                             gameLoop.stop();
                         } else if (temps % 500 == 0) {
-                            EnnemieSpawner.spawnEnnemie(mainPane, is[0]);
+                            EnnemieSpawner.spawnEnnemie(mainPane, is[0],gameLoop);
 
                         } else if (temps % 2 == 0) {
                             EnnemieSpawner.ActiverMob(mainPane);

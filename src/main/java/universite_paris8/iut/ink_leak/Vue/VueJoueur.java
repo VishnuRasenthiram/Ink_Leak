@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.VieObs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 
@@ -13,7 +14,7 @@ public class VueJoueur extends VueEntite{
     @FXML
     private Pane interfacePane;
     public VueJoueur(Pane mainPane, Pane interfacePane){
-        this.mainPane = mainPane;
+        super(mainPane);
         this.interfacePane = interfacePane;
 
     }
@@ -32,10 +33,6 @@ public class VueJoueur extends VueEntite{
         Joueur.translateYProperty().bind(entité.posYProperty());
 
         super.getMainPane().getChildren().add(Joueur);
-    }
-
-        mainPane.getChildren().add(Joueur);
-
     }
 
     public void créeSpriteVie(Joueur joueur) {

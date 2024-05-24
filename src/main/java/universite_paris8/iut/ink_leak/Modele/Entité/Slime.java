@@ -11,7 +11,7 @@ public class Slime extends Entité{
     private Timeline gameLoop;
 
     int temps;
-    public Slime(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop){
+    public Slime(String nom_joueur, int vie_joueur, int attaque_joueur, int vitesse_joueur, int taille_joueur, Timeline gameLoop){
         super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur);
         this.gameLoop=gameLoop;
     }

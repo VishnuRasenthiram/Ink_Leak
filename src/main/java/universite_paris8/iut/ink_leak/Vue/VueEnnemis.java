@@ -1,10 +1,8 @@
 package universite_paris8.iut.ink_leak.Vue;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-
 import java.io.File;
 
 public class VueEnnemis extends VueEntite{
@@ -29,5 +27,6 @@ public class VueEnnemis extends VueEntite{
         ennemis.translateXProperty().bind(entité.posXProperty());
         ennemis.translateYProperty().bind(entité.posYProperty());
         super.getMainPane().getChildren().add(ennemis);
+
     }
 }

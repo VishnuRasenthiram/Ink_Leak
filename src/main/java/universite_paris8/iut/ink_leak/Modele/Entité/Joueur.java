@@ -3,6 +3,8 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Vue.VueAttaque;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,14 +13,14 @@ import java.util.concurrent.TimeUnit;
 public class Joueur extends Entité{
         private static ScheduledExecutorService executorService;
         private int taille_joueur;
-        protected long invincibilite;
-        protected long dernier_degat;
 
-        public Joueur(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur) {
-            super(nom_joueur, vie_joueur, attaque_joueur, vitesse_joueur, taille_joueur);
+
+        public Joueur(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, GenerateurEnnemis spawner) {
+            super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,1000,spawner);
             this.taille_joueur = taille_joueur;
-            this.invincibilite = 1000;
+
             this.dernier_degat = -invincibilite;
+
 
         }
 
@@ -37,6 +39,7 @@ public class Joueur extends Entité{
         try {
 
             int vitesse_joueur = super.getVitesse_entite();
+            VueAttaque vA= new VueAttaque(mainPane,super.getSpawner());
             mainPane.setOnKeyPressed(e -> {
 
                 if (executorService != null) return;
@@ -74,7 +77,9 @@ public class Joueur extends Entité{
                             }
                         }
                         if (e.getCode() == KeyCode.J) {
-                            System.out.println("attaque");
+                            if(vA.afficheAttaque(this)!= null){
+                                vA.afficheAttaque(this).prendre_degat(1);
+                            };
                         }
                     });
                 }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
@@ -91,17 +96,11 @@ public class Joueur extends Entité{
         }
     }
 
-    public void prendre_degat(int degat) {
-            if (this.vie_entiteProperty.getValue() - degat < 0) { this.vie_entiteProperty.setValue(0); }
-            if (System.currentTimeMillis() - dernier_degat >= invincibilite) {
-                this.setVie_entiteProperty(this.vie_entiteProperty.getValue() - degat);
-                this.dernier_degat = System.currentTimeMillis();
-            }
-        }
+
 
         public void gagner_vie(int nb_vie_gagnee) {
-            if (this.getVie_entiteProperty().getValue() + nb_vie_gagnee > 6) { this.vie_entiteProperty.setValue(6); }
-            else this.setVie_entiteProperty(vie_entiteProperty.getValue() + nb_vie_gagnee);
+            if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
+            else this.setVie_entite(this.getVie() + nb_vie_gagnee);
         }
 
     }

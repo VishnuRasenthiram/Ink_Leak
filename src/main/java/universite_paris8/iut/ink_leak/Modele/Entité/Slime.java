@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 
 import java.util.Random;
 
@@ -12,9 +13,9 @@ public class Slime extends Entité{
     public static int cpt=0;
 
     int temps;
-    public Slime( int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop){
+    public Slime(int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop, GenerateurEnnemis spawner){
 
-        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur);
+        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,200,spawner);
         cpt++;
         this.gameLoop=gameLoop;
     }
@@ -26,12 +27,13 @@ public class Slime extends Entité{
 
     @Override
     public void déplacement(Pane mainPane) {
+        gameLoop.getKeyFrames().removeAll();
         KeyFrame kf;
-        int random = (int) (Math.random() * 4);
+        int random = new Random().nextInt(4);
         double x = super.getPosX();
         double y = super.getPosY();
         double ms=0.01;
-
+        System.out.println(random);
         if (random == 0) {
              kf = new KeyFrame(
                     Duration.millis(ms),
@@ -75,13 +77,12 @@ public class Slime extends Entité{
                     })
             );
         }
+
         gameLoop.getKeyFrames().add(kf);
+
     }
 
-    @Override
-    public void prendre_degat(int degat) {
-        System.out.println("bbbb");
-    }
+
 
     @Override
     public void gagner_vie(int nb_vie_gagnee) {

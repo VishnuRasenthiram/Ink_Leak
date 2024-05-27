@@ -3,18 +3,19 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 
 public class VieObs implements ChangeListener<Number> {
 
-    public Joueur joueur;
+    public Entité joueur;
     public ImageView imageView;
 
-    public VieObs(ImageView image, Joueur joueur) {
+    public VieObs(ImageView image, Entité entité) {
 
-        super();
-        this.joueur = joueur;
+
+        this.joueur = entité;
         this.imageView = image;
 
     }

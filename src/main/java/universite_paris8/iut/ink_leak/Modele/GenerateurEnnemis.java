@@ -1,6 +1,9 @@
 package universite_paris8.iut.ink_leak.Modele;
 
 import javafx.animation.Timeline;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
@@ -12,30 +15,28 @@ import static java.lang.Thread.sleep;
 
 public class GenerateurEnnemis {
 
-    private ArrayList<Slime> slimes ; // Liste pour stocker tous les slimes
+    private ObservableList<Entité> listeEntite ; // Liste pour stocker tous les slimes
     public GenerateurEnnemis(){
-        slimes=new ArrayList<Slime>();
+        listeEntite= FXCollections.observableArrayList();
 
     }
 
     public void ActiverMob(Pane mainPane){
-      for (Entité mob : slimes) {
+      for (Entité mob : listeEntite) {
           mob.déplacement(mainPane);
       }
     }
 
-    public void genererEnnemis(Pane mainPane, Timeline gameLoop){
-        VueEnnemis vueEnnemis = new VueEnnemis(mainPane);
-
-        Slime slime = new Slime(50, 10, 32, 1,gameLoop); // Créer un nouveau slime
-        slimes.add(slime); // Ajouter le slime à la liste
-        vueEnnemis.créeSprite(slime);
+    public void genererEnnemis( Timeline gameLoop, GenerateurEnnemis spawner){
+        Slime slime = new Slime(5, 10, 32, 1,gameLoop,spawner); // Créer un nouveau slime
+        listeEntite.add(slime); // Ajouter le slime à la liste
         slime.setPosYProperty(slime.getPosY() + 50);
         slime.setPosXProperty(slime.getPosX() + 300);
 
+    }
 
-
-
+    public ObservableList<Entité> getListeEntite(){
+        return listeEntite;
     }
 
 }

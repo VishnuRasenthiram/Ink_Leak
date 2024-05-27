@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -9,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
@@ -45,7 +48,7 @@ public class MapController implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        this.joueur = new Joueur("LePlayer", 6, 1, 32, 1);
+        this.joueur = new Joueur("LePlayer", 6, 1, 32, 1,spawner);
         ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
         joueur.orientationProperty().addListener((obs,old,nouv)->{
@@ -59,7 +62,8 @@ public class MapController implements Initializable {
             p.getChildren().add(imageview);
 
         });
-
+        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
+        spawner.getListeEntite().addListener(ecouteur);
         ink.créeSpriteVie(joueur);
 
     }
@@ -72,37 +76,7 @@ public class MapController implements Initializable {
     protected void stop() {
         joueur.stop(mainPane);
     }
-/*
-    private void attaquer() {
-        Pane Attaque=new Pane();
-        ImageView imageview= new ImageView();
-        imageview.setFitHeight(32);
-        imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
-        Attaque.getChildren().add(imageview);
-        mainPane.getChildren().add(Attaque);
-        if (joueur.getOrientationProperty() == "N") {
-            Attaque.setTranslateX(joueur.getPosX());
-            Attaque.setTranslateY(joueur.getPosY() - 32);
-        }
-        else if (joueur.getOrientationProperty() == "S") {
-            Attaque.setTranslateX(joueur.getPosX());
-            Attaque.setTranslateY(joueur.getPosY() + 32);
-        }
-        else if (joueur.getOrientationProperty() == "E") {
-            Attaque.setTranslateX(joueur.getPosX() + 32);
-            Attaque.setTranslateY(joueur.getPosY());
-        }
-        else {
-            Attaque.setTranslateX(joueur.getPosX() - 32);
-            Attaque.setTranslateY(joueur.getPosY());
-        }
-        Timeline attaqueVisible = new Timeline(
-                new KeyFrame(Duration.millis(200), ev -> mainPane.getChildren().remove(Attaque))
-        );
-        attaqueVisible.play();
-    }
-*/
+
     private void gameLoop() {
         gameLoop = new Timeline();
         temps=0;
@@ -111,10 +85,7 @@ public class MapController implements Initializable {
 
 
         KeyFrame kf = new KeyFrame(
-                // on définit le FPS (nbre de frame par seconde)
                 Duration.millis(60),
-                // on définit ce qui se passe à chaque frame
-                // c'est un eventHandler d'ou le lambda
                 (ev -> {
                     if (temps % 5 == 0) {
                         double x = joueur.getPosX();
@@ -125,7 +96,7 @@ public class MapController implements Initializable {
                             System.out.println("fini");
                             gameLoop.stop();
                         } else if (temps % 500 == 0) {
-                            spawner.genererEnnemis(mainPane,gameLoop);
+                            spawner.genererEnnemis(gameLoop,spawner);
 
                         } else if (temps % 2 == 0) {
                             spawner.ActiverMob(mainPane);

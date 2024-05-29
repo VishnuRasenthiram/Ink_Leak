@@ -15,14 +15,13 @@ public class Slime extends Entité{
     int temps;
     public Slime(int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop, GenerateurEnnemis spawner){
 
-        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,200,spawner);
+        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,200,spawner, false);
         cpt++;
         this.gameLoop=gameLoop;
     }
 
     @Override
     public void attaque(Pane mainPane) {
-
     }
 
     @Override

@@ -1,8 +1,12 @@
 package universite_paris8.iut.ink_leak.Vue;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Controller.VieObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
@@ -28,7 +32,17 @@ public class VueJoueur extends VueEntite{
         entité.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
         Joueur.translateXProperty().bind(entité.posXProperty());
         Joueur.translateYProperty().bind(entité.posYProperty());
-
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(Joueur.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(Joueur.opacityProperty(), 0.1)),
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(Joueur.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(0.3), new KeyValue(Joueur.opacityProperty(), 0.1)),
+                new KeyFrame(Duration.seconds(0.4), new KeyValue(Joueur.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(Joueur.opacityProperty(), 0.1)),
+                new KeyFrame(Duration.seconds(0.6), new KeyValue(Joueur.opacityProperty(), 1.0))
+        );
+        timeline.setCycleCount(2);
+        timeline.play();
         super.getMainPane().getChildren().add(Joueur);
     }
 

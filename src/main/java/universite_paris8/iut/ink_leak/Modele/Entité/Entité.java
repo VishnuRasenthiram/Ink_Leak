@@ -20,11 +20,12 @@ public abstract class Entité {
     protected int vitesse_entite;
     protected long invincibilite;
     protected long dernier_degat;
+    protected boolean enAttaque;
     protected DoubleProperty posXProperty;
     protected DoubleProperty posYProperty;
     private GenerateurEnnemis spawner;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite,int taille_entite, int vitesse_entite, long invincibilite,GenerateurEnnemis spawner) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite,int taille_entite, int vitesse_entite, long invincibilite,GenerateurEnnemis spawner, boolean enAttaque) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -36,6 +37,7 @@ public abstract class Entité {
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
         this.spawner = spawner;
+        this.enAttaque = false;
 
 
     }
@@ -198,5 +200,11 @@ public abstract class Entité {
 
     public GenerateurEnnemis getSpawner(){
         return spawner;
+    }
+    public boolean setAttaque(boolean attaque) {
+        return this.enAttaque = attaque;
+    }
+    public  boolean getAttaque() {
+        return enAttaque;
     }
 }

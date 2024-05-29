@@ -16,7 +16,7 @@ public class Joueur extends Entité{
 
 
         public Joueur(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, GenerateurEnnemis spawner) {
-            super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,1000,spawner);
+            super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,1000,spawner, false);
             this.taille_joueur = taille_joueur;
 
             this.dernier_degat = -invincibilite;

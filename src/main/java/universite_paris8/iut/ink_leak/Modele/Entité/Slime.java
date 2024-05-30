@@ -2,23 +2,26 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Slime extends Entité{
-    private Timeline gameLoop;
     public static int cpt=0;
+    private static ScheduledExecutorService executorService;
 
-    int temps;
-    public Slime(int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, Timeline gameLoop, Map map, GenerateurEnnemis spawner){
+    public Slime(  GenerateurEnnemis spawner,Map map){
 
-        super("S"+cpt, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,200,map,spawner);
+        super("S"+cpt, 5, 1,1, 1,200,map,spawner);
         cpt++;
-        this.gameLoop=gameLoop;
+
     }
 
 
@@ -30,59 +33,45 @@ public class Slime extends Entité{
 
     @Override
     public void déplacement(int déplacementDirection) {
-        gameLoop.getKeyFrames().removeAll();
-        KeyFrame kf;
-        int random = new Random().nextInt(4);
-        double x = super.getPosX();
-        double y = super.getPosY();
-        double ms=0.01;
-        
-        if (random == 0) {
-             kf = new KeyFrame(
-                    Duration.millis(ms),
-                    (ev ->{
-                        if(super.peutAller(x,super.getPosY() - 1,super.getMap())) {
-                            super.setPosYProperty(super.getPosY() - 1);
-                        }
-                    })
-            );
+        try {
+            if (executorService != null) return;
+
+            executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(() -> {
+                Platform.runLater(() -> {
+                    int random = new Random().nextInt(4);
+                    double x = super.getPosX();
+                    double y = super.getPosY();
+
+
+                    if (random == 0) {
+                                    if(super.peutAller(x,y - 1,super.getMap())) {
+                                        super.setPosYProperty(y - 1);
+                                    }
+                    }
+                    else if (random == 1) {
+                                    if(super.peutAller(x,y + 1,super.getMap())) {
+                                        super.setPosYProperty(y + 1);
+                                    }
+                    }
+                    else if (random == 2) {
+
+                                    if(super.peutAller(x - 1,y,super.getMap())) {
+                                        super.setPosXProperty(x - 1);
+                                    }
+                    }
+                    else {
+                                    if(super.peutAller(x + 1,y,super.getMap())) {
+                                        super.setPosXProperty(x + 1);
+                                    }
+                    }
+
+                });
+            }, 0, 100, TimeUnit.MILLISECONDS); // un delay entre les mouvements
+            ;
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
-        else if (random == 1) {
-
-             kf = new KeyFrame(
-                    Duration.millis(ms),
-                    (ev ->{
-                        if(super.peutAller(x,super.getPosY() + 1,super.getMap())) {
-                            super.setPosYProperty(super.getPosY() + 1);
-                        }
-                    })
-            );
-        }
-        else if (random == 2) {
-
-             kf = new KeyFrame(
-                    Duration.millis(ms),
-                    (ev ->{
-                        if(super.peutAller(super.getPosX() - 1,y,super.getMap())) {
-                            super.setPosXProperty(super.getPosX() - 1);
-                        }
-                    })
-            );
-        }
-        else {
-
-             kf = new KeyFrame(
-                    Duration.millis(ms),
-                    (ev ->{
-                        if(super.peutAller(super.getPosX() + 1,y,super.getMap())) {
-                            super.setPosXProperty(super.getPosX() + 1);
-                        }
-                    })
-            );
-        }
-
-        gameLoop.getKeyFrames().add(kf);
-
     }
 
 

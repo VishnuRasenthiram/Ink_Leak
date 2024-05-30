@@ -43,8 +43,6 @@ public abstract class Entité {
         }
         else {
 
-
-
             int mur=1;
             int solDegat=2;
             if(verifCaseSurCoord(mur,x,y)){
@@ -80,9 +78,9 @@ public abstract class Entité {
 
         return (x>0 && y>0)
                 &&
-               (x<(map.getMap().length*32)-this.taille_entite
+               (x<(map.getMap().length*32)-32
                 &&
-                y<(map.getMap().length*32)-this.taille_entite);
+                y<(map.getMap().length*32)-32);
     }
 
 

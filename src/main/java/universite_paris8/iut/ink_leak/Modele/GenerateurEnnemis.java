@@ -1,14 +1,9 @@
 package universite_paris8.iut.ink_leak.Modele;
-
-import javafx.animation.Timeline;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
-import universite_paris8.iut.ink_leak.Vue.VueEnnemis;
-import java.util.ArrayList;
-import static java.lang.Thread.sleep;
+
 
 public class GenerateurEnnemis {
 
@@ -24,8 +19,8 @@ public class GenerateurEnnemis {
       }
     }
 
-    public void genererEnnemis( Timeline gameLoop, GenerateurEnnemis spawner, Map map){
-        Slime slime = new Slime(5, 10, 32, 1,gameLoop,map,spawner); // Créer un nouveau slime
+    public void genererEnnemis( GenerateurEnnemis spawner, Map map){
+        Slime slime = new Slime(spawner,map); // Créer un nouveau slime
         listeEntite.add(slime); // Ajouter le slime à la liste
         slime.setPosYProperty(slime.getPosY() + 50);
         slime.setPosXProperty(slime.getPosX() + 300);

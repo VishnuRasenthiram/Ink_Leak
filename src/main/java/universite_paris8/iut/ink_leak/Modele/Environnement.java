@@ -1,24 +1,29 @@
 package universite_paris8.iut.ink_leak.Modele;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.input.KeyEvent;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 
 public class Environnement {
 
+    private Joueur joueur;
     private GenerateurEnnemis liste_entites;
+    private Map map;
 
-    public Environnement() { this.liste_entites = new GenerateurEnnemis(); }
-
-    public void ajouterEntite(Entité nv_entite) {
-        liste_entites.getListeEntite().add(nv_entite);
+    public Environnement(Joueur joueur, Map map, GenerateurEnnemis spawner) {
+        this.joueur = joueur;
+        this.liste_entites = spawner;
+        this.map = map;
     }
 
-    public void activerEntites() { liste_entites.ActiverMob(); }
+    public void action(int temps) {
 
-    public void genererEnnemi() { System.out.println("ennemi généré woooo~~~"); }
+        if (temps % 5 == 0) {
+            double x = this.joueur.getPosX();
+            double y = this.joueur.getPosY();
+            joueur.peutAller(x, y, this.map);
+        }
+        if (temps % 500 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
+        if (temps % 2 == 0) { liste_entites.ActiverMob(); }
 
-    public final ObservableList<Entité> getListe_entites() { return liste_entites.getListeEntite(); }
+    }
 
 }

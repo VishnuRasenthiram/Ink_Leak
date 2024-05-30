@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
@@ -27,6 +28,7 @@ public class Controller implements Initializable {
     private Timeline gameLoop;
     private int temps;
     private Map map;
+    public Environnement env;
     @FXML
     private TilePane tuileMap;
     private Joueur joueur;
@@ -64,6 +66,7 @@ public class Controller implements Initializable {
 
         });
         ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
+        env = new Environnement(joueur, map, spawner);
         spawner.getListeEntite().addListener(ecouteur);
         ink.créeSpriteVie(joueur);
 
@@ -102,29 +105,10 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-
-
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
-                    if (temps % 5 == 0) {
-                        double x = joueur.getPosX();
-                        double y = joueur.getPosY();
-                        joueur.peutAller(x,y,map);
-
-                        if (temps == 10000) {
-                            System.out.println("fini");
-                            gameLoop.stop();
-                        } else if (temps % 500 == 0) {
-                            spawner.genererEnnemis(spawner,map);
-
-                        } else if (temps % 2 == 0) {
-                            spawner.ActiverMob();
-
-
-                        }
-
-                    }
+                    env.action(temps);
                     temps++;
 
                 })

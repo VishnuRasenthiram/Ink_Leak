@@ -32,7 +32,7 @@ public class Slime extends Entité{
     }
 
     @Override
-    public void déplacement(int déplacementDirection) {
+    public void déplacement(String déplacementDirection) {
         try {
             if (executorService != null) return;
 

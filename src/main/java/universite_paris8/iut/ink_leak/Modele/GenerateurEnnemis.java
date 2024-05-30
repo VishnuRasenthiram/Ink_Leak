@@ -15,7 +15,7 @@ public class GenerateurEnnemis {
 
     public void ActiverMob(){
       for (Entité mob : listeEntite) {
-         mob.déplacement(0);
+         mob.déplacement("E");
       }
     }
 

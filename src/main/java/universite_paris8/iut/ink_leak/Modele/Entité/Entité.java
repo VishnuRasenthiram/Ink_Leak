@@ -32,7 +32,6 @@ public abstract class Entité {
         this.map = map;
         this.spawner = spawner;
 
-
     }
 
 
@@ -85,7 +84,7 @@ public abstract class Entité {
 
 
     public abstract void attaque(Entité entitéAttaqué);
-    public abstract void déplacement(int déplacementDirection);
+    public abstract void déplacement(String déplacementDirection);
 
     public boolean enContact(double coordAttaqueX,double coordAttaqueY, Entité entité2) {
         int coord_Sprite_GaucheX_Ent1 =coordEnIndiceGauche_Haut(coordAttaqueX);

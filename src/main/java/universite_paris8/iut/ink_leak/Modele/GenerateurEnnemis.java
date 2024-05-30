@@ -29,7 +29,6 @@ public class GenerateurEnnemis {
         listeEntite.add(slime); // Ajouter le slime à la liste
         slime.setPosYProperty(slime.getPosY() + 50);
         slime.setPosXProperty(slime.getPosX() + 300);
-
     }
 
     public ObservableList<Entité> getListeEntite(){

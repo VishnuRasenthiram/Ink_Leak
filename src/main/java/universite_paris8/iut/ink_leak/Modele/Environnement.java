@@ -7,23 +7,18 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 
 public class Environnement {
 
-    private ObservableList<Entité> liste_entites;
-    private Map map;
+    private GenerateurEnnemis liste_entites;
 
+    public Environnement() { this.liste_entites = new GenerateurEnnemis(); }
 
-    public Environnement(Map map) {
-        liste_entites = FXCollections.observableArrayList();
-        this.map = map;
+    public void ajouterEntite(Entité nv_entite) {
+        liste_entites.getListeEntite().add(nv_entite);
     }
 
-    public void ajouterEntite(Entité nv_entite) { liste_entites.add(nv_entite); }
-
-    public void activerEntites(KeyEvent e) {
-        for (Entité ennemi : liste_entites) { System.out.println("deplacement"); }
-    }
+    public void activerEntites() { liste_entites.ActiverMob(); }
 
     public void genererEnnemi() { System.out.println("ennemi généré woooo~~~"); }
 
-    public final ObservableList<Entité> getListe_entites() { return liste_entites; }
+    public final ObservableList<Entité> getListe_entites() { return liste_entites.getListeEntite(); }
 
 }

@@ -25,7 +25,7 @@ public class VueJoueur extends VueEntite{
         imageview.setFitWidth(32);
         imageview.setImage(new Image(orientationToFile(entité.getOrientationProperty()).toURI().toString()));
         Joueur.getChildren().add(imageview);
-        entité.setPosXProperty(Joueur.localToScene(Joueur.getBoundsInLocal()).getMinX());
+
         Joueur.translateXProperty().bind(entité.posXProperty());
         Joueur.translateYProperty().bind(entité.posYProperty());
 

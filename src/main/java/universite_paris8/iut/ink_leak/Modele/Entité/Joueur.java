@@ -17,8 +17,11 @@ public class Joueur extends Entité{
 
         }
 
+
+
     @Override
     public void attaque(Entité entitéAttaqué) {
+
         if(entitéAttaqué!=null){
             entitéAttaqué.prendre_degat(1);
         }
@@ -28,7 +31,7 @@ public class Joueur extends Entité{
 
 
     @Override
-    public void déplacement(int déplacementDirection) {
+    public void déplacement(String déplacementDirection) {
         try {
             int vitesse_joueur = super.getVitesse_entite();
 
@@ -41,27 +44,27 @@ public class Joueur extends Entité{
                         double y = super.getPosY();
 
                         switch (déplacementDirection) { // 0=Z 1=S 2=Q 3=D
-                            case 0:
+                            case "N":
                                 if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
                                     super.setPosYProperty(super.getPosY() - vitesse_joueur);
                                     super.setOrientationProperty("N");
                                 }
                                 break;
 
-                            case 1:
+                            case "S":
                                 if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
                                     super.setPosYProperty(super.getPosY() + vitesse_joueur);
                                     super.setOrientationProperty("S");
                                 }
                                 break;
 
-                            case 2:
+                            case "O":
                                 if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
                                     super.setPosXProperty(super.getPosX() - vitesse_joueur);
                                     super.setOrientationProperty("O");
                                 }
                                 break;
-                            case 3:
+                            case "E":
                                 if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
                                     super.setPosXProperty(super.getPosX() + vitesse_joueur);
                                     super.setOrientationProperty("E");

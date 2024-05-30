@@ -116,7 +116,7 @@ public class Controller implements Initializable {
                             System.out.println("fini");
                             gameLoop.stop();
                         } else if (temps % 500 == 0) {
-                            spawner.genererEnnemis(gameLoop,spawner,map);
+                            spawner.genererEnnemis(spawner,map);
 
                         } else if (temps % 2 == 0) {
                             spawner.ActiverMob();

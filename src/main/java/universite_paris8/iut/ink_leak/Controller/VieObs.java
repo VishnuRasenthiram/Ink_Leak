@@ -14,7 +14,6 @@ public class VieObs implements ChangeListener<Number> {
 
     public VieObs(ImageView image, Entité entité) {
 
-
         this.joueur = entité;
         this.imageView = image;
 

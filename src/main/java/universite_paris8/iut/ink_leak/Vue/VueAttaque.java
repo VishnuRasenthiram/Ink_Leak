@@ -23,7 +23,7 @@ public class VueAttaque {
     }
 
     public Entité afficheAttaque(Joueur joueur) {
-        Entité toucheEnnemi = null;
+        Entité ennemiTouché = null;
         Pane attaquePane=new Pane();
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
@@ -33,16 +33,16 @@ public class VueAttaque {
 
         attaquePane.setId("attaque");
         mainPane.getChildren().add(attaquePane);
-        if (joueur.getOrientationProperty() == "N") {
+        if (joueur.getOrientationProperty().equals( "N")) {
             attaquePane.setTranslateX(joueur.getPosX());
             attaquePane.setTranslateY(joueur.getPosY() - 32);
 
         }
-        else if (joueur.getOrientationProperty() == "S") {
+        else if (joueur.getOrientationProperty().equals( "S")) {
             attaquePane.setTranslateX(joueur.getPosX());
             attaquePane.setTranslateY(joueur.getPosY() + 32);
         }
-        else if (joueur.getOrientationProperty() == "E") {
+        else if (joueur.getOrientationProperty().equals( "E")) {
             attaquePane.setTranslateX(joueur.getPosX() + 32);
             attaquePane.setTranslateY(joueur.getPosY());
         }
@@ -53,9 +53,9 @@ public class VueAttaque {
 
         for(Entité sl:spawner.getListeEntite()){
 
-            Pane slime = (Pane) mainPane.lookup("#"+sl.getNom_entite());
-            if(joueur.enContact(attaquePane,slime)) {
-                toucheEnnemi=sl;
+
+            if(joueur.enContact(attaquePane.getTranslateX(),attaquePane.getTranslateY(),sl)) {
+                ennemiTouché=sl;
             }
         }
 
@@ -64,6 +64,6 @@ public class VueAttaque {
         );
         attaqueVisible.play();
 
-        return  toucheEnnemi;
+        return  ennemiTouché;
     }
 }

@@ -1,30 +1,24 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.*;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.ink_leak.Controller.VieObs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Entité {
-    protected int taille_entite;
-
-    protected String nom_entite;
-    protected IntegerProperty vie_entiteProperty;
+    private int taille_entite;
+    private String nom_entite;
+    private IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
-    protected int attaque_entite;
-    protected int vitesse_entite;
-    protected long invincibilite;
-    protected long dernier_degat;
-    protected DoubleProperty posXProperty;
-    protected DoubleProperty posYProperty;
+    private int attaque_entite;
+    private int vitesse_entite;
+    private long invincibilite;
+    private long dernier_degat;
+    private DoubleProperty posXProperty;
+    private DoubleProperty posYProperty;
+    private Map map;
     private GenerateurEnnemis spawner;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite,int taille_entite, int vitesse_entite, long invincibilite,GenerateurEnnemis spawner) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite,int taille_entite, int vitesse_entite, long invincibilite,Map map,GenerateurEnnemis spawner) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -35,71 +29,84 @@ public abstract class Entité {
         this.orientationProperty = new SimpleStringProperty("S");
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
+        this.map = map;
         this.spawner = spawner;
 
 
     }
 
 
-    public boolean peutAller(double x, double y, Pane mainPane) {
-        double rayon = this.taille_entite;
-        TilePane tuileMap = (TilePane) mainPane.lookup("#tuileMap");
+    public boolean peutAller(double x, double y, Map map) {
 
-        if (estDansMap(x, y, mainPane)) {
+        if (!estDansMap(x, y,  map)) {
             return false;
         }
-        for (Node tuile : tuileMap.getChildren()) {
-            Bounds délimitationDansParent = tuile.localToParent(tuile.getBoundsInLocal());
-            double xToutaGauche = délimitationDansParent.getMinX();
-            double yToutenBas = délimitationDansParent.getMinY();
-            double largeur = délimitationDansParent.getWidth();
-            double hauteur = délimitationDansParent.getHeight();
+        else {
 
-            boolean entite_sur_case = x + rayon >= xToutaGauche && x - rayon <= xToutaGauche + largeur - this.taille_entite && y + rayon >= yToutenBas && y - rayon <= yToutenBas + hauteur - this.taille_entite;
 
-            if (tuile.getId().equals("rouge")) {
 
-                if (entite_sur_case) {
-
-                    return false;
-                }
+            int mur=1;
+            int solDegat=2;
+            if(verifCaseSurCoord(mur,x,y)){
+                return false;
             }
 
-            if (tuile.getId().equals("bleue")) {
-
-                if (entite_sur_case) {
-                    this.prendre_degat(1);
-                }
+            if(verifCaseSurCoord(solDegat,x,y)){
+                this.prendre_degat(1);
             }
-
-
         }
 
         return true;
     }
-    private boolean estDansMap(double x, double y, Pane mainPane) {
-        TilePane tuileMap = (TilePane) mainPane.lookup("#tuileMap");
-        Bounds délimitationDansParent = tuileMap.localToParent(tuileMap.getBoundsInLocal());
+    private boolean verifCaseSurCoord(int cases, double x, double y) {
+        int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
+        int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
+        int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
+        int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
-        double rayon = this.taille_entite;
+        return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
+                map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
+                map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||
+                map.getMap(coord_Mur_DroitX,coord_Mur_BasY)==cases;
+    }
 
-        double xToutaGauche = délimitationDansParent.getMinX();
-        double yToutenBas = délimitationDansParent.getMinY();
-        double largeur = délimitationDansParent.getWidth();
-        double hauteur = délimitationDansParent.getHeight();
+    private int coordEnIndiceGauche_Haut(double coord){
+        return (int)Math.floor(coord)/32;
+    }
+    private int coordEnIndiceDroit_Bas(double coord){
+        return (int)Math.floor(coord+32)/32;
+    }
+    private boolean estDansMap(double x, double y, Map map) {
 
-        if (x - rayon >= xToutaGauche - this.taille_entite && x + rayon <= xToutaGauche + largeur && y - rayon >= yToutenBas - this.taille_entite && y + rayon <= yToutenBas + hauteur) {
-
-            return false;
-        }
-        return true;
+        return (x>0 && y>0)
+                &&
+               (x<(map.getMap().length*32)-this.taille_entite
+                &&
+                y<(map.getMap().length*32)-this.taille_entite);
     }
 
 
-    public abstract void attaque(Pane mainPane);
-    public abstract void déplacement(Pane mainPane);
+    public abstract void attaque(Entité entitéAttaqué);
+    public abstract void déplacement(int déplacementDirection);
 
-    public boolean enContact(Pane pane1, Pane pane2) { return pane1.getBoundsInParent().intersects(pane2.getBoundsInParent()); }
+    public boolean enContact(double coordAttaqueX,double coordAttaqueY, Entité entité2) {
+        int coord_Sprite_GaucheX_Ent1 =coordEnIndiceGauche_Haut(coordAttaqueX);
+        int coord_Sprite_DroitX_Ent1 =coordEnIndiceDroit_Bas(coordAttaqueX);
+        int coord_Sprite_HautY_Ent1 =coordEnIndiceGauche_Haut(coordAttaqueY);
+        int coord_Sprite_BasY_Ent1 =coordEnIndiceDroit_Bas(coordAttaqueY);
+
+        int coord_Sprite_GaucheX_Ent2 =coordEnIndiceGauche_Haut(entité2.getPosX());
+        int coord_Sprite_DroitX_Ent2 =coordEnIndiceDroit_Bas(entité2.getPosX());
+        int coord_Sprite_HautY_Ent2 =coordEnIndiceGauche_Haut(entité2.getPosY());
+        int coord_Sprite_BasY_Ent2 =coordEnIndiceDroit_Bas(entité2.getPosY());
+
+        if(coord_Sprite_GaucheX_Ent1==coord_Sprite_GaucheX_Ent2 || coord_Sprite_DroitX_Ent1==coord_Sprite_DroitX_Ent2 || coord_Sprite_BasY_Ent1==coord_Sprite_BasY_Ent2 || coord_Sprite_HautY_Ent1==coord_Sprite_HautY_Ent2){
+            return true;
+
+        }
+
+        return false;
+    }
 
     public void prendre_degat(int degat){
 
@@ -198,5 +205,9 @@ public abstract class Entité {
 
     public GenerateurEnnemis getSpawner(){
         return spawner;
+    }
+
+    public Map getMap(){
+        return map;
     }
 }

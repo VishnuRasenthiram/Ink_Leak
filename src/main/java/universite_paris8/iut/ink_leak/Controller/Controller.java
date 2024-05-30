@@ -6,29 +6,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Vue.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.ScheduledExecutorService;
 
-public class MapController implements Initializable {
+public class Controller implements Initializable {
 
     private Timeline gameLoop;
     private int temps;
     private Map map;
     @FXML
     private TilePane tuileMap;
-    public Joueur joueur;
+    private Joueur joueur;
     @FXML
     public BorderPane mainBorderPane;
     @FXML
@@ -48,7 +48,7 @@ public class MapController implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        this.joueur = new Joueur("LePlayer", 6, 1, 32, 1,spawner);
+        this.joueur = new Joueur("LePlayer",map,spawner);
         ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
         joueur.orientationProperty().addListener((obs,old,nouv)->{
@@ -70,11 +70,30 @@ public class MapController implements Initializable {
 
     @FXML
     public void action() {
-        joueur.déplacement(mainPane);
+        VueAttaque vA= new VueAttaque(mainPane,spawner);
+        mainPane.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.Z){
+                joueur.déplacement(0);
+            } else if (e.getCode() == KeyCode.S) {
+                joueur.déplacement(1);
+
+            } else if (e.getCode() == KeyCode.Q) {
+                joueur.déplacement(2);
+
+            } else if (e.getCode() == KeyCode.D) {
+                joueur.déplacement(3);
+
+            }
+
+            if(e.getCode()==KeyCode.J){
+
+                joueur.attaque(vA.afficheAttaque(joueur));
+            }
+        });
     }
     @FXML
     protected void stop() {
-        joueur.stop(mainPane);
+        joueur.stop();
     }
 
     private void gameLoop() {
@@ -90,16 +109,16 @@ public class MapController implements Initializable {
                     if (temps % 5 == 0) {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        joueur.peutAller(x, y, mainPane);
+                        joueur.peutAller(x,y,map);
 
                         if (temps == 10000) {
                             System.out.println("fini");
                             gameLoop.stop();
                         } else if (temps % 500 == 0) {
-                            spawner.genererEnnemis(gameLoop,spawner);
+                            spawner.genererEnnemis(gameLoop,spawner,map);
 
                         } else if (temps % 2 == 0) {
-                            spawner.ActiverMob(mainPane);
+                            spawner.ActiverMob();
 
 
                         }

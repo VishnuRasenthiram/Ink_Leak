@@ -28,7 +28,7 @@ public class VueAttaque {
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/hitbox/hitbox_3.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
         attaquePane.getChildren().add(imageview);
 
         attaquePane.setId("attaque");

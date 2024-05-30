@@ -9,14 +9,11 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 import java.io.File;
 
 public class VueJoueur extends VueEntite{
-    @FXML
-    private Pane mainPane;
-    @FXML
     private Pane interfacePane;
+
     public VueJoueur(Pane mainPane, Pane interfacePane){
         super(mainPane);
         this.interfacePane = interfacePane;
-
     }
 
     @Override
@@ -34,6 +31,8 @@ public class VueJoueur extends VueEntite{
 
         super.getMainPane().getChildren().add(Joueur);
     }
+
+
 
     public void créeSpriteVie(Joueur joueur) {
 

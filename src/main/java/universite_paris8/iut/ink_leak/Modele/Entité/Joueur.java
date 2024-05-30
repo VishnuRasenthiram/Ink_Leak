@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Vue.VueAttaque;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 public class Joueur extends Entité{
         private static ScheduledExecutorService executorService;
         private int taille_joueur;
-
 
         public Joueur(String nom_joueur, int vie_joueur, int attaque_joueur, int taille_joueur, int vitesse_joueur, GenerateurEnnemis spawner) {
             super(nom_joueur, vie_joueur, attaque_joueur,taille_joueur, vitesse_joueur,1000,spawner);

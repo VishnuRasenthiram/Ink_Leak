@@ -17,7 +17,7 @@ public class VueMap {
     public void initMap(Map env){
         for (int i = 0; i < env.getMap().length; i++) {
             for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(i,j));
+                creerTuile(env.getMap(j,i));
             }
         }
     }

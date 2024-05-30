@@ -4,13 +4,10 @@ import javafx.animation.Timeline;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
 import universite_paris8.iut.ink_leak.Vue.VueEnnemis;
-
 import java.util.ArrayList;
-
 import static java.lang.Thread.sleep;
 
 public class GenerateurEnnemis {
@@ -21,14 +18,14 @@ public class GenerateurEnnemis {
 
     }
 
-    public void ActiverMob(Pane mainPane){
+    public void ActiverMob(){
       for (Entité mob : listeEntite) {
-          mob.déplacement(mainPane);
+         mob.déplacement(0);
       }
     }
 
-    public void genererEnnemis( Timeline gameLoop, GenerateurEnnemis spawner){
-        Slime slime = new Slime(5, 10, 32, 1,gameLoop,spawner); // Créer un nouveau slime
+    public void genererEnnemis( Timeline gameLoop, GenerateurEnnemis spawner, Map map){
+        Slime slime = new Slime(5, 10, 32, 1,gameLoop,map,spawner); // Créer un nouveau slime
         listeEntite.add(slime); // Ajouter le slime à la liste
         slime.setPosYProperty(slime.getPosY() + 50);
         slime.setPosXProperty(slime.getPosX() + 300);

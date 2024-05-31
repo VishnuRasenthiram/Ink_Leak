@@ -1,11 +1,9 @@
 package universite_paris8.iut.ink_leak.Controller;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -14,12 +12,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
-import universite_paris8.iut.ink_leak.Vue.*;
-
+import universite_paris8.iut.ink_leak.Vue.VueAttaque;
+import universite_paris8.iut.ink_leak.Vue.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueMap;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,10 +26,6 @@ public class Controller implements Initializable {
     private Timeline gameLoop;
     private int temps;
     private Map map;
-    private Environnement env;
-    @FXML
-    private Label txt;
-    private VueTexte vT;
     @FXML
     private TilePane tuileMap;
     private Joueur joueur;
@@ -69,13 +63,8 @@ public class Controller implements Initializable {
 
         });
         ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
-        env = new Environnement(joueur, map, spawner);
-        vT = new VueTexte(env, txt, mainPane);
-        mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
         spawner.getListeEntite().addListener(ecouteur);
         ink.créeSpriteVie(joueur);
-        Musique musique = new Musique();
-        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav", -1);
 
     }
 
@@ -112,12 +101,30 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+
+
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
-                    env.action(temps);
+                    if (temps % 5 == 0) {
+                        double x = joueur.getPosX();
+                        double y = joueur.getPosY();
+                        joueur.peutAller(x,y,map);
+
+                        if (temps == 10000) {
+                            System.out.println("fini");
+                            gameLoop.stop();
+                        } else if (temps % 500 == 0) {
+                            spawner.genererEnnemis(spawner,map);
+
+                        } else if(temps %5==0) {
+                            spawner.ActiverMob();
+
+
+                        }
+
+                    }
                     temps++;
-                    vT.afficherTexte();
 
                 })
         );

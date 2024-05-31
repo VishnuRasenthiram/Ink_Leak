@@ -15,7 +15,7 @@ public class Slime extends Entité{
 
     public Slime(  GenerateurEnnemis spawner,Map map){
 
-        super("S"+cpt, 5, 1,1, 5,200,map,spawner);
+        super("S"+cpt, 5, 1,1, 1,200,map,spawner);
         cpt++;
 
     }
@@ -28,7 +28,7 @@ public class Slime extends Entité{
     }
 
     @Override
-    public void déplacement(int déplacementDirection) {
+    public void déplacement(String déplacementDirection) {
 
                     int random = new Random().nextInt(7);
                     double x = super.getPosX();

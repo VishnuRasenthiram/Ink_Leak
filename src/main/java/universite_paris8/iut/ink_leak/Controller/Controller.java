@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.Entité.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
@@ -73,21 +74,23 @@ public class Controller implements Initializable {
         VueAttaque vA= new VueAttaque(mainPane,spawner);
         mainPane.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.Z){
-                joueur.déplacement(0);
+                joueur.déplacement("N");
             } else if (e.getCode() == KeyCode.S) {
-                joueur.déplacement(1);
+                joueur.déplacement("S");
 
             } else if (e.getCode() == KeyCode.Q) {
-                joueur.déplacement(2);
+                joueur.déplacement("O");
 
             } else if (e.getCode() == KeyCode.D) {
-                joueur.déplacement(3);
+                joueur.déplacement("E");
 
             }
 
             if(e.getCode()==KeyCode.J){
+                Bulle bulle = new Bulle( map, spawner, joueur);
+                joueur.attaque(vA.afficheAttaque(joueur, bulle));
+                bulle.déplacement(joueur.getOrientationProperty());
 
-                joueur.attaque(vA.afficheAttaque(joueur));
             }
         });
     }

@@ -16,6 +16,9 @@ public class GenerateurEnnemis {
     }
 
     public void ActiverMob(){
+      for (Entité mob : listeEntite) {
+         mob.déplacement("E");
+      }
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {

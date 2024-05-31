@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Slime;
 
+import java.util.ArrayList;
+
 
 public class GenerateurEnnemis {
 
@@ -14,9 +16,19 @@ public class GenerateurEnnemis {
     }
 
     public void ActiverMob(){
-      for (Entité mob : listeEntite) {
-         mob.déplacement(0);
-      }
+        ArrayList<Entité> listeMort= new ArrayList<>();
+        if(!listeEntite.isEmpty()) {
+            for (Entité mob : listeEntite) {
+                mob.déplacement(0);
+                if(mob.getVie()==0){
+                    listeMort.add(mob);
+                }
+            }
+
+            for (Entité mobMort: listeMort) {
+                listeEntite.remove(mobMort);
+            }
+        }
     }
 
     public void genererEnnemis( GenerateurEnnemis spawner, Map map){

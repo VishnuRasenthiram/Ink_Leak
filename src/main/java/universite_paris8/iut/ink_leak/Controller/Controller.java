@@ -117,7 +117,7 @@ public class Controller implements Initializable {
                         } else if (temps % 500 == 0) {
                             spawner.genererEnnemis(spawner,map);
 
-                        } else if (temps % 2 == 0) {
+                        } else if(temps %5==0) {
                             spawner.ActiverMob();
 
 

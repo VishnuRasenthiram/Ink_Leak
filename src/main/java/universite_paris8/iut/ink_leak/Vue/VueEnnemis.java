@@ -23,7 +23,7 @@ public class VueEnnemis extends VueEntite{
         imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Ennemies/Slime/Idles/slime_idle_r.png").toURI().toString()));
         ennemis.getChildren().add(imageview);
 
-        entité.setPosXProperty(ennemis.localToScene(ennemis.getBoundsInLocal()).getMinX());
+        
         ennemis.translateXProperty().bind(entité.posXProperty());
         ennemis.translateYProperty().bind(entité.posYProperty());
         super.getMainPane().getChildren().add(ennemis);

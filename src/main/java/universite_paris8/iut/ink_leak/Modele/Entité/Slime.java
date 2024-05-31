@@ -1,13 +1,9 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
 import javafx.application.Platform;
-import javafx.scene.input.KeyEvent;
-import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,7 +15,7 @@ public class Slime extends Entité{
 
     public Slime(  GenerateurEnnemis spawner,Map map){
 
-        super("S"+cpt, 5, 1,1, 1,200,map,spawner);
+        super("S"+cpt, 5, 1,1, 5,200,map,spawner);
         cpt++;
 
     }
@@ -33,45 +29,41 @@ public class Slime extends Entité{
 
     @Override
     public void déplacement(int déplacementDirection) {
-        try {
-            if (executorService != null) return;
 
-            executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(() -> {
-                Platform.runLater(() -> {
-                    int random = new Random().nextInt(4);
+                    int random = new Random().nextInt(7);
                     double x = super.getPosX();
                     double y = super.getPosY();
 
+                    switch (random) {
+                        case 0:
+                            if (super.peutAller(x, y - super.getVitesse_entite(), super.getMap())) {
+                                super.setPosYProperty(y - super.getVitesse_entite());
 
-                    if (random == 0) {
-                                    if(super.peutAller(x,y - 1,super.getMap())) {
-                                        super.setPosYProperty(y - 1);
-                                    }
-                    }
-                    else if (random == 1) {
-                                    if(super.peutAller(x,y + 1,super.getMap())) {
-                                        super.setPosYProperty(y + 1);
-                                    }
-                    }
-                    else if (random == 2) {
+                            }
+                            break;
+                        case 1:
+                            if (super.peutAller(x, y + super.getVitesse_entite(), super.getMap())) {
+                                super.setPosYProperty(y + super.getVitesse_entite());
 
-                                    if(super.peutAller(x - 1,y,super.getMap())) {
-                                        super.setPosXProperty(x - 1);
-                                    }
-                    }
-                    else {
-                                    if(super.peutAller(x + 1,y,super.getMap())) {
-                                        super.setPosXProperty(x + 1);
-                                    }
+                            }
+                            break;
+                        case 2:
+
+                            if (super.peutAller(x - super.getVitesse_entite(), y, super.getMap())) {
+                                super.setPosXProperty(x - super.getVitesse_entite());
+
+                            }
+                            break;
+                        case 3:
+                            if (super.peutAller(x + super.getVitesse_entite(), y, super.getMap())) {
+                                super.setPosXProperty(x + super.getVitesse_entite());
+                            }
+                            break;
+                        default:
+                            break;
+
                     }
 
-                });
-            }, 0, 100, TimeUnit.MILLISECONDS); // un delay entre les mouvements
-            ;
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
     }
 
 

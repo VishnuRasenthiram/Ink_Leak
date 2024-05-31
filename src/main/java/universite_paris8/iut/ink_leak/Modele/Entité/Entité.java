@@ -111,7 +111,6 @@ public abstract class Entité {
         if (this.getVie() - degat < 0) {
 
             this.setVie_entite(0);
-            this.spawner.getListeEntite().remove(this);
 
         }
         else if (System.currentTimeMillis() - dernier_degat > invincibilite) {

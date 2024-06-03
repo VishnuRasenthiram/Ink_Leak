@@ -55,6 +55,14 @@ public abstract class Entité {
 
         return true;
     }
+    public int verifierInteractionEnFace(double x, double y,Map map) {
+        if(verifCaseSurCoord(3,x,y)){
+            return 3;
+        } else if(verifCaseSurCoord(4,x,y)){
+            return 4;
+        }
+        return 0;
+    }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);

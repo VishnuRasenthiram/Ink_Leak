@@ -1,6 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele;
 
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 
 public class Environnement {
 
@@ -21,9 +21,12 @@ public class Environnement {
             double y = this.joueur.getPosY();
             joueur.peutAller(x, y, this.map);
         }
-        if (temps % 500 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
+        if (temps % 50 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
         if (temps % 2 == 0) { liste_entites.ActiverMob(); }
 
+    }
+    public void TuerToutLesEnnemis(){
+        liste_entites.TuerToutLesEnnemis();
     }
 
 }

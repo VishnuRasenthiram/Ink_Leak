@@ -10,12 +10,12 @@ import java.io.File;
 
 public class BulleObs implements ChangeListener<Number> {
 
-    private Entité Bulle;
+
     private VueAttaque vueAttaque;
 
-    public BulleObs(Entité entité, VueAttaque vA) {
+    public BulleObs( VueAttaque vA) {
 
-            this.Bulle = entité;
+
             this.vueAttaque = vA;
 
 

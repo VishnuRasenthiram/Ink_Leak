@@ -1,22 +1,39 @@
-package universite_paris8.iut.ink_leak.Modele.Entité;
+package universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Vue.VueAttaque;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Joueur extends Entité{
+public class Joueur extends Entité {
         private static ScheduledExecutorService executorService;
-
+        private ObservableList<Pouvoirs> listePouvoirs;
+        private IntegerProperty pouvoirEnCoursProperty;
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 1,1000,map,spawner);
-
+            this.listePouvoirs= FXCollections.observableArrayList();
+            this.pouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
 
+    public ObservableList<Pouvoirs> getListePouvoirs() {
+        return listePouvoirs;
+    }
 
+    public IntegerProperty getPouvoirEnCoursProperty() {return pouvoirEnCoursProperty;}
+
+    public Pouvoirs getPouvoirEnCours(){
+            return this.listePouvoirs.get(pouvoirEnCoursProperty.getValue());
+    }
 
     @Override
     public void attaque(Entité entitéAttaqué) {
@@ -24,6 +41,10 @@ public class Joueur extends Entité{
         if(entitéAttaqué!=null){
             entitéAttaqué.prendre_degat(1);
         }
+    }
+
+    public void attaqueAvecPouvoir(Entité entitéAttaqué, Pouvoirs pouvoir){
+
     }
 
 

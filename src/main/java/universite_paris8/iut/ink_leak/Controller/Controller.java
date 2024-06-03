@@ -11,11 +11,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
-import universite_paris8.iut.ink_leak.Modele.Entité.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -23,7 +24,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
+    private boolean tempsDeRechargeK;
+    private boolean tempsDeRechargeJ;
     private Timeline gameLoop;
     private int temps;
     private Map map;
@@ -39,7 +41,8 @@ public class Controller implements Initializable {
     private GenerateurEnnemis spawner;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        this.tempsDeRechargeJ =true;
+        this.tempsDeRechargeK =true;
         this.map= new Map();
         spawner= new GenerateurEnnemis();
         VueMap vueMap= new VueMap(tuileMap);
@@ -63,8 +66,8 @@ public class Controller implements Initializable {
             p.getChildren().add(imageview);
 
         });
-        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
-        spawner.getListeEntite().addListener(ecouteur);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);
+        spawner.getListeEntite().addListener(listenerEnnemis);
         ink.créeSpriteVie(joueur);
 
     }
@@ -85,13 +88,25 @@ public class Controller implements Initializable {
                 joueur.déplacement("E");
 
             }
-
             if(e.getCode()==KeyCode.J){
-                Bulle bulle = new Bulle( map, spawner, joueur);
-                joueur.attaque(vA.afficheAttaque(joueur, bulle));
-                bulle.déplacement(joueur.getOrientationProperty());
+                if(tempsDeRechargeJ){
+                    tempsDeRechargeJ =false;
+                    AttaqueDeBase attaqueDeBase=new AttaqueDeBase(map,spawner,joueur);
+                    vA.afficheAttaque(attaqueDeBase);
+                    attaqueDeBase.déplacement(joueur.getOrientationProperty());
 
+                }
             }
+
+            if(e.getCode()==KeyCode.K){
+                if(tempsDeRechargeK){
+                    tempsDeRechargeK =false;
+                    Bulle bulle = new Bulle( map, spawner, joueur);
+                    vA.afficheAttaque(bulle);
+                    bulle.déplacement(joueur.getOrientationProperty());
+                }
+            }
+
         });
     }
     @FXML
@@ -122,10 +137,15 @@ public class Controller implements Initializable {
 
                         } else if(temps %5==0) {
                             spawner.ActiverMob();
-
-
                         }
 
+                    }
+
+                    if(temps%30==0){
+                        tempsDeRechargeK =true;
+                    }
+                    if(temps%10==0){
+                        tempsDeRechargeJ =true;
                     }
                     temps++;
 

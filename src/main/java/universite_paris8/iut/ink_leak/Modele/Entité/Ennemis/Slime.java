@@ -1,21 +1,19 @@
-package universite_paris8.iut.ink_leak.Modele.Entité;
+package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
 
 
-import javafx.application.Platform;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import java.util.Random;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public class Slime extends Entité{
+public class Slime extends Entité {
     public static int cpt=0;
     private static ScheduledExecutorService executorService;
 
     public Slime(  GenerateurEnnemis spawner,Map map){
 
-        super("S"+cpt, 5, 1,1, 1,200,map,spawner);
+        super("S"+cpt, 5, 1,1, 1,600,map,spawner);
         cpt++;
 
     }

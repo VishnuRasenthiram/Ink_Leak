@@ -19,7 +19,6 @@ public class Bulle extends Pouvoirs{
         public Bulle(Map map,GenerateurEnnemis spawner, Joueur j) {
             super("bulle",0, 0, 6, 2, 0, map, spawner,j);
             this.portée = 0;
-
             super.setPosition();
             this.estENVIEProperty = new SimpleIntegerProperty(1);
 
@@ -35,11 +34,6 @@ public class Bulle extends Pouvoirs{
 
 
 
-
-    @Override
-    public void attaque(Entité entitéAttaqué) {
-
-    }
 
     public IntegerProperty getEstENVIEProperty() {
         return estENVIEProperty;

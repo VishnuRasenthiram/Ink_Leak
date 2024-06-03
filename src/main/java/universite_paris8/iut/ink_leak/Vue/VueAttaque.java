@@ -24,12 +24,12 @@ import java.util.List;
 public class VueAttaque {
 
     private Pane mainPane;
-    private  GenerateurEnnemis spawner;
+
     private Pane attaquePane;
 
-    public VueAttaque(Pane mainPane, GenerateurEnnemis spawner){
+    public VueAttaque(Pane mainPane){
         this.mainPane = mainPane;
-        this.spawner = spawner;
+
 
     }
 
@@ -41,7 +41,7 @@ public class VueAttaque {
         } else if (pouvoirs instanceof AttaqueDeBase) {
             afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
         } else {
-            System.out.println("zebi");
+            System.out.println(" To do");
         }
 
     }
@@ -104,7 +104,7 @@ public class VueAttaque {
 
 
     public void removeAttaque() {
-        List<Node> nodesToRemove = new ArrayList<>();
+        ArrayList<Node> nodesToRemove = new ArrayList<>();
         for (Node node : mainPane.getChildren()) {
             if(node.getId()!=null){
                 if (node.getId().equals("attaque")) {

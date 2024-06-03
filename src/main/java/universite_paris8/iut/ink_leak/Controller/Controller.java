@@ -39,13 +39,15 @@ public class Controller implements Initializable {
     @FXML
     private Pane interfacePane;
     private GenerateurEnnemis spawner;
+
+    private VueMap vueMap;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
         spawner= new GenerateurEnnemis();
-        VueMap vueMap= new VueMap(tuileMap);
+        vueMap= new VueMap(tuileMap);
         VueJoueur ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map);
@@ -74,7 +76,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void action() {
-        VueAttaque vA= new VueAttaque(mainPane,spawner);
+        VueAttaque vA= new VueAttaque(mainPane);
         mainPane.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.Z){
                 joueur.déplacement("N");
@@ -128,6 +130,12 @@ public class Controller implements Initializable {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
                         joueur.peutAller(x,y,map);
+
+                        if(temps==50){
+                            vueMap.supprimerAffichageMap();
+                            map.setMap(2);
+                            vueMap.initMap(map);
+                        }
 
                         if (temps == 10000) {
                             System.out.println("fini");

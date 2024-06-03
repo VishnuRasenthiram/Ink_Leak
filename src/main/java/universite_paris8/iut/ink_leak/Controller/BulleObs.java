@@ -1,24 +1,13 @@
 package universite_paris8.iut.ink_leak.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Vue.VueAttaque;
-
-import java.io.File;
-
 public class BulleObs implements ChangeListener<Number> {
-
 
     private VueAttaque vueAttaque;
 
     public BulleObs( VueAttaque vA) {
-
-
             this.vueAttaque = vA;
-
-
     }
 
     @Override

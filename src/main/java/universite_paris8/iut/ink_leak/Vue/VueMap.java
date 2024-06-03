@@ -14,10 +14,10 @@ public class VueMap {
         this.tuileMap = tuileMap;
     }
 
-    public void initMap(Map env){
-        for (int i = 0; i < env.getMap().length; i++) {
-            for (int j = 0; j < env.getMap()[i].length; j++) {
-                creerTuile(env.getMap(j,i));
+    public void initMap(Map map){
+        for (int i = 0; i < map.getMap().length; i++) {
+            for (int j = 0; j < map.getMap()[i].length; j++) {
+                creerTuile(map.getMap(j,i));
             }
         }
     }
@@ -40,13 +40,13 @@ public class VueMap {
             pane.setId("bleue");
         }
 
-
         pane.getChildren().add(imageview);
-
 
         tuileMap.getChildren().add(pane);
 
+    }
 
-
+    public void supprimerAffichageMap(){
+        tuileMap.getChildren().clear();
     }
 }

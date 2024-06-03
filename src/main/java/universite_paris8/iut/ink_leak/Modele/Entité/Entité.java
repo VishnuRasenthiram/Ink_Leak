@@ -86,23 +86,28 @@ public abstract class Entité {
     public abstract void attaque(Entité entitéAttaqué);
     public abstract void déplacement(String déplacementDirection);
 
-    public boolean enContact(double coordAttaqueX,double coordAttaqueY, Entité entité2) {
-        int coord_Sprite_GaucheX_Ent1 =coordEnIndiceGauche_Haut(coordAttaqueX);
-        int coord_Sprite_DroitX_Ent1 =coordEnIndiceDroit_Bas(coordAttaqueX);
-        int coord_Sprite_HautY_Ent1 =coordEnIndiceGauche_Haut(coordAttaqueY);
-        int coord_Sprite_BasY_Ent1 =coordEnIndiceDroit_Bas(coordAttaqueY);
+    public boolean enContact(Entité entité1, Entité entité2) {
+        double xE1 = entité1.getPosX();
+        double yE1 = entité1.getPosY();
+        double xE2 = entité2.getPosX();
+        double yE2 = entité2.getPosY();
 
-        int coord_Sprite_GaucheX_Ent2 =coordEnIndiceGauche_Haut(entité2.getPosX());
-        int coord_Sprite_DroitX_Ent2 =coordEnIndiceDroit_Bas(entité2.getPosX());
-        int coord_Sprite_HautY_Ent2 =coordEnIndiceGauche_Haut(entité2.getPosY());
-        int coord_Sprite_BasY_Ent2 =coordEnIndiceDroit_Bas(entité2.getPosY());
+        int coord_Sprite_GaucheX_Ent1 = coordEnIndiceGauche_Haut(xE1);
+        int coord_Sprite_DroitX_Ent1 = coordEnIndiceDroit_Bas(xE1);
+        int coord_Sprite_HautY_Ent1 = coordEnIndiceGauche_Haut(yE1);
+        int coord_Sprite_BasY_Ent1 = coordEnIndiceDroit_Bas(yE1);
 
-        if(coord_Sprite_GaucheX_Ent1==coord_Sprite_GaucheX_Ent2 || coord_Sprite_DroitX_Ent1==coord_Sprite_DroitX_Ent2 || coord_Sprite_BasY_Ent1==coord_Sprite_BasY_Ent2 || coord_Sprite_HautY_Ent1==coord_Sprite_HautY_Ent2){
-            return true;
+        int coord_Sprite_GaucheX_Ent2 = coordEnIndiceGauche_Haut(xE2);
+        int coord_Sprite_DroitX_Ent2 = coordEnIndiceDroit_Bas(xE2);
+        int coord_Sprite_HautY_Ent2 = coordEnIndiceGauche_Haut(yE2);
+        int coord_Sprite_BasY_Ent2 = coordEnIndiceDroit_Bas(yE2);
 
-        }
+        boolean noOverlap = coord_Sprite_DroitX_Ent1 <= coord_Sprite_GaucheX_Ent2 ||
+                coord_Sprite_GaucheX_Ent1 >= coord_Sprite_DroitX_Ent2 ||
+                coord_Sprite_BasY_Ent1 <= coord_Sprite_HautY_Ent2 ||
+                coord_Sprite_HautY_Ent1 >= coord_Sprite_BasY_Ent2;
 
-        return false;
+        return !noOverlap;
     }
 
     public void prendre_degat(int degat){

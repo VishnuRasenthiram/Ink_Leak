@@ -1,47 +1,30 @@
-package universite_paris8.iut.ink_leak.Modele.Entité;
+package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
-public class Bulle extends Entité {
+public class Bulle extends Pouvoirs{
 
         private int portée;
-        private int dégât;
-        private Joueur joueur;
 
         private IntegerProperty estENVIEProperty;
 
         public Bulle(Map map,GenerateurEnnemis spawner, Joueur j) {
-            super("bulle",0, 0, 6, 2, 0, map, spawner);
-            this.portée = portée;
-            this.joueur = j;
-            setPosition();
+            super("bulle",0, 0, 6, 2, 0, map, spawner,j);
+            this.portée = 0;
+
+            super.setPosition();
             this.estENVIEProperty = new SimpleIntegerProperty(1);
 
         }
-        private void setPosition(){
-            if (joueur.getOrientationProperty() == "N") {
-                super.setPosXProperty(joueur.getPosX());
-                super.setPosYProperty(joueur.getPosY() - 32);
-            }
-            else if (joueur.getOrientationProperty() == "S") {
-                super.setPosXProperty(joueur.getPosX());
-                super.setPosYProperty(joueur.getPosY() + 32);
-            }
-            else if (joueur.getOrientationProperty() == "E") {
-                super.setPosXProperty(joueur.getPosX() + 32);
-                super.setPosYProperty(joueur.getPosY());
-            }
-            else {
-                super.setPosXProperty(joueur.getPosX() - 32);
-                super.setPosYProperty(joueur.getPosY());
-            }
-        }
+
         public int getPortée() {
             return portée;
         }
@@ -50,13 +33,7 @@ public class Bulle extends Entité {
             this.portée = portée;
         }
 
-        public int getDégât() {
-            return dégât;
-        }
 
-        public void setDégât(int dégât) {
-            this.dégât = dégât;
-        }
 
 
     @Override
@@ -100,9 +77,16 @@ public class Bulle extends Entité {
                             }
                             break;
                     }
+                    for(Entité sl:super.getSpawner().getListeEntite()){
+
+                        if(super.getJoueur().enContact(this,sl)) {
+                            System.out.println("touché");
+                            sl.prendre_degat(super.getAttaque_entite());
+                        }
+                    }
                 })
         );
-        //atta
+
         timeline.setCycleCount(30);
         timeline.play();
         timeline.setOnFinished(e -> {
@@ -110,10 +94,7 @@ public class Bulle extends Entité {
         });
     }
 
-    @Override
-    public void gagner_vie(int nb_vie_gagnee) {
 
-    }
 
-    // autres méthodes spécifiques à VueAttaque
+
 }

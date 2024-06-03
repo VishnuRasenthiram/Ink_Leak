@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Controller;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
@@ -14,6 +15,7 @@ import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
@@ -29,6 +31,7 @@ public class Controller implements Initializable {
     private Timeline gameLoop;
     private int temps;
     private Map map;
+    public Environnement env;
     @FXML
     private TilePane tuileMap;
     private Joueur joueur;
@@ -70,6 +73,9 @@ public class Controller implements Initializable {
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);
         spawner.getListeEntite().addListener(listenerEnnemis);
+        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
+        env = new Environnement(joueur, map, spawner);
+        spawner.getListeEntite().addListener(ecouteur);
         ink.créeSpriteVie(joueur);
 
     }
@@ -88,7 +94,6 @@ public class Controller implements Initializable {
 
             } else if (e.getCode() == KeyCode.D) {
                 joueur.déplacement("E");
-
             }
             if(e.getCode()==KeyCode.J){
                 if(tempsDeRechargeJ){
@@ -121,47 +126,66 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-
-
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
+                    env.action(temps);
+
                     if (temps % 5 == 0) {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
-                        joueur.peutAller(x,y,map);
+                        joueur.peutAller(x, y, map);
 
-                        if(temps==50){
+                        int interaction = joueur.verifierInteractionEnFace(x, y, map);
+
+                        if (interaction == 3 || interaction == 4) {
+                            if (interaction == 3 && map.getNumMap() < 0) {
+                                return;
+                            }
                             vueMap.supprimerAffichageMap();
-                            map.setMap(2);
+                            map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 3 ? 1 : map.getNumMap() - 1));
                             vueMap.initMap(map);
+                            env.TuerToutLesEnnemis();
+                            updatePlayerPosition(joueur);
                         }
 
                         if (temps == 10000) {
                             System.out.println("fini");
                             gameLoop.stop();
-                        } else if (temps % 500 == 0) {
-                            spawner.genererEnnemis(spawner,map);
-
-                        } else if(temps %5==0) {
-                            spawner.ActiverMob();
                         }
-
                     }
 
-                    if(temps%30==0){
-                        tempsDeRechargeK =true;
+                    if (temps % 30 == 0) {
+                        tempsDeRechargeK = true;
                     }
-                    if(temps%10==0){
-                        tempsDeRechargeJ =true;
+                    if (temps % 10 == 0) {
+                        tempsDeRechargeJ = true;
                     }
                     temps++;
-
                 })
         );
         gameLoop.getKeyFrames().add(kf);
     }
-
+    private void updatePlayerPosition(Joueur joueur) {
+        switch (joueur.getOrientationProperty()) {
+            case "N":
+                joueur.setPosYProperty(joueur.getPosY() + 32);
+                joueur.setOrientationProperty("N");
+                break;
+            case "S":
+                joueur.setPosYProperty(joueur.getPosY() - 32);
+                joueur.setOrientationProperty("S");
+                break;
+            case "O":
+                joueur.setPosXProperty(joueur.getPosX() + 32);
+                joueur.setOrientationProperty("O");
+                break;
+            case "E":
+                joueur.setPosXProperty(joueur.getPosX() - 32);
+                joueur.setOrientationProperty("E");
+                break;
+        }
+    }
 
 
 }

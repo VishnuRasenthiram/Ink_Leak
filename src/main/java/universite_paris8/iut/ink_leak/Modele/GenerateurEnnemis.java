@@ -24,13 +24,14 @@ public class GenerateurEnnemis {
                     listeMort.add(mob);
                 }
             }
-
             for (Entité mobMort: listeMort) {
                 listeEntite.remove(mobMort);
             }
         }
     }
-
+    public void TuerToutLesEnnemis(){
+        listeEntite.clear();
+    }
     public void genererEnnemis( GenerateurEnnemis spawner, Map map){
         Slime slime = new Slime(spawner,map); // Créer un nouveau slime
         listeEntite.add(slime); // Ajouter le slime à la liste

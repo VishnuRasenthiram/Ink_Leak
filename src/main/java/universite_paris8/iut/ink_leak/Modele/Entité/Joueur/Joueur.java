@@ -46,10 +46,11 @@ public class Joueur extends Entité {
 
 
 
-    @Override
     public void déplacement(String déplacementDirection) {
         try {
             int vitesse_joueur = super.getVitesse_entite();
+
+
 
                 if (executorService != null) return;
 

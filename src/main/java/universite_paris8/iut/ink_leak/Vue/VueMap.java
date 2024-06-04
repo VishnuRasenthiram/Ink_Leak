@@ -38,6 +38,12 @@ public class VueMap {
         } else if (tuile==2) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
             pane.setId("bleue");
+        } else if (tuile==3) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
+            pane.setId("porte");
+        }else if (tuile==4) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
+            pane.setId("porte");
         }
 
         pane.getChildren().add(imageview);

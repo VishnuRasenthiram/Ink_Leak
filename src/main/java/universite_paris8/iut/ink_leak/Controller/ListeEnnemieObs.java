@@ -1,6 +1,4 @@
 package universite_paris8.iut.ink_leak.Controller;
-
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

@@ -1,5 +1,4 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
-
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;

@@ -1,7 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
-
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -10,7 +8,6 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +59,7 @@ public class Joueur extends Entité {
                         double x = super.getPosX();
                         double y = super.getPosY();
 
-                        switch (déplacementDirection) { // 0=Z 1=S 2=Q 3=D
+                        switch (déplacementDirection) {
                             case "N":
                                 if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
                                     super.setPosYProperty(super.getPosY() - vitesse_joueur);

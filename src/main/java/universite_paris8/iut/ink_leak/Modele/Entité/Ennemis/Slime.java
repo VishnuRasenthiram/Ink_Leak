@@ -1,15 +1,13 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
-
-
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import java.util.Random;
-import java.util.concurrent.ScheduledExecutorService;
+
 
 public class Slime extends Entité {
     public static int cpt=0;
-    private static ScheduledExecutorService executorService;
+
 
     public Slime(  GenerateurEnnemis spawner,Map map){
 

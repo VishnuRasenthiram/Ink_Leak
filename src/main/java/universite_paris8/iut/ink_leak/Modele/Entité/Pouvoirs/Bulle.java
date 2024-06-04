@@ -1,5 +1,4 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
@@ -47,7 +46,7 @@ public class Bulle extends Pouvoirs{
                     double x = super.getPosX();
                     double y = super.getPosY();
                     int vitesse_joueur = super.getVitesse_entite();
-                    switch (déplacementDirection) { // 0=Z 1=S 2=Q 3=D
+                    switch (déplacementDirection) {
                         case "N":
                             if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
                                 super.setPosYProperty(super.getPosY() - vitesse_joueur);

@@ -3,6 +3,7 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 import javafx.application.Platform;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueAttaque;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -21,6 +22,7 @@ public class Joueur extends Entité{
         if(entitéAttaqué!=null){
             entitéAttaqué.prendre_degat(1);
         }
+        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0);
     }
 
 

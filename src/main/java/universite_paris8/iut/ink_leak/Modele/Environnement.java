@@ -26,4 +26,8 @@ public class Environnement {
 
     }
 
+    public GenerateurEnnemis getListe_entites() { return this.liste_entites; }
+
+    public Joueur getJoueur() { return this.joueur; }
+
 }

@@ -3,6 +3,7 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 
 public abstract class Entité {
     private int taille_entite;
@@ -112,6 +113,7 @@ public abstract class Entité {
 
             this.setVie_entite(0);
             this.spawner.getListeEntite().remove(this);
+            new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/mort.wav", 0);
 
         }
         else if (System.currentTimeMillis() - dernier_degat > invincibilite) {

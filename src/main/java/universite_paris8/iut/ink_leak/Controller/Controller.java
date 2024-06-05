@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -17,9 +18,8 @@ import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
-import universite_paris8.iut.ink_leak.Vue.VueAttaque;
-import universite_paris8.iut.ink_leak.Vue.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueMap;
+import universite_paris8.iut.ink_leak.Vue.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,7 +28,10 @@ public class Controller implements Initializable {
     private Timeline gameLoop;
     private int temps;
     private Map map;
-    public Environnement env;
+    private Environnement env;
+    @FXML
+    private Label txt;
+    private VueTexte vT;
     @FXML
     private TilePane tuileMap;
     private Joueur joueur;
@@ -67,8 +70,12 @@ public class Controller implements Initializable {
         });
         ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
         env = new Environnement(joueur, map, spawner);
+        vT = new VueTexte(env, txt, mainPane);
+        mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
         spawner.getListeEntite().addListener(ecouteur);
         ink.créeSpriteVie(joueur);
+        Musique musique = new Musique();
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav", -1);
 
     }
 
@@ -110,6 +117,7 @@ public class Controller implements Initializable {
                 (ev -> {
                     env.action(temps);
                     temps++;
+                    vT.afficherTexte();
 
                 })
         );

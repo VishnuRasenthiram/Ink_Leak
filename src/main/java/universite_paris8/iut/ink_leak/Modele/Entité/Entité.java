@@ -141,7 +141,6 @@ public abstract class Entité {
         if (this.getVie() - degat < 0) {
 
             this.setVie_entite(0);
-            new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/mort.wav", 0);
 
         }
         else if (System.currentTimeMillis() - dernier_degat > invincibilite) {

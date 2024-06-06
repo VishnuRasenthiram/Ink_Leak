@@ -112,7 +112,7 @@ public class Controller implements Initializable {
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
-        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav", -1);
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav",1.0f, -1);
     }
 
     @FXML
@@ -136,7 +136,7 @@ public class Controller implements Initializable {
                     tempsDeRechargeJ =false;
                     vA.afficheAttaque(joueur.getAttaqueDeBase());
                     joueur.attaque();
-                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0);
+                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0.7f, 0);
 
                 }
             }

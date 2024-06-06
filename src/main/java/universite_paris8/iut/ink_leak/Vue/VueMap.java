@@ -1,15 +1,22 @@
 package universite_paris8.iut.ink_leak.Vue;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import java.io.File;
 
 public class VueMap {
     @FXML
     private TilePane tuileMap;
+    @FXML
+    private BorderPane mainBorderPane;
     public VueMap(TilePane tuileMap){
         this.tuileMap = tuileMap;
     }
@@ -53,6 +60,34 @@ public class VueMap {
     }
 
     public void supprimerAffichageMap(){
+        fonduAuNoir(mainBorderPane);
         tuileMap.getChildren().clear();
+        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/changement_salle.wav", 1.0f, 0);
+    }
+
+    public void fonduAuNoir(BorderPane mainPane) {
+
+        ImageView rectangleNoir = new ImageView();
+        rectangleNoir.setFitWidth(1080);
+        rectangleNoir.setFitHeight(720);
+        rectangleNoir.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/black_screen.png").toURI().toString()));
+        mainPane.getChildren().add(rectangleNoir);
+
+        Timeline fondu = new Timeline(
+                new KeyFrame(Duration.seconds(0.0), new KeyValue(rectangleNoir.opacityProperty(), 1.0)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(rectangleNoir.opacityProperty(), 0.9)),
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(rectangleNoir.opacityProperty(), 0.8)),
+                new KeyFrame(Duration.seconds(0.3), new KeyValue(rectangleNoir.opacityProperty(), 0.7)),
+                new KeyFrame(Duration.seconds(0.4), new KeyValue(rectangleNoir.opacityProperty(), 0.6)),
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(rectangleNoir.opacityProperty(), 0.5)),
+                new KeyFrame(Duration.seconds(0.6), new KeyValue(rectangleNoir.opacityProperty(), 0.4)),
+                new KeyFrame(Duration.seconds(0.7), new KeyValue(rectangleNoir.opacityProperty(), 0.3)),
+                new KeyFrame(Duration.seconds(0.8), new KeyValue(rectangleNoir.opacityProperty(), 0.2)),
+                new KeyFrame(Duration.seconds(0.9), new KeyValue(rectangleNoir.opacityProperty(), 0.1)),
+                new KeyFrame(Duration.seconds(1.0), new KeyValue(rectangleNoir.opacityProperty(), 0.0))
+        );
+        fondu.setCycleCount(1);
+        fondu.play();
+
     }
 }

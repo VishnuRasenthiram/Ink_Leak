@@ -7,10 +7,14 @@ public class Musique {
 
     private Clip clip;
 
-    public void jouer(String chemin, int repetitions) {
+    public void jouer(String chemin, float volume, int repetitions) {
         try {
             AudioInputStream audio = AudioSystem.getAudioInputStream(new File(chemin));
             clip = AudioSystem.getClip();
+            if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl volumeControler = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                volumeControler.setValue(volume);
+            }
             clip.open(audio);
             if (repetitions == -1) { clip.loop(clip.LOOP_CONTINUOUSLY); }
             else clip.loop(repetitions);

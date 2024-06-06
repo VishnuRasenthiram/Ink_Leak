@@ -54,5 +54,6 @@ public class VueMap {
 
     public void supprimerAffichageMap(){
         tuileMap.getChildren().clear();
+        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/changement_salle.wav", 1.0f, 0);
     }
 }

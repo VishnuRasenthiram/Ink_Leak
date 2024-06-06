@@ -20,7 +20,6 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VuePouvoirs.VuePouvoirs;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import java.net.URL;
 import java.util.ResourceBundle;

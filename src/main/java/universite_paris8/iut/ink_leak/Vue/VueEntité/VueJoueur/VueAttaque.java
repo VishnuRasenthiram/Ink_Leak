@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Vue;
+package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -68,13 +68,10 @@ public class VueAttaque {
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/test.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Bubble/hitbox/hitbox_1.png").toURI().toString()));
 
 
-        Circle circle = new Circle(16,16,16);
-        circle.setFill(Color.TRANSPARENT);
-        circle.setStroke(Color.RED);
-        attaquePane.getChildren().add(circle);
+        attaquePane.getChildren().add(imageview);
 
 
 

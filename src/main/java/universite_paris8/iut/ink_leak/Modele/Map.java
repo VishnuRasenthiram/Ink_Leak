@@ -10,7 +10,12 @@ public class Map {
         this.numMap = 0;
 
     }
-
+    public int getLargeur(){
+        return this.map.length;
+    }
+    public int getHauteur(){
+        return this.map[0].length;
+    }
     public int[][] getMap(){
         return this.map;
     }

@@ -2,6 +2,8 @@ package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
+
 import java.util.Random;
 
 
@@ -11,7 +13,7 @@ public class Slime extends Entité {
 
     public Slime(  GenerateurEnnemis spawner,Map map){
 
-        super("S"+cpt, 3, 1,1, 1,600,map,spawner);
+        super("S"+cpt, 2, 1,32, 32,1,600,map,spawner);
         cpt++;
 
     }
@@ -19,7 +21,7 @@ public class Slime extends Entité {
 
 
     @Override
-    public void attaque(Entité entitéAttaqué) {
+    public void attaque(VueAttaque vA) {
 
     }
 

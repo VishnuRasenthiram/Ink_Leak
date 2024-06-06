@@ -1,13 +1,15 @@
-package universite_paris8.iut.ink_leak.Vue;
+package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.VieObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
+
 import java.io.File;
 
-public class VueJoueur extends VueEntite{
+public class VueJoueur extends VueEntite {
     private Pane interfacePane;
 
     public VueJoueur(Pane mainPane, Pane interfacePane){

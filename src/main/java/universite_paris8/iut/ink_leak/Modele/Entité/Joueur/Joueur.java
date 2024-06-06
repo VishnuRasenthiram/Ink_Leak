@@ -5,9 +5,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,9 +21,11 @@ public class Joueur extends Entité {
         private ObservableList<Pouvoirs> listePouvoirs;
         private IntegerProperty pouvoirEnCoursProperty;
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
-            super(nom_joueur,  6, 1, 30, 1,1000,map,spawner);
+            super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
-            this.pouvoirEnCoursProperty = new SimpleIntegerProperty(0);
+            this.pouvoirEnCoursProperty =new SimpleIntegerProperty(0);
+
+
         }
 
     public ObservableList<Pouvoirs> getListePouvoirs() {
@@ -27,20 +33,63 @@ public class Joueur extends Entité {
     }
 
     public IntegerProperty getPouvoirEnCoursProperty() {return pouvoirEnCoursProperty;}
-
-    public Pouvoirs getPouvoirEnCours(){
-            return this.listePouvoirs.get(pouvoirEnCoursProperty.getValue());
+    public int getPouvoirEnCours(){
+            return pouvoirEnCoursProperty.getValue();
     }
+
+    public void setPouvoirEnCours(int pouvoirEnCours) {
+            this.pouvoirEnCoursProperty.setValue(pouvoirEnCours);
+    }
+
+    public void setPouvoir(int a){
+            if(a>0){
+                if(getPouvoirEnCours()+1>getListePouvoirs().size()-1){
+                    setPouvoirEnCours(0);
+                }
+                else {
+                    setPouvoirEnCours(getPouvoirEnCours()+1);
+                }
+            }
+            else {
+                if(getPouvoirEnCours()-1<0){
+                    if(getListePouvoirs().isEmpty()){
+                        setPouvoirEnCours(0);
+                    }
+                    else {
+                        setPouvoirEnCours(getListePouvoirs().size()-1);
+                    }
+
+                }
+                else {
+                    setPouvoirEnCours(getPouvoirEnCours()-1);
+                }
+            }
+
+    }
+
+
 
     @Override
-    public void attaque(Entité entitéAttaqué) {
+    public void attaque(VueAttaque vA) {
 
-        if(entitéAttaqué!=null){
-            entitéAttaqué.prendre_degat(1);
-        }
+        AttaqueDeBase attaqueDeBase=new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
+        vA.afficheAttaque(attaqueDeBase);
+        attaqueDeBase.déplacement(getOrientationProperty());
     }
 
-    public void attaqueAvecPouvoir(Entité entitéAttaqué, Pouvoirs pouvoir){
+    public void attaqueAvecPouvoir(VueAttaque vA){
+        switch (getPouvoirEnCours()){
+            case 0:
+                Bulle bulle =new Bulle( super.getMap(),super.getSpawner(),this);
+                vA.afficheAttaque(bulle);
+                bulle.déplacement(getOrientationProperty());
+                break;
+
+        }
+
+
+
+
 
     }
 

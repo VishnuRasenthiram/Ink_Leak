@@ -3,9 +3,11 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 public abstract class Entité {
-    private int taille_entite;
+    private double largeur;
+    private double longueur;
     private String nom_entite;
     private IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
@@ -18,12 +20,13 @@ public abstract class Entité {
     private Map map;
     private GenerateurEnnemis spawner;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite,int taille_entite, int vitesse_entite, long invincibilite,Map map,GenerateurEnnemis spawner) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis spawner) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
         this.vitesse_entite = vitesse_entite;
-        this.taille_entite = taille_entite;
+        this.largeur = largeur;
+        this.longueur=longueur;
         this.posXProperty = new SimpleDoubleProperty();
         this.posYProperty = new SimpleDoubleProperty();
         this.orientationProperty = new SimpleStringProperty("S");
@@ -76,10 +79,10 @@ public abstract class Entité {
     }
 
     private int coordEnIndiceGauche_Haut(double coord){
-        return (int)Math.floor(coord)/32;
+        return (int)Math.ceil(coord)/32;
     }
     private int coordEnIndiceDroit_Bas(double coord){
-        return (int)Math.floor(coord+32)/32;
+        return (int)Math.ceil(coord+32)/32;
     }
     private boolean estDansMap(double x, double y, Map map) {
 
@@ -91,32 +94,35 @@ public abstract class Entité {
     }
 
 
-    public abstract void attaque(Entité entitéAttaqué);
+    public abstract void attaque(VueAttaque vA);
     public abstract void déplacement(String déplacementDirection);
 
-    public boolean enContact(Entité entité1, Entité entité2) {
-        double xE1 = entité1.getPosX();
-        double yE1 = entité1.getPosY();
-        double xE2 = entité2.getPosX();
-        double yE2 = entité2.getPosY();
+    public boolean enContact(Entité entite2) {
 
-        int coord_Sprite_GaucheX_Ent1 = coordEnIndiceGauche_Haut(xE1);
-        int coord_Sprite_DroitX_Ent1 = coordEnIndiceDroit_Bas(xE1);
-        int coord_Sprite_HautY_Ent1 = coordEnIndiceGauche_Haut(yE1);
-        int coord_Sprite_BasY_Ent1 = coordEnIndiceDroit_Bas(yE1);
+        double x1 = this.getPosX();
+        double y1 = this.getPosY();
+        double longueur1 = this.getLongueur();
+        double largeur1 = this.getLargeur();
 
-        int coord_Sprite_GaucheX_Ent2 = coordEnIndiceGauche_Haut(xE2);
-        int coord_Sprite_DroitX_Ent2 = coordEnIndiceDroit_Bas(xE2);
-        int coord_Sprite_HautY_Ent2 = coordEnIndiceGauche_Haut(yE2);
-        int coord_Sprite_BasY_Ent2 = coordEnIndiceDroit_Bas(yE2);
+        double x2 = entite2.getPosX();
+        double y2 = entite2.getPosY();
+        double longueur2 = entite2.getLongueur();
+        double largeur2 = entite2.getLargeur();
 
-        boolean noOverlap = coord_Sprite_DroitX_Ent1 <= coord_Sprite_GaucheX_Ent2 ||
-                coord_Sprite_GaucheX_Ent1 >= coord_Sprite_DroitX_Ent2 ||
-                coord_Sprite_BasY_Ent1 <= coord_Sprite_HautY_Ent2 ||
-                coord_Sprite_HautY_Ent1 >= coord_Sprite_BasY_Ent2;
+        boolean coinSupDroit = x1 + longueur1 >= x2 && x1 + longueur1 <= x2 + longueur2;
+        boolean coinInfDroit = y1 + largeur1 >= y2 && y1 + largeur1 <= y2 + largeur2;
+        boolean coinSupGauche = y1 >= y2 && y1 <= y2 + largeur2;
+        boolean coinInfGauche = x1 >= x2 && x1 <= x2 + longueur2;
+        boolean coinSupGaucheEntite1DansEntite2 = (x1 >= x2 && x1 <= x2 + longueur2) && (y1 >= y2 && y1 <= y2 + largeur2);
 
-        return !noOverlap;
+        boolean supDroitEtInfDroit =coinSupDroit && coinInfDroit;
+        boolean supDroitEtSupGauche=coinSupDroit && coinSupGauche;
+        boolean infGaucheEtSupGauche=coinInfGauche && coinSupGauche;
+        boolean infGaucheEtInfDroit=coinInfGauche && coinInfDroit;
+
+        return supDroitEtInfDroit || supDroitEtSupGauche || infGaucheEtSupGauche || infGaucheEtInfDroit || coinSupGaucheEntite1DansEntite2;
     }
+
 
     public void prendre_degat(int degat){
 
@@ -208,8 +214,12 @@ public abstract class Entité {
 
     public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
 
-    public int getTaille_entite() {
-        return taille_entite;
+    public double getLongueur() {
+        return longueur;
+    }
+
+    public double getLargeur() {
+        return largeur;
     }
 
     public GenerateurEnnemis getSpawner(){

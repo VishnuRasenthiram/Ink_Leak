@@ -1,6 +1,7 @@
+package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -56,7 +57,7 @@ public class VueJoueur extends VueEntite {
 
         interfacePane.getChildren().add(vie);
         vie.setTranslateX(0);
-        vie.setTranslateY(0);
+        vie.setTranslateY(-32);
 
         joueur.getVie_entiteProperty().addListener(new VieObs(imageView, Joueur, joueur));
     }

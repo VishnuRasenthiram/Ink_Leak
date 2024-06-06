@@ -29,9 +29,11 @@ public class Joueur extends Entité {
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
-            this.pouvoirEnCoursProperty = new SimpleIntegerProperty(0);
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);
+            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
+            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
+            this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
         public IntegerProperty getOppacitéProperty() {
             return oppacitéProperty;
@@ -41,9 +43,6 @@ public class Joueur extends Entité {
         }
         public boolean getBougable(){
             return bougable;
-            this.indicePouvoirEnCoursProperty =new SimpleIntegerProperty(0);
-            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
-            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
 
         }
 

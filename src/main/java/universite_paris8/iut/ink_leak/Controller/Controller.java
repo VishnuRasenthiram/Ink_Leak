@@ -12,15 +12,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Vue.VueAttaque;
-import universite_paris8.iut.ink_leak.Vue.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VuePouvoirs.VuePouvoirs;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -57,9 +57,12 @@ public class Controller implements Initializable {
         gameLoop();
         gameLoop.play();
 
+
         this.joueur = new Joueur("LePlayer",map,spawner);
-        ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
+
+        env = new Environnement(joueur, map, spawner,vueMap);
+
         joueur.orientationProperty().addListener((obs,old,nouv)->{
 
             Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
@@ -73,10 +76,21 @@ public class Controller implements Initializable {
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);
         spawner.getListeEntite().addListener(listenerEnnemis);
+
         ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
-        env = new Environnement(joueur, map, spawner);
         spawner.getListeEntite().addListener(ecouteur);
+
+
+        ListChangeListener<Pouvoirs> airpods=new ListePouvoirsObs(interfacePane,joueur);
+        joueur.getListePouvoirs().addListener(airpods);
+
+        PouvoirEnCoursObs pv= new PouvoirEnCoursObs(joueur,interfacePane);
+        joueur.getPouvoirEnCoursProperty().addListener(pv);
+
+        ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
+
+
 
     }
 
@@ -98,9 +112,7 @@ public class Controller implements Initializable {
             if(e.getCode()==KeyCode.J){
                 if(tempsDeRechargeJ){
                     tempsDeRechargeJ =false;
-                    AttaqueDeBase attaqueDeBase=new AttaqueDeBase(map,spawner,joueur);
-                    vA.afficheAttaque(attaqueDeBase);
-                    attaqueDeBase.déplacement(joueur.getOrientationProperty());
+                    joueur.attaque(vA);
 
                 }
             }
@@ -108,10 +120,15 @@ public class Controller implements Initializable {
             if(e.getCode()==KeyCode.K){
                 if(tempsDeRechargeK){
                     tempsDeRechargeK =false;
-                    Bulle bulle = new Bulle( map, spawner, joueur);
-                    vA.afficheAttaque(bulle);
-                    bulle.déplacement(joueur.getOrientationProperty());
+                    joueur.attaqueAvecPouvoir(vA);
                 }
+            }
+
+            if(e.getCode()==KeyCode.A){
+                joueur.setPouvoir(-1);
+            }
+            if(e.getCode()==KeyCode.E){
+                joueur.setPouvoir(1);
             }
 
         });
@@ -131,28 +148,9 @@ public class Controller implements Initializable {
                 (ev -> {
                     env.action(temps);
 
-                    if (temps % 5 == 0) {
-                        double x = joueur.getPosX();
-                        double y = joueur.getPosY();
-                        joueur.peutAller(x, y, map);
-
-                        int interaction = joueur.verifierInteractionEnFace(x, y, map);
-
-                        if (interaction == 3 || interaction == 4) {
-                            if (interaction == 3 && map.getNumMap() < 0) {
-                                return;
-                            }
-                            vueMap.supprimerAffichageMap();
-                            map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 3 ? 1 : map.getNumMap() - 1));
-                            vueMap.initMap(map);
-                            env.TuerToutLesEnnemis();
-                            updatePlayerPosition(joueur);
-                        }
-
-                        if (temps == 10000) {
-                            System.out.println("fini");
-                            gameLoop.stop();
-                        }
+                    if (temps == 10000) {
+                        System.out.println("fini");
+                        gameLoop.stop();
                     }
 
                     if (temps % 30 == 0) {
@@ -165,26 +163,8 @@ public class Controller implements Initializable {
                 })
         );
         gameLoop.getKeyFrames().add(kf);
-    }
-    private void updatePlayerPosition(Joueur joueur) {
-        switch (joueur.getOrientationProperty()) {
-            case "N":
-                joueur.setPosYProperty(joueur.getPosY() + 32);
-                joueur.setOrientationProperty("N");
-                break;
-            case "S":
-                joueur.setPosYProperty(joueur.getPosY() - 32);
-                joueur.setOrientationProperty("S");
-                break;
-            case "O":
-                joueur.setPosXProperty(joueur.getPosX() + 32);
-                joueur.setOrientationProperty("O");
-                break;
-            case "E":
-                joueur.setPosXProperty(joueur.getPosX() - 32);
-                joueur.setOrientationProperty("E");
-                break;
-        }
+
+
     }
 
 

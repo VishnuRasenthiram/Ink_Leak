@@ -14,12 +14,14 @@ public class Bulle extends Pouvoirs{
         private int portée;
 
         private IntegerProperty estENVIEProperty;
-
+        private static int cpt=0;
         public Bulle(Map map,GenerateurEnnemis spawner, Joueur j) {
-            super("bulle",0, 0, 6, 2, 0, map, spawner,j);
+
+            super("bulle"+cpt,0, 2, 32, 32, 1,0, map, spawner,j);
             this.portée = 0;
             super.setPosition();
             this.estENVIEProperty = new SimpleIntegerProperty(1);
+            cpt++;
 
         }
 
@@ -72,8 +74,8 @@ public class Bulle extends Pouvoirs{
                     }
                     for(Entité sl:super.getSpawner().getListeEntite()){
 
-                        if(super.getJoueur().enContact(this,sl)) {
-                            System.out.println("touché");
+                        if(this.enContact(sl)) {
+                            System.out.println("touché"+super.getAttaque_entite());
                             sl.prendre_degat(super.getAttaque_entite());
                         }
                     }

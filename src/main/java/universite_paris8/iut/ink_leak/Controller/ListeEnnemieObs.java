@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Vue.VueEnnemis;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueEnnemis;
 
 public class ListeEnnemieObs implements ListChangeListener<Entité> {
     @FXML

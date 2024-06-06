@@ -5,6 +5,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class GenerateurEnnemis {
@@ -33,10 +34,45 @@ public class GenerateurEnnemis {
         listeEntite.clear();
     }
     public void genererEnnemis( GenerateurEnnemis spawner, Map map){
-        Slime slime = new Slime(spawner,map); // Créer un nouveau slime
-        listeEntite.add(slime); // Ajouter le slime à la liste
-        slime.setPosYProperty(slime.getPosY() + 50);
-        slime.setPosXProperty(slime.getPosX() + 300);
+         // Ajouter le slime à la liste
+        switch (map.getNumMap()){
+
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+
+                break;
+            default:
+                Slime slime = new Slime(spawner,map); // Créer un nouveau slime
+                listeEntite.add(slime);
+                setEnnemisPos(slime);
+                break;
+        }
+
+    }
+
+    private void setEnnemisPos(Entité enti){
+
+        int random = new Random().nextInt(3);
+        switch (random){
+            case 0:
+                enti.setPosYProperty(enti.getPosY() + 50);
+                enti.setPosXProperty(enti.getPosX() + 300);
+                break;
+            case 1:
+                enti.setPosYProperty(enti.getPosY() + 100);
+                enti.setPosXProperty(enti.getPosX() + 520);
+                break;
+
+            case 2:
+                enti.setPosYProperty(enti.getPosY() + 500);
+                enti.setPosXProperty(enti.getPosX() + 100);
+
+        }
+
 
     }
 

@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Vue;
+package universite_paris8.iut.ink_leak.Vue.VueEntité;
 
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;

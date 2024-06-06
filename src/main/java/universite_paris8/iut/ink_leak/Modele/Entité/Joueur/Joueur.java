@@ -82,6 +82,7 @@ public class Joueur extends Entité {
             case 0:
                 Bulle bulle =new Bulle( super.getMap(),super.getSpawner(),this);
                 vA.afficheAttaque(bulle);
+                listePouvoirs.add(bulle);
                 bulle.déplacement(getOrientationProperty());
                 break;
 

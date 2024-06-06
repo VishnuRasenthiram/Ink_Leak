@@ -36,13 +36,13 @@ public class VieObs implements ChangeListener<Number> {
         if ((int) nouv < (int) old) {
             new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/degat.wav", 0, 0);
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(joueurView.opacityProperty(), 0.2)),
-                    new KeyFrame(Duration.seconds(0.15), new KeyValue(joueurView.opacityProperty(), 1.0)),
-                    new KeyFrame(Duration.seconds(0.24), new KeyValue(joueurView.opacityProperty(), 0.2)),
-                    new KeyFrame(Duration.seconds(0.33), new KeyValue(joueurView.opacityProperty(), 1.0)),
-                    new KeyFrame(Duration.seconds(0.42), new KeyValue(joueurView.opacityProperty(), 0.2)),
-                    new KeyFrame(Duration.seconds(0.51), new KeyValue(joueurView.opacityProperty(), 1.0)),
-                    new KeyFrame(Duration.seconds(0.58), new KeyValue(joueurView.opacityProperty(), 1.0))
+                    new KeyFrame(Duration.ZERO, new KeyValue(joueurView.opacityProperty(), 0.3)),
+                    new KeyFrame(Duration.seconds(0.15), new KeyValue(joueurView.opacityProperty(), 0.5)),
+                    new KeyFrame(Duration.seconds(0.24), new KeyValue(joueurView.opacityProperty(), 0.3)),
+                    new KeyFrame(Duration.seconds(0.33), new KeyValue(joueurView.opacityProperty(), 0.5)),
+                    new KeyFrame(Duration.seconds(0.42), new KeyValue(joueurView.opacityProperty(), 0.3)),
+                    new KeyFrame(Duration.seconds(0.51), new KeyValue(joueurView.opacityProperty(), 0.5)),
+                    new KeyFrame(Duration.seconds(0.58), new KeyValue(joueurView.opacityProperty(), 1))
             );
             timeline.setCycleCount(2);
             timeline.play();

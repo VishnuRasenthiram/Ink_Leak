@@ -58,7 +58,7 @@ public class Controller implements Initializable {
         this.map= new Map();
         spawner= new GenerateurEnnemis();
         vueMap= new VueMap(tuileMap, mainBorderPane);
-        VueJoueur ink= new VueJoueur(mainPane, interfacePane);
+        VueJoueur ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
 
         vueMap.initMap(map);
         gameLoop();
@@ -93,10 +93,10 @@ public class Controller implements Initializable {
             }
 
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane, mainBorderPane);
         spawner.getListeEntite().addListener(listenerEnnemis);
 
-        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
+        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane, mainBorderPane);
         env = new Environnement(joueur, map, spawner,vueMap);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();

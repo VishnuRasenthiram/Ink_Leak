@@ -2,6 +2,7 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -21,8 +22,8 @@ public class VueJoueur extends VueEntite {
     private Joueur joueur;
     private Pane Joueur;
 
-    public VueJoueur(Pane mainPane, Pane interfacePane){
-        super(mainPane);
+    public VueJoueur(Pane mainPane, Pane interfacePane, Pane mainborderPane){
+        super(mainPane, mainborderPane);
         this.interfacePane = interfacePane;
     }
 
@@ -40,8 +41,17 @@ public class VueJoueur extends VueEntite {
 
         Joueur.translateXProperty().bind(entité.posXProperty());
         Joueur.translateYProperty().bind(entité.posYProperty());
+        ImageView Torche = new ImageView();
+        Torche.setFitHeight(1400);
+        Torche.setFitWidth(2500);
+        Torche.setId("torche");
+        Torche.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
 
+        Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1251));
+        Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), -699));
         super.getMainPane().getChildren().add(Joueur);
+        interfacePane.getChildren().add(Torche);
+
     }
 
 
@@ -80,8 +90,7 @@ public class VueJoueur extends VueEntite {
 
         }
     }
-    //timeline
-    //créé une gameloop timeline
+
     public File créeTimeline(String orientation) {
         File file;
         if (orientation.equals("N"))

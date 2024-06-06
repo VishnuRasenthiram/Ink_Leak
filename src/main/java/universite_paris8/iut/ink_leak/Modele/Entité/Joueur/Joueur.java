@@ -127,50 +127,50 @@ public class Joueur extends Entité {
             int vitesse_joueur = super.getVitesse_entite();
 
 
-            if (getBougable() == false) {
-                stop();
-                return;
-            }
+            setMovementState(Joueur.MovementState.WALK);
+
             if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.scheduleAtFixedRate(() -> {
                     Platform.runLater(() -> {
+                        if (getBougable() == false) {
+                            return;
+                        }
                         double x = super.getPosX();
                         double y = super.getPosY();
 
                         switch (déplacementDirection) {
                             case "N":
+                                super.setOrientationProperty("N");
                                 if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
                                     super.setPosYProperty(super.getPosY() - vitesse_joueur);
-                                    super.setOrientationProperty("N");
                                 }
                                 break;
 
                             case "S":
+                                super.setOrientationProperty("S");
                                 if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
                                     super.setPosYProperty(super.getPosY() + vitesse_joueur);
-                                    super.setOrientationProperty("S");
                                 }
                                 break;
 
                             case "O":
+                                super.setOrientationProperty("O");
                                 if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
                                     super.setPosXProperty(super.getPosX() - vitesse_joueur);
-                                    super.setOrientationProperty("O");
                                 }
                                 break;
                             case "E":
+                                super.setOrientationProperty("E");
                                 if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
                                     super.setPosXProperty(super.getPosX() + vitesse_joueur);
-                                    super.setOrientationProperty("E");
                                 }
                                 break;
                         }
 
                     });
                 }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
-            setMovementState(Joueur.MovementState.WALK);
 
             ;
         } catch (Exception ex) {

@@ -53,6 +53,9 @@ public class VueMap {
         }else if (tuile==4) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("porte");
+        }else if (tuile==6) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/abc.png").toURI().toString()));
+            pane.setId("torche");
         }
 
         pane.getChildren().add(imageview);

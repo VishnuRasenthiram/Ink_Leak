@@ -10,8 +10,8 @@ import java.io.File;
 public class VueEnnemis extends VueEntite {
 
 
-    public VueEnnemis(Pane mainPane) {
-        super(mainPane);
+    public VueEnnemis(Pane mainPane, Pane mainborderPane) {
+        super(mainPane, mainborderPane);
     }
 
     @Override

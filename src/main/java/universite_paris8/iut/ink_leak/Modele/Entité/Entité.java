@@ -3,7 +3,7 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 
 public abstract class Entité {
     private double largeur;
@@ -59,7 +59,7 @@ public abstract class Entité {
 
         return true;
     }
-    public int verifierInteractionEnFace(double x, double y,Map map) {
+    public int verifierInteractionEnFace(double x, double y) {
         if(verifCaseSurCoord(3,x,y)){
             return 3;
         } else if(verifCaseSurCoord(4,x,y)){
@@ -95,7 +95,7 @@ public abstract class Entité {
     }
 
 
-    public abstract void attaque(VueAttaque vA);
+    public abstract void attaque();
     public abstract void déplacement(String déplacementDirection);
 
     public boolean enContact(Entité entite2) {
@@ -130,7 +130,6 @@ public abstract class Entité {
         if (this.getVie() - degat < 0) {
 
             this.setVie_entite(0);
-            this.spawner.getListeEntite().remove(this);
             new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/mort.wav", 0);
 
         }

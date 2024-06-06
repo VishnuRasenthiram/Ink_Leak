@@ -23,7 +23,7 @@ public class Environnement {
             double x = this.joueur.getPosX();
             double y = this.joueur.getPosY();
             joueur.peutAller(x, y, this.map);
-            int interaction = joueur.verifierInteractionEnFace(x, y, map);
+            int interaction = joueur.verifierInteractionEnFace(x, y);
 
             if (interaction == 3 || interaction == 4) {
                 vMap.supprimerAffichageMap();

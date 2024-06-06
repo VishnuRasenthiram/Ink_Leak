@@ -2,7 +2,6 @@ package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 import java.util.Random;
 
@@ -21,7 +20,7 @@ public class Slime extends Entité {
 
 
     @Override
-    public void attaque(VueAttaque vA) {
+    public void attaque() {
 
     }
 

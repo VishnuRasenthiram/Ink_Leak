@@ -42,7 +42,7 @@ public class Bulle extends Pouvoirs{
 
     @Override
     public void déplacement(String déplacementDirection) {
-
+        super.setPosition();
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();
@@ -75,7 +75,6 @@ public class Bulle extends Pouvoirs{
                     for(Entité sl:super.getSpawner().getListeEntite()){
 
                         if(this.enContact(sl)) {
-                            System.out.println("touché"+super.getAttaque_entite());
                             sl.prendre_degat(super.getAttaque_entite());
                         }
                     }

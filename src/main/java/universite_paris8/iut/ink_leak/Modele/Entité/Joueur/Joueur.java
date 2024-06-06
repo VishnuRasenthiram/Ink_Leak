@@ -10,7 +10,6 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,49 +18,67 @@ import java.util.concurrent.TimeUnit;
 public class Joueur extends Entité {
         private static ScheduledExecutorService executorService;
         private ObservableList<Pouvoirs> listePouvoirs;
-        private IntegerProperty pouvoirEnCoursProperty;
+        private IntegerProperty indicePouvoirEnCoursProperty;
+        private Bulle bulle;
+        private AttaqueDeBase attaqueDeBase;
+
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
-            this.pouvoirEnCoursProperty =new SimpleIntegerProperty(0);
-
+            this.indicePouvoirEnCoursProperty =new SimpleIntegerProperty(0);
+            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
+            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
 
         }
+
+    public Bulle getBulle() {
+        return bulle;
+    }
+
+    public AttaqueDeBase getAttaqueDeBase() {
+        return attaqueDeBase;
+    }
 
     public ObservableList<Pouvoirs> getListePouvoirs() {
         return listePouvoirs;
     }
 
-    public IntegerProperty getPouvoirEnCoursProperty() {return pouvoirEnCoursProperty;}
-    public int getPouvoirEnCours(){
-            return pouvoirEnCoursProperty.getValue();
+    public IntegerProperty getIndicePouvoirEnCoursProperty() {return indicePouvoirEnCoursProperty;}
+    public int getIndicePouvoirEnCours(){
+            return indicePouvoirEnCoursProperty.getValue();
     }
 
-    public void setPouvoirEnCours(int pouvoirEnCours) {
-            this.pouvoirEnCoursProperty.setValue(pouvoirEnCours);
+    public void setIndicePouvoirEnCours(int pouvoirEnCours) {
+            this.indicePouvoirEnCoursProperty.setValue(pouvoirEnCours);
     }
 
+    public Pouvoirs getPouvoirEnCours() {
+            if(listePouvoirs.isEmpty()){
+                return null;
+            }
+            return listePouvoirs.get(getIndicePouvoirEnCours());
+    }
     public void setPouvoir(int a){
             if(a>0){
-                if(getPouvoirEnCours()+1>getListePouvoirs().size()-1){
-                    setPouvoirEnCours(0);
+                if(getIndicePouvoirEnCours()+1>getListePouvoirs().size()-1){
+                    setIndicePouvoirEnCours(0);
                 }
                 else {
-                    setPouvoirEnCours(getPouvoirEnCours()+1);
+                    setIndicePouvoirEnCours(getIndicePouvoirEnCours()+1);
                 }
             }
             else {
-                if(getPouvoirEnCours()-1<0){
+                if(getIndicePouvoirEnCours()-1<0){
                     if(getListePouvoirs().isEmpty()){
-                        setPouvoirEnCours(0);
+                        setIndicePouvoirEnCours(0);
                     }
                     else {
-                        setPouvoirEnCours(getListePouvoirs().size()-1);
+                        setIndicePouvoirEnCours(getListePouvoirs().size()-1);
                     }
 
                 }
                 else {
-                    setPouvoirEnCours(getPouvoirEnCours()-1);
+                    setIndicePouvoirEnCours(getIndicePouvoirEnCours()-1);
                 }
             }
 
@@ -70,26 +87,18 @@ public class Joueur extends Entité {
 
 
     @Override
-    public void attaque(VueAttaque vA) {
-
-        AttaqueDeBase attaqueDeBase=new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
-        vA.afficheAttaque(attaqueDeBase);
+    public void attaque() {
         attaqueDeBase.déplacement(getOrientationProperty());
     }
 
-    public void attaqueAvecPouvoir(VueAttaque vA){
-        switch (getPouvoirEnCours()){
+
+    public void attaqueAvecPouvoir(){
+        switch (getIndicePouvoirEnCours()){
             case 0:
-                Bulle bulle =new Bulle( super.getMap(),super.getSpawner(),this);
-                vA.afficheAttaque(bulle);
                 bulle.déplacement(getOrientationProperty());
                 break;
 
         }
-
-
-
-
 
     }
 

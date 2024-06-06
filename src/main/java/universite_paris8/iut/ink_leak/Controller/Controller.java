@@ -13,16 +13,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
+import universite_paris8.iut.ink_leak.Vue.Musique;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VuePouvoirs.VuePouvoirs;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
+import universite_paris8.iut.ink_leak.Vue.VueTexte;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -82,7 +84,7 @@ public class Controller implements Initializable {
         spawner.getListeEntite().addListener(listenerEnnemis);
 
         ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane);
-        env = new Environnement(joueur, map, spawner);
+        env = new Environnement(joueur, map, spawner,vueMap);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
         spawner.getListeEntite().addListener(ecouteur);
@@ -92,15 +94,12 @@ public class Controller implements Initializable {
         joueur.getListePouvoirs().addListener(airpods);
 
         PouvoirEnCoursObs pv= new PouvoirEnCoursObs(joueur,interfacePane);
-        joueur.getPouvoirEnCoursProperty().addListener(pv);
+        joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav", -1);
-
-
-
     }
 
     @FXML
@@ -120,19 +119,25 @@ public class Controller implements Initializable {
             }
             if(e.getCode()==KeyCode.J){
                 if(tempsDeRechargeJ){
+
                     tempsDeRechargeJ =false;
-                    joueur.attaque(vA);
+                    vA.afficheAttaque(joueur.getAttaqueDeBase());
+                    joueur.attaque();
+                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0);
 
                 }
             }
-
             if(e.getCode()==KeyCode.K){
                 if(tempsDeRechargeK){
                     tempsDeRechargeK =false;
-                    joueur.attaqueAvecPouvoir(vA);
+                    Pouvoirs pouvoirEnCours=joueur.getPouvoirEnCours();
+                    if(pouvoirEnCours!=null){
+                        vA.afficheAttaque(pouvoirEnCours);
+                        joueur.attaqueAvecPouvoir();
+                    }
+
                 }
             }
-
             if(e.getCode()==KeyCode.A){
                 joueur.setPouvoir(-1);
             }
@@ -156,7 +161,7 @@ public class Controller implements Initializable {
                 Duration.millis(60),
                 (ev -> {
                     env.action(temps);
-
+                    vT.afficherTexte();
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();
@@ -169,7 +174,7 @@ public class Controller implements Initializable {
                         tempsDeRechargeJ = true;
                     }
                     temps++;
-                    vT.afficherTexte();
+
 
                 })
         );

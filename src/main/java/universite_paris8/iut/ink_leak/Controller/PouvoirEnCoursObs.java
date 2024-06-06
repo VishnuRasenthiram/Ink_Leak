@@ -1,15 +1,11 @@
 package universite_paris8.iut.ink_leak.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
-
-import java.io.File;
 
 public class PouvoirEnCoursObs implements ChangeListener<Number> {
 

@@ -21,8 +21,6 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
             for(Entité ennemisAjouté: change.getAddedSubList()){
                 vueEnnemis.créeSprite(ennemisAjouté);
             }
-
-
             for(Entité ennemisEnlevé : change.getRemoved()){
                 for(int i= this.mainPane.getChildren().size()-1; i >= 0; i--){
                     if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite())){

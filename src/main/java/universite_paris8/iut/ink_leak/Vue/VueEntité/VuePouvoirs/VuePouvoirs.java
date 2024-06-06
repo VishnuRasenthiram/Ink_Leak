@@ -3,16 +3,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.ink_leak.Controller.ListePouvoirsObs;
-import universite_paris8.iut.ink_leak.Controller.VieObs;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 
 import java.io.File;
 

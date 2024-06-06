@@ -21,8 +21,7 @@ public class VuePouvoirs  {
         HBox hBox = new HBox();
         hBox.setId("listePouvoir");
         hBox.setTranslateX(480);
-        hBox.setTranslateY(0);
-
+        hBox.setTranslateY(-32);
 
         Pane pouvoir= new Pane();
         pouvoir.setId("griffe");

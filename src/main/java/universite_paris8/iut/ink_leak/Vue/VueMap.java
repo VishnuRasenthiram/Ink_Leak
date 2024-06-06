@@ -17,8 +17,10 @@ public class VueMap {
     private TilePane tuileMap;
     @FXML
     private BorderPane mainBorderPane;
-    public VueMap(TilePane tuileMap){
+    public VueMap(TilePane tuileMap, BorderPane mainBorderPane){
+
         this.tuileMap = tuileMap;
+        this.mainBorderPane = mainBorderPane;
     }
 
     public void initMap(Map map){

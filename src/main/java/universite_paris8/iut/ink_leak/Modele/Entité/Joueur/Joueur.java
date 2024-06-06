@@ -19,12 +19,28 @@ public class Joueur extends Entité {
         private static ScheduledExecutorService executorService;
         private ObservableList<Pouvoirs> listePouvoirs;
         private IntegerProperty pouvoirEnCoursProperty;
+        private boolean bougable;
+        private IntegerProperty oppacitéProperty;
+
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
             this.pouvoirEnCoursProperty = new SimpleIntegerProperty(0);
+            this.bougable = true;
+            this.oppacitéProperty = new SimpleIntegerProperty(1);
         }
-
+        public IntegerProperty getOppacitéProperty() {
+            return oppacitéProperty;
+        }
+        public void setOppacitéProperty(int oppacité) {
+            this.oppacitéProperty.set(oppacité);
+        }
+        public boolean getBougable(){
+            return bougable;
+        }
+        public void setBougable(boolean bougable){
+            this.bougable = bougable;
+        }
     public ObservableList<Pouvoirs> getListePouvoirs() {
         return listePouvoirs;
     }
@@ -54,8 +70,11 @@ public class Joueur extends Entité {
             int vitesse_joueur = super.getVitesse_entite();
 
 
-
-                if (executorService != null) return;
+            if (getBougable() == false) {
+                stop();
+                return;
+            }
+            if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.scheduleAtFixedRate(() -> {
@@ -94,6 +113,8 @@ public class Joueur extends Entité {
 
                     });
                 }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
+            setMovementState(Joueur.MovementState.WALK);
+
             ;
         } catch (Exception ex) {
             System.out.println(ex);
@@ -104,6 +125,8 @@ public class Joueur extends Entité {
         if (executorService != null) {
             executorService.shutdownNow();
             executorService = null;
+            setMovementState(Joueur.MovementState.IDLE);
+
         }
     }
 

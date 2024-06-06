@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -60,6 +61,7 @@ public class Controller implements Initializable {
         this.joueur = new Joueur("LePlayer",map,spawner);
         ink.créeSprite(joueur);
         joueur.setEmplacement(30,200);
+
         joueur.orientationProperty().addListener((obs,old,nouv)->{
 
             Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
@@ -69,6 +71,17 @@ public class Controller implements Initializable {
             imageview.setFitWidth(32);
             imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
             p.getChildren().add(imageview);
+
+        });
+        joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
+
+            Pane p = (Pane) mainPane.lookup("#" + joueur.getNom_entite());
+            if (nouv != Joueur.MovementState.WALK){
+                ink.stopWalkAnimation(joueur, p);
+            }
+            else{
+                ink.walkAnimation(joueur, p);
+            }
 
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);
@@ -130,7 +143,6 @@ public class Controller implements Initializable {
                 Duration.millis(60),
                 (ev -> {
                     env.action(temps);
-
                     if (temps % 5 == 0) {
                         double x = joueur.getPosX();
                         double y = joueur.getPosY();
@@ -142,6 +154,7 @@ public class Controller implements Initializable {
                             if (interaction == 3 && map.getNumMap() < 0) {
                                 return;
                             }
+                            joueur.setBougable(false);
                             vueMap.supprimerAffichageMap();
                             map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 3 ? 1 : map.getNumMap() - 1));
                             vueMap.initMap(map);
@@ -185,6 +198,7 @@ public class Controller implements Initializable {
                 joueur.setOrientationProperty("E");
                 break;
         }
+        joueur.setBougable(true);
     }
 
 

@@ -18,6 +18,7 @@ import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -89,7 +90,7 @@ public class Controller implements Initializable {
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
 
-
+        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav", -1);
 
     }
 
@@ -112,6 +113,7 @@ public class Controller implements Initializable {
                 if(tempsDeRechargeJ){
                     tempsDeRechargeJ =false;
                     joueur.attaque(vA);
+                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0);
 
                 }
             }

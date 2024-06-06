@@ -50,7 +50,7 @@ public class Controller implements Initializable {
         this.tempsDeRechargeK =true;
         this.map= new Map();
         spawner= new GenerateurEnnemis();
-        vueMap= new VueMap(tuileMap);
+        vueMap= new VueMap(tuileMap, mainBorderPane);
         VueJoueur ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map);

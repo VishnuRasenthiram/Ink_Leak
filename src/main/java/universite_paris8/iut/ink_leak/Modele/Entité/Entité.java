@@ -30,7 +30,7 @@ public abstract class Entité {
         this.posXProperty = new SimpleDoubleProperty();
         this.posYProperty = new SimpleDoubleProperty();
         this.orientationProperty = new SimpleStringProperty("S");
-        this.invincibilite =invincibilite;
+        this.invincibilite = invincibilite;
         this.dernier_degat = 0;
         this.map = map;
         this.spawner = spawner;

@@ -18,6 +18,10 @@ import java.util.concurrent.TimeUnit;
 public class Joueur extends Entité {
         private static ScheduledExecutorService executorService;
         private ObservableList<Pouvoirs> listePouvoirs;
+        private IntegerProperty pouvoirEnCoursProperty;
+        private boolean bougable;
+        private IntegerProperty oppacitéProperty;
+
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
         private AttaqueDeBase attaqueDeBase;
@@ -25,6 +29,18 @@ public class Joueur extends Entité {
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
+            this.pouvoirEnCoursProperty = new SimpleIntegerProperty(0);
+            this.bougable = true;
+            this.oppacitéProperty = new SimpleIntegerProperty(1);
+        }
+        public IntegerProperty getOppacitéProperty() {
+            return oppacitéProperty;
+        }
+        public void setOppacitéProperty(int oppacité) {
+            this.oppacitéProperty.set(oppacité);
+        }
+        public boolean getBougable(){
+            return bougable;
             this.indicePouvoirEnCoursProperty =new SimpleIntegerProperty(0);
             bulle =new Bulle( super.getMap(),super.getSpawner(),this);
             attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
@@ -39,6 +55,9 @@ public class Joueur extends Entité {
         return attaqueDeBase;
     }
 
+        public void setBougable(boolean bougable){
+            this.bougable = bougable;
+        }
     public ObservableList<Pouvoirs> getListePouvoirs() {
         return listePouvoirs;
     }
@@ -109,8 +128,11 @@ public class Joueur extends Entité {
             int vitesse_joueur = super.getVitesse_entite();
 
 
-
-                if (executorService != null) return;
+            if (getBougable() == false) {
+                stop();
+                return;
+            }
+            if (executorService != null) return;
 
                 executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.scheduleAtFixedRate(() -> {
@@ -149,6 +171,8 @@ public class Joueur extends Entité {
 
                     });
                 }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
+            setMovementState(Joueur.MovementState.WALK);
+
             ;
         } catch (Exception ex) {
             System.out.println(ex);
@@ -159,6 +183,8 @@ public class Joueur extends Entité {
         if (executorService != null) {
             executorService.shutdownNow();
             executorService = null;
+            setMovementState(Joueur.MovementState.IDLE);
+
         }
     }
 

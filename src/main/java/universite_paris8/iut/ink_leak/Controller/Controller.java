@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -67,6 +68,7 @@ public class Controller implements Initializable {
         this.joueur = new Joueur("LePlayer",map,spawner);
         joueur.setEmplacement(30,200);
 
+
         env = new Environnement(joueur, map, spawner,vueMap);
 
         joueur.orientationProperty().addListener((obs,old,nouv)->{
@@ -78,6 +80,17 @@ public class Controller implements Initializable {
             imageview.setFitWidth(32);
             imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
             p.getChildren().add(imageview);
+
+        });
+        joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
+
+            Pane p = (Pane) mainPane.lookup("#" + joueur.getNom_entite());
+            if (nouv != Joueur.MovementState.WALK){
+                ink.stopWalkAnimation(joueur, p);
+            }
+            else{
+                ink.walkAnimation(joueur, p);
+            }
 
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane);

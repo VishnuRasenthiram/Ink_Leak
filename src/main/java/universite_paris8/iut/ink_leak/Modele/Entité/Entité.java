@@ -19,6 +19,7 @@ public abstract class Entité {
     private DoubleProperty posYProperty;
     private Map map;
     private GenerateurEnnemis spawner;
+    private final ObjectProperty<MovementState> movementStateProperty;
 
     public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis spawner) {
         this.nom_entite = nom_entite;
@@ -34,11 +35,21 @@ public abstract class Entité {
         this.dernier_degat = 0;
         this.map = map;
         this.spawner = spawner;
+        this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
 
 
     }
 
-
+    public enum MovementState {
+        IDLE,
+        WALK,
+    }
+    public ObjectProperty<MovementState> getMovementStateProperty() {
+        return movementStateProperty;
+    }
+    public void setMovementState(MovementState movementState) {
+        movementStateProperty.set(movementState);
+    }
     public boolean peutAller(double x, double y, Map map) {
 
         if (!estDansMap(x, y,  map)) {

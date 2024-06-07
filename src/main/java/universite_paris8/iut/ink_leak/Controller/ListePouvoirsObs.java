@@ -9,10 +9,7 @@ public class ListePouvoirsObs implements ListChangeListener<Pouvoirs> {
 
 
     private VuePouvoirs vP;
-
     public ListePouvoirsObs(Pane interfacePane, Joueur j){
-
-
         vP= new VuePouvoirs(interfacePane);
         vP.créeSpriteListeAttaque(j);
     }

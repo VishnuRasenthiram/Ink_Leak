@@ -25,8 +25,8 @@ public class VueJoueur extends VueEntite {
     private Joueur joueur;
     private Pane Joueur;
 
-    public VueJoueur(Pane mainPane, Pane interfacePane, Pane mainborderPane){
-        super(mainPane, mainborderPane);
+    public VueJoueur(Pane mainPane, Pane interfacePane){
+        super(mainPane);
         this.interfacePane = interfacePane;
     }
 

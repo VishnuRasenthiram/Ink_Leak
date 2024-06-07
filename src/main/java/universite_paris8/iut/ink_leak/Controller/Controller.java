@@ -65,7 +65,7 @@ public class Controller implements Initializable {
         this.map= new Map();
         spawner= new GenerateurEnnemis();
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
-        ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
+        ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map, joueur);
         gameLoop();

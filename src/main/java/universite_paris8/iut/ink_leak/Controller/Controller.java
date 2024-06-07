@@ -15,7 +15,9 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objet;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -53,8 +55,8 @@ public class Controller implements Initializable {
 
     private VueMap vueMap;
 
-    private ObjetPouvoirBulle ob;
-    private ObjetPouvoirBulle op;
+    private ObjetBulle ob;
+    private ObjetPoing op;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
@@ -71,8 +73,8 @@ public class Controller implements Initializable {
 
         this.joueur = new Joueur("LePlayer",map,spawner);
         joueur.setEmplacement(30,200);
-        ob=new ObjetPouvoirBulle(map,spawner,joueur, "ObjetBulle");
-        op=new ObjetPouvoirBulle(map,spawner,joueur, "ObjetPoing");
+        ob=new ObjetBulle(map, spawner, joueur);
+        op=new ObjetPoing(map, spawner, joueur);
 
         env = new Environnement(joueur, map, spawner,vueMap);
 
@@ -188,8 +190,8 @@ public class Controller implements Initializable {
                         op.setEmplacement(13, 13);
                         vob.créeSprite(op);
                     }
-                    ob.déplacement("s");
-                    op.déplacement("s");
+                    ob.action();
+                    op.action();
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

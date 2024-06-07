@@ -39,6 +39,8 @@ public abstract class Entité {
 
 
     }
+
+
     public enum MovementState {
         IDLE,
         WALK,

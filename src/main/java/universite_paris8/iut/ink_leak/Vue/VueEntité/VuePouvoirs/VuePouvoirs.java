@@ -53,7 +53,6 @@ public class VuePouvoirs  {
             imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/bubble_icon.png").toURI().toString())));
         }
         else if(p instanceof Poing) {
-            System.out.println("poing");
             imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/fist_icon.png").toURI().toString())));
         }
         pouvoir.getChildren().add(imageView);

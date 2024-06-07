@@ -97,14 +97,12 @@ public class Controller implements Initializable {
             }
 
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane, mainBorderPane);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
         spawner.getListeEntite().addListener(listenerEnnemis);
-
-        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane, mainBorderPane);
         env = new Environnement(joueur, map, spawner,vueMap);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
-        spawner.getListeEntite().addListener(ecouteur);
+
 
 
         ListChangeListener<Pouvoirs> airpods=new ListePouvoirsObs(interfacePane,joueur);

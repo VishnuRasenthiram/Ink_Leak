@@ -2,6 +2,7 @@ package universite_paris8.iut.ink_leak.Vue;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import java.io.File;
 
@@ -17,13 +19,28 @@ public class VueMap {
     private TilePane tuileMap;
     @FXML
     private BorderPane mainBorderPane;
-    public VueMap(TilePane tuileMap, BorderPane mainBorderPane){
+    @FXML
+    private Pane interfacePane;
+    public VueMap(TilePane tuileMap, Pane InterfacePane, BorderPane mainBorderPane){
 
         this.tuileMap = tuileMap;
         this.mainBorderPane = mainBorderPane;
+        this.interfacePane = InterfacePane;
     }
 
-    public void initMap(Map map){
+    public void initMap(Map map, Joueur entité){
+        if (map.getNumMap() == 2){
+            ImageView Torche = new ImageView();
+            Torche.setFitHeight(1800);
+            Torche.setFitWidth(3000);
+            Torche.setId("torche");
+            Torche.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
+            Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1504));
+            Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
+            interfacePane.getChildren().add(Torche);
+        } else {
+            interfacePane.getChildren().removeIf(node -> node.getId() != null && node.getId().equals("torche"));
+        }
         for (int i = 0; i < map.getMap().length; i++) {
             for (int j = 0; j < map.getMap()[i].length; j++) {
                 creerTuile(map.getMap(j,i));

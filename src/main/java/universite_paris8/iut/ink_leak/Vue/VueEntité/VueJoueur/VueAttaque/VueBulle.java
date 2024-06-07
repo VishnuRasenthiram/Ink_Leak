@@ -4,13 +4,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.BulleObs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 
 import java.io.File;
 
 public class VueBulle extends VueAttaque{
-    public VueBulle(Pane mainPane) {
-        super(mainPane);
+    private Joueur joueur;
+    public VueBulle(Pane mainPane, Joueur joueur) {
+        super(mainPane, joueur);
     }
     public void afficheAttaqueBulle( Bulle bulle) {
 

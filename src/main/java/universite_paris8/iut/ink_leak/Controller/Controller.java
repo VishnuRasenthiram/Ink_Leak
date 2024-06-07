@@ -57,10 +57,10 @@ public class Controller implements Initializable {
         this.tempsDeRechargeK =true;
         this.map= new Map();
         spawner= new GenerateurEnnemis();
-        vueMap= new VueMap(tuileMap, mainBorderPane);
+        vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         VueJoueur ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
 
-        vueMap.initMap(map);
+        vueMap.initMap(map, joueur);
         gameLoop();
         gameLoop.play();
 
@@ -117,7 +117,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void action() {
-        VueAttaque vA= new VueAttaque(mainPane);
+        VueAttaque vA= new VueAttaque(mainPane, joueur);
         mainPane.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.Z){
                 joueur.déplacement("N");

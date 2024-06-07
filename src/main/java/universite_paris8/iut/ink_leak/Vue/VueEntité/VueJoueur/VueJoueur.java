@@ -41,16 +41,8 @@ public class VueJoueur extends VueEntite {
 
         Joueur.translateXProperty().bind(entité.posXProperty());
         Joueur.translateYProperty().bind(entité.posYProperty());
-        ImageView Torche = new ImageView();
-        Torche.setFitHeight(1400);
-        Torche.setFitWidth(2500);
-        Torche.setId("torche");
-        Torche.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
 
-        Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1251));
-        Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), -699));
         super.getMainPane().getChildren().add(Joueur);
-        interfacePane.getChildren().add(Torche);
 
     }
 
@@ -136,8 +128,7 @@ public class VueJoueur extends VueEntite {
             ImageView imageview = new ImageView();
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
-            imageview.setImage(images.get(1));  // On change cette image plus tard dans l'animation
-            // Créer une animation d'images
+            imageview.setImage(images.get(1));
             currentIndex = currentIndex + 1;
             if (currentIndex >= images.size()) currentIndex = 0;
             imageview.setImage(images.get(currentIndex));

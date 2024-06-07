@@ -35,10 +35,10 @@ public class Environnement {
                 vMap.supprimerAffichageMap();
                 map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 3 ? 1 : map.getNumMap() - 1));
                 TuerToutLesEnnemis();
-                vMap.initMap(map);
+                vMap.initMap(map, joueur);
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(event -> joueur.setBougable(true));
+                pause.setOnFinished(event -> joueur.setBougable(true)); // ici vous mettez quoi faire après X temps
                 pause.play();
             }
 

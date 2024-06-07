@@ -7,8 +7,8 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 public abstract class Pouvoirs extends Entité {
     private Joueur joueur;
-    public Pouvoirs(String nom_entite, int vie_entite, int attaque_entite, double hauteur,double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis spawner, Joueur joueur) {
-        super(nom_entite, vie_entite, attaque_entite, hauteur,longueur, vitesse_entite, invincibilite, map, spawner);
+    public Pouvoirs(String nom_entite, int attaque_entite, double hauteur,double longueur, int vitesse_entite, Map map, GenerateurEnnemis spawner, Joueur joueur) {
+        super(nom_entite, 0, attaque_entite, hauteur,longueur, vitesse_entite, 0, map, spawner);
         this.joueur = joueur;
     }
 

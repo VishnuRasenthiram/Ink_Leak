@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
@@ -9,32 +10,18 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
-public class Bulle extends Pouvoirs{
+public class Poing extends Pouvoirs {
 
-        private int portée;
+    private IntegerProperty estENVIEProperty;
+    private static int cpt=0;
+    public Poing(Map map, GenerateurEnnemis spawner, Joueur j) {
 
-        private IntegerProperty estENVIEProperty;
-        private static int cpt=0;
-        public Bulle(Map map,GenerateurEnnemis spawner, Joueur j) {
+        super("poing"+cpt,0, 2, 64, 64, map, spawner,j);
+        super.setPosition();
+        this.estENVIEProperty = new SimpleIntegerProperty(1);
+        cpt++;
 
-            super("bulle"+cpt,0, 2, 32, 32, map,spawner,j);
-            this.portée = 0;
-            super.setPosition();
-            this.estENVIEProperty = new SimpleIntegerProperty(1);
-            cpt++;
-
-        }
-
-        public int getPortée() {
-            return portée;
-        }
-
-        public void setPortée(int portée) {
-            this.portée = portée;
-        }
-
-
-
+    }
 
     public IntegerProperty getEstENVIEProperty() {
         return estENVIEProperty;
@@ -88,8 +75,4 @@ public class Bulle extends Pouvoirs{
             estENVIEProperty.setValue(0);
         });
     }
-
-
-
-
 }

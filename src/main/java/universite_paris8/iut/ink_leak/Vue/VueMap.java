@@ -1,5 +1,5 @@
 package universite_paris8.iut.ink_leak.Vue;
-import javafx.animation.AnimationTimer;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -11,8 +11,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
-import java.awt.*;
 import java.io.File;
 
 public class VueMap {

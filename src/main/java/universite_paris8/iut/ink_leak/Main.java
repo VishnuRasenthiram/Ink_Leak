@@ -23,12 +23,12 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("terrain.fxml"));
         Pane root = fxmlLoader.load();
-        Scene scene = new Scene(root, 1080, 720);
+        Scene scene = new Scene(root, 700, 700);
         stage.setTitle("Ink Leak");
         stage.setScene(scene);
         stage.show();
 
-        showDialog("Sortez de ce laboratoire...", stage);
+        showDialog("Sortez de cet endroit...", stage);
     }
 
     public static void main(String[] args) {

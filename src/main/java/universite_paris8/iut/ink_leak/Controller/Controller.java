@@ -15,7 +15,9 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objet;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -54,7 +56,8 @@ public class Controller implements Initializable {
 
     private VueMap vueMap;
 
-    private ObjetPouvoirBulle ob;
+    private ObjetBulle ob;
+    private ObjetPoing op;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
@@ -62,7 +65,7 @@ public class Controller implements Initializable {
         this.map= new Map();
         spawner= new GenerateurEnnemis();
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
-        ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
+        ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map, joueur);
         gameLoop();
@@ -71,7 +74,8 @@ public class Controller implements Initializable {
 
         this.joueur = new Joueur("LePlayer",map,spawner);
         joueur.setEmplacement(30,200);
-        ob=new ObjetPouvoirBulle(map,spawner,joueur);
+        ob=new ObjetBulle(map, spawner, joueur);
+        op=new ObjetPoing(map, spawner, joueur);
 
         env = new Environnement(joueur, map, spawner,vueMap);
 
@@ -97,14 +101,12 @@ public class Controller implements Initializable {
             }
 
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane, mainBorderPane);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
         spawner.getListeEntite().addListener(listenerEnnemis);
-
-        ListChangeListener<Entité> ecouteur=new ListeEnnemieObs(mainPane, mainBorderPane);
         env = new Environnement(joueur, map, spawner,vueMap);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
-        spawner.getListeEntite().addListener(ecouteur);
+
 
 
         ListChangeListener<Pouvoirs> airpods=new ListePouvoirsObs(interfacePane,joueur);
@@ -168,6 +170,7 @@ public class Controller implements Initializable {
             } else if (e.getCode() == KeyCode.E) {
                 joueur.setPouvoir(1);
             }
+
         });
 
         mainPane.setOnKeyReleased(e -> {
@@ -199,8 +202,11 @@ public class Controller implements Initializable {
                         System.out.println("pop");
                         ob.setEmplacement(15,15);
                         vob.créeSprite(ob);
+                        op.setEmplacement(13, 13);
+                        vob.créeSprite(op);
                     }
-                    ob.déplacement("s");
+                    ob.action();
+                    op.action();
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

@@ -5,15 +5,17 @@ import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.VieEnnemisObs;
 import universite_paris8.iut.ink_leak.Controller.VieObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 
 import java.io.File;
 
 public class VueEnnemis extends VueEntite {
 
-
-    public VueEnnemis(Pane mainPane, Pane mainborderPane) {
-        super(mainPane, mainborderPane);
+    private Joueur joueur;
+    public VueEnnemis(Pane mainPane, Joueur j) {
+        super(mainPane);
+        joueur = j;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class VueEnnemis extends VueEntite {
         ennemis.translateXProperty().bind(entité.posXProperty());
         ennemis.translateYProperty().bind(entité.posYProperty());
         super.getMainPane().getChildren().add(ennemis);
-        entité.getVie_entiteProperty().addListener(new VieEnnemisObs(imageview, ennemis, entité));
+        entité.getVie_entiteProperty().addListener(new VieEnnemisObs(ennemis,entité,joueur));
 
     }
 }

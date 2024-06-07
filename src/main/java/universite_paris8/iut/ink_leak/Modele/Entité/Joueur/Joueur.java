@@ -75,6 +75,8 @@ public class Joueur extends Entité {
         }
     }
 
+
+
     public void déplacement(String direction) {
         try {
             int vitesseJoueur = super.getVitesse_entite();

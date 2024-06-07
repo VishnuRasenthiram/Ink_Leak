@@ -9,8 +9,8 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public  class ObjetPouvoirBulle extends Entité {
     private Joueur j;
     private static int nbFoisRecuperable=1;
-    public ObjetPouvoirBulle( Map map, GenerateurEnnemis spawner, Joueur j) {
-        super("ObjetBulle", 1, 0, 32,32, 0, 1, map, spawner);
+    public ObjetPouvoirBulle( Map map, GenerateurEnnemis spawner, Joueur j, String idPouvoir) {
+        super(idPouvoir, 1, 0, 32,32, 0, 1, map, spawner);
         this.j = j;
 
 
@@ -22,10 +22,15 @@ public  class ObjetPouvoirBulle extends Entité {
 
     @Override
     public void déplacement(String déplacementDirection) {
+
         if(j.enContact(this) && nbFoisRecuperable>0){
             nbFoisRecuperable--;
-            j.ajoutPouvoir(j.getBulle());
-            this.setEmplacement(0,0);
+            if (getNom_entite() == "ObjetBulle") {
+                j.ajoutPouvoir(j.getBulle());
+            }
+            else if (getNom_entite() == "ObjetPoing") {
+                j.ajoutPouvoir(j.getPoing());
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 
 import java.io.File;
@@ -50,6 +51,10 @@ public class VuePouvoirs  {
 
         if(p instanceof Bulle){
             imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/bubble_icon.png").toURI().toString())));
+        }
+        else if(p instanceof Poing) {
+            System.out.println("poing");
+            imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/fist_icon.png").toURI().toString())));
         }
         pouvoir.getChildren().add(imageView);
         HBox hbox = (HBox)interfacePane.lookup("#listePouvoir");

@@ -54,6 +54,7 @@ public class Controller implements Initializable {
     private VueMap vueMap;
 
     private ObjetPouvoirBulle ob;
+    private ObjetPouvoirBulle op;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
@@ -70,7 +71,8 @@ public class Controller implements Initializable {
 
         this.joueur = new Joueur("LePlayer",map,spawner);
         joueur.setEmplacement(30,200);
-        ob=new ObjetPouvoirBulle(map,spawner,joueur);
+        ob=new ObjetPouvoirBulle(map,spawner,joueur, "ObjetBulle");
+        op=new ObjetPouvoirBulle(map,spawner,joueur, "ObjetPoing");
 
         env = new Environnement(joueur, map, spawner,vueMap);
 
@@ -183,8 +185,11 @@ public class Controller implements Initializable {
                         System.out.println("pop");
                         ob.setEmplacement(15,15);
                         vob.créeSprite(ob);
+                        op.setEmplacement(13, 13);
+                        vob.créeSprite(op);
                     }
                     ob.déplacement("s");
+                    op.déplacement("s");
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

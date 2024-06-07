@@ -21,8 +21,5 @@
          </Pane>
       </Pane>
    </center>
-   <top>
-      <Label text="Ink Leak" BorderPane.alignment="CENTER" />
-   </top>
 
 </BorderPane>

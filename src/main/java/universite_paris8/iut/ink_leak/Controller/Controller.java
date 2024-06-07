@@ -16,6 +16,7 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -23,6 +24,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjetBulle;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -51,6 +53,8 @@ public class Controller implements Initializable {
     private GenerateurEnnemis spawner;
 
     private VueMap vueMap;
+
+    private ObjetPouvoirBulle ob;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
@@ -67,7 +71,7 @@ public class Controller implements Initializable {
 
         this.joueur = new Joueur("LePlayer",map,spawner);
         joueur.setEmplacement(30,200);
-
+        ob=new ObjetPouvoirBulle(map,spawner,joueur);
 
         env = new Environnement(joueur, map, spawner,vueMap);
 
@@ -152,6 +156,7 @@ public class Controller implements Initializable {
                 }
             }
             if(e.getCode()==KeyCode.A){
+
                 joueur.setPouvoir(-1);
             }
             if(e.getCode()==KeyCode.E){
@@ -170,11 +175,18 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
+        VueObjetBulle vob=new VueObjetBulle(mainPane);
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
                     env.action(temps);
                     vT.afficherTexte();
+                    if(map.getNumMap()==0 && temps==100){
+                        System.out.println("pop");
+                        ob.setEmplacement(15,15);
+                        vob.créeSprite(ob);
+                    }
+                    ob.déplacement("s");
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

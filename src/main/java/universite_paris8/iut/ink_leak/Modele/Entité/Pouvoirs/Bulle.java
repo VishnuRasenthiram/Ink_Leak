@@ -19,7 +19,7 @@ public class Bulle extends Pouvoirs{
 
             super("bulle"+cpt,0, 2, 32, 32, 1,0, map, spawner,j);
             this.portée = 0;
-            super.setPosition();
+
             this.estENVIEProperty = new SimpleIntegerProperty(1);
             cpt++;
 
@@ -43,6 +43,7 @@ public class Bulle extends Pouvoirs{
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
+        estENVIEProperty.set(1);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();

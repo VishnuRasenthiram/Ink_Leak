@@ -31,8 +31,8 @@ public class Joueur extends Entité {
             this.listePouvoirs= FXCollections.observableArrayList();
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);
-            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
             attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
+            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
         public IntegerProperty getOppacitéProperty() {
@@ -76,6 +76,11 @@ public class Joueur extends Entité {
             }
             return listePouvoirs.get(getIndicePouvoirEnCours());
     }
+
+    public void ajoutPouvoir(Pouvoirs p){
+            listePouvoirs.add(p);
+    }
+
     public void setPouvoir(int a){
             if(a>0){
                 if(getIndicePouvoirEnCours()+1>getListePouvoirs().size()-1){
@@ -111,12 +116,15 @@ public class Joueur extends Entité {
 
 
     public void attaqueAvecPouvoir(){
-        switch (getIndicePouvoirEnCours()){
-            case 0:
-                bulle.déplacement(getOrientationProperty());
-                break;
-
+        int indice=getIndicePouvoirEnCours();
+        if(listePouvoirs.get(indice) instanceof Bulle){
+            bulle.déplacement(getOrientationProperty());
         }
+
+
+
+
+
 
     }
 

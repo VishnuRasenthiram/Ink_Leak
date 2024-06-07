@@ -24,7 +24,7 @@ public class VueBulle extends VueAttaque{
 
         attaquePane.translateXProperty().bind(bulle.posXProperty());
         attaquePane.translateYProperty().bind(bulle.posYProperty());
-
+        System.out.println(bulle.getPosX());
         attaquePane.setId("attaque");
         super.getMainPane().getChildren().add(attaquePane);
 

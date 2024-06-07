@@ -33,7 +33,6 @@ public class PouvoirEnCoursObs implements ChangeListener<Number> {
         Pouvoirs pouvoirPrecedent=joueur.getListePouvoirs().get((int)old);
         HBox listePouvoirs2 = (HBox) interfacePane.lookup("#listePouvoir");
         Pane paneO=(Pane)listePouvoirs2.lookup("#"+pouvoirPrecedent.getNom_entite());
-
         ImageView imageViewO = (ImageView) paneO.lookup("#imageView");
         imageViewO.setFitWidth(32);
         imageViewO.setFitHeight(32);

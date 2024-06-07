@@ -6,6 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 
 public class Environnement {
@@ -29,6 +30,7 @@ public class Environnement {
             double y = this.joueur.getPosY();
             joueur.peutAller(x, y, this.map);
             int interaction = joueur.verifierInteractionEnFace(x, y);
+
 
             if (interaction == 3 || interaction == 4) {
                 joueur.setBougable(false);

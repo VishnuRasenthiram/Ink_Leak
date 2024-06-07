@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Map;
@@ -93,15 +95,15 @@ public class VueMap {
         new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/changement_salle.wav", 1.0f, 0);
     }
 
-    public void fonduAuNoir(BorderPane mainPane) {
+    public void fonduAuNoir(BorderPane mainBorderPane) {
 
-        ImageView rectangleNoir = new ImageView();
-        rectangleNoir.setFitWidth(1080);
-        rectangleNoir.setFitHeight(720);
-        rectangleNoir.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/black_screen.png").toURI().toString()));
-        mainPane.getChildren().add(rectangleNoir);
+        Rectangle rectangleNoir = new Rectangle(mainBorderPane.getWidth(), mainBorderPane.getHeight());
+        rectangleNoir.setFill(Color.BLACK);
+
+        mainBorderPane.getChildren().add(rectangleNoir);
 
         Timeline fondu = new Timeline(
+
                 new KeyFrame(Duration.seconds(0.0), new KeyValue(rectangleNoir.opacityProperty(), 1.0)),
                 new KeyFrame(Duration.seconds(0.1), new KeyValue(rectangleNoir.opacityProperty(), 0.9)),
                 new KeyFrame(Duration.seconds(0.2), new KeyValue(rectangleNoir.opacityProperty(), 0.8)),

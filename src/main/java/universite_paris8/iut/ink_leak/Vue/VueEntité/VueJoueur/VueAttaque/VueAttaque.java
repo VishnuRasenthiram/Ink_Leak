@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.BulleObs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
@@ -15,22 +16,27 @@ import java.util.ArrayList;
 public class VueAttaque {
 
     private Pane mainPane;
+    private Joueur joueur;
 
-    public VueAttaque(Pane mainPane){
+    public VueAttaque(Pane mainPane, Joueur joueur){
         this.mainPane = mainPane;
-
+        this.joueur = joueur;
 
     }
     public Pane getMainPane() {
         return mainPane;
     }
 
+    public Joueur getJoueur() {
+        return joueur;
+    }
+
     public void afficheAttaque(Pouvoirs pouvoirs) {
         if(pouvoirs instanceof AttaqueDeBase){
-            VueAttaqueDeBase ab=new VueAttaqueDeBase(mainPane);
+            VueAttaqueDeBase ab=new VueAttaqueDeBase(mainPane, joueur);
             ab.afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
         } else if (pouvoirs instanceof Bulle ) {
-            VueBulle vB= new VueBulle(mainPane);
+            VueBulle vB= new VueBulle(mainPane, joueur);
             vB.afficheAttaqueBulle((Bulle) pouvoirs);
         } else {
             System.out.println(" To do");

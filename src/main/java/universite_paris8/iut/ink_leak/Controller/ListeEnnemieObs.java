@@ -9,13 +9,16 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueEnnemis;
 public class ListeEnnemieObs implements ListChangeListener<Entité> {
     @FXML
     private Pane mainPane;
-    public ListeEnnemieObs(Pane mainPane){
+    @FXML
+    private Pane mainBorderPane;
+    public ListeEnnemieObs(Pane mainPane, Pane mainBorderPane){
         this.mainPane = mainPane;
+        this.mainBorderPane = mainBorderPane;
     }
 
     @Override
     public void onChanged(Change<? extends Entité> change) {
-        VueEnnemis vueEnnemis = new VueEnnemis(mainPane);
+        VueEnnemis vueEnnemis = new VueEnnemis(mainPane, mainBorderPane);
 
         while(change.next()){
             for(Entité ennemisAjouté: change.getAddedSubList()){

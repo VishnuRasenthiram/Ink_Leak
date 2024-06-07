@@ -1,5 +1,10 @@
 package universite_paris8.iut.ink_leak.Modele;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -28,12 +33,16 @@ public class Environnement {
 
 
             if (interaction == 3 || interaction == 4) {
+                joueur.setBougable(false);
                 vMap.supprimerAffichageMap();
-                map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 3 ? 1 : map.getNumMap() - 1));
+                map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 4 ? 1 : map.getNumMap() - 1));
                 TuerToutLesEnnemis();
-                vMap.initMap(map);
-
+                vMap.initMap(map, joueur);
+                PauseTransition pause = new PauseTransition(Duration.millis(500));
+                pause.setOnFinished(event -> joueur.setBougable(true));
+                pause.play();
             }
+
         }
         if (temps % 100 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
         liste_entites.ActiverMob();

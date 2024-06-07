@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
@@ -26,6 +27,7 @@ public class Joueur extends Entité {
         private IntegerProperty oppacitéProperty;
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
+        private Poing poing;
         private AttaqueDeBase attaqueDeBase;
         private Timeline timeline;
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
@@ -35,6 +37,7 @@ public class Joueur extends Entité {
             this.oppacitéProperty = new SimpleIntegerProperty(1);
             attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
             bulle =new Bulle( super.getMap(),super.getSpawner(),this);
+            poing = new Poing(super.getMap(), super.getSpawner(), this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
 
@@ -154,6 +157,7 @@ public class Joueur extends Entité {
     public Bulle getBulle() {
         return bulle;
     }
+    public Poing getPoing() { return poing; }
 
     public AttaqueDeBase getAttaqueDeBase() {
         return attaqueDeBase;

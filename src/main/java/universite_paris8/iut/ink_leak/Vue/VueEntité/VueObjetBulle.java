@@ -15,18 +15,24 @@ public class VueObjetBulle {
     }
 
     public void créeSprite(Entité entité) {
-        Pane bullePane =new Pane();
-        bullePane.setId(entité.getNom_entite());
+        Pane pouvoirPane =new Pane();
+        pouvoirPane.setId(entité.getNom_entite());
         ImageView imageview= new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/Buckets/blue_bucket.png").toURI().toString()));
-        bullePane.getChildren().add(imageview);
+        if (entité.getNom_entite() == "ObjetBulle") {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/Buckets/blue_bucket.png").toURI().toString()));
+            pouvoirPane.getChildren().add(imageview);
+        }
+        else if (entité.getNom_entite() == "ObjetPoing") {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/Buckets/green_bucket.png").toURI().toString()));
+            pouvoirPane.getChildren().add(imageview);
+        }
 
 
-        bullePane.translateXProperty().bind(entité.posXProperty());
-        bullePane.translateYProperty().bind(entité.posYProperty());
-        mainPane.getChildren().add(bullePane);
+        pouvoirPane.translateXProperty().bind(entité.posXProperty());
+        pouvoirPane.translateYProperty().bind(entité.posYProperty());
+        mainPane.getChildren().add(pouvoirPane);
 
     }
 }

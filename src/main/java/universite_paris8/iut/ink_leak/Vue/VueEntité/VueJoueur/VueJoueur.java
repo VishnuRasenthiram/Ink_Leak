@@ -80,21 +80,7 @@ public class VueJoueur extends VueEntite {
 
         }
     }
-    //timeline
-    //créé une gameloop timeline
-    public File créeTimeline(String orientation) {
-        File file;
-        if (orientation.equals("N"))
-            file = new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_up.png");
-        else if (orientation.equals("S"))
-            file = new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_down.png");
-        else if (orientation.equals("E"))
-            file = new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_right.png");
-        else
-            file = new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_left.png");
-
-        return file;
-    }
+peaf
     public List<Image> getWalkImages(String orientation) {
 
         List<Image> images = new ArrayList<>();

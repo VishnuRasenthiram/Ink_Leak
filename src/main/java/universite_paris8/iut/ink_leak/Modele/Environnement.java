@@ -6,7 +6,6 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPouvoirBulle;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 
 public class Environnement {

@@ -21,7 +21,6 @@ public class Joueur extends Entité {
         private IntegerProperty pouvoirEnCoursProperty;
         private boolean bougable;
         private IntegerProperty oppacitéProperty;
-
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
         private AttaqueDeBase attaqueDeBase;
@@ -35,51 +34,6 @@ public class Joueur extends Entité {
             bulle =new Bulle( super.getMap(),super.getSpawner(),this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
-        public IntegerProperty getOppacitéProperty() {
-            return oppacitéProperty;
-        }
-        public void setOppacitéProperty(int oppacité) {
-            this.oppacitéProperty.set(oppacité);
-        }
-        public boolean getBougable(){
-            return bougable;
-
-        }
-
-    public Bulle getBulle() {
-        return bulle;
-    }
-
-    public AttaqueDeBase getAttaqueDeBase() {
-        return attaqueDeBase;
-    }
-
-        public void setBougable(boolean bougable){
-            this.bougable = bougable;
-        }
-    public ObservableList<Pouvoirs> getListePouvoirs() {
-        return listePouvoirs;
-    }
-
-    public IntegerProperty getIndicePouvoirEnCoursProperty() {return indicePouvoirEnCoursProperty;}
-    public int getIndicePouvoirEnCours(){
-            return indicePouvoirEnCoursProperty.getValue();
-    }
-
-    public void setIndicePouvoirEnCours(int pouvoirEnCours) {
-            this.indicePouvoirEnCoursProperty.setValue(pouvoirEnCours);
-    }
-
-    public Pouvoirs getPouvoirEnCours() {
-            if(listePouvoirs.isEmpty()){
-                return null;
-            }
-            return listePouvoirs.get(getIndicePouvoirEnCours());
-    }
-
-    public void ajoutPouvoir(Pouvoirs p){
-            listePouvoirs.add(p);
-    }
 
     public void setPouvoir(int a){
             if(a>0){
@@ -98,7 +52,6 @@ public class Joueur extends Entité {
                     else {
                         setIndicePouvoirEnCours(getListePouvoirs().size()-1);
                     }
-
                 }
                 else {
                     setIndicePouvoirEnCours(getIndicePouvoirEnCours()-1);
@@ -107,28 +60,17 @@ public class Joueur extends Entité {
 
     }
 
-
-
     @Override
     public void attaque() {
         attaqueDeBase.déplacement(getOrientationProperty());
     }
-
 
     public void attaqueAvecPouvoir(){
         int indice=getIndicePouvoirEnCours();
         if(listePouvoirs.get(indice) instanceof Bulle){
             bulle.déplacement(getOrientationProperty());
         }
-
-
-
-
-
-
     }
-
-
 
     public void déplacement(String déplacementDirection) {
         try {
@@ -202,4 +144,47 @@ public class Joueur extends Entité {
             else this.setVie_entite(this.getVie() + nb_vie_gagnee);
         }
 
+    public IntegerProperty getOppacitéProperty() {
+        return oppacitéProperty;
     }
+    public void setOppacitéProperty(int oppacité) {
+        this.oppacitéProperty.set(oppacité);
+    }
+    public boolean getBougable(){
+        return bougable;
+
+    }
+    public Bulle getBulle() {
+        return bulle;
+    }
+
+    public AttaqueDeBase getAttaqueDeBase() {
+        return attaqueDeBase;
+    }
+
+    public void setBougable(boolean bougable){
+        this.bougable = bougable;
+    }
+    public ObservableList<Pouvoirs> getListePouvoirs() {
+        return listePouvoirs;
+    }
+
+    public IntegerProperty getIndicePouvoirEnCoursProperty() {return indicePouvoirEnCoursProperty;}
+    public int getIndicePouvoirEnCours(){
+        return indicePouvoirEnCoursProperty.getValue();
+    }
+
+    public void setIndicePouvoirEnCours(int pouvoirEnCours) {
+        this.indicePouvoirEnCoursProperty.setValue(pouvoirEnCours);
+    }
+    public Pouvoirs getPouvoirEnCours() {
+        if(listePouvoirs.isEmpty()){
+            return null;
+        }
+        return listePouvoirs.get(getIndicePouvoirEnCours());
+    }
+    public void ajoutPouvoir(Pouvoirs p){
+        listePouvoirs.add(p);
+    }
+
+}

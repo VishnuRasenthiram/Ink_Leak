@@ -6,7 +6,6 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -136,7 +135,6 @@ public class Controller implements Initializable {
             }
             if(e.getCode()==KeyCode.J){
                 if(tempsDeRechargeJ){
-
                     tempsDeRechargeJ =false;
                     vA.afficheAttaque(joueur.getAttaqueDeBase());
                     joueur.attaque();

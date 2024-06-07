@@ -17,7 +17,7 @@ public class Bulle extends Pouvoirs{
         private static int cpt=0;
         public Bulle(Map map,GenerateurEnnemis spawner, Joueur j) {
 
-            super("bulle"+cpt,0, 2, 32, 32, 1,0, map, spawner,j);
+            super("bulle"+cpt, 2, 32, 32, 1, map, spawner,j);
             this.portée = 0;
             this.estENVIEProperty = new SimpleIntegerProperty(1);
             cpt++;

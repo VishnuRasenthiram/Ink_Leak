@@ -139,7 +139,6 @@ public abstract class Entité {
     public void prendre_degat(int degat){
 
         if (this.getVie() - degat < 0) {
-
             this.setVie_entite(0);
 
         }

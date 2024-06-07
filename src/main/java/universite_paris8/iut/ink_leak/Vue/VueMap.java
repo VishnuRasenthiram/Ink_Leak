@@ -73,6 +73,12 @@ public class VueMap {
         }else if (tuile==6) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/abc.png").toURI().toString()));
             pane.setId("torche");
+        }else if (tuile==10) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/glace.png").toURI().toString()));
+            pane.setId("sol_glace");
+        }else if (tuile==9) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/glace_qui_bloque.png").toURI().toString()));
+            pane.setId("bloc_glace");
         }
 
         pane.getChildren().add(imageview);

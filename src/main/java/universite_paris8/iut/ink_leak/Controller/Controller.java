@@ -49,6 +49,7 @@ public class Controller implements Initializable {
     @FXML
     private Pane interfacePane;
     private GenerateurEnnemis spawner;
+    private VueJoueur ink;
 
     private VueMap vueMap;
     @Override
@@ -58,7 +59,7 @@ public class Controller implements Initializable {
         this.map= new Map();
         spawner= new GenerateurEnnemis();
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
-        VueJoueur ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
+        ink= new VueJoueur(mainPane, interfacePane, mainBorderPane);
 
         vueMap.initMap(map, joueur);
         gameLoop();
@@ -86,7 +87,7 @@ public class Controller implements Initializable {
 
             Pane p = (Pane) mainPane.lookup("#" + joueur.getNom_entite());
             if (nouv != Joueur.MovementState.WALK){
-                ink.stopWalkAnimation(joueur, p);
+                ink.stopAnimation(joueur, p);
             }
             else{
                 ink.walkAnimation(joueur, p);
@@ -114,55 +115,70 @@ public class Controller implements Initializable {
         Musique musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav",1.0f, -1);
     }
+    private String currentDirection = null;
 
     @FXML
     public void action() {
-        VueAttaque vA= new VueAttaque(mainPane, joueur);
+        VueAttaque vA = new VueAttaque(mainPane, joueur);
+
         mainPane.setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.Z){
-                joueur.déplacement("N");
+            String newDirection = null;
+            if (e.getCode() == KeyCode.Z) {
+                newDirection = "N";
             } else if (e.getCode() == KeyCode.S) {
-                joueur.déplacement("S");
-
+                newDirection = "S";
             } else if (e.getCode() == KeyCode.Q) {
-                joueur.déplacement("O");
-
+                newDirection = "O";
             } else if (e.getCode() == KeyCode.D) {
-                joueur.déplacement("E");
+                newDirection = "E";
             }
-            if(e.getCode()==KeyCode.J){
-                if(tempsDeRechargeJ){
 
-                    tempsDeRechargeJ =false;
-                    vA.afficheAttaque(joueur.getAttaqueDeBase());
-                    joueur.attaque();
-                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0.7f, 0);
-
+            if (newDirection != null) {
+                if (!newDirection.equals(currentDirection)) {
+                    if (currentDirection != null) {
+                        joueur.stop();
+                    }
+                    currentDirection = newDirection;
+                    joueur.déplacement(newDirection);
                 }
             }
-            if(e.getCode()==KeyCode.K){
-                if(tempsDeRechargeK){
-                    tempsDeRechargeK =false;
-                    Pouvoirs pouvoirEnCours=joueur.getPouvoirEnCours();
-                    if(pouvoirEnCours!=null){
+
+            if (e.getCode() == KeyCode.J) {
+                if (tempsDeRechargeJ) {
+                    tempsDeRechargeJ = false;
+                    vA.afficheAttaque(joueur.getAttaqueDeBase());
+                    ink.punchAnimation();
+                    joueur.attaque();
+                    new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0.7f, 0);
+                }
+            } else if (e.getCode() == KeyCode.K) {
+                if (tempsDeRechargeK) {
+                    tempsDeRechargeK = false;
+                    Pouvoirs pouvoirEnCours = joueur.getPouvoirEnCours();
+                    if (pouvoirEnCours != null) {
                         vA.afficheAttaque(pouvoirEnCours);
                         joueur.attaqueAvecPouvoir();
                     }
-
                 }
-            }
-            if(e.getCode()==KeyCode.A){
+            } else if (e.getCode() == KeyCode.A) {
                 joueur.setPouvoir(-1);
-            }
-            if(e.getCode()==KeyCode.E){
+            } else if (e.getCode() == KeyCode.E) {
                 joueur.setPouvoir(1);
             }
-
         });
-    }
-    @FXML
-    protected void stop() {
-        joueur.stop();
+
+        mainPane.setOnKeyReleased(e -> {
+            if (currentDirection == null) {
+                return;
+            }
+            if ((e.getCode() == KeyCode.Z && currentDirection.equals("N")) ||
+                    (e.getCode() == KeyCode.S && currentDirection.equals("S")) ||
+                    (e.getCode() == KeyCode.Q && currentDirection.equals("O")) ||
+                    (e.getCode() == KeyCode.D && currentDirection.equals("E"))) {
+                joueur.stop();
+                currentDirection = null;
+            }
+        });
     }
 
     private void gameLoop() {

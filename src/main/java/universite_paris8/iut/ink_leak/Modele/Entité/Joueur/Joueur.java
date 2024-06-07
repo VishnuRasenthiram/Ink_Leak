@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,7 +11,9 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +28,7 @@ public class Joueur extends Entité {
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
         private AttaqueDeBase attaqueDeBase;
-
+        private Timeline timeline;
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
@@ -122,68 +125,60 @@ public class Joueur extends Entité {
 
 
 
-    public void déplacement(String déplacementDirection) {
+    public void déplacement(String direction) {
         try {
-            int vitesse_joueur = super.getVitesse_entite();
-
-
+            int vitesseJoueur = super.getVitesse_entite();
             setMovementState(Joueur.MovementState.WALK);
 
-            if (executorService != null) return;
+            if (timeline != null) return;
 
-                executorService = Executors.newSingleThreadScheduledExecutor();
-                executorService.scheduleAtFixedRate(() -> {
-                    Platform.runLater(() -> {
-                        if (getBougable() == false) {
-                            return;
-                        }
-                        double x = super.getPosX();
-                        double y = super.getPosY();
+            timeline = new Timeline(new KeyFrame(Duration.millis(5), event -> {
+                Platform.runLater(() -> {
+                    if (!getBougable()) return;
 
-                        switch (déplacementDirection) {
-                            case "N":
-                                super.setOrientationProperty("N");
-                                if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
-                                    super.setPosYProperty(super.getPosY() - vitesse_joueur);
-                                }
-                                break;
+                    double x = super.getPosX();
+                    double y = super.getPosY();
 
-                            case "S":
-                                super.setOrientationProperty("S");
-                                if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
-                                    super.setPosYProperty(super.getPosY() + vitesse_joueur);
-                                }
-                                break;
-
-                            case "O":
-                                super.setOrientationProperty("O");
-                                if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
-                                    super.setPosXProperty(super.getPosX() - vitesse_joueur);
-                                }
-                                break;
-                            case "E":
-                                super.setOrientationProperty("E");
-                                if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
-                                    super.setPosXProperty(super.getPosX() + vitesse_joueur);
-                                }
-                                break;
-                        }
-
-                    });
-                }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
-
-            ;
+                    switch (direction) {
+                        case "N":
+                            super.setOrientationProperty("N");
+                            if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
+                                super.setPosYProperty(y - vitesseJoueur);
+                            }
+                            break;
+                        case "S":
+                            super.setOrientationProperty("S");
+                            if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
+                                super.setPosYProperty(y + vitesseJoueur);
+                            }
+                            break;
+                        case "O":
+                            super.setOrientationProperty("O");
+                            if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
+                                super.setPosXProperty(x - vitesseJoueur);
+                            }
+                            break;
+                        case "E":
+                            super.setOrientationProperty("E");
+                            if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
+                                super.setPosXProperty(x + vitesseJoueur);
+                            }
+                            break;
+                    }
+                });
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
         } catch (Exception ex) {
             System.out.println(ex);
         }
     }
 
-    public void stop(){
-        if (executorService != null) {
-            executorService.shutdownNow();
-            executorService = null;
+    public void stop() {
+        if (timeline != null) {
+            timeline.stop();
+            timeline = null;
             setMovementState(Joueur.MovementState.IDLE);
-
         }
     }
 

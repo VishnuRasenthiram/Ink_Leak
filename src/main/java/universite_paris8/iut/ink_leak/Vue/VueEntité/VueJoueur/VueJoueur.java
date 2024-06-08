@@ -3,7 +3,6 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -24,6 +23,8 @@ public class VueJoueur extends VueEntite {
 
     private Joueur joueur;
     private Pane Joueur;
+    private int punchIndex = 0;
+    private int walkIndex = 0;
 
     public VueJoueur(Pane mainPane, Pane interfacePane){
         super(mainPane);
@@ -105,7 +106,6 @@ public class VueJoueur extends VueEntite {
 
         return images;
     }
-    private int currentIndex = 0;
     private String orientation;
     public void walkAnimation(Joueur joueur, Pane p) {
         animationTimeline = new Timeline();
@@ -120,9 +120,9 @@ public class VueJoueur extends VueEntite {
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
             imageview.setImage(images.get(1));
-            currentIndex = currentIndex + 1;
-            if (currentIndex >= images.size()) currentIndex = 0;
-            imageview.setImage(images.get(currentIndex));
+            walkIndex = walkIndex + 1;
+            if (walkIndex >= images.size()) walkIndex = 0;
+            imageview.setImage(images.get(walkIndex));
             p.getChildren().add(imageview);
         });
 
@@ -146,9 +146,10 @@ public class VueJoueur extends VueEntite {
         else if (orientation.equals("right")) orientation = "r";
         else orientation = "l";
 
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 2; i++) {
             File file = new File(basePath + "entity_attack_" + orientation + "_" + i + ".png");
             images.add(new Image(file.toURI().toString()));
+            System.out.println(file.toURI().toString());
         }
 
 
@@ -156,11 +157,12 @@ public class VueJoueur extends VueEntite {
     }
     public void punchAnimation() {
         punchTimeline = new Timeline();
-        punchTimeline.setCycleCount(1);
+        punchTimeline.setCycleCount(2);
+
         KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.09), e -> {
             orientation = joueur.getOrientationProperty();
             List<Image> images = getPunchAnimation(orientation);
-            int currentIndex = 0;
+
             if (Joueur == null) return;
 
             Joueur.getChildren().clear();
@@ -168,8 +170,9 @@ public class VueJoueur extends VueEntite {
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
             imageview.setImage(images.get(1));
-            currentIndex = currentIndex + 1;
-            imageview.setImage(images.get(currentIndex));
+            if (punchIndex >= images.size()) punchIndex = 0;
+            imageview.setImage(images.get(punchIndex));
+            punchIndex = punchIndex + 1;
 
             Joueur.getChildren().add(imageview);
         });

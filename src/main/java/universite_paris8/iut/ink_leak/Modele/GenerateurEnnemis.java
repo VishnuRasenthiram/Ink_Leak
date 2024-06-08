@@ -59,8 +59,8 @@ public class GenerateurEnnemis {
         int random = new Random().nextInt(3);
         switch (random){
             case 0:
-                enti.setPosYProperty(enti.getPosY() + 50);
-                enti.setPosXProperty(enti.getPosX() + 300);
+                enti.setPosYProperty(enti.getPosY() + 200);
+                enti.setPosXProperty(enti.getPosX() + 100);
                 break;
             case 1:
                 enti.setPosYProperty(enti.getPosY() + 100);
@@ -68,7 +68,7 @@ public class GenerateurEnnemis {
                 break;
 
             case 2:
-                enti.setPosYProperty(enti.getPosY() + 500);
+                enti.setPosYProperty(enti.getPosY() + 580);
                 enti.setPosXProperty(enti.getPosX() + 100);
 
         }

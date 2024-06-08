@@ -93,30 +93,117 @@ public class Joueur extends Entité {
 
                     double x = super.getPosX();
                     double y = super.getPosY();
-
                     switch (direction) {
                         case "N":
                             super.setOrientationProperty("N");
                             if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
-                                super.setPosYProperty(y - vitesseJoueur);
+                                if (super.verifierInteractionEnFace(x,y - vitesseJoueur) == 10) {
+                                    Timeline timeline = new Timeline();
+
+                                    for (int i = 0; i < 1000; i += 2) {
+                                        int dx = i;
+                                        KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
+                                            if (super.verifierInteractionEnFace(x,y - dx) != 9) {
+                                                if (!super.peutAller(x, y - dx, super.getMap())) return;
+                                                super.setPosYProperty(y - dx);
+                                            }else {
+                                                timeline.stop();
+                                            }
+                                        });
+
+                                        timeline.getKeyFrames().add(keyFrame);
+                                    }
+
+                                    timeline.play();
+                                } else{
+                                    super.setPosYProperty(y - vitesseJoueur);
+
+                                }
                             }
                             break;
                         case "S":
                             super.setOrientationProperty("S");
                             if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
-                                super.setPosYProperty(y + vitesseJoueur);
+                                if (super.verifierInteractionEnFace(x,y + vitesseJoueur) == 10) {
+                                    Timeline timeline = new Timeline();
+
+                                    for (int i = 0; i < 1000; i += 2) {
+                                        int dx = i;
+                                        KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
+                                            if (super.verifierInteractionEnFace(x,y + dx) != 9) {
+                                                if (!super.peutAller(x, y + dx, super.getMap())) return;
+                                                super.setPosYProperty(y + dx);
+                                            }else {
+                                                timeline.stop();
+                                            }
+                                        });
+
+                                        timeline.getKeyFrames().add(keyFrame);
+                                    }
+
+                                    timeline.play();
+                                } else{
+                                    super.setPosYProperty(y + vitesseJoueur);
+
+
+                                }
                             }
                             break;
                         case "O":
                             super.setOrientationProperty("O");
                             if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
-                                super.setPosXProperty(x - vitesseJoueur);
+                                if (super.verifierInteractionEnFace(x - vitesseJoueur, y) == 10) {
+                                    Timeline timeline = new Timeline();
+
+                                    for (int i = 0; i < 1000; i += 2) {
+                                        int dx = i;
+
+                                        KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
+                                            if (super.verifierInteractionEnFace(x - dx, y) != 9) {
+                                                if (!super.peutAller(x - dx, y, super.getMap())) return;
+                                                super.setPosXProperty(x - dx);
+
+                                            }else {
+                                                timeline.stop();
+                                            }
+                                        });
+
+                                        timeline.getKeyFrames().add(keyFrame);
+                                    }
+
+                                    timeline.play();
+                                } else{
+                                    super.setPosXProperty(x - vitesseJoueur);
+
+                                }
                             }
                             break;
                         case "E":
                             super.setOrientationProperty("E");
                             if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
-                                super.setPosXProperty(x + vitesseJoueur);
+                                if (super.verifierInteractionEnFace(x + vitesseJoueur, y) == 10) {
+                                    Timeline timeline = new Timeline();
+
+                                    for (int i = 0; i < 1000; i += 2) {
+                                        int dx = i;
+
+                                        KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
+                                            if (super.verifierInteractionEnFace(x + dx, y) != 9) {
+                                                if (!super.peutAller(x + dx, y, super.getMap())) return;
+                                                super.setPosXProperty(x + dx);
+                                            }else {
+                                                timeline.stop();
+                                            }
+                                        });
+
+                                        timeline.getKeyFrames().add(keyFrame);
+                                    }
+
+                                    timeline.play();
+                                } else{
+                                    super.setPosXProperty(x + vitesseJoueur);
+
+                                }
                             }
                             break;
                     }

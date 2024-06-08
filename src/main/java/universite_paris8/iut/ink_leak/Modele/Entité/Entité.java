@@ -76,6 +76,10 @@ public abstract class Entité {
             return 3;
         } else if(verifCaseSurCoord(4,x,y)){
             return 4;
+        }else if(verifCaseSurCoord(9,x,y)){
+            return 9;
+        }else if(verifCaseSurCoord(10,x,y)){
+            return 10;
         }
         return 0;
     }

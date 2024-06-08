@@ -149,7 +149,6 @@ public class VueJoueur extends VueEntite {
         for (int i = 1; i <= 2; i++) {
             File file = new File(basePath + "entity_attack_" + orientation + "_" + i + ".png");
             images.add(new Image(file.toURI().toString()));
-            System.out.println(file.toURI().toString());
         }
 
 
@@ -159,7 +158,7 @@ public class VueJoueur extends VueEntite {
         punchTimeline = new Timeline();
         punchTimeline.setCycleCount(2);
 
-        KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.09), e -> {
+        KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.11), e -> {
             orientation = joueur.getOrientationProperty();
             List<Image> images = getPunchAnimation(orientation);
 

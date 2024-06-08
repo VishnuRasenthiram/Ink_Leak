@@ -31,7 +31,11 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
                     if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite())){
                         Node nod=this.mainPane.getChildren().get(i);
                         this.mainPane.getChildren().remove(nod);
+                    } else if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite()+"vie")){
+                        Node nod=this.mainPane.getChildren().get(i);
+                        this.mainPane.getChildren().remove(nod);
                     }
+
                 }
             }
         }

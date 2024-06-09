@@ -60,10 +60,13 @@ public abstract class Entité {
 
             int mur=1;
             int solDegat=2;
+            int murglace=9;
             if(verifCaseSurCoord(mur,x,y)){
                 return false;
             }
-
+            if(verifCaseSurCoord(murglace,x,y)){
+                return false;
+            }
             if(verifCaseSurCoord(solDegat,x,y)){
                 this.prendre_degat(1);
             }

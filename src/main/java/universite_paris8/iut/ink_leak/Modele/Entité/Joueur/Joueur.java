@@ -89,6 +89,7 @@ public class Joueur extends Entité {
 
             timeline = new Timeline(new KeyFrame(Duration.millis(5), event -> {
                 Platform.runLater(() -> {
+                    System.out.println(getBougable());
                     if (!getBougable()) return;
 
                     double x = super.getPosX();
@@ -99,18 +100,18 @@ public class Joueur extends Entité {
                             if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x,y - vitesseJoueur) == 10) {
                                     Timeline timeline = new Timeline();
-
-                                    for (int i = 0; i < 1000; i += 2) {
-                                        int dx = i;
+                                    setBougable(false);
+                                    for (int i = 0; i < 2000; i += 2) {
+                                        int dx = i/2;
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
-                                            if (super.verifierInteractionEnFace(x,y - dx) != 9) {
-                                                if (!super.peutAller(x, y - dx, super.getMap())) return;
+                                            if (super.peutAller(x, y - dx, super.getMap())){
                                                 super.setPosYProperty(y - dx);
-                                            }else {
+                                            } else {
                                                 timeline.stop();
+                                                setBougable(true);
                                             }
-                                        });
 
+                                        });
                                         timeline.getKeyFrames().add(keyFrame);
                                     }
 
@@ -126,15 +127,17 @@ public class Joueur extends Entité {
                             if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x,y + vitesseJoueur) == 10) {
                                     Timeline timeline = new Timeline();
+                                    setBougable(false);
 
-                                    for (int i = 0; i < 1000; i += 2) {
-                                        int dx = i;
+                                    for (int i = 0; i < 2000; i += 2) {
+                                        int dx = i/2;
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
-                                            if (super.verifierInteractionEnFace(x,y + dx) != 9) {
-                                                if (!super.peutAller(x, y + dx, super.getMap())) return;
+                                            if (super.peutAller(x, y + dx, super.getMap())){
                                                 super.setPosYProperty(y + dx);
                                             }else {
                                                 timeline.stop();
+                                                setBougable(true);
+
                                             }
                                         });
 
@@ -145,7 +148,6 @@ public class Joueur extends Entité {
                                 } else{
                                     super.setPosYProperty(y + vitesseJoueur);
 
-
                                 }
                             }
                             break;
@@ -154,17 +156,19 @@ public class Joueur extends Entité {
                             if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x - vitesseJoueur, y) == 10) {
                                     Timeline timeline = new Timeline();
+                                    setBougable(false);
 
-                                    for (int i = 0; i < 1000; i += 2) {
-                                        int dx = i;
+                                    for (int i = 0; i < 2000; i += 2) {
+                                        int dx = i/2;
 
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
-                                            if (super.verifierInteractionEnFace(x - dx, y) != 9) {
-                                                if (!super.peutAller(x - dx, y, super.getMap())) return;
+                                            if (super.peutAller(x - dx, y, super.getMap())){
                                                 super.setPosXProperty(x - dx);
 
                                             }else {
                                                 timeline.stop();
+                                                setBougable(true);
+
                                             }
                                         });
 
@@ -183,16 +187,17 @@ public class Joueur extends Entité {
                             if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x + vitesseJoueur, y) == 10) {
                                     Timeline timeline = new Timeline();
+                                    setBougable(false);
 
-                                    for (int i = 0; i < 1000; i += 2) {
-                                        int dx = i;
+                                    for (int i = 0; i < 2000; i += 2) {
+                                        int dx = i/2;
 
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
-                                            if (super.verifierInteractionEnFace(x + dx, y) != 9) {
-                                                if (!super.peutAller(x + dx, y, super.getMap())) return;
+                                           if (super.peutAller(x + dx, y, super.getMap())){
                                                 super.setPosXProperty(x + dx);
                                             }else {
                                                 timeline.stop();
+                                                setBougable(true);
                                             }
                                         });
 

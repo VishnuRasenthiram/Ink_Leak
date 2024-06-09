@@ -32,14 +32,14 @@ public class VueMap {
 
     public void initMap(Map map, Joueur entité){
         if (map.getNumMap() == 2){
-            ImageView Torche = new ImageView();
-            Torche.setFitHeight(1800);
-            Torche.setFitWidth(3000);
-            Torche.setId("torche");
-            Torche.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
-            Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1504));
-            Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
-            interfacePane.getChildren().add(Torche);
+            ImageView ObscuritéCache = new ImageView();
+            ObscuritéCache.setFitHeight(1800);
+            ObscuritéCache.setFitWidth(3000);
+            ObscuritéCache.setId("cacheNoir");
+            ObscuritéCache.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
+            ObscuritéCache.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1504));
+            ObscuritéCache.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
+            interfacePane.getChildren().add(ObscuritéCache);
         } else {
             interfacePane.getChildren().removeIf(node -> node.getId() != null && node.getId().equals("torche"));
         }

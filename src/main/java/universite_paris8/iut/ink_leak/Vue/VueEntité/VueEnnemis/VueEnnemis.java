@@ -38,21 +38,19 @@ public class VueEnnemis extends VueEntite {
 
         // Rectangle pour représenter les points de vie (PV)
         Pane Rectangle = new Pane();
-        Rectangle.setPrefWidth(32);
+        Rectangle.setPrefWidth(28);
         Rectangle.setPrefHeight(6);
         Rectangle.setId(entité.getNom_entite() + "vie");
         Rectangle.setStyle("-fx-background-color: #edc2c2; -fx-border-color: rgba(0,0,0,0.68); -fx-border-radius: 50; -fx-background-radius: 50;");
         Rectangle vieRect = new Rectangle();
-        vieRect.setWidth(32);  // Largeur du rectangle (correspondant à la taille de l'image)
+        vieRect.setWidth(28);  // Largeur du rectangle (correspondant à la taille de l'image)
         vieRect.setHeight(6); // Hauteur du rectangle (à ajuster selon vos besoins)
         vieRect.setId(entité.getNom_entite() + "vie");
         vieRect.setStyle("-fx-fill: #990e0e; -fx-stroke: rgba(0,0,0,0.56); -fx-stroke-width: 1; -fx-arc-height: 50; -fx-arc-width: 10;");
 
         vieRect.widthProperty().bind(entité.getVie_entiteProperty().multiply(32).divide(2));
-
-        // Positionnement du rectangle au-dessus de l'entité
         Rectangle.translateXProperty().bind(entité.posXProperty());
-        Rectangle.translateYProperty().bind(entité.posYProperty().subtract(1));
+        Rectangle.translateYProperty().bind(entité.posYProperty());
 
         super.getMainPane().getChildren().add(ennemis);
         super.getMainPane().getChildren().add(Rectangle);

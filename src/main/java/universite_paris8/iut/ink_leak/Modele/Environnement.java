@@ -43,7 +43,7 @@ public class Environnement {
             }
 
         }
-        if (temps % 10 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
+        if (temps % 10000 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
         liste_entites.ActiverMob();
 
     }

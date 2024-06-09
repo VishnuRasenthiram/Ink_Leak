@@ -91,7 +91,7 @@ public abstract class Entité {
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
-
+        System.out.println("x: "+x+" y: "+y+" coord_Mur_GaucheX: "+coord_Mur_GaucheX+" coord_Mur_DroitX: "+coord_Mur_DroitX+" coord_Mur_HautY: "+coord_Mur_HautY+" coord_Mur_BasY: "+coord_Mur_BasY);
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||

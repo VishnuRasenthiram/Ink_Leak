@@ -44,9 +44,10 @@ public class VieEnnemisObs implements ChangeListener<Number> {
 
                 switch (direction) {
                     case "N":
+
                         for (int i = 0; i < 10; i++) {
                             double timeFraction = (double)i / 9;
-                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 35;
+                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 30;
                             KeyFrame keyFrame = new KeyFrame(Duration.seconds(timeFraction * 0.4),
                                     new KeyValue(entité.posYProperty(), entité.getPosY() - translation),
                                     new KeyValue(colorAdjust.brightnessProperty(), i >= 5 ? 0 : colorAdjust.getBrightness())
@@ -58,7 +59,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                     case "O":
                         for (int i = 0; i < 10; i++) {
                             double timeFraction = (double)i / 9;
-                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 35;
+                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 30;
                             KeyFrame keyFrame = new KeyFrame(Duration.seconds(timeFraction * 0.4),
                                     new KeyValue(entité.posXProperty(), entité.getPosX() - translation),
                                     new KeyValue(colorAdjust.brightnessProperty(), i >= 5 ? 0 : colorAdjust.getBrightness())
@@ -69,7 +70,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                     case "E":
                         for (int i = 0; i < 10; i++) {
                             double timeFraction = (double)i / 9;
-                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 35;
+                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 30;
                             KeyFrame keyFrame = new KeyFrame(Duration.seconds(timeFraction * 0.4),
                                     new KeyValue(entité.posXProperty(), entité.getPosX() + translation),
                                     new KeyValue(colorAdjust.brightnessProperty(), i >= 5 ? 0 : colorAdjust.getBrightness())
@@ -80,7 +81,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                     case "S":
                         for (int i = 0; i < 10; i++) {
                             double timeFraction = (double)i / 9;
-                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 35;
+                            double translation = (1 - Math.pow(1 - timeFraction, 2)) * 30;
                             if (entité.peutAller(entité.getPosX(), entité.getPosY() + translation+5, joueur.getMap())){
                                 KeyFrame keyFrame = new KeyFrame(Duration.seconds(timeFraction * 0.4),
                                         new KeyValue(entité.posYProperty(), entité.getPosY() + translation),

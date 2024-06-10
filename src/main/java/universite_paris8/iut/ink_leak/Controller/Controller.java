@@ -206,9 +206,10 @@ public class Controller implements Initializable {
                         vob.créeSprite(ob);
                         op.setEmplacement(13, 13);
                         vob.créeSprite(op);
-                        im.setEmplacement(17, 17);
-                        vob.créeSprite(im);
+
                     }
+                    im.setEmplacement(17, 17);
+                    vob.créeSprite(im);
                     ob.action();
                     op.action();
                     im.action();

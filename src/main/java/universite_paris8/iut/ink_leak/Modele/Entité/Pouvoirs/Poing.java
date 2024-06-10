@@ -16,8 +16,7 @@ public class Poing extends Pouvoirs {
     private static int cpt=0;
     public Poing(Map map, GenerateurEnnemis spawner, Joueur j) {
 
-        super("poing"+cpt,0, 2, 64, 64, map, spawner,j);
-        super.setPosition();
+        super("poing"+cpt,2, 64, 64, 1, map, spawner,j);
         this.estENVIEProperty = new SimpleIntegerProperty(1);
         cpt++;
 
@@ -30,38 +29,49 @@ public class Poing extends Pouvoirs {
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
-        double x = super.getPosX();
-        double y = super.getPosY();
-        int vitesse_joueur = super.getVitesse_entite();
-        switch (déplacementDirection) { // 0=Z 1=S 2=Q 3=D
-            case "N":
-                if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
-                    super.setPosYProperty(super.getPosY() - vitesse_joueur);
-                }
-                break;
+        estENVIEProperty.set(1);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(20), ev -> {
+                    double x = super.getPosX();
+                    double y = super.getPosY();
+                    int vitesse_joueur = super.getVitesse_entite();
+                    switch (déplacementDirection) {
+                        case "N":
+                            if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
+                                super.setPosYProperty(super.getPosY() - vitesse_joueur);
+                            }
+                            break;
 
-            case "S":
-                if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
-                    super.setPosYProperty(super.getPosY() + vitesse_joueur);
-                }
-                break;
+                        case "S":
+                            if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
+                                super.setPosYProperty(super.getPosY() + vitesse_joueur);
+                            }
+                            break;
 
-            case "O":
-                if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
-                    super.setPosXProperty(super.getPosX() - vitesse_joueur);
-                }
-                break;
-            case  "E":
-                if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
-                    super.setPosXProperty(super.getPosX() + vitesse_joueur);
-                }
-                break;
-        }
-        for(Entité sl:super.getSpawner().getListeEntite()){
+                        case "O":
+                            if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
+                                super.setPosXProperty(super.getPosX() - vitesse_joueur);
+                            }
+                            break;
+                        case  "E":
+                            if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
+                                super.setPosXProperty(super.getPosX() + vitesse_joueur);
+                            }
+                            break;
+                    }
+                    for(Entité sl:super.getSpawner().getListeEntite()){
 
-            if(this.enContact(sl)) {
-                sl.prendre_degat(super.getAttaque_entite());
-            }
-        }
+                        if(this.enContact(sl)) {
+                            sl.prendre_degat(super.getAttaque_entite());
+                        }
+                    }
+                })
+        );
+
+        timeline.setCycleCount(30);
+        timeline.play();
+        timeline.setOnFinished(e -> {
+            estENVIEProperty.setValue(0);
+        });
     }
 }

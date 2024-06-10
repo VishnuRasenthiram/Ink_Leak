@@ -3,7 +3,7 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.ink_leak.Controller.BulleObs;
+import universite_paris8.iut.ink_leak.Controller.PouvoirObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 
@@ -31,7 +31,7 @@ public class VueBulle extends VueAttaque{
         super.getMainPane().getChildren().add(attaquePane);
 
 
-        bulle.getEstENVIEProperty().addListener(new BulleObs(this));
+        bulle.getEstENVIEProperty().addListener(new PouvoirObs(this));
 
 
     }

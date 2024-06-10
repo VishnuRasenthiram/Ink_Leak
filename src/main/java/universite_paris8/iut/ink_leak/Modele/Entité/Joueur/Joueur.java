@@ -76,6 +76,9 @@ public class Joueur extends Entité {
         if(listePouvoirs.get(indice) instanceof Bulle){
             bulle.déplacement(getOrientationProperty());
         }
+        else if (listePouvoirs.get(indice) instanceof Poing) {
+            poing.déplacement(getOrientationProperty());
+        }
     }
 
 

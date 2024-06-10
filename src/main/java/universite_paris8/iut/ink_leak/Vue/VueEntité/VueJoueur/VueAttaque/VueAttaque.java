@@ -1,15 +1,13 @@
 package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.ink_leak.Controller.BulleObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
-import java.io.File;
+
 import java.util.ArrayList;
 
 
@@ -38,8 +36,9 @@ public class VueAttaque {
         } else if (pouvoirs instanceof Bulle ) {
             VueBulle vB= new VueBulle(mainPane, joueur);
             vB.afficheAttaqueBulle((Bulle) pouvoirs);
-        } else {
-            System.out.println(" To do");
+        } else if (pouvoirs instanceof Poing){
+            VuePoing vP = new VuePoing(mainPane, joueur);
+            vP.afficherAttaquePoing((Poing) pouvoirs);
         }
 
     }

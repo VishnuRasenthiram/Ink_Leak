@@ -46,7 +46,7 @@ public class VieObs implements ChangeListener<Number> {
             );
             timeline.setCycleCount(2);
             timeline.play();
-                imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_"+ entité.getVie_entiteProperty().getValue()+".png").toURI().toString()));
+
             } else  if(entité instanceof Slime) {
                 String direction = joueurView.getId();
                 System.out.println(direction);
@@ -63,6 +63,8 @@ public class VieObs implements ChangeListener<Number> {
                 timeline.play();
             }
         }
+
+        imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_"+ entité.getVie_entiteProperty().getValue()+".png").toURI().toString()));
 
 
         }

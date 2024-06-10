@@ -16,7 +16,7 @@ public class GenerateurEnnemis {
 
     }
 
-    public void ActiverMob(){
+    public void activerMob(){
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
@@ -33,7 +33,7 @@ public class GenerateurEnnemis {
     public void TuerToutLesEnnemis(){
         listeEntite.clear();
     }
-    public void genererEnnemis( GenerateurEnnemis spawner, Map map){
+    public void genererEnnemis( GenerateurEnnemis liste_entites, Map map){
          // Ajouter le slime à la liste
         switch (map.getNumMap()){
 
@@ -46,7 +46,7 @@ public class GenerateurEnnemis {
 
                 break;
             default:
-                Slime slime = new Slime(spawner,map); // Créer un nouveau slime
+                Slime slime = new Slime(liste_entites,map); // Créer un nouveau slime
                 listeEntite.add(slime);
                 setEnnemisPos(slime);
                 break;

@@ -29,6 +29,7 @@ public class PouvoirEnCoursObs implements ChangeListener<Number> {
         imageView.setFitWidth(42);
         imageView.setFitHeight(42);
 
+
         // Récupere le sprite du pouvoir qui a été choisis précedement pour lui donner sa taille d'origine
         Pouvoirs pouvoirPrecedent=joueur.getListePouvoirs().get((int)old);
         HBox listePouvoirs2 = (HBox) interfacePane.lookup("#listePouvoir");

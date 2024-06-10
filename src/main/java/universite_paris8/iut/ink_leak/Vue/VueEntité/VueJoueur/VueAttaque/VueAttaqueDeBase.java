@@ -36,7 +36,7 @@ public class VueAttaqueDeBase extends VueAttaque {
 
         super.getMainPane().getChildren().add(attaquePane);
         Timeline attaqueVisible = new Timeline(
-                new KeyFrame(Duration.millis(320), ev -> super.getMainPane().getChildren().remove(attaquePane))
+                new KeyFrame(Duration.millis(350), ev -> super.getMainPane().getChildren().remove(attaquePane))
         );
         attaqueVisible.play();
         griffeAnimation(attaquePane);

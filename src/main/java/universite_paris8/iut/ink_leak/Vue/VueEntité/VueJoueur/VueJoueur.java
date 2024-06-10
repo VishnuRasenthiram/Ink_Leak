@@ -16,17 +16,22 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class VueJoueur extends VueEntite {
     private Pane interfacePane;
     private Timeline animationTimeline;
+    private Timeline torcheTimeline;
     private Timeline punchTimeline;
 
     private Joueur joueur;
     private Pane Joueur;
+    private int punchIndex = 0;
+    private int walkIndex = 0;
+    private int torcheIndex = 0;
 
-    public VueJoueur(Pane mainPane, Pane interfacePane, Pane mainborderPane){
-        super(mainPane, mainborderPane);
+    public VueJoueur(Pane mainPane, Pane interfacePane){
+        super(mainPane);
         this.interfacePane = interfacePane;
     }
 
@@ -46,6 +51,28 @@ public class VueJoueur extends VueEntite {
         Joueur.translateYProperty().bind(entité.posYProperty());
 
         super.getMainPane().getChildren().add(Joueur);
+
+        ImageView Torche = new ImageView();
+        Torche.setFitHeight(24);
+        Torche.setFitWidth(24);
+        Torche.setId("torche");
+        Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -4));
+        Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), 4));
+        interfacePane.getChildren().add(Torche);
+
+        torcheTimeline = new Timeline();
+        torcheTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.12), e -> {
+            List<Image> images = getTorchesImages();
+            Torche.setImage(images.get(1));
+            torcheIndex = torcheIndex + 1;
+            if (torcheIndex >= images.size()) torcheIndex = 0;
+            Torche.setImage(images.get(torcheIndex));
+        });
+
+        torcheTimeline.getKeyFrames().add(keyFrame);
+        torcheTimeline.play();
 
     }
 
@@ -86,7 +113,19 @@ public class VueJoueur extends VueEntite {
         }
     }
 
+    public List<Image> getTorchesImages() {
 
+        List<Image> images = new ArrayList<>();
+
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/torcheMain_";
+
+        for (int i = 1; i <= 6; i++) {
+            File file = new File(basePath + i + ".png");
+            images.add(new Image(file.toURI().toString()));
+        }
+
+        return images;
+    }
     public List<Image> getWalkImages(String orientation) {
 
         List<Image> images = new ArrayList<>();
@@ -105,7 +144,6 @@ public class VueJoueur extends VueEntite {
 
         return images;
     }
-    private int currentIndex = 0;
     private String orientation;
     public void walkAnimation(Joueur joueur, Pane p) {
         animationTimeline = new Timeline();
@@ -120,9 +158,9 @@ public class VueJoueur extends VueEntite {
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
             imageview.setImage(images.get(1));
-            currentIndex = currentIndex + 1;
-            if (currentIndex >= images.size()) currentIndex = 0;
-            imageview.setImage(images.get(currentIndex));
+            walkIndex = walkIndex + 1;
+            if (walkIndex >= images.size()) walkIndex = 0;
+            imageview.setImage(images.get(walkIndex));
             p.getChildren().add(imageview);
         });
 
@@ -146,7 +184,7 @@ public class VueJoueur extends VueEntite {
         else if (orientation.equals("right")) orientation = "r";
         else orientation = "l";
 
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 2; i++) {
             File file = new File(basePath + "entity_attack_" + orientation + "_" + i + ".png");
             images.add(new Image(file.toURI().toString()));
         }
@@ -156,11 +194,12 @@ public class VueJoueur extends VueEntite {
     }
     public void punchAnimation() {
         punchTimeline = new Timeline();
-        punchTimeline.setCycleCount(1);
-        KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.09), e -> {
+        punchTimeline.setCycleCount(2);
+
+        KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.11), e -> {
             orientation = joueur.getOrientationProperty();
             List<Image> images = getPunchAnimation(orientation);
-            int currentIndex = 0;
+
             if (Joueur == null) return;
 
             Joueur.getChildren().clear();
@@ -168,8 +207,9 @@ public class VueJoueur extends VueEntite {
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
             imageview.setImage(images.get(1));
-            currentIndex = currentIndex + 1;
-            imageview.setImage(images.get(currentIndex));
+            if (punchIndex >= images.size()) punchIndex = 0;
+            imageview.setImage(images.get(punchIndex));
+            punchIndex = punchIndex + 1;
 
             Joueur.getChildren().add(imageview);
         });

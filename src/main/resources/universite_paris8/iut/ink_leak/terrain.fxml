@@ -8,9 +8,6 @@
 
 
    <center>
-
-      <Group scaleX="1.1" scaleY="1.1">
-
          <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER">
 
             <Label fx:id="txt" />
@@ -20,7 +17,6 @@
                </TilePane>
             </Pane>
          </Pane>
-      </Group>
    </center>
 
 </BorderPane>

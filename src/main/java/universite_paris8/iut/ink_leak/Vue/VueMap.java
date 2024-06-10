@@ -41,7 +41,7 @@ public class VueMap {
             ObscuritéCache.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
             interfacePane.getChildren().add(ObscuritéCache);
         } else {
-            interfacePane.getChildren().removeIf(node -> node.getId() != null && node.getId().equals("torche"));
+            interfacePane.getChildren().removeIf(node -> node.getId() != null && node.getId().equals("cacheNoir"));
         }
         for (int i = 0; i < map.getMap().length; i++) {
             for (int j = 0; j < map.getMap()[i].length; j++) {

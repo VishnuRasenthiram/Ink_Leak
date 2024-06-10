@@ -82,15 +82,12 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                         for (int i = 0; i < 10; i++) {
                             double timeFraction = (double)i / 9;
                             double translation = (1 - Math.pow(1 - timeFraction, 2)) * 30;
-                            if (entité.peutAller(entité.getPosX(), entité.getPosY() + translation+5, joueur.getMap())){
                                 KeyFrame keyFrame = new KeyFrame(Duration.seconds(timeFraction * 0.4),
                                         new KeyValue(entité.posYProperty(), entité.getPosY() + translation),
                                         new KeyValue(colorAdjust.brightnessProperty(), i >= 5 ? 0 : colorAdjust.getBrightness())
                                 );
                                 timeline.getKeyFrames().add(keyFrame);
-                            } else {
-                                colorAdjust.setBrightness(0);
-                            }
+
 
                         }
                 }

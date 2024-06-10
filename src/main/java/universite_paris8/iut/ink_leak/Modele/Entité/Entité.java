@@ -87,11 +87,16 @@ public abstract class Entité {
         return 0;
     }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
+        x = x +5;
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
+        x = x -10;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
+
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
+        y = y +5;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
-        System.out.println("x: "+x+" y: "+y+" coord_Mur_GaucheX: "+coord_Mur_GaucheX+" coord_Mur_DroitX: "+coord_Mur_DroitX+" coord_Mur_HautY: "+coord_Mur_HautY+" coord_Mur_BasY: "+coord_Mur_BasY);
+        y = y -10;
+
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||

@@ -10,9 +10,9 @@ public class Slime extends Entité {
     public static int cpt=0;
 
 
-    public Slime(  GenerateurEnnemis spawner,Map map){
+    public Slime(  GenerateurEnnemis listeEntite,Map map){
 
-        super("S"+cpt, 2, 1,32, 32,1,600,map,spawner);
+        super("S"+cpt, 2, 1,32, 32,1,600,map,listeEntite);
         cpt++;
 
     }

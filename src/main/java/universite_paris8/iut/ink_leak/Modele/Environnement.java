@@ -1,9 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -11,13 +8,15 @@ import universite_paris8.iut.ink_leak.Vue.VueMap;
 public class Environnement {
 
     private Joueur joueur;
-    private GenerateurEnnemis liste_entites;
+    private GenerateurEnnemis listeEntite;
+    private GenerateurObjets listeObjets;
     private Map map;
     private VueMap vMap;
 
-    public Environnement(Joueur joueur, Map map, GenerateurEnnemis spawner, VueMap vMap) {
+    public Environnement(Joueur joueur, Map map, GenerateurEnnemis listeEntite,GenerateurObjets listeObjets, VueMap vMap) {
         this.joueur = joueur;
-        this.liste_entites = spawner;
+        this.listeEntite = listeEntite;
+        this.listeObjets = listeObjets;
         this.map = map;
         this.vMap = vMap;
     }
@@ -36,22 +35,25 @@ public class Environnement {
                 vMap.supprimerAffichageMap();
                 map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 4 ? 1 : map.getNumMap() - 1));
                 TuerToutLesEnnemis();
+                listeObjets.EnleverToutLesObjets();
                 vMap.initMap(map, joueur);
+                listeObjets.genererObjets();
                 PauseTransition pause = new PauseTransition(Duration.millis(500));
                 pause.setOnFinished(event -> joueur.setBougable(true));
                 pause.play();
             }
 
         }
-        if (temps % 100 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
-        liste_entites.ActiverMob();
+        if (temps % 100 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
+        listeEntite.activerMob();
+        listeObjets.activerObjet();
 
     }
     private void TuerToutLesEnnemis(){
-        liste_entites.TuerToutLesEnnemis();
+        listeEntite.TuerToutLesEnnemis();
     }
 
-    public GenerateurEnnemis getListe_entites() { return this.liste_entites; }
+    public GenerateurEnnemis getListeEntite() { return this.listeEntite; }
 
     public Joueur getJoueur() { return this.joueur; }
 

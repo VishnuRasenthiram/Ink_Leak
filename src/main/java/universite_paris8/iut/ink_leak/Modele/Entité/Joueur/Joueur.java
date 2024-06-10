@@ -13,11 +13,9 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
-import java.util.concurrent.Executors;
+
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Joueur extends Entité {
         private static ScheduledExecutorService executorService;
@@ -30,14 +28,14 @@ public class Joueur extends Entité {
         private Poing poing;
         private AttaqueDeBase attaqueDeBase;
         private Timeline timeline;
-        public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
-            super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
+        public Joueur(String nom_joueur,Map map, GenerateurEnnemis listeEntite) {
+            super(nom_joueur,  6, 1, 30, 32,1,1000,map,listeEntite);
             this.listePouvoirs= FXCollections.observableArrayList();
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);
-            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
-            bulle =new Bulle( super.getMap(),super.getSpawner(),this);
-            poing = new Poing(super.getMap(), super.getSpawner(), this);
+            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getlisteEntite(),this);
+            bulle =new Bulle( super.getMap(),super.getlisteEntite(),this);
+            poing = new Poing(super.getMap(), super.getlisteEntite(), this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
 

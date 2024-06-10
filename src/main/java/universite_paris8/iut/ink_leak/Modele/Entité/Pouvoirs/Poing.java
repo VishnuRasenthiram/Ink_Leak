@@ -1,10 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -14,9 +11,9 @@ public class Poing extends Pouvoirs {
 
     private IntegerProperty estENVIEProperty;
     private static int cpt=0;
-    public Poing(Map map, GenerateurEnnemis spawner, Joueur j) {
+    public Poing(Map map, GenerateurEnnemis liste_entites, Joueur j) {
 
-        super("poing"+cpt,0, 2, 64, 64, map, spawner,j);
+        super("poing"+cpt,0, 2, 64, 64, map, liste_entites,j);
         super.setPosition();
         this.estENVIEProperty = new SimpleIntegerProperty(1);
         cpt++;
@@ -57,7 +54,7 @@ public class Poing extends Pouvoirs {
                 }
                 break;
         }
-        for(Entité sl:super.getSpawner().getListeEntite()){
+        for(Entité sl:super.getlisteEntite().getListeEntite()){
 
             if(this.enContact(sl)) {
                 sl.prendre_degat(super.getAttaque_entite());

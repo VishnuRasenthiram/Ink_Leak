@@ -6,8 +6,8 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Pouvoirs extends Entité {
     private Joueur joueur;
-    public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite, Map map, GenerateurEnnemis spawner, Joueur joueur) {
-        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, spawner);
+    public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite, Map map, GenerateurEnnemis liste_entites, Joueur joueur) {
+        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, liste_entites);
         this.joueur = joueur;
     }
 

@@ -1,23 +1,23 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Objets;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
-public class ObjetPoing extends Objet {
+public class ObjetPoing extends Objets {
 
-    private int nbFoisRecuperable;
 
-    public ObjetPoing(Map map, GenerateurEnnemis spawner, Joueur j) {
-        super("ObjetPoing", 0, map, spawner, j);
-        this.nbFoisRecuperable = 1;
+
+    public ObjetPoing(Map map, GenerateurObjets listeObjets, Joueur j) {
+        super("ObjetPoing",  map, listeObjets, j);
+
     }
 
     public void action() {
-        if(super.getJ().enContact(this) && nbFoisRecuperable>0){
-            nbFoisRecuperable--;
-            super.getJ().ajoutPouvoir(super.getJ().getPoing());
+        if(super.getJoueur().enContact(this) && super.getNbFoisRecuperable()>0){
+            super.setNbFoisRecuperable(super.getNbFoisRecuperable()-1);
+            super.getJoueur().ajoutPouvoir(super.getJoueur().getPoing());
         }
     }
 }

@@ -15,17 +15,17 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objet;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjetBulle;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -51,7 +51,8 @@ public class Controller implements Initializable {
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-    private GenerateurEnnemis spawner;
+    private GenerateurEnnemis listeEntite;
+    private GenerateurObjets listeObjets;
     private VueJoueur ink;
 
     private VueMap vueMap;
@@ -63,7 +64,8 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
-        spawner= new GenerateurEnnemis();
+        listeEntite = new GenerateurEnnemis();
+
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink= new VueJoueur(mainPane, interfacePane);
 
@@ -72,12 +74,12 @@ public class Controller implements Initializable {
         gameLoop.play();
 
 
-        this.joueur = new Joueur("LePlayer",map,spawner);
+        this.joueur = new Joueur("LePlayer",map, listeEntite);
         joueur.setEmplacement(30,200);
-        ob=new ObjetBulle(map, spawner, joueur);
-        op=new ObjetPoing(map, spawner, joueur);
+        listeObjets= new GenerateurObjets(map, joueur);
 
-        env = new Environnement(joueur, map, spawner,vueMap);
+
+        env = new Environnement(joueur, map, listeEntite,listeObjets,vueMap);
 
         joueur.orientationProperty().addListener((obs,old,nouv)->{
 
@@ -102,8 +104,7 @@ public class Controller implements Initializable {
 
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
-        spawner.getListeEntite().addListener(listenerEnnemis);
-        env = new Environnement(joueur, map, spawner,vueMap);
+        listeEntite.getListeEntite().addListener(listenerEnnemis);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
 
@@ -114,6 +115,9 @@ public class Controller implements Initializable {
 
         PouvoirEnCoursObs pv= new PouvoirEnCoursObs(joueur,interfacePane);
         joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
+
+        ListChangeListener<Objets> Buds= new ListeObjetsObs(mainPane);
+        listeObjets.getListeObjets().addListener(Buds);
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
@@ -192,21 +196,14 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        VueObjetBulle vob=new VueObjetBulle(mainPane);
+
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
                     env.action(temps);
                     vT.afficherTexte();
-                    if(map.getNumMap()==0 && temps==100){
-                        System.out.println("pop");
-                        ob.setEmplacement(15,15);
-                        vob.créeSprite(ob);
-                        op.setEmplacement(13, 13);
-                        vob.créeSprite(op);
-                    }
-                    ob.action();
-                    op.action();
+
+
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

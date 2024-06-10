@@ -6,11 +6,12 @@ import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 
 import java.io.File;
+import java.io.FileInputStream;
 
-public class VueObjetBulle {
+public class VueObjet {
 
     private Pane mainPane;
-    public VueObjetBulle(Pane mainPane) {
+    public VueObjet(Pane mainPane) {
         this.mainPane=mainPane;
     }
 
@@ -26,6 +27,10 @@ public class VueObjetBulle {
         }
         else if (entité.getNom_entite() == "ObjetPoing") {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/Buckets/green_bucket.png").toURI().toString()));
+            pouvoirPane.getChildren().add(imageview);
+        }
+        else if (entité.getNom_entite() == "Imprimante") {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/printer.png").toURI().toString()));
             pouvoirPane.getChildren().add(imageview);
         }
 

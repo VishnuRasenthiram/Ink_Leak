@@ -15,7 +15,7 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objet;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Imprimante;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
@@ -25,7 +25,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjetBulle;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjet;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -58,6 +58,7 @@ public class Controller implements Initializable {
 
     private ObjetBulle ob;
     private ObjetPoing op;
+    private Imprimante im;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.tempsDeRechargeJ =true;
@@ -76,6 +77,7 @@ public class Controller implements Initializable {
         joueur.setEmplacement(30,200);
         ob=new ObjetBulle(map, spawner, joueur);
         op=new ObjetPoing(map, spawner, joueur);
+        im = new Imprimante(map, spawner, joueur);
 
         env = new Environnement(joueur, map, spawner,vueMap);
 
@@ -192,7 +194,7 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        VueObjetBulle vob=new VueObjetBulle(mainPane);
+        VueObjet vob=new VueObjet(mainPane);
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),
                 (ev -> {
@@ -204,9 +206,12 @@ public class Controller implements Initializable {
                         vob.créeSprite(ob);
                         op.setEmplacement(13, 13);
                         vob.créeSprite(op);
+                        im.setEmplacement(17, 17);
+                        vob.créeSprite(im);
                     }
                     ob.action();
                     op.action();
+                    im.action();
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();

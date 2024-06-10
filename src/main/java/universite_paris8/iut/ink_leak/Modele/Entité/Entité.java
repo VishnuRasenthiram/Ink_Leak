@@ -60,10 +60,13 @@ public abstract class Entité {
 
             int mur=1;
             int solDegat=2;
+            int murglace=9;
             if(verifCaseSurCoord(mur,x,y)){
                 return false;
             }
-
+            if(verifCaseSurCoord(murglace,x,y)){
+                return false;
+            }
             if(verifCaseSurCoord(solDegat,x,y)){
                 this.prendre_degat(1);
             }
@@ -76,14 +79,23 @@ public abstract class Entité {
             return 3;
         } else if(verifCaseSurCoord(4,x,y)){
             return 4;
+        }else if(verifCaseSurCoord(9,x,y)){
+            return 9;
+        }else if(verifCaseSurCoord(10,x,y)){
+            return 10;
         }
         return 0;
     }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
+        x = x +5;
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
+        x = x -10;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
+
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
+        y = y +5;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
+        y = y -10;
 
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||

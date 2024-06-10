@@ -59,7 +59,7 @@ public class Poing extends Pouvoirs {
                             }
                             break;
                     }
-                    for(Entité sl:super.getSpawner().getListeEntite()){
+                    for(Entité sl:super.getlisteEntite().getListeEntite()){
 
                         if(this.enContact(sl)) {
                             sl.prendre_degat(super.getAttaque_entite());

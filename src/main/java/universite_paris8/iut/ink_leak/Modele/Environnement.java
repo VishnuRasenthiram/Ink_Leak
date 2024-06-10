@@ -44,8 +44,8 @@ public class Environnement {
             }
 
         }
-        if (temps % 10000 == 0) { liste_entites.genererEnnemis(liste_entites, map); }
-        liste_entites.ActiverMob();
+        if (temps % 10000 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
+        listeEntite.activerMob();
 
     }
     private void TuerToutLesEnnemis(){

@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -7,10 +8,13 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -23,8 +27,9 @@ public class Joueur extends Entité {
         private IntegerProperty oppacitéProperty;
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
+        private Poing poing;
         private AttaqueDeBase attaqueDeBase;
-
+        private Timeline timeline;
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis spawner) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,spawner);
             this.listePouvoirs= FXCollections.observableArrayList();
@@ -32,6 +37,7 @@ public class Joueur extends Entité {
             this.oppacitéProperty = new SimpleIntegerProperty(1);
             attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getSpawner(),this);
             bulle =new Bulle( super.getMap(),super.getSpawner(),this);
+            poing = new Poing(super.getMap(), super.getSpawner(), this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
 
@@ -72,68 +78,62 @@ public class Joueur extends Entité {
         }
     }
 
-    public void déplacement(String déplacementDirection) {
+
+
+    public void déplacement(String direction) {
         try {
-            int vitesse_joueur = super.getVitesse_entite();
-
-
-            if (getBougable() == false) {
-                stop();
-                return;
-            }
-            if (executorService != null) return;
-
-                executorService = Executors.newSingleThreadScheduledExecutor();
-                executorService.scheduleAtFixedRate(() -> {
-                    Platform.runLater(() -> {
-                        double x = super.getPosX();
-                        double y = super.getPosY();
-
-                        switch (déplacementDirection) {
-                            case "N":
-                                if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
-                                    super.setPosYProperty(super.getPosY() - vitesse_joueur);
-                                    super.setOrientationProperty("N");
-                                }
-                                break;
-
-                            case "S":
-                                if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
-                                    super.setPosYProperty(super.getPosY() + vitesse_joueur);
-                                    super.setOrientationProperty("S");
-                                }
-                                break;
-
-                            case "O":
-                                if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
-                                    super.setPosXProperty(super.getPosX() - vitesse_joueur);
-                                    super.setOrientationProperty("O");
-                                }
-                                break;
-                            case "E":
-                                if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
-                                    super.setPosXProperty(super.getPosX() + vitesse_joueur);
-                                    super.setOrientationProperty("E");
-                                }
-                                break;
-                        }
-
-                    });
-                }, 0, 5, TimeUnit.MILLISECONDS); // un delay entre les mouvements
+            int vitesseJoueur = super.getVitesse_entite();
             setMovementState(Joueur.MovementState.WALK);
 
-            ;
+            if (timeline != null) return;
+
+            timeline = new Timeline(new KeyFrame(Duration.millis(5), event -> {
+                Platform.runLater(() -> {
+                    if (!getBougable()) return;
+
+                    double x = super.getPosX();
+                    double y = super.getPosY();
+
+                    switch (direction) {
+                        case "N":
+                            super.setOrientationProperty("N");
+                            if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
+                                super.setPosYProperty(y - vitesseJoueur);
+                            }
+                            break;
+                        case "S":
+                            super.setOrientationProperty("S");
+                            if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
+                                super.setPosYProperty(y + vitesseJoueur);
+                            }
+                            break;
+                        case "O":
+                            super.setOrientationProperty("O");
+                            if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
+                                super.setPosXProperty(x - vitesseJoueur);
+                            }
+                            break;
+                        case "E":
+                            super.setOrientationProperty("E");
+                            if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
+                                super.setPosXProperty(x + vitesseJoueur);
+                            }
+                            break;
+                    }
+                });
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
         } catch (Exception ex) {
             System.out.println(ex);
         }
     }
 
-    public void stop(){
-        if (executorService != null) {
-            executorService.shutdownNow();
-            executorService = null;
+    public void stop() {
+        if (timeline != null) {
+            timeline.stop();
+            timeline = null;
             setMovementState(Joueur.MovementState.IDLE);
-
         }
     }
 
@@ -157,6 +157,7 @@ public class Joueur extends Entité {
     public Bulle getBulle() {
         return bulle;
     }
+    public Poing getPoing() { return poing; }
 
     public AttaqueDeBase getAttaqueDeBase() {
         return attaqueDeBase;

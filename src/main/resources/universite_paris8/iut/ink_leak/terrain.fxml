@@ -14,7 +14,7 @@
       <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER">
 
          <Label fx:id="txt" />
-         <Pane fx:id="mainPane" focusTraversable="true" maxHeight="384.0" maxWidth="640.0" onKeyPressed="#action" onKeyReleased="#stop" BorderPane.alignment="TOP_CENTER">
+         <Pane fx:id="mainPane" focusTraversable="true" maxHeight="384.0" maxWidth="640.0" onKeyPressed="#action" BorderPane.alignment="TOP_CENTER">
             <TilePane fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
 
             </TilePane>

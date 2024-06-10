@@ -7,13 +7,16 @@ public abstract class VueEntite {
 
     private Pane mainPane;
 
+
     public VueEntite(Pane mainPane){
         this.mainPane=mainPane;
+
     }
 
     public abstract void créeSprite(Entité entité);
 
-    public Pane getMainPane(){
+    public Pane getMainPane() {
         return mainPane;
     }
+
 }

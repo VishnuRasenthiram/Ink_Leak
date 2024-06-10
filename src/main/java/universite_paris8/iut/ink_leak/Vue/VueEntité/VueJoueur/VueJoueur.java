@@ -1,7 +1,9 @@
 package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -18,6 +20,8 @@ import java.util.List;
 public class VueJoueur extends VueEntite {
     private Pane interfacePane;
     private Timeline animationTimeline;
+    private Timeline punchTimeline;
+
     private Joueur joueur;
     private Pane Joueur;
 
@@ -42,6 +46,7 @@ public class VueJoueur extends VueEntite {
         Joueur.translateYProperty().bind(entité.posYProperty());
 
         super.getMainPane().getChildren().add(Joueur);
+
     }
 
 
@@ -80,7 +85,8 @@ public class VueJoueur extends VueEntite {
 
         }
     }
-peaf
+
+
     public List<Image> getWalkImages(String orientation) {
 
         List<Image> images = new ArrayList<>();
@@ -113,8 +119,7 @@ peaf
             ImageView imageview = new ImageView();
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
-            imageview.setImage(images.get(1));  // On change cette image plus tard dans l'animation
-            // Créer une animation d'images
+            imageview.setImage(images.get(1));
             currentIndex = currentIndex + 1;
             if (currentIndex >= images.size()) currentIndex = 0;
             imageview.setImage(images.get(currentIndex));
@@ -124,9 +129,62 @@ peaf
         animationTimeline.getKeyFrames().add(keyFrame);
         animationTimeline.play();
     }
-    public void stopWalkAnimation(Joueur joueur,  Pane p) {
+    public List<Image> getPunchAnimation(String orientation) {
+
+        List<Image> images = new ArrayList<>();
+
+
+        if (orientation.equals("N")) orientation = "up";
+        else if (orientation.equals("S")) orientation = "down";
+        else if (orientation.equals("E")) orientation = "right";
+        else orientation = "left";
+
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/" + orientation + "/";
+
+        if (orientation.equals("up")) orientation = "u";
+        else if (orientation.equals("down")) orientation = "d";
+        else if (orientation.equals("right")) orientation = "r";
+        else orientation = "l";
+
+        for (int i = 1; i <= 3; i++) {
+            File file = new File(basePath + "entity_attack_" + orientation + "_" + i + ".png");
+            images.add(new Image(file.toURI().toString()));
+        }
+
+
+        return images;
+    }
+    public void punchAnimation() {
+        punchTimeline = new Timeline();
+        punchTimeline.setCycleCount(1);
+        KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.09), e -> {
+            orientation = joueur.getOrientationProperty();
+            List<Image> images = getPunchAnimation(orientation);
+            int currentIndex = 0;
+            if (Joueur == null) return;
+
+            Joueur.getChildren().clear();
+            ImageView imageview = new ImageView();
+            imageview.setFitHeight(32);
+            imageview.setFitWidth(32);
+            imageview.setImage(images.get(1));
+            currentIndex = currentIndex + 1;
+            imageview.setImage(images.get(currentIndex));
+
+            Joueur.getChildren().add(imageview);
+        });
+        punchTimeline.getKeyFrames().add(punchFrame);
+        punchTimeline.setOnFinished(e -> {
+            PauseTransition pause = new PauseTransition(Duration.millis(450));
+            pause.setOnFinished(event -> stopAnimation(joueur, Joueur));
+            pause.play();
+        });
+        punchTimeline.play();
+    }
+    public void stopAnimation(Joueur joueur,  Pane p) {
         if (animationTimeline != null) {
             animationTimeline.stop();
+        }
             String orientation = joueur.getOrientationProperty();
 
             if (orientation.equals("N")) orientation = "up";
@@ -140,7 +198,6 @@ peaf
             imageview.setFitWidth(32);
             imageview.setImage(new Image(new File(idlePath).toURI().toString()));
             p.getChildren().add(imageview);
-        }
     }
 
 

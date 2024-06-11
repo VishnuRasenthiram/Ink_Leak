@@ -1,20 +1,24 @@
 package universite_paris8.iut.ink_leak.Controller;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
+import universite_paris8.iut.ink_leak.Main;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 
 public class VieEnnemisObs implements ChangeListener<Number> {
 
     public Entité entité;
+
 
     public Pane ennemisView;
     public Joueur joueur;
@@ -23,7 +27,6 @@ public class VieEnnemisObs implements ChangeListener<Number> {
         this.entité = entité;
         this.ennemisView = ennemis;
         this.joueur = joueur;
-
 
     }
     private ColorAdjust colorAdjust;
@@ -34,8 +37,12 @@ public class VieEnnemisObs implements ChangeListener<Number> {
 
         if ((int) nouv < (int) old) {
             if (entité instanceof Slime) {
+
+
+
+
+
                 String direction = joueur.getOrientationProperty().toString();
-                System.out.println(direction);
 
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);

@@ -3,6 +3,7 @@ package universite_paris8.iut.ink_leak.Modele;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 
 public class Environnement {
@@ -20,6 +21,8 @@ public class Environnement {
         this.map = map;
         this.vMap = vMap;
     }
+
+
 
     public void action(int temps) {
 

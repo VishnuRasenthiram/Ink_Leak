@@ -30,4 +30,11 @@ public class Musique {
             clip.close();
         }
     }
+
+    public boolean getStatus() {
+        if (clip != null){
+            return clip.isActive();
+        }
+        return false;
+    }
 }

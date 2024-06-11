@@ -31,8 +31,8 @@ public class VueAttaque {
 
     public void afficheAttaque(Pouvoirs pouvoirs) {
         if(pouvoirs instanceof AttaqueDeBase){
-            VueAttaqueDeBase ab=new VueAttaqueDeBase(mainPane, joueur);
-            ab.afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
+            VueAttaqueDeBase vAB=new VueAttaqueDeBase(mainPane, joueur);
+            vAB.afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
         } else if (pouvoirs instanceof Bulle ) {
             VueBulle vB= new VueBulle(mainPane, joueur);
             vB.afficheAttaqueBulle((Bulle) pouvoirs);

@@ -18,7 +18,6 @@ import java.util.List;
 public class VueAttaqueDeBase extends VueAttaque {
 
     private Timeline animationTimeline;
-    private Joueur joueur;
     private String orientation;
     private int currentIndex = 0;
 

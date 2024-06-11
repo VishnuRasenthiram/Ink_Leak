@@ -10,7 +10,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import java.io.File;
 
 public class VueBulle extends VueAttaque{
-    private Joueur joueur;
+
     public VueBulle(Pane mainPane, Joueur joueur) {
         super(mainPane, joueur);
     }

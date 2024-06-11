@@ -8,7 +8,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public class AttaqueDeBase extends Pouvoirs{
 
     public AttaqueDeBase(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super("attBase",  1, 32, 32, 1, map, generateurEnnemis,joueur);
+        super("attBase",  1, 32, 32, 1, true,map, generateurEnnemis,joueur);
 
     }
 

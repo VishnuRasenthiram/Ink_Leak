@@ -12,24 +12,21 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Poing extends Pouvoirs {
 
-    private IntegerProperty estENVIEProperty;
+
     private static int cpt=0;
     public Poing(Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
 
-        super("poing"+cpt,2, 64, 64, 1, map, generateurEnnemis,joueur);
-        this.estENVIEProperty = new SimpleIntegerProperty(1);
+        super("poing"+cpt,2, 64, 64, 1,true, map, generateurEnnemis,joueur);
         cpt++;
 
     }
 
-    public IntegerProperty getEstENVIEProperty() {
-        return estENVIEProperty;
-    }
+
 
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
-        estENVIEProperty.set(1);
+        setEstEnVie(true);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();
@@ -71,7 +68,7 @@ public class Poing extends Pouvoirs {
         timeline.setCycleCount(30);
         timeline.play();
         timeline.setOnFinished(e -> {
-            estENVIEProperty.setValue(0);
+            setEstEnVie(false);
         });
     }
 }

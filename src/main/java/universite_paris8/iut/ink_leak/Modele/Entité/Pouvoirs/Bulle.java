@@ -13,14 +13,10 @@ public class Bulle extends Pouvoirs{
 
         private int portée;
 
-        private IntegerProperty estENVIEProperty;
-        private static int cpt=0;
         public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
 
-            super("bulle"+cpt, 1, 32, 32, 3, map, generateurEnnemis,joueur);
+            super("bulle", 1, 32, 32, 3,true, map, generateurEnnemis,joueur);
             this.portée = 12;
-            this.estENVIEProperty = new SimpleIntegerProperty(1);
-            cpt++;
 
         }
 
@@ -35,14 +31,12 @@ public class Bulle extends Pouvoirs{
 
 
 
-    public IntegerProperty getEstENVIEProperty() {
-        return estENVIEProperty;
-    }
+
 
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
-        estENVIEProperty.set(1);
+        setEstEnVie(true);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();
@@ -84,7 +78,7 @@ public class Bulle extends Pouvoirs{
         timeline.setCycleCount(30);
         timeline.play();
         timeline.setOnFinished(e -> {
-            estENVIEProperty.setValue(0);
+            setEstEnVie(false);
         });
     }
 

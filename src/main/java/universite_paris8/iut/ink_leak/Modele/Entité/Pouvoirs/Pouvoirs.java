@@ -1,4 +1,8 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -6,9 +10,13 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Pouvoirs extends Entité {
     private Joueur joueur;
-    public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite, Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
+    private BooleanProperty estEnVieProperty;
+
+    public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite,boolean estEnVie, Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
         super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, generateurEnnemis,null);
         this.joueur = joueur;
+        this.estEnVieProperty = new SimpleBooleanProperty(estEnVie);
+
     }
 
     @Override
@@ -18,6 +26,16 @@ public abstract class Pouvoirs extends Entité {
  
     public Joueur getJoueur() {
         return joueur;
+    }
+    public BooleanProperty getEstENVIEProperty() {
+        return estEnVieProperty;
+    }
+
+    public void setEstEnVie(boolean estEnVie) {
+        this.estEnVieProperty.setValue(estEnVie);
+    }
+    public boolean getEstEnVie() {
+        return estEnVieProperty.getValue();
     }
 
     @Override

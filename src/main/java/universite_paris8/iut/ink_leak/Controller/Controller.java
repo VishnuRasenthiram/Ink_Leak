@@ -24,7 +24,6 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjet;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -196,7 +195,7 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        VueObjet vob=new VueObjet(mainPane);
+
 
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),

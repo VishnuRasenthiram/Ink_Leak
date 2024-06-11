@@ -121,7 +121,7 @@ public class Controller implements Initializable {
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
-        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav",1.0f, -1);
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
     }
     private String currentDirection = null;
 

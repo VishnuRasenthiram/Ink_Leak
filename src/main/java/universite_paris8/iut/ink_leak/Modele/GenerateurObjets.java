@@ -50,7 +50,7 @@ public class GenerateurObjets {
                     listeObjets.add(objetBulle);
                 }
                 break;
-            case 2:
+            case 0:
                 if(objetPoing.getNbFoisRecuperable() !=0){
                     setObjetsPos(objetPoing);
                     listeObjets.add(objetPoing);
@@ -71,7 +71,7 @@ public class GenerateurObjets {
 
         switch (map.getNumMap()){
             case 0:
-                objet.setEmplacement(15,15);
+                objet.setEmplacement(1,5);
                 break;
             case 1:
                 objet.setEmplacement(16,15);

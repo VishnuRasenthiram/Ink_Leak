@@ -90,7 +90,6 @@ public class Joueur extends Entité {
 
             timeline = new Timeline(new KeyFrame(Duration.millis(5), event -> {
                 Platform.runLater(() -> {
-                    System.out.println(getBougable());
                     if (!getBougable()) return;
 
                     double x = super.getPosX();

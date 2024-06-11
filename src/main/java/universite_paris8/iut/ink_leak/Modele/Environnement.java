@@ -29,6 +29,7 @@ public class Environnement {
             joueur.peutAller(x, y, this.map);
             int interaction = joueur.verifierInteractionEnFace(x, y);
 
+            listeObjets.genererObjets();
 
             if (interaction == 3 || interaction == 4) {
                 joueur.setBougable(false);
@@ -44,8 +45,10 @@ public class Environnement {
             }
 
         }
-        if (temps % 10000 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
+        if (temps % 100 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
         listeEntite.activerMob();
+        listeObjets.activerObjet();
+
 
     }
     private void TuerToutLesEnnemis(){

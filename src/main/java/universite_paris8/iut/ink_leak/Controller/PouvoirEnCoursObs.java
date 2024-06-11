@@ -13,7 +13,6 @@ public class PouvoirEnCoursObs implements ChangeListener<Number> {
     public Pane interfacePane;
 
     public PouvoirEnCoursObs(Joueur joueur, Pane interfacePane ) {
-
         this.joueur = joueur;
         this.interfacePane = interfacePane;
 

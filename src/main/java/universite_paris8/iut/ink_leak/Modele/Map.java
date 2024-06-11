@@ -10,11 +10,12 @@ public class Map {
         this.numMap = 0;
 
     }
-    public int getLargeur(){
-        return this.map.length;
+    public static int getLargeur(Map map) {
+        return map.map.length;
     }
-    public int getHauteur(){
-        return this.map[0].length;
+
+    public static int getHauteur(Map map) {
+        return map.map[0].length;
     }
     public int[][] getMap(){
         return this.map;
@@ -22,7 +23,9 @@ public class Map {
     public int getNumMap(){
         return this.numMap;
     }
-
+    public int[][] getNontraversable(){
+        return this.map;
+    }
     public void setMap(int numMap){
         switch (numMap){
             case 1:

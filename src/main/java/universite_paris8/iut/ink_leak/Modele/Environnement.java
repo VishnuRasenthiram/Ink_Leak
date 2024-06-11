@@ -6,6 +6,10 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 
+import java.util.List;
+
+import static universite_paris8.iut.ink_leak.Modele.Dijkstra.dijkstra;
+
 public class Environnement {
 
     private Joueur joueur;
@@ -20,6 +24,21 @@ public class Environnement {
         this.listeObjets = listeObjets;
         this.map = map;
         this.vMap = vMap;
+        // Replace these with your desired starting and target positions
+        int startX = 0;
+        int startY = 0;
+        int targetX = 8;
+        int targetY = 4;
+
+        List<Direction> path = dijkstra(map.getMap(), startX, startY, targetX, targetY);
+        // Process the path (optional)
+        if (path != null) {
+            for (Direction direction : path) {
+                System.out.println(direction);
+            }
+        } else {
+            System.out.println("No path found");
+        }
     }
 
 
@@ -35,6 +54,8 @@ public class Environnement {
             listeObjets.genererObjets();
 
             if (interaction == 3 || interaction == 4) {
+
+
                 joueur.setBougable(false);
                 vMap.supprimerAffichageMap();
                 map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 4 ? 1 : map.getNumMap() - 1));

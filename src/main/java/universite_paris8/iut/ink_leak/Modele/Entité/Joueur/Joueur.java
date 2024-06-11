@@ -28,6 +28,7 @@ public class Joueur extends Entité {
         private Poing poing;
         private AttaqueDeBase attaqueDeBase;
         private Timeline timeline;
+
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis generateurEnnemis) {
             super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null);
             this.listePouvoirs= FXCollections.observableArrayList();
@@ -90,7 +91,6 @@ public class Joueur extends Entité {
 
             timeline = new Timeline(new KeyFrame(Duration.millis(5), event -> {
                 Platform.runLater(() -> {
-                    System.out.println(getBougable());
                     if (!getBougable()) return;
 
                     double x = super.getPosX();

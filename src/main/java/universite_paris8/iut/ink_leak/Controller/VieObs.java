@@ -49,7 +49,6 @@ public class VieObs implements ChangeListener<Number> {
 
             } else  if(entité instanceof Slime) {
                 String direction = joueurView.getId();
-                System.out.println(direction);
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(joueurView.translateXProperty(), 0.3)),
                         new KeyFrame(Duration.seconds(0.15), new KeyValue(joueurView.opacityProperty(), 0.5)),

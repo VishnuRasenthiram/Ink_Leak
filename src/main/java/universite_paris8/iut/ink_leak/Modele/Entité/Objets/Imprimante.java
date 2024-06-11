@@ -4,7 +4,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
-public class Imprimante extends Objet {
+public class Imprimante extends Objets {
 
     private int nbFoisRecuperable;
 

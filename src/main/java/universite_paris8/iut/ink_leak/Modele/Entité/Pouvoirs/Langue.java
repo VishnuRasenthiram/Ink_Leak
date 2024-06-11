@@ -23,7 +23,7 @@ public class Langue extends Pouvoirs{
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();
                     double y = super.getPosY();
-                    int vitesse_joueur = super.getVitesse_entite()+2+i;
+                    int vitesse_joueur = super.getVitesse_entite()+i;
                     i--;
                     switch (déplacementDirection) {
                         case "N":

@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetLangue;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
 
 import java.util.ArrayList;
 
@@ -57,10 +54,7 @@ public class GenerateurObjets {
                 }
                 break;
             case 2:
-                if(objetPoing.getNbFoisRecuperable() !=0){
-                    setObjetsPos(objetPoing);
-                    listeObjets.add(objetPoing);
-                }
+
                 break;
             case 3:
                 if(objetLangue.getNbFoisRecuperable() !=0){
@@ -72,6 +66,10 @@ public class GenerateurObjets {
                 if(tube.getNbFoisRecuperable() !=0) {
                     setObjetsPos(tube);
                     listeObjets.add(tube);
+                }
+                if(objetPoing.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetPoing);
+                    listeObjets.add(objetPoing);
                 }
                 break;
         }
@@ -88,7 +86,7 @@ public class GenerateurObjets {
                     break;
                 }
             case 1:
-                objet.setEmplacement(8,15);
+                objet.setEmplacement(7,15);
                 break;
 
             case 2:

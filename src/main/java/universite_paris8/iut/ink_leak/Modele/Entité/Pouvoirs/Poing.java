@@ -66,4 +66,7 @@ public class Poing extends Pouvoirs {
             setEstEnVie(false);
         });
     }
+
+
+
 }

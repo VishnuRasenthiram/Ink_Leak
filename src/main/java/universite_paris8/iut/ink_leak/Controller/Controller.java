@@ -198,7 +198,7 @@ public class Controller implements Initializable {
 
 
         KeyFrame kf = new KeyFrame(
-                Duration.millis(60),
+                Duration.millis(17),
                 (ev -> {
                     env.action(temps);
                     vT.afficherTexte();
@@ -210,10 +210,10 @@ public class Controller implements Initializable {
                         gameLoop.stop();
                     }
 
-                    if (temps % 30 == 0) {
+                    if (temps % 50 == 0) {
                         tempsDeRechargeK = true;
                     }
-                    if (temps % 10 == 0) {
+                    if (temps % 90 == 0) {
                         tempsDeRechargeJ = true;
                     }
                     temps++;

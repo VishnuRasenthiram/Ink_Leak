@@ -17,7 +17,7 @@ public class VuePoing extends VueAttaque {
 
     public void afficherAttaquePoing(Poing poing) {
 
-        String orientation = super.getJoueur().getOrientationProperty();
+        String orientation = super.getJoueur().getOrientation();
         Pane attaquePane = new Pane();
         ImageView imageview = new ImageView();
         imageview.setFitHeight(64);
@@ -42,7 +42,7 @@ public class VuePoing extends VueAttaque {
         attaquePane.setId("attaque");
         super.getMainPane().getChildren().add(attaquePane);
 
-        poing.getEstENVIEProperty().addListener(new PouvoirObs(this));
+        poing.getEstEnVieProperty().addListener(new PouvoirObs(this));
 
     }
 }

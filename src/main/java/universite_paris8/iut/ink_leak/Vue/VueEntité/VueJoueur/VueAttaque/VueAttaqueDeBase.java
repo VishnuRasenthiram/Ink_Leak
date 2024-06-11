@@ -2,14 +2,12 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,7 +57,7 @@ public class VueAttaqueDeBase extends VueAttaque {
         animationTimeline.setCycleCount(5);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.04), e -> {
-            orientation = super.getJoueur().getOrientationProperty();
+            orientation = super.getJoueur().getOrientation();
             List<Image> images = getGriffeAnimation();
 
             if (p == null) return;

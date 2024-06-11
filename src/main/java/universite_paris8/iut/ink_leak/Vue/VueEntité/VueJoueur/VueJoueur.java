@@ -16,7 +16,6 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class VueJoueur extends VueEntite {
     private Pane interfacePane;
@@ -44,7 +43,7 @@ public class VueJoueur extends VueEntite {
         ImageView JoueurView= new ImageView();
         JoueurView.setFitHeight(32);
         JoueurView.setFitWidth(32);
-        JoueurView.setImage(new Image(orientationToFile(entité.getOrientationProperty()).toURI().toString()));
+        JoueurView.setImage(new Image(orientationToFile(entité.getOrientation()).toURI().toString()));
         Joueur.getChildren().add(JoueurView);
 
         Joueur.translateXProperty().bind(entité.posXProperty());
@@ -150,7 +149,7 @@ public class VueJoueur extends VueEntite {
         animationTimeline.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), e -> {
-            orientation = joueur.getOrientationProperty();
+            orientation = joueur.getOrientation();
             List<Image> images = getWalkImages(orientation);
             if (p == null) return;
             p.getChildren().clear();
@@ -197,7 +196,7 @@ public class VueJoueur extends VueEntite {
         punchTimeline.setCycleCount(2);
 
         KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.11), e -> {
-            orientation = joueur.getOrientationProperty();
+            orientation = joueur.getOrientation();
             List<Image> images = getPunchAnimation(orientation);
 
             if (Joueur == null) return;
@@ -225,7 +224,7 @@ public class VueJoueur extends VueEntite {
         if (animationTimeline != null) {
             animationTimeline.stop();
         }
-            String orientation = joueur.getOrientationProperty();
+            String orientation = joueur.getOrientation();
 
             if (orientation.equals("N")) orientation = "up";
             else if (orientation.equals("S")) orientation = "down";

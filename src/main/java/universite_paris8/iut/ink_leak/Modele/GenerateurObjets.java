@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetLangue;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 
@@ -17,11 +18,14 @@ public class GenerateurObjets {
 
     private ObjetBulle objetBulle;
     private ObjetPoing objetPoing;
+    private ObjetLangue objetLangue;
     public GenerateurObjets(Map map, Joueur joueur){
         listeObjets= FXCollections.observableArrayList();
         this.map=map;
         objetBulle= new ObjetBulle(map,this,joueur);
         objetPoing= new ObjetPoing(map,this,joueur);
+        objetLangue= new ObjetLangue(map,this,joueur);
+
 
     }
     public void activerObjet(){
@@ -57,10 +61,16 @@ public class GenerateurObjets {
                 }
                 break;
             case 3:
-
+                if(objetLangue.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetLangue);
+                    listeObjets.add(objetLangue);
+                }
                 break;
             default:
-
+                if(objetLangue.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetLangue);
+                    listeObjets.add(objetLangue);
+                }
                 break;
         }
 

@@ -178,8 +178,8 @@ public abstract class Entité {
         return posXProperty;
     }
 
-    public String getOrientationProperty() {
-        return orientationProperty.get();
+    public String getOrientation() {
+        return orientationProperty.getValue();
     }
 
     public StringProperty orientationProperty() {
@@ -252,7 +252,7 @@ public abstract class Entité {
         return largeur;
     }
 
-    public GenerateurEnnemis getlisteEntite(){
+    public GenerateurEnnemis getGenerateurEnnemis(){
         return generateurEnnemis;
     }
 

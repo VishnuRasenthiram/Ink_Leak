@@ -6,11 +6,11 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import java.util.Random;
 
 
-public class Slime extends Entité {
+public class Flaque extends Entité {
     public static int cpt=0;
 
 
-    public Slime(GenerateurEnnemis generateurEnnemis, Map map){
+    public Flaque(GenerateurEnnemis generateurEnnemis, Map map){
 
         super("S"+cpt, 5, 1,32, 32,1,200,map, generateurEnnemis,null);
         cpt++;

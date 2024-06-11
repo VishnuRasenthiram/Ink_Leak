@@ -3,10 +3,7 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
 
 import java.util.ArrayList;
 
@@ -39,6 +36,10 @@ public class VueAttaque {
         } else if (pouvoirs instanceof Poing){
             VuePoing vP = new VuePoing(mainPane, joueur);
             vP.afficherAttaquePoing((Poing) pouvoirs);
+        } else if (pouvoirs instanceof Langue) {
+            VueLangue vL = new VueLangue(mainPane, joueur);
+            vL.afficherAttaqueLangue((Langue)pouvoirs);
+
         }
 
     }

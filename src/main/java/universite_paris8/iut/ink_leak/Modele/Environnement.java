@@ -42,9 +42,11 @@ public class Environnement {
                 pause.setOnFinished(event -> joueur.setBougable(true));
                 pause.play();
             }
+            generateurObjets.genererObjets();
+
 
         }
-        if (temps % 10000 == 0) { generateurEnnemis.genererEnnemis(generateurEnnemis, map); }
+        if (temps % 100 == 0) { generateurEnnemis.genererEnnemis(map); }
         generateurEnnemis.activerMob();
         generateurObjets.activerObjet();
 

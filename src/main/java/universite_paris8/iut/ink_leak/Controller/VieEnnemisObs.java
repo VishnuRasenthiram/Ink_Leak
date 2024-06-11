@@ -2,7 +2,6 @@ package universite_paris8.iut.ink_leak.Controller;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
@@ -34,7 +33,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
 
         if ((int) nouv < (int) old) {
             if (entité instanceof Slime) {
-                String direction = joueur.getOrientationProperty().toString();
+                String direction = joueur.getOrientation().toString();
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);
 

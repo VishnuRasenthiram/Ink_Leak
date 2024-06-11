@@ -1,8 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -27,7 +25,7 @@ public abstract class Pouvoirs extends Entité {
     public Joueur getJoueur() {
         return joueur;
     }
-    public BooleanProperty getEstENVIEProperty() {
+    public BooleanProperty getEstEnVieProperty() {
         return estEnVieProperty;
     }
 
@@ -46,15 +44,15 @@ public abstract class Pouvoirs extends Entité {
 
     }
     public void setPosition(){
-        if (joueur.getOrientationProperty() == "N") {
+        if (joueur.getOrientation() == "N") {
             super.setPosXProperty(joueur.getPosX());
             super.setPosYProperty(joueur.getPosY() - 32);
         }
-        else if (joueur.getOrientationProperty() == "S") {
+        else if (joueur.getOrientation() == "S") {
             super.setPosXProperty(joueur.getPosX());
             super.setPosYProperty(joueur.getPosY() + 32);
         }
-        else if (joueur.getOrientationProperty() == "E") {
+        else if (joueur.getOrientation() == "E") {
             super.setPosXProperty(joueur.getPosX() + 32);
             super.setPosYProperty(joueur.getPosY());
         }

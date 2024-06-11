@@ -1,8 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
@@ -66,7 +64,7 @@ public class Bulle extends Pouvoirs{
                             }
                             break;
                     }
-                    for(Entité sl:super.getlisteEntite().getListeEntite()){
+                    for(Entité sl:super.getGenerateurEnnemis().getListeEntite()){
 
                         if(this.enContact(sl)) {
                             sl.prendre_degat(super.getAttaque_entite());

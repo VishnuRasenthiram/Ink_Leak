@@ -31,7 +31,7 @@ public class VueBulle extends VueAttaque{
         super.getMainPane().getChildren().add(attaquePane);
 
 
-        bulle.getEstENVIEProperty().addListener(new PouvoirObs(this));
+        bulle.getEstEnVieProperty().addListener(new PouvoirObs(this));
 
 
     }

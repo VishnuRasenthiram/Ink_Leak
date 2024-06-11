@@ -42,7 +42,7 @@ public class AttaqueDeBase extends Pouvoirs{
                 }
                 break;
         }
-        for(Entité sl:super.getlisteEntite().getListeEntite()){
+        for(Entité sl:super.getGenerateurEnnemis().getListeEntite()){
 
             if(this.enContact(sl)) {
                 sl.prendre_degat(super.getAttaque_entite());

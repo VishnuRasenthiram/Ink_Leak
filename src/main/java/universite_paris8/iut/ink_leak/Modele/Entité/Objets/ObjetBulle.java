@@ -9,8 +9,8 @@ public class ObjetBulle extends Objets {
 
 
 
-    public ObjetBulle(Map map, GenerateurObjets listeObjets, Joueur joueur) {
-        super("ObjetBulle", map, listeObjets, joueur);
+    public ObjetBulle(Map map, GenerateurObjets generateurObjets, Joueur joueur) {
+        super("ObjetBulle", map, generateurObjets, joueur);
 
     }
 

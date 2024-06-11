@@ -15,9 +15,6 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Imprimante;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
@@ -53,8 +50,8 @@ public class Controller implements Initializable {
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-    private GenerateurEnnemis listeEntite;
-    private GenerateurObjets listeObjets;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
     private VueJoueur ink;
 
     private VueMap vueMap;
@@ -65,7 +62,7 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
-        listeEntite = new GenerateurEnnemis();
+        generateurEnnemis = new GenerateurEnnemis();
 
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink= new VueJoueur(mainPane, interfacePane);
@@ -75,14 +72,14 @@ public class Controller implements Initializable {
         gameLoop.play();
 
 
-        this.joueur = new Joueur("LePlayer",map, listeEntite);
+        this.joueur = new Joueur("LePlayer",map, generateurEnnemis);
         joueur.setEmplacement(30,200);
 
 
-        listeObjets= new GenerateurObjets(map, joueur);
+        generateurObjets = new GenerateurObjets(map, joueur);
 
 
-        env = new Environnement(joueur, map, listeEntite,listeObjets,vueMap);
+        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
 
         joueur.orientationProperty().addListener((obs,old,nouv)->{
 
@@ -107,7 +104,7 @@ public class Controller implements Initializable {
 
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
-        listeEntite.getListeEntite().addListener(listenerEnnemis);
+        generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
 
@@ -120,7 +117,7 @@ public class Controller implements Initializable {
         joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
 
         ListChangeListener<Objets> Buds= new ListeObjetsObs(mainPane);
-        listeObjets.getListeObjets().addListener(Buds);
+        generateurObjets.getListeObjets().addListener(Buds);
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);

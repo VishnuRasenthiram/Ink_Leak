@@ -15,9 +15,9 @@ public class Bulle extends Pouvoirs{
 
         private IntegerProperty estENVIEProperty;
         private static int cpt=0;
-        public Bulle(Map map,GenerateurEnnemis liste_entites, Joueur j) {
+        public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
 
-            super("bulle"+cpt, 1, 32, 32, 3, map, liste_entites,j);
+            super("bulle"+cpt, 1, 32, 32, 3, map, generateurEnnemis,joueur);
             this.portée = 12;
             this.estENVIEProperty = new SimpleIntegerProperty(1);
             cpt++;

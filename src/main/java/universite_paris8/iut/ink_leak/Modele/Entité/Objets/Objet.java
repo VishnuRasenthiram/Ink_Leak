@@ -2,14 +2,14 @@ package universite_paris8.iut.ink_leak.Modele.Entité.Objets;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Objet extends Entité {
-    private Joueur j;
-    public Objet(String idObjet, int attaque, Map map, GenerateurEnnemis spawner, Joueur j) {
-        super(idObjet, 1, attaque, 32, 32, 0, 1, map, spawner);
-        this.j = j;
+    private Joueur joueur;
+    public Objet(String idObjet, Map map, GenerateurObjets generateurObjets, Joueur joueur) {
+        super(idObjet, map, generateurObjets);
+        this.joueur = joueur;
 
 
     }
@@ -32,5 +32,5 @@ public abstract class Objet extends Entité {
         super.setEmplacement(x*32,y*32);
     }
 
-    public Joueur getJ() { return this.j; }
+    public Joueur getJoueur() { return this.joueur; }
 }

@@ -28,8 +28,8 @@ public class Joueur extends Entité {
         private Poing poing;
         private AttaqueDeBase attaqueDeBase;
         private Timeline timeline;
-        public Joueur(String nom_joueur,Map map, GenerateurEnnemis listeEntite) {
-            super(nom_joueur,  6, 1, 30, 32,1,1000,map,listeEntite);
+        public Joueur(String nom_joueur,Map map, GenerateurEnnemis generateurEnnemis) {
+            super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null);
             this.listePouvoirs= FXCollections.observableArrayList();
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);
@@ -232,10 +232,10 @@ public class Joueur extends Entité {
 
 
 
-        public void gagner_vie(int nb_vie_gagnee) {
-            if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
-            else this.setVie_entite(this.getVie() + nb_vie_gagnee);
-        }
+    public void gagner_vie(int nb_vie_gagnee) {
+        if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
+        else this.setVie_entite(this.getVie() + nb_vie_gagnee);
+    }
 
     public IntegerProperty getOppacitéProperty() {
         return oppacitéProperty;

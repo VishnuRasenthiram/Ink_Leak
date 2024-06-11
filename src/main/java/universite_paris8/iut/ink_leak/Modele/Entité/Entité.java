@@ -18,11 +18,11 @@ public abstract class Entité {
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
     private Map map;
-    private GenerateurEnnemis listeEntite;
-    private GenerateurObjets listeObjets;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
     private final ObjectProperty<MovementState> movementStateProperty;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis listeEntite) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis,GenerateurObjets generateurObjets) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -35,26 +35,14 @@ public abstract class Entité {
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
         this.map = map;
-        this.listeEntite = listeEntite;
+        this.generateurEnnemis = generateurEnnemis;
+        this.generateurObjets = generateurObjets;
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
 
     }
 
-    public Entité(String nom_entite, Map map, GenerateurObjets listeObjets) {
-        this.nom_entite = nom_entite;
-        this.vie_entiteProperty = new SimpleIntegerProperty(1);
-        this.attaque_entite = 0;
-        this.vitesse_entite = 0;
-        this.largeur=32;
-        this.longueur=32;
-        this.posXProperty = new SimpleDoubleProperty();
-        this.posYProperty = new SimpleDoubleProperty();
-        this.orientationProperty = new SimpleStringProperty("S");
-        this.invincibilite =1;
-        this.dernier_degat = 0;
-        this.map = map;
-        this.listeObjets = listeObjets;
-        this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
+    public Entité(String nom_entite, Map map, GenerateurObjets generateurObjets) {
+        this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets);
 
     }
 
@@ -265,14 +253,14 @@ public abstract class Entité {
     }
 
     public GenerateurEnnemis getlisteEntite(){
-        return listeEntite;
+        return generateurEnnemis;
     }
 
     public Map getMap(){
         return map;
     }
 
-    public GenerateurObjets getListeObjets() {
-        return listeObjets;
+    public GenerateurObjets getGenerateurObjets() {
+        return generateurObjets;
     }
 }

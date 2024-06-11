@@ -14,9 +14,9 @@ public class Poing extends Pouvoirs {
 
     private IntegerProperty estENVIEProperty;
     private static int cpt=0;
-    public Poing(Map map, GenerateurEnnemis spawner, Joueur j) {
+    public Poing(Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
 
-        super("poing"+cpt,2, 64, 64, 1, map, spawner,j);
+        super("poing"+cpt,2, 64, 64, 1, map, generateurEnnemis,joueur);
         this.estENVIEProperty = new SimpleIntegerProperty(1);
         cpt++;
 

@@ -93,15 +93,15 @@ public abstract class Entité {
         return 0;
     }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
-        x = x +5;
+        x = x +2;
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
-        x = x -10;
+        x = x -4;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
-
+        y = y +2;
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
-        y = y +5;
+        y = y -4;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
-        y = y -10;
+
 
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||

@@ -64,6 +64,8 @@ public class VieObs implements ChangeListener<Number> {
             }
         }
 
+        else { new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/regen.wav", 1.0f, 0);}
+
         imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_"+ entité.getVie_entiteProperty().getValue()+".png").toURI().toString()));
 
 

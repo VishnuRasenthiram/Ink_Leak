@@ -37,7 +37,6 @@ public class Environnement {
                 TuerToutLesEnnemis();
                 listeObjets.EnleverToutLesObjets();
                 vMap.initMap(map, joueur);
-                listeObjets.genererObjets();
                 PauseTransition pause = new PauseTransition(Duration.millis(500));
                 pause.setOnFinished(event -> joueur.setBougable(true));
                 pause.play();
@@ -45,7 +44,9 @@ public class Environnement {
 
         }
         if (temps % 10000 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
+        listeObjets.genererObjets();
         listeEntite.activerMob();
+        listeObjets.activerObjet();
 
     }
     private void TuerToutLesEnnemis(){

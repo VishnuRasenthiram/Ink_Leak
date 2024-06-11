@@ -15,9 +15,6 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Imprimante;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
@@ -27,7 +24,6 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjet;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -125,7 +121,7 @@ public class Controller implements Initializable {
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
-        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(Snarfnpoots).wav",1.0f, -1);
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
     }
     private String currentDirection = null;
 
@@ -198,8 +194,6 @@ public class Controller implements Initializable {
         gameLoop = new Timeline();
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-
-        VueObjet vob=new VueObjet(mainPane);
 
         KeyFrame kf = new KeyFrame(
                 Duration.millis(60),

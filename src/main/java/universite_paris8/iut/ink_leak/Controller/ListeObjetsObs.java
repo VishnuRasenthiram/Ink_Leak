@@ -9,25 +9,25 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Tube;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueEnnemis;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjetBulle;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjetPoing;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjets;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueTube;
 
 public class ListeObjetsObs implements ListChangeListener<Objets> {
     @FXML
     private Pane mainPane;
 
 
-    public ListeObjetsObs(Pane mainPane){
-        this.mainPane = mainPane;
-
-    }
+    public ListeObjetsObs(Pane mainPane){ this.mainPane = mainPane; }
 
     @Override
     public void onChanged(Change<? extends Objets> change) {
         VueObjets vueObjetBulle = new VueObjetBulle(mainPane);
         VueObjets vueObjetsPoing =new VueObjetPoing(mainPane);
+        VueTube vueTube=new VueTube(mainPane);
 
         while(change.next()){
             for(Objets objetsAjoute: change.getAddedSubList()){
@@ -35,6 +35,8 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
                     vueObjetBulle.créeSprite(objetsAjoute);
                 } else if (objetsAjoute instanceof ObjetPoing) {
                     vueObjetsPoing.créeSprite(objetsAjoute);
+                } else if (objetsAjoute instanceof Tube) {
+                    vueTube.créeSprite(objetsAjoute);
                 }
 
             }
@@ -43,7 +45,8 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
                     vueObjetBulle.supprimerSpriteObjet(objetsEnleve);
                 } else if (objetsEnleve instanceof ObjetPoing) {
                     vueObjetsPoing.supprimerSpriteObjet(objetsEnleve);
-
+                } else if (objetsEnleve instanceof Tube) {
+                    vueTube.supprimerSpriteObjet(objetsEnleve);
                 }
             }
         }

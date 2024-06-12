@@ -97,7 +97,7 @@ public abstract class Entité {
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
         x = x -4;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
-        y = y +2;
+        y = y + 2;
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
         y = y -4;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
@@ -108,7 +108,12 @@ public abstract class Entité {
                 map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_BasY)==cases;
     }
-
+    public int coorDansLeTableauY(double coord){
+        return (int)Math.ceil(coord)/32;
+    }
+    public int coorDansLeTableauX(double coord){
+        return (int)Math.ceil(coord)/32;
+    }
     public int coordEnIndiceGauche_Haut(double coord){
         return (int)Math.ceil(coord)/32;
     }

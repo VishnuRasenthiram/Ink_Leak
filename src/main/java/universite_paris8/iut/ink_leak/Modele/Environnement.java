@@ -8,7 +8,6 @@ import universite_paris8.iut.ink_leak.Vue.VueMap;
 
 import java.util.List;
 
-import static universite_paris8.iut.ink_leak.Modele.Dijkstra.dijkstra;
 
 public class Environnement {
 
@@ -55,11 +54,13 @@ public class Environnement {
             generateurObjets.genererObjets();
 
 
+
+
         }
-        if (temps % 10000 == 0) {
-            generateurEnnemis.genererEnnemis(map,joueur); }
         if (temps % 100 == 0) {
-            generateurEnnemis.activerMob();
+            generateurEnnemis.genererEnnemis(map,joueur); }
+        if (temps % 1 == 0) {
+            generateurEnnemis.activerMob(joueur, map);
         }
         generateurObjets.activerObjet();
 

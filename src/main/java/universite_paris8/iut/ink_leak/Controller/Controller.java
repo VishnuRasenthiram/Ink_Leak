@@ -74,11 +74,11 @@ public class Controller implements Initializable {
         gameLoop();
         gameLoop.play();
 
+        generateurEnnemis = new GenerateurEnnemis();
 
         this.joueur = new Joueur("Entity",map, generateurEnnemis);
         joueur.setEmplacement(30,200);
 
-        generateurEnnemis = new GenerateurEnnemis(joueur, map);
 
 
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
@@ -147,6 +147,7 @@ public class Controller implements Initializable {
                     }
                     currentDirection = newDirection;
                     joueur.déplacement(newDirection);
+
                 }
             }
 

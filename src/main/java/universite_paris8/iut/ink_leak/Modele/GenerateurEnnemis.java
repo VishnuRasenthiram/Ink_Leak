@@ -28,13 +28,14 @@ public class GenerateurEnnemis {
             for (Entité mob : listeEntite) {
                // mob.déplacement("E");
                 // Replace these with your desired starting and target positions
-                int startX = mob.coordEnIndiceGauche_Haut(mob.getPosX()+16);
-                int startY = mob.coordEnIndiceGauche_Haut(mob.getPosY()+16);
-                int targetX = joueur.coordEnIndiceGauche_Haut(joueur.getPosX()+16);
-                int targetY = joueur.coordEnIndiceGauche_Haut(joueur.getPosY()+16);
-
+                int startX = mob.coordEnIndiceGauche_Haut(mob.getPosX());
+                int startY = mob.coordEnIndiceGauche_Haut(mob.getPosY()-16);
+                int targetX = joueur.coordEnIndiceGauche_Haut(joueur.getPosX());
+                int targetY = joueur.coordEnIndiceGauche_Haut(joueur.getPosY()-16);
+                System.out.println("Start: " + startX + ", " + startY);
+                System.out.println("Target: " + targetX + ", " + targetY);
                 List<Integer> path = dijkstra(map.getMap(), startX, startY, targetX, targetY);
-                if (path != null) {
+                if (path != null && !path.isEmpty()) {
                     System.out.println(path.get(0));
                     if (path.get(0) == 1) {
                         mob.déplacement("0");

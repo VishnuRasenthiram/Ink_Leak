@@ -18,7 +18,6 @@ public class Dijkstra {
 
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
-            System.out.println("Current node: (" + currentNode.x + ", " + currentNode.y + ") with distance: " + currentNode.distance);
 
             if (currentNode.x == targetX && currentNode.y == targetY) {
                 return reconstructPath(currentNode);
@@ -51,7 +50,6 @@ public class Dijkstra {
                     int newDistance = currentNode.distance + 1; // Pondération de déplacement
 
                     if (newDistance < neighborNode.distance) {
-                        System.out.println("Updating node: (" + neighborNode.x + ", " + neighborNode.y + ") from distance: " + neighborNode.distance + " to new distance: " + newDistance);
                         neighborNode.distance = newDistance;
                         neighborNode.previous = currentNode;
                         neighborNode.direction = dir;
@@ -67,7 +65,6 @@ public class Dijkstra {
 
     private static boolean isValidCell(int x, int y, int width, int height, int[][] map) {
         boolean isValid = x >= 0 && x < width && y >= 0 && y < height && map[y][x] == 0;
-        System.out.println("Checking cell: (" + x + ", " + y + ") is valid: " + isValid);
         return isValid;
     }
 
@@ -76,7 +73,6 @@ public class Dijkstra {
 
         while (node.previous != null) {
             path.add(0, node.direction);
-            System.out.println("Reconstructing path, adding direction: " + node.direction + " from node: (" + node.x + ", " + node.y + ")");
             node = node.previous;
         }
 

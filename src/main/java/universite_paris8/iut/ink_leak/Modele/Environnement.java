@@ -55,9 +55,11 @@ public class Environnement {
             }
 
         }
+        if (temps % 10000 == 0) {
+            listeEntite.genererEnnemis(listeEntite, map); }
         if (temps % 100 == 0) {
-        listeEntite.genererEnnemis(listeEntite, map); }
-        listeEntite.activerMob();
+            listeEntite.activerMob();
+        }
         listeObjets.activerObjet();
 
 

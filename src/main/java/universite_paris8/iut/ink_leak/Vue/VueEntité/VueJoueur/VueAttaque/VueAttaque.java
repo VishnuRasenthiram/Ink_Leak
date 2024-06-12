@@ -3,10 +3,7 @@ package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
 
 import java.util.ArrayList;
 
@@ -31,14 +28,18 @@ public class VueAttaque {
 
     public void afficheAttaque(Pouvoirs pouvoirs) {
         if(pouvoirs instanceof AttaqueDeBase){
-            VueAttaqueDeBase ab=new VueAttaqueDeBase(mainPane, joueur);
-            ab.afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
+            VueAttaqueDeBase vAB=new VueAttaqueDeBase(mainPane, joueur);
+            vAB.afficheAttaqueDeBase((AttaqueDeBase) pouvoirs);
         } else if (pouvoirs instanceof Bulle ) {
             VueBulle vB= new VueBulle(mainPane, joueur);
             vB.afficheAttaqueBulle((Bulle) pouvoirs);
         } else if (pouvoirs instanceof Poing){
             VuePoing vP = new VuePoing(mainPane, joueur);
             vP.afficherAttaquePoing((Poing) pouvoirs);
+        } else if (pouvoirs instanceof Langue) {
+            VueLangue vL = new VueLangue(mainPane, joueur);
+            vL.afficherAttaqueLangue((Langue)pouvoirs);
+
         }
 
     }

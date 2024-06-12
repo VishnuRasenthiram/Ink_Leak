@@ -6,10 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.animation.KeyFrame;
@@ -26,16 +23,19 @@ public class Joueur extends Entité {
         private IntegerProperty indicePouvoirEnCoursProperty;
         private Bulle bulle;
         private Poing poing;
+        private Langue langue;
         private AttaqueDeBase attaqueDeBase;
         private Timeline timeline;
-        public Joueur(String nom_joueur,Map map, GenerateurEnnemis listeEntite) {
-            super(nom_joueur,  6, 1, 30, 32,1,1000,map,listeEntite);
+
+        public Joueur(String nom_joueur,Map map, GenerateurEnnemis generateurEnnemis) {
+            super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null);
             this.listePouvoirs= FXCollections.observableArrayList();
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);
-            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getlisteEntite(),this);
-            bulle =new Bulle( super.getMap(),super.getlisteEntite(),this);
-            poing = new Poing(super.getMap(), super.getlisteEntite(), this);
+            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getGenerateurEnnemis(),this);
+            bulle =new Bulle( super.getMap(),super.getGenerateurEnnemis(),this);
+            poing = new Poing(super.getMap(), super.getGenerateurEnnemis(), this);
+            langue = new Langue(super.getMap(), super.getGenerateurEnnemis(), this);
             this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
         }
 
@@ -66,16 +66,18 @@ public class Joueur extends Entité {
 
     @Override
     public void attaque() {
-        attaqueDeBase.déplacement(getOrientationProperty());
+        attaqueDeBase.déplacement(getOrientation());
     }
 
     public void attaqueAvecPouvoir(){
         int indice=getIndicePouvoirEnCours();
         if(listePouvoirs.get(indice) instanceof Bulle){
-            bulle.déplacement(getOrientationProperty());
+            bulle.déplacement(getOrientation());
         }
         else if (listePouvoirs.get(indice) instanceof Poing) {
-            poing.déplacement(getOrientationProperty());
+            poing.déplacement(getOrientation());
+        } else if (listePouvoirs.get(indice) instanceof  Langue) {
+            langue.déplacement(getOrientation());
         }
     }
 
@@ -231,10 +233,10 @@ public class Joueur extends Entité {
 
 
 
-        public void gagner_vie(int nb_vie_gagnee) {
-            if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
-            else this.setVie_entite(this.getVie() + nb_vie_gagnee);
-        }
+    public void gagner_vie(int nb_vie_gagnee) {
+        if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
+        else this.setVie_entite(this.getVie() + nb_vie_gagnee);
+    }
 
     public IntegerProperty getOppacitéProperty() {
         return oppacitéProperty;
@@ -250,6 +252,7 @@ public class Joueur extends Entité {
         return bulle;
     }
     public Poing getPoing() { return poing; }
+    public Langue getLangue() { return langue; }
 
     public AttaqueDeBase getAttaqueDeBase() {
         return attaqueDeBase;

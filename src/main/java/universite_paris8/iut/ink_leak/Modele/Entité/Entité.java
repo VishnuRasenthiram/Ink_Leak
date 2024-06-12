@@ -18,11 +18,11 @@ public abstract class Entité {
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
     private Map map;
-    private GenerateurEnnemis listeEntite;
-    private GenerateurObjets listeObjets;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
     private final ObjectProperty<MovementState> movementStateProperty;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis listeEntite) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis,GenerateurObjets generateurObjets) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -35,26 +35,14 @@ public abstract class Entité {
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
         this.map = map;
-        this.listeEntite = listeEntite;
+        this.generateurEnnemis = generateurEnnemis;
+        this.generateurObjets = generateurObjets;
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
 
     }
 
-    public Entité(String nom_entite, Map map, GenerateurObjets listeObjets) {
-        this.nom_entite = nom_entite;
-        this.vie_entiteProperty = new SimpleIntegerProperty(1);
-        this.attaque_entite = 0;
-        this.vitesse_entite = 0;
-        this.largeur=32;
-        this.longueur=32;
-        this.posXProperty = new SimpleDoubleProperty();
-        this.posYProperty = new SimpleDoubleProperty();
-        this.orientationProperty = new SimpleStringProperty("S");
-        this.invincibilite =1;
-        this.dernier_degat = 0;
-        this.map = map;
-        this.listeObjets = listeObjets;
-        this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
+    public Entité(String nom_entite, Map map, GenerateurObjets generateurObjets) {
+        this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets);
 
     }
 
@@ -114,6 +102,7 @@ public abstract class Entité {
         y = y -4;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
+
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||
@@ -140,31 +129,20 @@ public abstract class Entité {
     public abstract void déplacement(String déplacementDirection);
 
     public boolean enContact(Entité entite2) {
+        for (int i = (int) getPosX(); i < (int) getPosX() + getLongueur(); i++) {
+            for (int j = (int) getPosY(); j < (int) getPosY() + getLargeur(); j++) {
+                if (entite2.contientPixel(i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
 
-        double x1 = this.getPosX();
-        double y1 = this.getPosY();
-        double longueur1 = this.getLongueur();
-        double largeur1 = this.getLargeur();
-
-        double x2 = entite2.getPosX();
-        double y2 = entite2.getPosY();
-        double longueur2 = entite2.getLongueur();
-        double largeur2 = entite2.getLargeur();
-
-        boolean coinSupDroit = x1 + longueur1 >= x2 && x1 + longueur1 <= x2 + longueur2;
-        boolean coinInfDroit = y1 + largeur1 >= y2 && y1 + largeur1 <= y2 + largeur2;
-        boolean coinSupGauche = y1 >= y2 && y1 <= y2 + largeur2;
-        boolean coinInfGauche = x1 >= x2 && x1 <= x2 + longueur2;
-        boolean coinSupGaucheEntite1DansEntite2 = (x1 >= x2 && x1 <= x2 + longueur2) && (y1 >= y2 && y1 <= y2 + largeur2);
-
-        boolean supDroitEtInfDroit =coinSupDroit && coinInfDroit;
-        boolean supDroitEtSupGauche=coinSupDroit && coinSupGauche;
-        boolean infGaucheEtSupGauche=coinInfGauche && coinSupGauche;
-        boolean infGaucheEtInfDroit=coinInfGauche && coinInfDroit;
-
-        return supDroitEtInfDroit || supDroitEtSupGauche || infGaucheEtSupGauche || infGaucheEtInfDroit || coinSupGaucheEntite1DansEntite2;
     }
-
+    public boolean contientPixel(int x, int y) {
+        return x >= getPosX() && x < getPosX() + getLongueur() &&
+                y >= getPosY() && y < getPosY() + getLargeur();
+    }
 
     public void prendre_degat(int degat){
 
@@ -189,11 +167,11 @@ public abstract class Entité {
         return posXProperty;
     }
 
-    public String getOrientationProperty() {
-        return orientationProperty.get();
+    public String getOrientation() {
+        return orientationProperty.getValue();
     }
 
-    public StringProperty orientationProperty() {
+    public StringProperty getOrientationProperty() {
         return orientationProperty;
     }
 
@@ -263,15 +241,15 @@ public abstract class Entité {
         return largeur;
     }
 
-    public GenerateurEnnemis getlisteEntite(){
-        return listeEntite;
+    public GenerateurEnnemis getGenerateurEnnemis(){
+        return generateurEnnemis;
     }
 
     public Map getMap(){
         return map;
     }
 
-    public GenerateurObjets getListeObjets() {
-        return listeObjets;
+    public GenerateurObjets getGenerateurObjets() {
+        return generateurObjets;
     }
 }

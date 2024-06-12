@@ -13,11 +13,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeEnnemieObs;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeObjetsObs;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListePouvoirsObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Imprimante;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
@@ -27,7 +29,6 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjet;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
@@ -53,8 +54,8 @@ public class Controller implements Initializable {
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-    private GenerateurEnnemis listeEntite;
-    private GenerateurObjets listeObjets;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
     private VueJoueur ink;
 
     private VueMap vueMap;
@@ -65,6 +66,7 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
+        generateurEnnemis = new GenerateurEnnemis();
 
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink= new VueJoueur(mainPane, interfacePane);
@@ -74,40 +76,35 @@ public class Controller implements Initializable {
         gameLoop.play();
 
 
-        this.joueur = new Joueur("LePlayer",map, listeEntite);
+        this.joueur = new Joueur("Entity",map, generateurEnnemis);
         joueur.setEmplacement(30,200);
 
-        listeEntite = new GenerateurEnnemis(joueur, map);
-
-        listeObjets= new GenerateurObjets(map, joueur);
 
 
-        env = new Environnement(joueur, map, listeEntite,listeObjets,vueMap);
 
-        joueur.orientationProperty().addListener((obs,old,nouv)->{
 
-            Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
-            p.getChildren().remove(0);
-            ImageView imageview= new ImageView();
-            imageview.setFitHeight(32);
-            imageview.setFitWidth(32);
-            imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
-            p.getChildren().add(imageview);
+        joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
 
-        });
+        generateurObjets = new GenerateurObjets(map, joueur);
+
+
+        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
+
+
+
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
 
-            Pane p = (Pane) mainPane.lookup("#" + joueur.getNom_entite());
+
             if (nouv != Joueur.MovementState.WALK){
-                ink.stopAnimation(joueur, p);
+                ink.stopAnimation(joueur);
             }
             else{
-                ink.walkAnimation(joueur, p);
+                ink.walkAnimation(joueur);
             }
 
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
-        listeEntite.getListeEntite().addListener(listenerEnnemis);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur,map);
+        generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
 
@@ -120,11 +117,13 @@ public class Controller implements Initializable {
         joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
 
         ListChangeListener<Objets> Buds= new ListeObjetsObs(mainPane);
-        listeObjets.getListeObjets().addListener(Buds);
+        generateurObjets.getListeObjets().addListener(Buds);
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
-       }
+        Musique musique = new Musique();
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
+    }
     private String currentDirection = null;
 
     @FXML
@@ -197,10 +196,10 @@ public class Controller implements Initializable {
         temps=0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        VueObjet vob=new VueObjet(mainPane);
+
 
         KeyFrame kf = new KeyFrame(
-                Duration.millis(60),
+                Duration.millis(17),
                 (ev -> {
                     env.action(temps);
                     vT.afficherTexte();
@@ -212,10 +211,10 @@ public class Controller implements Initializable {
                         gameLoop.stop();
                     }
 
-                    if (temps % 30 == 0) {
+                    if (temps % 50 == 0) {
                         tempsDeRechargeK = true;
                     }
-                    if (temps % 10 == 0) {
+                    if (temps % 90 == 0) {
                         tempsDeRechargeJ = true;
                     }
                     temps++;
@@ -227,5 +226,7 @@ public class Controller implements Initializable {
 
 
     }
+
+
 
 }

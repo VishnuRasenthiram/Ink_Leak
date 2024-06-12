@@ -35,7 +35,6 @@ public class Map {
             case 2:
                 this.map=map2();
                 this.numMap = 2;
-                this.numMap = 2;
                 break;
 
             case 3:

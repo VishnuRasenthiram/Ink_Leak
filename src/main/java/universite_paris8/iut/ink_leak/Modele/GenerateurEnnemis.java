@@ -61,7 +61,7 @@ public class GenerateurEnnemis {
     public void TuerToutLesEnnemis(){
         listeEntite.clear();
     }
-    public void genererEnnemis( GenerateurEnnemis liste_entites, Map map){
+    public void genererEnnemis( Map map, Joueur joueur){
          // Ajouter le slime à la liste
         switch (map.getNumMap()){
 
@@ -74,7 +74,7 @@ public class GenerateurEnnemis {
 
                 break;
             default:
-                Slime slime = new Slime(liste_entites,map); // Créer un nouveau slime
+                Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(slime);
                 setEnnemisPos(slime);
                 break;

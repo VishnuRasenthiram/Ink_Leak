@@ -1,8 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
@@ -13,14 +11,10 @@ public class Bulle extends Pouvoirs{
 
         private int portée;
 
-        private IntegerProperty estENVIEProperty;
-        private static int cpt=0;
-        public Bulle(Map map,GenerateurEnnemis liste_entites, Joueur j) {
+        public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
 
-            super("bulle"+cpt, 1, 32, 32, 3, map, liste_entites,j);
+            super("bulle", 1, 32, 32, 3,true, map, generateurEnnemis,joueur);
             this.portée = 12;
-            this.estENVIEProperty = new SimpleIntegerProperty(1);
-            cpt++;
 
         }
 
@@ -35,14 +29,12 @@ public class Bulle extends Pouvoirs{
 
 
 
-    public IntegerProperty getEstENVIEProperty() {
-        return estENVIEProperty;
-    }
+
 
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
-        estENVIEProperty.set(1);
+        setEstEnVie(true);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     double x = super.getPosX();
@@ -72,7 +64,8 @@ public class Bulle extends Pouvoirs{
                             }
                             break;
                     }
-                    for(Entité sl:super.getlisteEntite().getListeEntite()){
+                    for(Entité sl:super.getGenerateurEnnemis().getListeEntite()){
+
                         if(this.enContact(sl)) {
                             sl.prendre_degat(super.getAttaque_entite());
                         }
@@ -83,7 +76,7 @@ public class Bulle extends Pouvoirs{
         timeline.setCycleCount(30);
         timeline.play();
         timeline.setOnFinished(e -> {
-            estENVIEProperty.setValue(0);
+            setEstEnVie(false);
         });
     }
 

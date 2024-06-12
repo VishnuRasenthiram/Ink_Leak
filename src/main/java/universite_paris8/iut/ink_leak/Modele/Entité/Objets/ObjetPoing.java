@@ -9,8 +9,8 @@ public class ObjetPoing extends Objets {
 
 
 
-    public ObjetPoing(Map map, GenerateurObjets listeObjets, Joueur j) {
-        super("ObjetPoing",  map, listeObjets, j);
+    public ObjetPoing(Map map, GenerateurObjets generateurObjets, Joueur joueur) {
+        super("ObjetPoing",  map, generateurObjets, joueur);
 
     }
 

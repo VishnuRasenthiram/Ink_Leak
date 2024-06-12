@@ -13,15 +13,15 @@ import static universite_paris8.iut.ink_leak.Modele.Dijkstra.dijkstra;
 public class Environnement {
 
     private Joueur joueur;
-    private GenerateurEnnemis listeEntite;
-    private GenerateurObjets listeObjets;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
     private Map map;
     private VueMap vMap;
 
-    public Environnement(Joueur joueur, Map map, GenerateurEnnemis listeEntite,GenerateurObjets listeObjets, VueMap vMap) {
+    public Environnement(Joueur joueur, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, VueMap vMap) {
         this.joueur = joueur;
-        this.listeEntite = listeEntite;
-        this.listeObjets = listeObjets;
+        this.generateurEnnemis = generateurEnnemis;
+        this.generateurObjets = generateurObjets;
         this.map = map;
         this.vMap = vMap;
 
@@ -46,13 +46,15 @@ public class Environnement {
                 vMap.supprimerAffichageMap();
                 map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 4 ? 1 : map.getNumMap() - 1));
                 TuerToutLesEnnemis();
-                listeObjets.EnleverToutLesObjets();
+                generateurObjets.EnleverToutLesObjets();
                 vMap.initMap(map, joueur);
-                listeObjets.genererObjets();
+                generateurObjets.genererObjets();
                 PauseTransition pause = new PauseTransition(Duration.millis(500));
                 pause.setOnFinished(event -> joueur.setBougable(true));
                 pause.play();
             }
+            generateurObjets.genererObjets();
+
 
         }
         if (temps % 10000 == 0) {
@@ -65,10 +67,10 @@ public class Environnement {
 
     }
     private void TuerToutLesEnnemis(){
-        listeEntite.TuerToutLesEnnemis();
+        generateurEnnemis.TuerToutLesEnnemis();
     }
 
-    public GenerateurEnnemis getListeEntite() { return this.listeEntite; }
+    public GenerateurEnnemis getGenerateurEnnemis() { return this.generateurEnnemis; }
 
     public Joueur getJoueur() { return this.joueur; }
 

@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
 
 import java.util.ArrayList;
 
@@ -17,11 +15,16 @@ public class GenerateurObjets {
 
     private ObjetBulle objetBulle;
     private ObjetPoing objetPoing;
+    private ObjetLangue objetLangue;
+    private Tube tube;
     public GenerateurObjets(Map map, Joueur joueur){
         listeObjets= FXCollections.observableArrayList();
         this.map=map;
         objetBulle= new ObjetBulle(map,this,joueur);
         objetPoing= new ObjetPoing(map,this,joueur);
+        objetLangue= new ObjetLangue(map,this,joueur);
+
+        tube= new Tube(map, this, joueur);
 
     }
     public void activerObjet(){
@@ -50,17 +53,24 @@ public class GenerateurObjets {
                     listeObjets.add(objetBulle);
                 }
                 break;
+            case 2:
+
+                break;
+            case 3:
+                if(objetLangue.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetLangue);
+                    listeObjets.add(objetLangue);
+                }
+                break;
             case 0:
+                if(tube.getNbFoisRecuperable() !=0) {
+                    setObjetsPos(tube);
+                    listeObjets.add(tube);
+                }
                 if(objetPoing.getNbFoisRecuperable() !=0){
                     setObjetsPos(objetPoing);
                     listeObjets.add(objetPoing);
                 }
-                break;
-            case 3:
-
-                break;
-            default:
-
                 break;
         }
 
@@ -71,14 +81,19 @@ public class GenerateurObjets {
 
         switch (map.getNumMap()){
             case 0:
-                objet.setEmplacement(1,5);
+                if (objet instanceof Tube) {
+                    objet.setEmplacement(1,5);
+                    break;
+                }
+
                 break;
             case 1:
-                objet.setEmplacement(16,15);
+                objet.setEmplacement(7,15);
                 break;
 
             case 2:
-                objet.setEmplacement(17,15);
+                objet.setEmplacement(14,15);
+                break;
 
         }
 

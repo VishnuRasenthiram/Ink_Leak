@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import universite_paris8.iut.ink_leak.Controller.VieObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.VieObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
@@ -16,7 +16,6 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class VueJoueur extends VueEntite {
     private Pane interfacePane;
@@ -44,7 +43,7 @@ public class VueJoueur extends VueEntite {
         ImageView JoueurView= new ImageView();
         JoueurView.setFitHeight(32);
         JoueurView.setFitWidth(32);
-        JoueurView.setImage(new Image(orientationToFile(entité.getOrientationProperty()).toURI().toString()));
+        JoueurView.setImage(new Image(orientationToFile(entité.getOrientation(),entité,"Idle").toURI().toString()));
         Joueur.getChildren().add(JoueurView);
 
         Joueur.translateXProperty().bind(entité.posXProperty());
@@ -94,24 +93,7 @@ public class VueJoueur extends VueEntite {
         joueur.getVie_entiteProperty().addListener(new VieObs(imageView, Joueur, joueur));
     }
 
-    public File orientationToFile(String orientation){
 
-        switch (orientation){
-
-            case "N":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_up.png");
-
-            case "O":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_left.png");
-
-            case "E":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_right.png");
-
-            default:
-                return  new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_down.png");
-
-        }
-    }
 
     public List<Image> getTorchesImages() {
 
@@ -129,28 +111,20 @@ public class VueJoueur extends VueEntite {
     public List<Image> getWalkImages(String orientation) {
 
         List<Image> images = new ArrayList<>();
-
-        if (orientation.equals("N")) orientation = "up";
-        else if (orientation.equals("S")) orientation = "down";
-        else if (orientation.equals("E")) orientation = "right";
-        else orientation = "left";
-
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Walk/" + orientation + "/";
-
         for (int i = 1; i <= 4; i++) {
-            File file = new File(basePath + "entity_walk_" + orientation + "_" + i + ".png");
-            images.add(new Image(file.toURI().toString()));
+            images.add(new Image(orientationToFileAnimation(orientation,joueur,"Walk",i).toURI().toString()));
         }
-
         return images;
     }
-    private String orientation;
-    public void walkAnimation(Joueur joueur, Pane p) {
+
+    public void walkAnimation(Joueur joueur) {
         animationTimeline = new Timeline();
         animationTimeline.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), e -> {
-            orientation = joueur.getOrientationProperty();
+            Pane p = (Pane) super.getMainPane().lookup("#"+joueur.getNom_entite());
+            p.getChildren().remove(0);
+            String orientation = joueur.getOrientation();
             List<Image> images = getWalkImages(orientation);
             if (p == null) return;
             p.getChildren().clear();
@@ -170,23 +144,8 @@ public class VueJoueur extends VueEntite {
     public List<Image> getPunchAnimation(String orientation) {
 
         List<Image> images = new ArrayList<>();
-
-
-        if (orientation.equals("N")) orientation = "up";
-        else if (orientation.equals("S")) orientation = "down";
-        else if (orientation.equals("E")) orientation = "right";
-        else orientation = "left";
-
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/" + orientation + "/";
-
-        if (orientation.equals("up")) orientation = "u";
-        else if (orientation.equals("down")) orientation = "d";
-        else if (orientation.equals("right")) orientation = "r";
-        else orientation = "l";
-
         for (int i = 1; i <= 2; i++) {
-            File file = new File(basePath + "entity_attack_" + orientation + "_" + i + ".png");
-            images.add(new Image(file.toURI().toString()));
+            images.add(new Image(orientationToFileAnimation(orientation,joueur,"Attack",i).toURI().toString()));
         }
 
 
@@ -197,7 +156,7 @@ public class VueJoueur extends VueEntite {
         punchTimeline.setCycleCount(2);
 
         KeyFrame punchFrame = new KeyFrame(Duration.seconds(0.11), e -> {
-            orientation = joueur.getOrientationProperty();
+            String orientation = joueur.getOrientation();
             List<Image> images = getPunchAnimation(orientation);
 
             if (Joueur == null) return;
@@ -216,28 +175,22 @@ public class VueJoueur extends VueEntite {
         punchTimeline.getKeyFrames().add(punchFrame);
         punchTimeline.setOnFinished(e -> {
             PauseTransition pause = new PauseTransition(Duration.millis(450));
-            pause.setOnFinished(event -> stopAnimation(joueur, Joueur));
+            pause.setOnFinished(event -> stopAnimation(joueur));
             pause.play();
         });
         punchTimeline.play();
     }
-    public void stopAnimation(Joueur joueur,  Pane p) {
+    public void stopAnimation(Joueur joueur) {
         if (animationTimeline != null) {
             animationTimeline.stop();
         }
-            String orientation = joueur.getOrientationProperty();
-
-            if (orientation.equals("N")) orientation = "up";
-            else if (orientation.equals("S")) orientation = "down";
-            else if (orientation.equals("E")) orientation = "right";
-            else orientation = "left";
-            p.getChildren().clear();
-            String idlePath =  "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Idle/" + "entity_idle_" + orientation + ".png";
+            Pane player = (Pane) super.getMainPane().lookup("#"+joueur.getNom_entite());
+            player.getChildren().remove(0);
             ImageView imageview = new ImageView();
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);
-            imageview.setImage(new Image(new File(idlePath).toURI().toString()));
-            p.getChildren().add(imageview);
+            imageview.setImage(new Image(orientationToFile(joueur.getOrientation(),joueur,"Idle").toURI().toString()));
+            player.getChildren().add(imageview);
     }
 
 

@@ -11,8 +11,8 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public abstract class Objets extends Entité {
     private Joueur joueur;
     private IntegerProperty nbFoisRecuperable;
-    public Objets(String idPouvoir, Map map, GenerateurObjets listeObjets, Joueur joueur) {
-        super(idPouvoir, map, listeObjets);
+    public Objets(String idPouvoir, Map map, GenerateurObjets generateurObjets, Joueur joueur) {
+        super(idPouvoir, map, generateurObjets);
         this.joueur = joueur;
         nbFoisRecuperable=new SimpleIntegerProperty(1);
 

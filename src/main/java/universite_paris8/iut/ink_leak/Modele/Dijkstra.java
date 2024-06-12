@@ -4,39 +4,57 @@ import java.util.*;
 
 public class Dijkstra {
 
-    public static List<Integer> forceAllCells(int[][] mapData, int startX, int startY, int targetX, int targetY) {
+    public static List<Integer> dijkstra(int[][] mapData, int startX, int startY, int targetX, int targetY) {
         int width = mapData[0].length;
         int height = mapData.length;
 
-        // Keep track of visited cells
-        boolean[][] visited = new boolean[height][width];
-        visited[startY][startX] = true;  // Mark starting cell as visited
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.distance));
+        java.util.Map<String, Node> allNodes = new HashMap<>();
 
-        // Use a stack to explore cells in a depth-first manner
-        Stack<Node> stack = new Stack<>();
-        stack.push(new Node(startX, startY));
+        Node startNode = new Node(startX, startY);
+        startNode.distance = 0;
+        queue.add(startNode);
+        allNodes.put(startX + "," + startY, startNode);
 
-        List<Integer> path = new ArrayList<>();
-
-        while (!stack.isEmpty()) {
-            Node currentNode = stack.pop();
-
-            // Add current cell direction to path
-            path.add(getDirection(currentNode, startX, startY));
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
 
             if (currentNode.x == targetX && currentNode.y == targetY) {
-                // Reached target cell, return path
-                return path;
+                return reconstructPath(currentNode);
             }
 
-            // Explore unvisited neighbors in order (up, right, down, left)
-            for (int[] direction : new int[][]{{0, -1, 1}, {1, 0, 2}, {0, 1, 3}, {-1, 0, 4}}) {
-                int neighborX = currentNode.x + direction[0];
-                int neighborY = currentNode.y + direction[1];
+            for (int dir = 1; dir <= 4; dir++) {
+                int neighborX = currentNode.x;
+                int neighborY = currentNode.y;
 
-                if (isValidCell(neighborX, neighborY, width, height, mapData) && !visited[neighborY][neighborX]) {
-                    visited[neighborY][neighborX] = true;
-                    stack.push(new Node(neighborX, neighborY));
+                switch (dir) {
+                    case 1: // UP
+                        neighborY--;
+                        break;
+                    case 2: // DOWN
+                        neighborY++;
+                        break;
+                    case 3: // LEFT
+                        neighborX--;
+                        break;
+                    case 4: // RIGHT
+                        neighborX++;
+                        break;
+                }
+
+                if (isValidCell(neighborX, neighborY, width, height, mapData)) {
+                    String neighborKey = neighborX + "," + neighborY;
+                    Node neighborNode = allNodes.getOrDefault(neighborKey, new Node(neighborX, neighborY));
+                    allNodes.putIfAbsent(neighborKey, neighborNode);
+
+                    int newDistance = currentNode.distance + 1; // Pondération de déplacement
+
+                    if (newDistance < neighborNode.distance) {
+                        neighborNode.distance = newDistance;
+                        neighborNode.previous = currentNode;
+                        neighborNode.direction = dir;
+                        queue.add(neighborNode);
+                    }
                 }
             }
         }
@@ -46,29 +64,34 @@ public class Dijkstra {
     }
 
     private static boolean isValidCell(int x, int y, int width, int height, int[][] map) {
-        return x >= 0 && x < width && y >= 0 && y < height && map[y][x] == 0;
+        boolean isValid = x >= 0 && x < width && y >= 0 && y < height && map[y][x] == 0;
+        return isValid;
     }
 
-    // Helper function to determine direction based on current and starting positions
-    private static int getDirection(Node node, int startX, int startY) {
-        if (node.x > startX) {
-            return 2; // Right
-        } else if (node.x < startX) {
-            return 4; // Left
-        } else if (node.y > startY) {
-            return 3; // Down
-        } else {
-            return 1; // Up (assuming starting position is a unique entry point)
+    private static List<Integer> reconstructPath(Node node) {
+        List<Integer> path = new ArrayList<>();
+
+        while (node.previous != null) {
+            path.add(0, node.direction);
+            node = node.previous;
         }
+
+        return path;
     }
 }
 
 class Node {
     int x;
     int y;
+    int distance;
+    Node previous;
+    int direction;
 
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
+        this.distance = Integer.MAX_VALUE;
+        this.previous = null;
+        this.direction = 0;
     }
 }

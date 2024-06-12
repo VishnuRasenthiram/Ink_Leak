@@ -29,7 +29,7 @@ public class GenerateurEnnemis {
                 int targetX = joueur.coorDansLeTableauX(joueur.getPosX());
                 int targetY = joueur.coorDansLeTableauY(joueur.getPosY());
 
-                List<Integer> path = Dijkstra.forceAllCells(map.getMap(), startX, startY, targetX, targetY);
+                List<Integer> path = Dijkstra.dijkstra(map.getMap(), startX, startY, targetX, targetY);
 
                 if (path != null && !path.isEmpty()) {
 

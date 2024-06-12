@@ -42,7 +42,6 @@ public class VieEnnemisObs implements ChangeListener<Number> {
             if (entité instanceof Slime) {
                 String direction = joueur.getOrientation().toString();
 
-                String direction = joueur.getOrientationProperty().toString();
 
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);

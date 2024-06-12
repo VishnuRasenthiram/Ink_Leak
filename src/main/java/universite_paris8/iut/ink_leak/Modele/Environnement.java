@@ -37,7 +37,6 @@ public class Environnement {
             joueur.peutAller(x, y, this.map);
             int interaction = joueur.verifierInteractionEnFace(x, y);
 
-            listeObjets.genererObjets();
 
             if (interaction == 3 || interaction == 4) {
 
@@ -58,11 +57,11 @@ public class Environnement {
 
         }
         if (temps % 10000 == 0) {
-            listeEntite.genererEnnemis(listeEntite, map); }
+            generateurEnnemis.genererEnnemis(map,joueur); }
         if (temps % 100 == 0) {
-            listeEntite.activerMob();
+            generateurEnnemis.activerMob();
         }
-        listeObjets.activerObjet();
+        generateurObjets.activerObjet();
 
 
     }

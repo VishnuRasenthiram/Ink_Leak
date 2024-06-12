@@ -66,7 +66,6 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
-        generateurEnnemis = new GenerateurEnnemis();
 
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink= new VueJoueur(mainPane, interfacePane);
@@ -79,8 +78,7 @@ public class Controller implements Initializable {
         this.joueur = new Joueur("Entity",map, generateurEnnemis);
         joueur.setEmplacement(30,200);
 
-
-
+        generateurEnnemis = new GenerateurEnnemis(joueur, map);
 
 
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));

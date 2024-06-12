@@ -3,24 +3,51 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import static universite_paris8.iut.ink_leak.Modele.Dijkstra.dijkstra;
 
 
 public class GenerateurEnnemis {
-
+    private Joueur joueur;
+    private Map map;
     private ObservableList<Entité> listeEntite ; // Liste pour stocker tous les slimes
-    public GenerateurEnnemis(){
+    public GenerateurEnnemis(Joueur joueur, Map map){
         listeEntite= FXCollections.observableArrayList();
-
+        this.joueur=joueur;
+        this.map = map;
     }
 
     public void activerMob(){
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
-                mob.déplacement("E");
+               // mob.déplacement("E");
+                // Replace these with your desired starting and target positions
+                int startX = mob.coordEnIndiceGauche_Haut(mob.getPosX()+16);
+                int startY = mob.coordEnIndiceGauche_Haut(mob.getPosY()+16);
+                int targetX = joueur.coordEnIndiceGauche_Haut(joueur.getPosX()+16);
+                int targetY = joueur.coordEnIndiceGauche_Haut(joueur.getPosY()+16);
+
+                List<Integer> path = dijkstra(map.getMap(), startX, startY, targetX, targetY);
+                if (path != null) {
+                    System.out.println(path.get(0));
+                    if (path.get(0) == 1) {
+                        mob.déplacement("0");
+                    } else if (path.get(0) == 2) {
+                        mob.déplacement("1");
+                    } else if (path.get(0) == 3) {
+                        mob.déplacement("2");
+                    } else if (path.get(0) == 4) {
+                        mob.déplacement("3");
+                    }
+                } else {
+                    System.out.println("No path found");
+                }
                 if(mob.getVie()==0){
                     listeMort.add(mob);
                 }

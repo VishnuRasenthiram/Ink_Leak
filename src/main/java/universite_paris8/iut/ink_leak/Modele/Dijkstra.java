@@ -1,40 +1,13 @@
 package universite_paris8.iut.ink_leak.Modele;
 
 import java.util.*;
-enum Direction {
-    UP, DOWN, LEFT, RIGHT
-}
-
-class Node {
-    int x;
-    int y;
-    int distance;
-    Node previous;
-    Direction direction;
-
-    public Node(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.distance = Integer.MAX_VALUE;
-        this.previous = null;
-        this.direction = null;
-    }
-}
 
 public class Dijkstra {
 
-    public static List<Direction> dijkstra(int[][] mapData, int startX, int startY, int targetX, int targetY) {
+    public static List<Integer> dijkstra(int[][] mapData, int startX, int startY, int targetX, int targetY) {
         int width = mapData[0].length;
         int height = mapData.length;
-        for (int i = 0; i < mapData.length; i++) {
-            for (int j = 0; j < mapData[i].length; j++) {
-                if (mapData[i][j] == 0 || mapData[i][j] == 10) {
-                    mapData[i][j] = 0;
-                } else{
-                    mapData[i][j] = 1;
-                }
-            }
-        }
+
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.distance));
         java.util.Map<String, Node> allNodes = new HashMap<>();
 
@@ -45,26 +18,27 @@ public class Dijkstra {
 
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
+            System.out.println("Current node: (" + currentNode.x + ", " + currentNode.y + ") with distance: " + currentNode.distance);
 
             if (currentNode.x == targetX && currentNode.y == targetY) {
                 return reconstructPath(currentNode);
             }
 
-            for (Direction dir : Direction.values()) {
+            for (int dir = 1; dir <= 4; dir++) {
                 int neighborX = currentNode.x;
                 int neighborY = currentNode.y;
 
                 switch (dir) {
-                    case UP:
+                    case 1: // UP
                         neighborY--;
                         break;
-                    case DOWN:
+                    case 2: // DOWN
                         neighborY++;
                         break;
-                    case LEFT:
+                    case 3: // LEFT
                         neighborX--;
                         break;
-                    case RIGHT:
+                    case 4: // RIGHT
                         neighborX++;
                         break;
                 }
@@ -74,9 +48,10 @@ public class Dijkstra {
                     Node neighborNode = allNodes.getOrDefault(neighborKey, new Node(neighborX, neighborY));
                     allNodes.putIfAbsent(neighborKey, neighborNode);
 
-                    int newDistance = currentNode.distance + mapData[neighborY][neighborX];
+                    int newDistance = currentNode.distance + 1; // Pondération de déplacement
 
                     if (newDistance < neighborNode.distance) {
+                        System.out.println("Updating node: (" + neighborNode.x + ", " + neighborNode.y + ") from distance: " + neighborNode.distance + " to new distance: " + newDistance);
                         neighborNode.distance = newDistance;
                         neighborNode.previous = currentNode;
                         neighborNode.direction = dir;
@@ -86,21 +61,41 @@ public class Dijkstra {
             }
         }
 
+        System.out.println("No path found.");
         return null;
     }
 
     private static boolean isValidCell(int x, int y, int width, int height, int[][] map) {
-        return x >= 0 && x < width && y >= 0 && y < height && map[y][x] != 1;
+        boolean isValid = x >= 0 && x < width && y >= 0 && y < height && map[y][x] == 0;
+        System.out.println("Checking cell: (" + x + ", " + y + ") is valid: " + isValid);
+        return isValid;
     }
 
-    private static List<Direction> reconstructPath(Node node) {
-        List<Direction> path = new ArrayList<>();
+    private static List<Integer> reconstructPath(Node node) {
+        List<Integer> path = new ArrayList<>();
 
         while (node.previous != null) {
             path.add(0, node.direction);
+            System.out.println("Reconstructing path, adding direction: " + node.direction + " from node: (" + node.x + ", " + node.y + ")");
             node = node.previous;
         }
 
         return path;
+    }
+}
+
+class Node {
+    int x;
+    int y;
+    int distance;
+    Node previous;
+    int direction;
+
+    public Node(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.distance = Integer.MAX_VALUE;
+        this.previous = null;
+        this.direction = 0;
     }
 }

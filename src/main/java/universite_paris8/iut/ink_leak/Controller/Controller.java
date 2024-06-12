@@ -65,7 +65,6 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ =true;
         this.tempsDeRechargeK =true;
         this.map= new Map();
-        listeEntite = new GenerateurEnnemis();
 
         vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink= new VueJoueur(mainPane, interfacePane);
@@ -78,6 +77,7 @@ public class Controller implements Initializable {
         this.joueur = new Joueur("LePlayer",map, listeEntite);
         joueur.setEmplacement(30,200);
 
+        listeEntite = new GenerateurEnnemis(joueur, map);
 
         listeObjets= new GenerateurObjets(map, joueur);
 

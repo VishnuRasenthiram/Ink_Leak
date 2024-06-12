@@ -1,6 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele;
 
-// Classe représentant une position dans le monde
 public class Position {
     private double x;
     private double y;

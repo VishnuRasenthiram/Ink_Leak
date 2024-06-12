@@ -120,10 +120,10 @@ public abstract class Entité {
                 map.getMap(coord_Mur_DroitX,coord_Mur_BasY)==cases;
     }
 
-    private int coordEnIndiceGauche_Haut(double coord){
+    public int coordEnIndiceGauche_Haut(double coord){
         return (int)Math.ceil(coord)/32;
     }
-    private int coordEnIndiceDroit_Bas(double coord){
+    public int coordEnIndiceDroit_Bas(double coord){
         return (int)Math.ceil(coord+32)/32;
     }
     private boolean estDansMap(double x, double y, Map map) {

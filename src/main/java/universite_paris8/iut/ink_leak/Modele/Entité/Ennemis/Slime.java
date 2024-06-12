@@ -27,11 +27,12 @@ public class Slime extends Entité {
     @Override
     public void déplacement(String déplacementDirection) {
 
-                    int random = new Random().nextInt(7);
                     double x = super.getPosX();
                     double y = super.getPosY();
+                    //transformer déplacement en int pour le switch
+                    int direction = Integer.parseInt(déplacementDirection);
 
-                    switch (random) {
+                    switch (direction) {
                         case 0:
                             if (super.peutAller(x, y - super.getVitesse_entite(), super.getMap())) {
                                 super.setPosYProperty(y - super.getVitesse_entite());

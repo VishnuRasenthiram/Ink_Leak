@@ -24,21 +24,7 @@ public class Environnement {
         this.listeObjets = listeObjets;
         this.map = map;
         this.vMap = vMap;
-        // Replace these with your desired starting and target positions
-        int startX = 0;
-        int startY = 0;
-        int targetX = 8;
-        int targetY = 4;
 
-        List<Direction> path = dijkstra(map.getMap(), startX, startY, targetX, targetY);
-        // Process the path (optional)
-        if (path != null) {
-            for (Direction direction : path) {
-                System.out.println(direction);
-            }
-        } else {
-            System.out.println("No path found");
-        }
     }
 
 
@@ -69,7 +55,8 @@ public class Environnement {
             }
 
         }
-        if (temps % 100 == 0) { listeEntite.genererEnnemis(listeEntite, map); }
+        if (temps % 100 == 0) {
+        listeEntite.genererEnnemis(listeEntite, map); }
         listeEntite.activerMob();
         listeObjets.activerObjet();
 

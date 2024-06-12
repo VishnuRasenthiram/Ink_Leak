@@ -13,6 +13,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeEnnemieObs;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeObjetsObs;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListePouvoirsObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
@@ -71,38 +76,34 @@ public class Controller implements Initializable {
         gameLoop.play();
 
 
-        this.joueur = new Joueur("LePlayer",map, generateurEnnemis);
+        this.joueur = new Joueur("Entity",map, generateurEnnemis);
         joueur.setEmplacement(30,200);
 
+
+
+
+
+        joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
 
         generateurObjets = new GenerateurObjets(map, joueur);
 
 
         env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
 
-        joueur.orientationProperty().addListener((obs,old,nouv)->{
 
-            Pane p = (Pane) mainPane.lookup("#"+joueur.getNom_entite());
-            p.getChildren().remove(0);
-            ImageView imageview= new ImageView();
-            imageview.setFitHeight(32);
-            imageview.setFitWidth(32);
-            imageview.setImage(new Image(ink.orientationToFile(nouv).toURI().toString()));
-            p.getChildren().add(imageview);
 
-        });
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
 
-            Pane p = (Pane) mainPane.lookup("#" + joueur.getNom_entite());
+
             if (nouv != Joueur.MovementState.WALK){
-                ink.stopAnimation(joueur, p);
+                ink.stopAnimation(joueur);
             }
             else{
-                ink.walkAnimation(joueur, p);
+                ink.walkAnimation(joueur);
             }
 
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur);
+        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur,map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         vT = new VueTexte(env, txt, mainPane);
         mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();

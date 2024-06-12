@@ -1,15 +1,12 @@
 package universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import universite_paris8.iut.ink_leak.Controller.VieEnnemisObs;
-import universite_paris8.iut.ink_leak.Controller.VieObs;
+import universite_paris8.iut.ink_leak.Controller.Observable.VieEnnemisObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 
 import java.io.File;
@@ -17,9 +14,11 @@ import java.io.File;
 public class VueEnnemis extends VueEntite {
 
     private Joueur joueur;
-    public VueEnnemis(Pane mainPane, Joueur j) {
+    private Map map;
+    public VueEnnemis(Pane mainPane, Joueur joueur, Map map) {
         super(mainPane);
-        joueur = j;
+        this.joueur = joueur;
+        this.map = map;
     }
 
     @Override
@@ -30,7 +29,7 @@ public class VueEnnemis extends VueEntite {
         ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Ennemies/Slime/Idles/slime_idle_r.png").toURI().toString()));
+        imageview.setImage(new Image(orientationToFile(entité.getOrientation(),entité,"Idle").toURI().toString()));
         ennemis.getChildren().add(imageview);
 
         ennemis.translateXProperty().bind(entité.posXProperty());
@@ -56,7 +55,7 @@ public class VueEnnemis extends VueEntite {
         super.getMainPane().getChildren().add(Rectangle);
         Rectangle.getChildren().add(vieRect);
 
-        entité.getVie_entiteProperty().addListener(new VieEnnemisObs(ennemis, entité, joueur));
+        entité.getVie_entiteProperty().addListener(new VieEnnemisObs(ennemis, entité, joueur,map));
     }
 
 

@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
+import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class GenerateurEnnemis {
     public void TuerToutLesEnnemis(){
         listeEntite.clear();
     }
-    public void genererEnnemis( Map map){
+    public void genererEnnemis( Map map, Joueur joueur){
          // Ajouter le slime à la liste
         switch (map.getNumMap()){
 
@@ -46,7 +47,7 @@ public class GenerateurEnnemis {
 
                 break;
             default:
-                Slime slime = new Slime(this,map); // Créer un nouveau slime
+                Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(slime);
                 setEnnemisPos(slime);
                 break;

@@ -115,6 +115,8 @@ public abstract class Entité {
     private int coordEnIndiceDroit_Bas(double coord){
         return (int)Math.ceil(coord+32)/32;
     }
+
+
     private boolean estDansMap(double x, double y, Map map) {
 
         return (x>0 && y>0)
@@ -129,31 +131,20 @@ public abstract class Entité {
     public abstract void déplacement(String déplacementDirection);
 
     public boolean enContact(Entité entite2) {
+        for (int i = (int) getPosX(); i < (int) getPosX() + getLongueur(); i++) {
+            for (int j = (int) getPosY(); j < (int) getPosY() + getLargeur(); j++) {
+                if (entite2.contientPixel(i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
 
-        double x1 = this.getPosX();
-        double y1 = this.getPosY();
-        double longueur1 = this.getLongueur();
-        double largeur1 = this.getLargeur();
-
-        double x2 = entite2.getPosX();
-        double y2 = entite2.getPosY();
-        double longueur2 = entite2.getLongueur();
-        double largeur2 = entite2.getLargeur();
-
-        boolean coinSupDroit = x1 + longueur1 >= x2 && x1 + longueur1 <= x2 + longueur2;
-        boolean coinInfDroit = y1 + largeur1 >= y2 && y1 + largeur1 <= y2 + largeur2;
-        boolean coinSupGauche = y1 >= y2 && y1 <= y2 + largeur2;
-        boolean coinInfGauche = x1 >= x2 && x1 <= x2 + longueur2;
-        boolean coinSupGaucheEntite1DansEntite2 = (x1 >= x2 && x1 <= x2 + longueur2) && (y1 >= y2 && y1 <= y2 + largeur2);
-
-        boolean supDroitEtInfDroit =coinSupDroit && coinInfDroit;
-        boolean supDroitEtSupGauche=coinSupDroit && coinSupGauche;
-        boolean infGaucheEtSupGauche=coinInfGauche && coinSupGauche;
-        boolean infGaucheEtInfDroit=coinInfGauche && coinInfDroit;
-
-        return supDroitEtInfDroit || supDroitEtSupGauche || infGaucheEtSupGauche || infGaucheEtInfDroit || coinSupGaucheEntite1DansEntite2;
     }
-
+    public boolean contientPixel(int x, int y) {
+        return x >= getPosX() && x < getPosX() + getLongueur() &&
+                y >= getPosY() && y < getPosY() + getLargeur();
+    }
 
     public void prendre_degat(int degat){
 
@@ -182,7 +173,7 @@ public abstract class Entité {
         return orientationProperty.getValue();
     }
 
-    public StringProperty orientationProperty() {
+    public StringProperty getOrientationProperty() {
         return orientationProperty;
     }
 

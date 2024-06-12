@@ -12,4 +12,8 @@ module universite_paris8.iut.ink_leak {
     opens universite_paris8.iut.ink_leak.Controller to javafx.fxml;
     exports universite_paris8.iut.ink_leak.Vue;
     opens universite_paris8.iut.ink_leak.Vue to javafx.fxml;
+    exports universite_paris8.iut.ink_leak.Controller.ListeObservable;
+    opens universite_paris8.iut.ink_leak.Controller.ListeObservable to javafx.fxml;
+    exports universite_paris8.iut.ink_leak.Controller.Observable;
+    opens universite_paris8.iut.ink_leak.Controller.Observable to javafx.fxml;
 }

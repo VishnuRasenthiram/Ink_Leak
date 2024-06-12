@@ -20,7 +20,7 @@ public class VueTube extends VueObjets{
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
 
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/ink_tube.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/objects/ink_tube.png").toURI().toString()));
         objetPane.getChildren().add(imageview);
 
         objetPane.translateXProperty().bind(tube.posXProperty());

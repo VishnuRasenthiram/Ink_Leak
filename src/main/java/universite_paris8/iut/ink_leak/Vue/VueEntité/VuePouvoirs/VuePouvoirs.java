@@ -30,7 +30,7 @@ public class VuePouvoirs  {
         imageView.setId("imageView");
         imageView.setFitHeight(32);
         imageView.setFitWidth(32);
-        imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/claw_icon.png").toURI().toString())));
+        imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/powers/claw_icon.png").toURI().toString())));
         pouvoir.getChildren().add(imageView);
         hBox.getChildren().add(pouvoir);
 
@@ -50,10 +50,10 @@ public class VuePouvoirs  {
         imageView.setFitWidth(32);
 
         if(p instanceof Bulle){
-            imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/bubble_icon.png").toURI().toString())));
+            imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/powers/bubble_icon.png").toURI().toString())));
         }
         else if(p instanceof Poing) {
-            imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Powers/fist_icon.png").toURI().toString())));
+            imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/powers/fist_icon.png").toURI().toString())));
         }
         pouvoir.getChildren().add(imageView);
         HBox hbox = (HBox)interfacePane.lookup("#listePouvoir");

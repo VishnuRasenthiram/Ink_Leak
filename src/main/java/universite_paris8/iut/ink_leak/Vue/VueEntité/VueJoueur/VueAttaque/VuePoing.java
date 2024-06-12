@@ -24,15 +24,15 @@ public class VuePoing extends VueAttaque {
         imageview.setFitWidth(64);
 
         if (orientation.equals("N")) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Fist/hitbox/hitbox_u.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/fist/hitbox/hitbox_u.png").toURI().toString()));
         }
         else if (orientation.equals("S")) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Fist/hitbox/hitbox_d.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/fist/hitbox/hitbox_d.png").toURI().toString()));
         }
         else if (orientation.equals("O")) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Fist/hitbox/hitbox_l.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/fist/hitbox/hitbox_l.png").toURI().toString()));
         }
-        else imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Fist/hitbox/hitbox_r.png").toURI().toString()));
+        else imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/fist/hitbox/hitbox_r.png").toURI().toString()));
 
         attaquePane.getChildren().add(imageview);
 

@@ -45,7 +45,7 @@ public class VueAttaqueDeBase extends VueAttaque {
     public List<Image> getGriffeAnimation() {
 
         List<Image> images = new ArrayList<>();
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/hitbox/";
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/attack/hitbox/";
 
         for (int i = 6; i >= 1; i--) {
             File file = new File(basePath + "hitbox_" + i + ".png");

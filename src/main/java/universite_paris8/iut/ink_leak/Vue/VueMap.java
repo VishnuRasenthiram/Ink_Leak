@@ -36,7 +36,7 @@ public class VueMap {
             ObscuritéCache.setFitHeight(1800);
             ObscuritéCache.setFitWidth(3000);
             ObscuritéCache.setId("cacheNoir");
-            ObscuritéCache.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
+            ObscuritéCache.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/darkness.png").toURI().toString()));
             ObscuritéCache.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1504));
             ObscuritéCache.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
             interfacePane.getChildren().add(ObscuritéCache);
@@ -58,28 +58,28 @@ public class VueMap {
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
         if(tuile==0){
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/floors/floor.png").toURI().toString()));
             pane.setId("sol");
         } else if (tuile==1) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/corridors/corridor_upward.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/corridors/corridor_upward.png").toURI().toString()));
             pane.setId("rouge");
         } else if (tuile==2) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/water.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/floors/water.png").toURI().toString()));
             pane.setId("bleue");
         } else if (tuile==3) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/walls/wall_exit.png").toURI().toString()));
             pane.setId("porte");
         }else if (tuile==4) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/walls/wall_exit.png").toURI().toString()));
             pane.setId("porte");
         }else if (tuile==6) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/abc.png").toURI().toString()));
             pane.setId("torche");
         }else if (tuile==10) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/glace.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/floors/ice.png").toURI().toString()));
             pane.setId("sol_glace");
         }else if (tuile==9) {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/glace_qui_bloque.png").toURI().toString()));
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/background/floors/rocky_ice.png").toURI().toString()));
             pane.setId("bloc_glace");
         }
 

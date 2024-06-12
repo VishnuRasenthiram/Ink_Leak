@@ -84,7 +84,7 @@ public class VueJoueur extends VueEntite {
         ImageView imageView = new ImageView();
         imageView.setFitHeight(32);
         imageView.setFitWidth(96);
-        imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/Health/health_6.png").toURI().toString())));
+        imageView.setImage((new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/health/health_6.png").toURI().toString())));
         vie.getChildren().add(imageView);
 
         interfacePane.getChildren().add(vie);
@@ -99,16 +99,16 @@ public class VueJoueur extends VueEntite {
         switch (orientation){
 
             case "N":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_up.png");
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/idle/entity_idle_up.png");
 
             case "O":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_left.png");
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/idle/entity_idle_left.png");
 
             case "E":
-                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_right.png");
+                return new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/idle/entity_idle_right.png");
 
             default:
-                return  new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/idle/entity_idle_down.png");
+                return  new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/idle/entity_idle_down.png");
 
         }
     }
@@ -117,7 +117,7 @@ public class VueJoueur extends VueEntite {
 
         List<Image> images = new ArrayList<>();
 
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/torcheMain_";
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/objects/torch/torch_";
 
         for (int i = 1; i <= 6; i++) {
             File file = new File(basePath + i + ".png");
@@ -135,7 +135,7 @@ public class VueJoueur extends VueEntite {
         else if (orientation.equals("E")) orientation = "right";
         else orientation = "left";
 
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Walk/" + orientation + "/";
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/walk/" + orientation + "/";
 
         for (int i = 1; i <= 4; i++) {
             File file = new File(basePath + "entity_walk_" + orientation + "_" + i + ".png");
@@ -177,7 +177,7 @@ public class VueJoueur extends VueEntite {
         else if (orientation.equals("E")) orientation = "right";
         else orientation = "left";
 
-        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Attack/" + orientation + "/";
+        String basePath = "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/attack/" + orientation + "/";
 
         if (orientation.equals("up")) orientation = "u";
         else if (orientation.equals("down")) orientation = "d";
@@ -232,7 +232,7 @@ public class VueJoueur extends VueEntite {
             else if (orientation.equals("E")) orientation = "right";
             else orientation = "left";
             p.getChildren().clear();
-            String idlePath =  "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Entity/Idle/" + "entity_idle_" + orientation + ".png";
+            String idlePath =  "src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/entity/idle/" + "entity_idle_" + orientation + ".png";
             ImageView imageview = new ImageView();
             imageview.setFitHeight(32);
             imageview.setFitWidth(32);

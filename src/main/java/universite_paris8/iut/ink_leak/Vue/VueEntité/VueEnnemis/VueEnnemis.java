@@ -30,7 +30,7 @@ public class VueEnnemis extends VueEntite {
         ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Characters/Ennemies/Slime/Idles/slime_idle_r.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/entities/slime/idle/slime_idle_r.png").toURI().toString()));
         ennemis.getChildren().add(imageview);
 
         ennemis.translateXProperty().bind(entité.posXProperty());

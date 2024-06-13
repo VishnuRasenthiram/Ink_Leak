@@ -27,21 +27,21 @@ public abstract class Pouvoirs extends Entité {
     public void gagner_vie(int nb_vie_gagnee) {
 
     }
-    public void setPosition(){
+    public void setPosition(int taille){
         if (joueur.getOrientationProperty() == "N") {
             super.setPosXProperty(joueur.getPosX());
-            super.setPosYProperty(joueur.getPosY() - 32);
+            super.setPosYProperty(joueur.getPosY() - taille);
         }
         else if (joueur.getOrientationProperty() == "S") {
             super.setPosXProperty(joueur.getPosX());
-            super.setPosYProperty(joueur.getPosY() + 32);
+            super.setPosYProperty(joueur.getPosY() + taille);
         }
         else if (joueur.getOrientationProperty() == "E") {
-            super.setPosXProperty(joueur.getPosX() + 32);
+            super.setPosXProperty(joueur.getPosX() + taille);
             super.setPosYProperty(joueur.getPosY());
         }
         else {
-            super.setPosXProperty(joueur.getPosX() - 32);
+            super.setPosXProperty(joueur.getPosX() - taille);
             super.setPosYProperty(joueur.getPosY());
         }
     }

@@ -41,7 +41,7 @@ public class Bulle extends Pouvoirs{
 
     @Override
     public void déplacement(String déplacementDirection) {
-        super.setPosition();
+        super.setPosition(32);
         estENVIEProperty.set(1);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {

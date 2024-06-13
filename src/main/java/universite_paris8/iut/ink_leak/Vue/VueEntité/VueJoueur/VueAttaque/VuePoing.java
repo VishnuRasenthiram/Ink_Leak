@@ -36,8 +36,8 @@ public class VuePoing extends VueAttaque {
 
         attaquePane.getChildren().add(imageview);
 
-        attaquePane.translateXProperty().bind(poing.posXProperty());
-        attaquePane.translateYProperty().bind(poing.posYProperty());
+        attaquePane.translateXProperty().bind(poing.posXProperty().subtract(12));
+        attaquePane.translateYProperty().bind(poing.posYProperty().subtract(14));
 
         attaquePane.setId("attaque");
         super.getMainPane().getChildren().add(attaquePane);

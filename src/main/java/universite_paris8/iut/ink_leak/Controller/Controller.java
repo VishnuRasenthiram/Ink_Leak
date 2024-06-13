@@ -21,6 +21,8 @@ import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
@@ -166,6 +168,12 @@ public class Controller implements Initializable {
                     if (pouvoirEnCours != null) {
                         vA.afficheAttaque(pouvoirEnCours);
                         joueur.attaqueAvecPouvoir();
+                    }
+                    if (pouvoirEnCours instanceof Bulle) {
+                        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/bulle.wav", 1.0f, 0);
+                    }
+                    else if (pouvoirEnCours instanceof Poing) {
+                        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/poing.wav", 1.0f, 0);
                     }
                 }
             } else if (e.getCode() == KeyCode.A) {

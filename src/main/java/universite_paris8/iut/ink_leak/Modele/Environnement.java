@@ -37,12 +37,12 @@ public class Environnement {
             int interaction = joueur.verifierInteractionEnFace(x, y);
 
 
-            if (interaction == 3 || interaction == 4) {
+            if (interaction == 22 || interaction == 6) {
 
 
                 joueur.setBougable(false);
                 vMap.supprimerAffichageMap();
-                map.setMap(interaction == 3 ? map.getNumMap() + 1 : (map.getNumMap() > 4 ? 1 : map.getNumMap() - 1));
+                map.setMap(interaction == 22 ? map.getNumMap() - 1 : (map.getNumMap() > 6 ? 1 : map.getNumMap() + 1));
                 TuerToutLesEnnemis();
                 generateurObjets.EnleverToutLesObjets();
                 vMap.initMap(map, joueur);
@@ -59,7 +59,7 @@ public class Environnement {
         }
         if (temps % 100 == 0) {
             generateurEnnemis.genererEnnemis(map,joueur); }
-        if (temps % 1 == 0) {
+        if (temps % 10 == 0) {
             generateurEnnemis.activerMob(joueur, map);
         }
         generateurObjets.activerObjet();

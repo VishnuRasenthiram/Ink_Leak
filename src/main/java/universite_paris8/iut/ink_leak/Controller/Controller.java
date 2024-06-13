@@ -77,7 +77,7 @@ public class Controller implements Initializable {
         generateurEnnemis = new GenerateurEnnemis();
 
         this.joueur = new Joueur("Entity",map, generateurEnnemis);
-        joueur.setEmplacement(30,200);
+        joueur.setEmplacement(12,10);
 
 
 

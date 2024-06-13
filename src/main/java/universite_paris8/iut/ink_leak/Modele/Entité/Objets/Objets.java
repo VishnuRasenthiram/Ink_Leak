@@ -33,9 +33,7 @@ public abstract class Objets extends Entité {
 
     }
 
-    public void setEmplacement(int x, int y){
-        super.setEmplacement(x*32,y*32);
-    }
+
 
     public Joueur getJoueur() { return this.joueur; }
 

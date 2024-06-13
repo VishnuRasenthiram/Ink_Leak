@@ -101,7 +101,7 @@ public class Joueur extends Entité {
                         case "N":
                             super.setOrientationProperty("N");
                             if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
-                                if (super.verifierInteractionEnFace(x,y - vitesseJoueur) == 10) {
+                                if (super.verifierInteractionEnFace(x,y - vitesseJoueur) == 1) {
                                     Timeline timeline = new Timeline();
                                     setBougable(false);
                                     for (int i = 0; i < 2000; i += 2) {
@@ -128,7 +128,7 @@ public class Joueur extends Entité {
                         case "S":
                             super.setOrientationProperty("S");
                             if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
-                                if (super.verifierInteractionEnFace(x,y + vitesseJoueur) == 10) {
+                                if (super.verifierInteractionEnFace(x,y + vitesseJoueur) == 1) {
                                     Timeline timeline = new Timeline();
                                     setBougable(false);
 
@@ -157,7 +157,7 @@ public class Joueur extends Entité {
                         case "O":
                             super.setOrientationProperty("O");
                             if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
-                                if (super.verifierInteractionEnFace(x - vitesseJoueur, y) == 10) {
+                                if (super.verifierInteractionEnFace(x - vitesseJoueur, y) == 1) {
                                     Timeline timeline = new Timeline();
                                     setBougable(false);
 
@@ -188,7 +188,7 @@ public class Joueur extends Entité {
                         case "E":
                             super.setOrientationProperty("E");
                             if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
-                                if (super.verifierInteractionEnFace(x + vitesseJoueur, y) == 10) {
+                                if (super.verifierInteractionEnFace(x + vitesseJoueur, y) == 1) {
                                     Timeline timeline = new Timeline();
                                     setBougable(false);
 

@@ -68,8 +68,8 @@ public class GenerateurObjets {
                     listeObjets.add(tube);
                 }
                 if(objetPoing.getNbFoisRecuperable() !=0){
-                    setObjetsPos(objetPoing);
-                    listeObjets.add(objetPoing);
+                    setObjetsPos(objetLangue);
+                    listeObjets.add(objetLangue);
                 }
                 break;
         }

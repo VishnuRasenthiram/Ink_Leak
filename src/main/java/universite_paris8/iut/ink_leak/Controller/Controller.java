@@ -103,9 +103,11 @@ public class Controller implements Initializable {
         });
         ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur,map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
-        vT = new VueTexte(env, txt, mainPane);
-        mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
-
+        vT = new VueTexte(env, mainPane);
+       // mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
+        vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
+        vT.ajouterTexte("Vous avez trouvé un objet magique !", 400, 200, 120, 265, 1, 2);
+        vT.ajouterTexte("Les lumière on été cassé dans cette salle... attention des monstre ont peut-être tendu des pièges...", 400, 200, 120, 315, 1, 3);
 
 
         ListChangeListener<Pouvoirs> airpods=new ListePouvoirsObs(interfacePane,joueur);
@@ -205,7 +207,7 @@ public class Controller implements Initializable {
 
 
 
-                    if (temps == 10000) {
+                    if (temps == 1000000) {
                         System.out.println("fini");
                         gameLoop.stop();
                     }

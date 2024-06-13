@@ -1,15 +1,25 @@
 package universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirObs;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
 
 import java.io.File;
+import java.util.List;
 
 public class VueLangue extends VueAttaque {
+    private Timeline animationTimeline;
+    private Timeline animationTimeline2;
+    private double currentIndex = 1;
+    private         ImageView imageview = new ImageView();
+    private ImageView imageview2 = new ImageView();
 
     public VueLangue(Pane mainPane, Joueur joueur) {
         super(mainPane, joueur);
@@ -20,11 +30,9 @@ public class VueLangue extends VueAttaque {
         String orientation = super.getJoueur().getOrientation();
         Pane attaquePane = new Pane();
 
-        ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
 
-        ImageView imageview2 = new ImageView();
         imageview2.setFitHeight(32);
         imageview2.setFitWidth(32);
 
@@ -72,6 +80,33 @@ public class VueLangue extends VueAttaque {
         super.getMainPane().getChildren().add(attaquePane);
 
         langue.getEstEnVieProperty().addListener(new PouvoirObs(this));
+        griffeAnimation();
+    }
+    public void griffeAnimation() {
+        animationTimeline = new Timeline();
+        animationTimeline2 = new Timeline();
+        animationTimeline.setCycleCount(46);
+        animationTimeline2.setCycleCount(61);
 
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.0023), e -> {
+
+
+
+            currentIndex = currentIndex + 0.11;
+            imageview2.setScaleX(currentIndex);
+        });
+        KeyFrame endFrame = new KeyFrame(Duration.seconds(0.003), e -> {
+
+            currentIndex = currentIndex - 0.1;
+            imageview2.setScaleX(currentIndex);
+        });
+        animationTimeline2.getKeyFrames().add(endFrame);
+        animationTimeline.getKeyFrames().add(keyFrame);
+        animationTimeline.setOnFinished(e -> {
+            PauseTransition pause = new PauseTransition(Duration.millis(200));
+            pause.setOnFinished(event -> animationTimeline2.play());
+            pause.play();
+        });
+        animationTimeline.play();
     }
 }

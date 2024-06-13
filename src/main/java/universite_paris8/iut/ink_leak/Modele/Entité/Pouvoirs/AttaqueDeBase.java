@@ -14,7 +14,7 @@ public class AttaqueDeBase extends Pouvoirs{
 
     @Override
     public void déplacement(String déplacementDirection) {
-        super.setPosition(32);
+        super.setPosition();
         double x = super.getPosX();
         double y = super.getPosY();
         int vitesse_joueur = super.getVitesse_entite();

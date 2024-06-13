@@ -97,9 +97,9 @@ public abstract class Entité {
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
         x = x -4;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
-        y = y + 2;
+        y = y + 3;
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
-        y = y -4;
+        y = y -6;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
 

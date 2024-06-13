@@ -27,30 +27,7 @@ public class Poing extends Pouvoirs {
                     double x = super.getPosX();
                     double y = super.getPosY();
                     int vitesse_joueur = super.getVitesse_entite();
-                    switch (déplacementDirection) {
-                        case "N":
-                            if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {
-                                super.setPosYProperty(super.getPosY() - vitesse_joueur);
-                            }
-                            break;
 
-                        case "S":
-                            if (super.peutAller(x, y + vitesse_joueur, super.getMap())) {
-                                super.setPosYProperty(super.getPosY() + vitesse_joueur);
-                            }
-                            break;
-
-                        case "O":
-                            if (super.peutAller(x - vitesse_joueur, y, super.getMap())) {
-                                super.setPosXProperty(super.getPosX() - vitesse_joueur);
-                            }
-                            break;
-                        case  "E":
-                            if (super.peutAller(x + vitesse_joueur, y, super.getMap())) {
-                                super.setPosXProperty(super.getPosX() + vitesse_joueur);
-                            }
-                            break;
-                    }
                     for(Entité sl:super.getGenerateurEnnemis().getListeEntite()){
 
                         if(this.enContact(sl)) {

@@ -1,22 +1,19 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Objets;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
-public class Imprimante extends Objet {
+public class Imprimante extends Objets {
 
-    private int nbFoisRecuperable;
-
-    public Imprimante(Map map, GenerateurEnnemis spawner, Joueur j) {
-        super("Imprimante", 0, map, spawner, j);
-        this.nbFoisRecuperable = 1;
+    public Imprimante(Map map, GenerateurObjets listeObjets, Joueur j) {
+        super("Imprimante", map, listeObjets, j);
     }
 
     public void action() {
-        if (super.getJ().getAttaqueDeBase().enContact(this) && nbFoisRecuperable > 0) {
-            nbFoisRecuperable--;
-            super.getJ().gagner_vie(2);
+        if (super.getJoueur().getAttaqueDeBase().enContact(this) && super.getNbFoisRecuperable() > 0) {
+            super.setNbFoisRecuperable(super.getNbFoisRecuperable() -1);
+            super.getJoueur().gagner_vie(2);
         }
     }
 }

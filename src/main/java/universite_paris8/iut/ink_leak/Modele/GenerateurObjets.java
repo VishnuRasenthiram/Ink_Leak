@@ -16,12 +16,14 @@ public class GenerateurObjets {
     private ObjetBulle objetBulle;
     private ObjetPoing objetPoing;
     private Tube tube;
+    private Imprimante imprimante;
     public GenerateurObjets(Map map, Joueur joueur){
         listeObjets= FXCollections.observableArrayList();
         this.map=map;
         objetBulle= new ObjetBulle(map,this,joueur);
         objetPoing= new ObjetPoing(map,this,joueur);
         tube= new Tube(map, this, joueur);
+        imprimante = new Imprimante(map, this, joueur);
 
     }
     public void activerObjet(){
@@ -63,6 +65,10 @@ public class GenerateurObjets {
                     setObjetsPos(tube);
                     listeObjets.add(tube);
                 }
+                if(imprimante.getNbFoisRecuperable() !=0) {
+                    setObjetsPos(imprimante);
+                    listeObjets.add(imprimante);
+                }
                 break;
         }
 
@@ -75,8 +81,11 @@ public class GenerateurObjets {
             case 0:
                 if (objet instanceof Tube) {
                     objet.setEmplacement(15, 15);
-                    break;
                 }
+                if (objet instanceof Imprimante) {
+                    objet.setEmplacement(10, 10);
+                }
+                break;
             case 1:
                 objet.setEmplacement(8,15);
                 break;

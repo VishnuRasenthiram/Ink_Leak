@@ -6,15 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetBulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetPoing;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
-import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Tube;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueEnnemis;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjetBulle;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjetPoing;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueObjets;
-import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.VueTube;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.*;
 
 public class ListeObjetsObs implements ListChangeListener<Objets> {
     @FXML
@@ -28,6 +22,7 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
         VueObjets vueObjetBulle = new VueObjetBulle(mainPane);
         VueObjets vueObjetsPoing =new VueObjetPoing(mainPane);
         VueTube vueTube=new VueTube(mainPane);
+        VueImprimante vueImprimante = new VueImprimante(mainPane);
 
         while(change.next()){
             for(Objets objetsAjoute: change.getAddedSubList()){
@@ -37,6 +32,8 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
                     vueObjetsPoing.créeSprite(objetsAjoute);
                 } else if (objetsAjoute instanceof Tube) {
                     vueTube.créeSprite(objetsAjoute);
+                } else if (objetsAjoute instanceof Imprimante) {
+                    vueImprimante.créeSprite(objetsAjoute);
                 }
 
             }
@@ -47,6 +44,8 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
                     vueObjetsPoing.supprimerSpriteObjet(objetsEnleve);
                 } else if (objetsEnleve instanceof Tube) {
                     vueTube.supprimerSpriteObjet(objetsEnleve);
+                } else if (objetsEnleve instanceof Imprimante) {
+                    vueImprimante.supprimerSpriteObjet(objetsEnleve);
                 }
             }
         }

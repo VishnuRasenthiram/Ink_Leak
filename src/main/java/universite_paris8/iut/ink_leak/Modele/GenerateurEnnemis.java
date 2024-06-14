@@ -22,8 +22,6 @@ public class GenerateurEnnemis {
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
-               // mob.déplacement("E");
-                // Replace these with your desired starting and target positions
                 int startX = mob.coorDansLeTableauX(mob.getPosX());
                 int startY = mob.coorDansLeTableauY(mob.getPosY());
                 int targetX = joueur.coorDansLeTableauX(joueur.getPosX());
@@ -43,8 +41,6 @@ public class GenerateurEnnemis {
                     } else if (path.get(0) == 4) {
                         mob.déplacement("3");
                     }
-                } else {
-                    //System.out.println("No path found");
                 }
                 if(mob.getVie()==0){
                     listeMort.add(mob);

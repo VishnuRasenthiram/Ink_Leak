@@ -13,7 +13,7 @@ public class Slime extends Entité {
 
     public Slime(GenerateurEnnemis generateurEnnemis, Map map, Joueur joueur){
 
-        super("Slime"+cpt, 5, 1,32, 32,2,200,map, generateurEnnemis,null);
+        super("Slime"+cpt, 2, 1,32, 32,2,200,map, generateurEnnemis,null);
         this.joueur = joueur;
         cpt++;
 

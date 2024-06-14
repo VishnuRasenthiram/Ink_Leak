@@ -21,7 +21,7 @@ public class VueObjetBulle extends VueObjets{
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
 
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Objects/Buckets/blue_bucket.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/objects/buckets/blue_bucket.png").toURI().toString()));
         objetPane.getChildren().add(imageview);
 
         objetPane.translateXProperty().bind(bulle.posXProperty());

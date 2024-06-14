@@ -7,24 +7,24 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 
 import java.io.File;
 
-public class VueTube extends VueObjets{
+public class VueImprimante extends VueObjets {
 
-    public VueTube(Pane mainPane) {
+    public VueImprimante(Pane mainPane) {
         super(mainPane);
     }
 
-    public void créeSprite(Objets tube) {
+    public void créeSprite(Objets imprimante) {
         Pane objetPane = new Pane();
-        objetPane.setId(tube.getNom_entite());
+        objetPane.setId(imprimante.getNom_entite());
         ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
 
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/objects/ink_tube.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/objects/printer.png").toURI().toString()));
         objetPane.getChildren().add(imageview);
 
-        objetPane.translateXProperty().bind(tube.posXProperty());
-        objetPane.translateYProperty().bind(tube.posYProperty());
+        objetPane.translateXProperty().bind(imprimante.posXProperty());
+        objetPane.translateYProperty().bind(imprimante.posYProperty());
         super.getMainPane().getChildren().add(objetPane);
     }
 }

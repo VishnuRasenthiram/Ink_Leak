@@ -64,14 +64,14 @@ public abstract class Entité {
         }
         else {
 
-            int mur=1;
-            int solDegat=2;
-            int murglace=9;
-            if(verifCaseSurCoord(mur,x,y)){
-                return false;
-            }
-            if(verifCaseSurCoord(murglace,x,y)){
-                return false;
+            int[] mur={2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
+            int solDegat=3;
+
+
+            for(int i : mur){
+                if(verifCaseSurCoord(i,x,y)){
+                    return false;
+                }
             }
             if(verifCaseSurCoord(solDegat,x,y)){
                 this.prendre_degat(1);
@@ -81,14 +81,14 @@ public abstract class Entité {
         return true;
     }
     public int verifierInteractionEnFace(double x, double y) {
-        if(verifCaseSurCoord(3,x,y)){
-            return 3;
-        } else if(verifCaseSurCoord(4,x,y)){
-            return 4;
-        }else if(verifCaseSurCoord(9,x,y)){
-            return 9;
-        }else if(verifCaseSurCoord(10,x,y)){
-            return 10;
+        if(verifCaseSurCoord(22,x,y)){
+            return 22;
+        } else if(verifCaseSurCoord(6,x,y)){
+            return 6;
+        }else if(verifCaseSurCoord(2,x,y)){
+            return 2;
+        }else if(verifCaseSurCoord(1,x,y)){
+            return 1;
         }
         return 0;
     }
@@ -200,9 +200,9 @@ public abstract class Entité {
         this.posYProperty.set(posYProperty);
     }
 
-    public void setEmplacement(double x , double y ){
-        setPosXProperty(x);
-        setPosYProperty(y);
+    public void setEmplacement(int x , int y ){
+        setPosXProperty(x*32);
+        setPosYProperty(y*32);
     }
 
     public int getVitesse_entite() {

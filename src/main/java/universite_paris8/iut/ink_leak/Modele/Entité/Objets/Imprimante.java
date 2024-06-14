@@ -6,16 +6,13 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Imprimante extends Objets {
 
-    private int nbFoisRecuperable;
-
-    public Imprimante(Map map, GenerateurObjets generateurObjets, Joueur joueur) {
-        super("Imprimante",  map, generateurObjets, joueur);
-        this.nbFoisRecuperable = 1;
+    public Imprimante(Map map, GenerateurObjets listeObjets, Joueur j) {
+        super("Imprimante", map, listeObjets, j);
     }
 
     public void action() {
-        if (super.getJoueur().getAttaqueDeBase().enContact(this) && nbFoisRecuperable > 0) {
-            nbFoisRecuperable--;
+        if (super.getJoueur().getAttaqueDeBase().enContact(this) && super.getNbFoisRecuperable() > 0) {
+            super.setNbFoisRecuperable(super.getNbFoisRecuperable() -1);
             super.getJoueur().gagner_vie(2);
         }
     }

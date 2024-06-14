@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPaneDebut" prefHeight="700.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.ink_leak.Controller.LaunchController">
+
+    <center>
+
+        <Button fx:id="button" onAction="#startGame" prefHeight="67.0" prefWidth="195.0" styleClass="root" text="Démarrer la partie" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Ink Free" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <InnerShadow blurType="ONE_PASS_BOX" choke="0.24" height="65.45" radius="78.43" width="250.27">
+               <color>
+                  <Color red="0.04210526496171951" green="0.040857698768377304" blue="0.040857698768377304" />
+               </color>
+            </InnerShadow>
+         </effect>
+         <textFill>
+            <RadialGradient centerX="0.46475770084868445" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.7368420958518982" green="0.38479530811309814" blue="0.38479530811309814" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.13169088975540588">
+                     <color>
+                        <Color red="0.7300000190734863" green="0.38690000772476196" blue="0.38690000772476196" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill></Button>
+
+    </center>
+</BorderPane>

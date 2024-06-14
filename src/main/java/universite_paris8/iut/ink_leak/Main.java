@@ -2,6 +2,7 @@ package universite_paris8.iut.ink_leak;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -20,16 +21,14 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("terrain.fxml"));
-        Pane root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 700);
-        stage.setTitle("Ink Leak");
-        stage.setScene(scene);
-        stage.show();
-
-        showDialog("Sortez de cet endroit...", stage);
+    public void start(Stage Stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("launch.fxml"));
+        Pane root = loader.load();
+        Stage.setTitle("Game Launcher");
+        Stage.setScene(new Scene(root,700,700));
+        Stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

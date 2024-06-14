@@ -36,7 +36,7 @@ public class VueMap {
             ObscuritéCache.setFitHeight(1800);
             ObscuritéCache.setFitWidth(3000);
             ObscuritéCache.setId("cacheNoir");
-            ObscuritéCache.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/noir.png").toURI().toString()));
+            ObscuritéCache.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/darkness.png").toURI().toString()));
             ObscuritéCache.translateXProperty().bind(Bindings.add(entité.posXProperty(), -1504));
             ObscuritéCache.translateYProperty().bind(Bindings.add(entité.posYProperty(), -898));
             interfacePane.getChildren().add(ObscuritéCache);

@@ -50,22 +50,13 @@ public class GenerateurObjets {
         switch (map.getNumMap()){
 
             case 1:
-                if(objetBulle.getNbFoisRecuperable() !=0){
-                    setObjetsPos(objetBulle);
-                    listeObjets.add(objetBulle);
-                }
+
                 break;
             case 2:
-                if(objetPoing.getNbFoisRecuperable() !=0){
-                    setObjetsPos(objetPoing);
-                    listeObjets.add(objetPoing);
-                }
+
                 break;
             case 3:
-                if(objetLangue.getNbFoisRecuperable() !=0){
-                    setObjetsPos(objetLangue);
-                    listeObjets.add(objetLangue);
-                }
+
                 break;
             case 0:
                 if(tube.getNbFoisRecuperable() !=0) {
@@ -80,6 +71,14 @@ public class GenerateurObjets {
                     setObjetsPos(objetPoing);
                     listeObjets.add(objetPoing);
                 }
+                if(objetLangue.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetLangue);
+                    listeObjets.add(objetLangue);
+                }
+                if(objetBulle.getNbFoisRecuperable() !=0){
+                    setObjetsPos(objetBulle);
+                    listeObjets.add(objetBulle);
+                }
                 break;
         }
 
@@ -91,10 +90,19 @@ public class GenerateurObjets {
         switch (map.getNumMap()){
             case 0:
                 if (objet instanceof Tube) {
-                    objet.setEmplacement(15, 15);
+                    objet.setEmplacement(9, 15);
                 }
                 if (objet instanceof Imprimante) {
                     objet.setEmplacement(10, 10);
+                }
+                if(objet instanceof ObjetPoing){
+                    objet.setEmplacement(11, 10);
+                }
+                if(objet instanceof ObjetBulle){
+                    objet.setEmplacement(12, 10);
+                }
+                if(objet instanceof ObjetLangue){
+                    objet.setEmplacement(13, 10);
                 }
                 break;
             case 1:

@@ -39,7 +39,6 @@ public class Environnement {
 
             if (interaction == 22 || interaction == 6) {
 
-
                 joueur.setBougable(false);
                 vMap.supprimerAffichageMap();
                 map.setMap(interaction == 22 ? map.getNumMap() - 1 : (map.getNumMap() > 6 ? 1 : map.getNumMap() + 1));

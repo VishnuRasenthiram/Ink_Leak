@@ -5,16 +5,16 @@ import java.util.*;
 public class Dijkstra {
 
     public static List<Integer> dijkstra(int[][] mapData, int startX, int startY, int targetX, int targetY) {
-        int width = mapData[0].length;
-        int height = mapData.length;
+        int longueur = mapData[0].length;
+        int hauteur = mapData.length;
 
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.distance));
         java.util.Map<String, Node> allNodes = new HashMap<>();
 
-        Node startNode = new Node(startX, startY);
-        startNode.distance = 0;
-        queue.add(startNode);
-        allNodes.put(startX + "," + startY, startNode);
+        Node NoeufDeDepart = new Node(startX, startY);
+        NoeufDeDepart.distance = 0;
+        queue.add(NoeufDeDepart);
+        allNodes.put(startX + "," + startY, NoeufDeDepart);
 
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
@@ -24,36 +24,36 @@ public class Dijkstra {
             }
 
             for (int dir = 1; dir <= 4; dir++) {
-                int neighborX = currentNode.x;
-                int neighborY = currentNode.y;
+                int voisinX = currentNode.x;
+                int voisinY = currentNode.y;
 
                 switch (dir) {
-                    case 1: // UP
-                        neighborY--;
+                    case 1: // en haut
+                        voisinY--;
                         break;
-                    case 2: // DOWN
-                        neighborY++;
+                    case 2: // en bas
+                        voisinY++;
                         break;
-                    case 3: // LEFT
-                        neighborX--;
+                    case 3: // haut
+                        voisinX--;
                         break;
                     case 4: // RIGHT
-                        neighborX++;
+                        voisinX++;
                         break;
                 }
 
-                if (isValidCell(neighborX, neighborY, width, height, mapData)) {
-                    String neighborKey = neighborX + "," + neighborY;
-                    Node neighborNode = allNodes.getOrDefault(neighborKey, new Node(neighborX, neighborY));
-                    allNodes.putIfAbsent(neighborKey, neighborNode);
+                if (estValideCell(voisinX, voisinY, longueur, hauteur, mapData)) {
+                    String voisinKey = voisinX + "," + voisinY;
+                    Node voisinNode = allNodes.getOrDefault(voisinKey, new Node(voisinX, voisinY));
+                    allNodes.putIfAbsent(voisinKey, voisinNode);
 
-                    int newDistance = currentNode.distance + 1; // Pondération de déplacement
+                    int newDistance = currentNode.distance + 1;
 
-                    if (newDistance < neighborNode.distance) {
-                        neighborNode.distance = newDistance;
-                        neighborNode.previous = currentNode;
-                        neighborNode.direction = dir;
-                        queue.add(neighborNode);
+                    if (newDistance < voisinNode.distance) {
+                        voisinNode.distance = newDistance;
+                        voisinNode.previous = currentNode;
+                        voisinNode.direction = dir;
+                        queue.add(voisinNode);
                     }
                 }
             }
@@ -63,9 +63,9 @@ public class Dijkstra {
         return null;
     }
 
-    private static boolean isValidCell(int x, int y, int width, int height, int[][] map) {
-        boolean isValid = x >= 0 && x < width && y >= 0 && y < height && map[y][x] == 0;
-        return isValid;
+    private static boolean estValideCell(int x, int y, int longueur, int hauteur, int[][] map) {
+        boolean estValide = x >= 0 && x < longueur && y >= 0 && y < hauteur && map[y][x] == 0;
+        return estValide;
     }
 
     private static List<Integer> reconstructPath(Node node) {

@@ -14,20 +14,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeEnnemieObs;
+import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeMursObs;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeObjetsObs;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListePouvoirsObs;
 import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
 import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
+import universite_paris8.iut.ink_leak.Modele.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
+import universite_paris8.iut.ink_leak.Modele.Entité.MurCassable.MurCassable;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
-import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
-import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
@@ -58,6 +57,7 @@ public class Controller implements Initializable {
     private Pane interfacePane;
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
+    private GenerateurMurs generateurMurs;
     private VueJoueur ink;
 
     private VueMap vueMap;
@@ -86,10 +86,9 @@ public class Controller implements Initializable {
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
 
         generateurObjets = new GenerateurObjets(map, joueur);
+        generateurMurs = new GenerateurMurs(map, joueur);
 
-
-        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
-
+        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,generateurMurs);
 
 
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
@@ -119,6 +118,8 @@ public class Controller implements Initializable {
         ListChangeListener<Objets> Buds= new ListeObjetsObs(mainPane);
         generateurObjets.getListeObjets().addListener(Buds);
 
+        ListChangeListener<MurCassable> oreille= new ListeMursObs(mainPane);
+        generateurMurs.getListeMurs().addListener(oreille);
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
@@ -208,20 +209,28 @@ public class Controller implements Initializable {
         KeyFrame kf = new KeyFrame(
                 Duration.millis(17),
                 (ev -> {
-                    env.action(temps);
+
                     vT.afficherTexte();
-
-
+                    double x = this.joueur.getPosX();
+                    double y = this.joueur.getPosY();
+                    int interaction = joueur.verifierInteractionEnFace(x, y);
+                    env.action(temps);
+                    if (interaction == 22 || interaction == 6) {
+                        map.setMap(interaction == 22 ? map.getNumMap() - 1 : (map.getNumMap() > 6 ? 1 : map.getNumMap() + 1));
+                        vueMap.supprimerAffichageMap();
+                        vueMap.initMap(map, joueur);
+                        env.changementDeMap();
+                    }
 
                     if (temps == 10000) {
                         System.out.println("fini");
                         gameLoop.stop();
                     }
 
-                    if (temps % 50 == 0) {
+                    if (temps % 60 == 0) {
                         tempsDeRechargeK = true;
                     }
-                    if (temps % 90 == 0) {
+                    if (temps % 40 == 0) {
                         tempsDeRechargeJ = true;
                     }
                     temps++;

@@ -10,12 +10,12 @@ public class Map {
         this.numMap = 0;
 
     }
-    public static int getLargeur(Map map) {
-        return map.map.length;
+    public int getLargeur() {
+        return this.map.length;
     }
 
-    public static int getHauteur(Map map) {
-        return map.map[0].length;
+    public int getHauteur() {
+        return map[0].length;
     }
     public int[][] getMap(){
         return this.map;
@@ -56,12 +56,14 @@ public class Map {
     public int getMap(int x, int y){
         return this.map[y][x];
     }
-
+    public void setMap(int x, int y,int val){
+        this.map[y][x]=val;
+    }
     private int[][] mapDeDepart(){
 
         return new int[][]{{17,17,17,20,0,0,0,0,0,8,11,11,11,11,17,17,9,0,0,0},
                 {17,17,17,20,0,0,0,0,0,0,0,0,0,0,21,20,0,0,15,11},
-                {18,18,18,14,0,0,0,0,0,0,0,0,0,0,21,20,0,0,12,0},
+                {18,23,23,14,0,0,0,0,0,0,0,0,0,0,21,20,0,0,12,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,20,0,0,12,0},
                 {0,0,0,0,8,11,11,11,11,11,11,11,11,11,18,14,0,0,12,0},
                 {10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0},

@@ -12,7 +12,7 @@ public class Flaque extends Entité {
 
     public Flaque(GenerateurEnnemis generateurEnnemis, Map map){
 
-        super("S"+cpt, 5, 1,32, 32,1,200,map, generateurEnnemis,null);
+        super("S"+cpt, 5, 1,32, 32,1,200,map, generateurEnnemis,null,null);
         cpt++;
 
     }

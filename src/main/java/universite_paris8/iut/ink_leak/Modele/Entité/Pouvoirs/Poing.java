@@ -17,21 +17,17 @@ public class Poing extends Pouvoirs {
     }
 
 
-
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
         setEstEnVie(true);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
-                    double x = super.getPosX();
-                    double y = super.getPosY();
-                    int vitesse_joueur = super.getVitesse_entite();
-
-                    for(Entité sl:super.getGenerateurEnnemis().getListeEntite()){
-
-                        if(this.enContact(sl)) {
-                            sl.prendre_degat(super.getAttaque_entite());
+                    if(this.getEstEnVie()) {
+                        for (Entité sl : super.getGenerateurEnnemis().getListeEntite()) {
+                            if (this.enContact(sl)) {
+                                sl.prendre_degat(super.getAttaque_entite());
+                            }
                         }
                     }
                 })

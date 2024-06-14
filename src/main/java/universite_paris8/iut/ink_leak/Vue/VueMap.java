@@ -126,6 +126,9 @@ public class VueMap {
         } else if (tuile == 22) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("exit2");
+        } else if (tuile==23) {
+            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
+            pane.setId("murCassable");
         }
 
         pane.getChildren().add(imageview);

@@ -2,6 +2,7 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
@@ -20,9 +21,10 @@ public abstract class Entité {
     private Map map;
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
+    private GenerateurMurs generateurMurs;
     private final ObjectProperty<MovementState> movementStateProperty;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis,GenerateurObjets generateurObjets) {
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, GenerateurMurs generateurMurs) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -37,12 +39,13 @@ public abstract class Entité {
         this.map = map;
         this.generateurEnnemis = generateurEnnemis;
         this.generateurObjets = generateurObjets;
+        this.generateurMurs = generateurMurs;
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
 
     }
 
     public Entité(String nom_entite, Map map, GenerateurObjets generateurObjets) {
-        this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets);
+        this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets,null);
 
     }
 
@@ -64,7 +67,7 @@ public abstract class Entité {
         }
         else {
 
-            int[] mur={2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
+            int[] mur={2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23};
             int solDegat=3;
 
 
@@ -256,5 +259,9 @@ public abstract class Entité {
 
     public GenerateurObjets getGenerateurObjets() {
         return generateurObjets;
+    }
+
+    public GenerateurMurs getGenerateurMurs() {
+        return generateurMurs;
     }
 }

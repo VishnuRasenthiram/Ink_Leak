@@ -15,7 +15,6 @@ public class GenerateurEnnemis {
     private ObservableList<Entité> listeEntite ; // Liste pour stocker tous les slimes
     public GenerateurEnnemis(){
         listeEntite= FXCollections.observableArrayList();
-
     }
 
     public void activerMob(Joueur joueur, Map map){
@@ -24,8 +23,8 @@ public class GenerateurEnnemis {
             for (Entité mob : listeEntite) {
                 int startX = mob.coorDansLeTableauX(mob.getPosX());
                 int startY = mob.coorDansLeTableauY(mob.getPosY());
-                int targetX = joueur.coorDansLeTableauX(joueur.getPosX());
-                int targetY = joueur.coorDansLeTableauY(joueur.getPosY());
+                int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
+                int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+16);
 
                 List<Integer> path = Dijkstra.dijkstra(map.getMap(), startX, startY, targetX, targetY);
 

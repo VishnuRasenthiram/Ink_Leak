@@ -15,6 +15,7 @@ public class PouvoirObs implements ChangeListener<Boolean> {
     public void changed(ObservableValue<? extends Boolean  > observable, Boolean old,Boolean nouv) {
 
         if (!nouv){
+
             vueAttaque.removeAttaque();
         }
 

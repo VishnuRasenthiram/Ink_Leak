@@ -39,9 +39,8 @@ public class VieEnnemisObs implements ChangeListener<Number> {
         colorAdjust = new ColorAdjust();
 
         if ((int) nouv < (int) old) {
-            if (entité instanceof Slime) {
-                String direction = joueur.getOrientation().toString();
 
+                String direction = joueur.getOrientation().toString();
 
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);
@@ -111,7 +110,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                 timeline.play();
                 timeline.setOnFinished(event -> colorAdjust.setBrightness(0));
 
-            }
+
         }
     }
 

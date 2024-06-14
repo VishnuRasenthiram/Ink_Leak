@@ -28,7 +28,7 @@ public class Joueur extends Entité {
         private Timeline timeline;
 
         public Joueur(String nom_joueur,Map map, GenerateurEnnemis generateurEnnemis) {
-            super(nom_joueur,  1, 1, 30, 32,1,1000,map,generateurEnnemis,null);
+            super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,null);
             this.listePouvoirs= FXCollections.observableArrayList();
             this.bougable = true;
             this.oppacitéProperty = new SimpleIntegerProperty(1);

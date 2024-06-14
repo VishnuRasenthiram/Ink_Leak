@@ -11,7 +11,7 @@ public abstract class Pouvoirs extends Entité {
     private BooleanProperty estEnVieProperty;
 
     public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite,boolean estEnVie, Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, generateurEnnemis,null);
+        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, generateurEnnemis,null,null);
         this.joueur = joueur;
         this.estEnVieProperty = new SimpleBooleanProperty(estEnVie);
 

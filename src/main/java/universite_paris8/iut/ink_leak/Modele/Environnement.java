@@ -16,6 +16,7 @@ public class Environnement {
     private GenerateurObjets generateurObjets;
     private Map map;
     private VueMap vMap;
+    private boolean jeuFini;
 
     public Environnement(Joueur joueur, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, VueMap vMap) {
         this.joueur = joueur;
@@ -23,6 +24,7 @@ public class Environnement {
         this.generateurObjets = generateurObjets;
         this.map = map;
         this.vMap = vMap;
+        this.jeuFini = false;
 
     }
 
@@ -72,5 +74,9 @@ public class Environnement {
     public GenerateurEnnemis getGenerateurEnnemis() { return this.generateurEnnemis; }
 
     public Joueur getJoueur() { return this.joueur; }
+
+    public boolean getJeuFini() { return this.jeuFini; }
+
+    public void setJeuFini(boolean finiOuNon) { this.jeuFini = finiOuNon; }
 
 }

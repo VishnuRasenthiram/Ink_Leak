@@ -6,8 +6,6 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +20,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
@@ -41,6 +40,7 @@ public class Controller implements Initializable {
     private boolean tempsDeRechargeK;
     private boolean tempsDeRechargeJ;
     private Timeline gameLoop;
+    public Musique musique;
     private int temps;
     private Map map;
     private Environnement env;
@@ -73,14 +73,11 @@ public class Controller implements Initializable {
         ink= new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map, joueur);
-        gameLoop();
-        gameLoop.play();
 
         generateurEnnemis = new GenerateurEnnemis();
 
         this.joueur = new Joueur("Entity",map, generateurEnnemis);
         joueur.setEmplacement(8,10);
-
 
 
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
@@ -89,8 +86,6 @@ public class Controller implements Initializable {
 
 
         env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
-
-
 
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
 
@@ -121,8 +116,12 @@ public class Controller implements Initializable {
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
-        Musique musique = new Musique();
+        musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
+
+        gameLoop();
+        gameLoop.play();
+
     }
     private String currentDirection = null;
 
@@ -175,6 +174,9 @@ public class Controller implements Initializable {
                     else if (pouvoirEnCours instanceof Poing) {
                         new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/poing.wav", 1.0f, 0);
                     }
+                    else if (pouvoirEnCours instanceof Langue) {
+                        new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/langue.wav", 1.0f, 0);
+                    }
                 }
             } else if (e.getCode() == KeyCode.A) {
                 joueur.setPouvoir(-1);
@@ -200,18 +202,22 @@ public class Controller implements Initializable {
 
     private void gameLoop() {
         gameLoop = new Timeline();
-        temps=0;
+        temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-
-
 
         KeyFrame kf = new KeyFrame(
                 Duration.millis(17),
-                (ev -> {
+                ev -> {
                     env.action(temps);
                     vT.afficherTexte();
 
-
+                    if (joueur.getVie() == 0) {
+                        env.setJeuFini(true);
+                        joueur.setBougable(false);
+                        musique.arreter();
+                        gameLoop.stop();
+                        return;
+                    }
 
                     if (temps == 10000) {
                         System.out.println("fini");
@@ -225,15 +231,11 @@ public class Controller implements Initializable {
                         tempsDeRechargeJ = true;
                     }
                     temps++;
-
-
-                })
+                }
         );
+
         gameLoop.getKeyFrames().add(kf);
 
-
     }
-
-
 
 }

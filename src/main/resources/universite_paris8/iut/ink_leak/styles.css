@@ -1,0 +1,13 @@
+.root {
+    -fx-background-image: url("fond.jpg");
+    -fx-background-size: cover;
+}
+
+#button{
+
+    -fx-background-image: url("encre.jpg");
+    -fx-background-size: 100% 160%;
+    -fx-background-position: 100% 100%;
+
+
+}

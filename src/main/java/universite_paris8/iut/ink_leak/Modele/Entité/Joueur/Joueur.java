@@ -86,7 +86,7 @@ public class Joueur extends Entité {
     public void déplacement(String direction) {
         try {
 
-            int vitesseJoueur = super.getVitesse_entite();
+            double vitesseJoueur = super.getVitesse_entite()-0.2;
             setMovementState(Joueur.MovementState.WALK);
 
             if (timeline != null) return;

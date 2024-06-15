@@ -1,0 +1,32 @@
+.quiz-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.quiz-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 16px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.quiz-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.quiz-button:pressed {
+    -fx-background-color: #3e8e41;
+}
+
+.quiz-box {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-padding: 20;
+    -fx-border-color: #333;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+}

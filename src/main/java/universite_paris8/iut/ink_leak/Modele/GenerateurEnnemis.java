@@ -25,33 +25,39 @@ public class GenerateurEnnemis {
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
-                int startX = mob.coorDansLeTableauX(mob.getPosX());
-                if (mob.getOrientation().equals("O")) startX = startX + 1;
-                int startY = mob.coorDansLeTableauY(mob.getPosY());
-                int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
-                int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+4);
+                if (mob instanceof HeadLess) {
 
-                List<Integer> path = Dijkstra.dijkstraAstar(map.getMap(), startX, startY, targetX, targetY);
+                    int startX = mob.coorDansLeTableauX(mob.getPosX());
+                    if (mob.getOrientation().equals("O")) startX = startX + 1;
+                    int startY = mob.coorDansLeTableauY(mob.getPosY());
+                    int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
+                    int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 4);
 
-                if (path != null && !path.isEmpty()) {
+                    List<Integer> path = Dijkstra.dijkstraAstar(map.getMap(), startX, startY, targetX, targetY);
 
-                    if (path.get(0) == 1) {
+                    if (path != null && !path.isEmpty()) {
 
-                        mob.déplacement("0");
-                    } else if (path.get(0) == 2) {
-                        mob.déplacement("1");
-                    } else if (path.get(0) == 3) {
-                        mob.déplacement("2");
-                    } else if (path.get(0) == 4) {
-                        mob.déplacement("3");
+                        if (path.get(0) == 1) {
+
+                            mob.déplacement("0");
+                        } else if (path.get(0) == 2) {
+                            mob.déplacement("1");
+                        } else if (path.get(0) == 3) {
+                            mob.déplacement("2");
+                        } else if (path.get(0) == 4) {
+                            mob.déplacement("3");
+                        }
                     }
+                    if (mob.getVie() == 0) {
+                        listeMort.add(mob);
+                    }
+                } else {
+                    mob.déplacement("4");
+
                 }
-                if(mob.getVie()==0){
-                    listeMort.add(mob);
+                for (Entité mobMort : listeMort) {
+                    listeEntite.remove(mobMort);
                 }
-            }
-            for (Entité mobMort: listeMort) {
-                listeEntite.remove(mobMort);
             }
         }
     }
@@ -83,6 +89,9 @@ public class GenerateurEnnemis {
                 HeadLess HeadLess = new HeadLess(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(HeadLess);
                 setEnnemisPos(HeadLess);
+                Slime slimde = new Slime(this,map, joueur); // Créer un nouveau slime
+                listeEntite.add(slimde);
+                setEnnemisPos(slimde);
                 break;
         }
 

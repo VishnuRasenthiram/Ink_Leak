@@ -133,7 +133,51 @@ public abstract class Entité {
 
 
     public abstract void attaque();
-    public abstract void déplacement(String déplacementDirection);
+
+    public void déplacement(String déplacementDirection) {
+
+        double x = getPosX();
+        double y = getPosY();
+        //transformer déplacement en int pour le switch
+        int direction = Integer.parseInt(déplacementDirection);
+        if (direction == 4){
+            direction = (int) (Math.random() * 9);
+        }
+        switch (direction) {
+            case 0:
+                if (peutAller(x, y - getVitesse_entite(), getMap())) {
+                    setPosYProperty(y - getVitesse_entite());
+                    setOrientationProperty("S");
+
+                }
+                break;
+            case 1:
+                if (peutAller(x, y + getVitesse_entite(), getMap())) {
+                    setPosYProperty(y + getVitesse_entite());
+                    setOrientationProperty("N");
+
+                }
+                break;
+            case 2:
+
+                if (peutAller(x - getVitesse_entite(), y, getMap())) {
+                    setPosXProperty(x - getVitesse_entite());
+                    setOrientationProperty("O");
+
+                }
+                break;
+            case 3:
+                if (peutAller(x + getVitesse_entite(), y, getMap())) {
+                    setPosXProperty(x + getVitesse_entite());
+                    setOrientationProperty("E");
+                }
+                break;
+            default:
+                break;
+
+        }
+        attaque();
+    }
 
     public boolean enContact(Entité entite2) {
         for (int i = (int) getPosX(); i < (int) getPosX() + getLongueur(); i++) {

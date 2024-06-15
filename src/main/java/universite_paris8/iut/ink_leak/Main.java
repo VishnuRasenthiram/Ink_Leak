@@ -24,6 +24,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("terrain.fxml"));
         Pane root = fxmlLoader.load();
         Scene scene = new Scene(root, 700, 700);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Ink Leak");
         stage.setScene(scene);
         stage.show();

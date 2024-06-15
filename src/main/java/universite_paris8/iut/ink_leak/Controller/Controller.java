@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Controller;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeEnnemieObs;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeObjetsObs;
@@ -54,6 +56,7 @@ public class Controller implements Initializable {
     private GenerateurObjets generateurObjets;
     private VueJoueur ink;
     private VueMap vueMap;
+    private DialogueController dialogueController;
 
     @FXML
     private Label dialogueLabel;
@@ -64,6 +67,8 @@ public class Controller implements Initializable {
     @FXML
     private Button optionButton3;
     @FXML
+    private VBox QuizBox;
+    @FXML
     private TilePane tuileMap;
     @FXML
     public BorderPane mainBorderPane;
@@ -71,8 +76,6 @@ public class Controller implements Initializable {
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-
-    private SimpleObjectProperty<DialogueNode> currentDialogueNode = new SimpleObjectProperty<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,6 +110,7 @@ public class Controller implements Initializable {
 
         ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
+
         vT = new VueTexte(env, mainPane);
         vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
         vT.ajouterTexte("Vous avez trouvé un objet magique !", 400, 200, 120, 265, 1, 2);
@@ -126,98 +130,27 @@ public class Controller implements Initializable {
         Musique musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
 
-        // Initialisation de l'arbre de dialogue
-        initDialogueTree();
-        currentDialogueNode.addListener((obs, oldNode, newNode) -> updateDialogueUI(newNode));
-        currentDialogueNode.set(rootNode); // Définir le nœud de dialogue initial
-    }
+        dialogueController = new DialogueController(dialogueLabel, optionButton1, optionButton2, optionButton3);
+        dialogueController.initDialogueTree();
+        dialogueController.setInitialDialogueNode();
 
-    private DialogueNode rootNode;
-
-    private void initDialogueTree() {
-        rootNode = new DialogueNode("Bienvenue dans le jeu. Que voulez-vous faire ?");
-        DialogueNode option1 = new DialogueNode("Explorer la forêt");
-        DialogueNode option2 = new DialogueNode("Visiter le village");
-        DialogueNode option3 = new DialogueNode("Quitter le jeu");
-
-        rootNode.addResponse(option1);
-        rootNode.addResponse(option2);
-        rootNode.addResponse(option3);
-
-        option1.addResponse(new DialogueNode("Vous trouvez un trésor caché !"));
-        option1.addResponse(new DialogueNode("Un loup apparaît !"));
-
-        option2.addResponse(new DialogueNode("Vous rencontrez un marchand."));
-        option2.addResponse(new DialogueNode("Vous trouvez une auberge."));
     }
 
     @FXML
     private void handleOption1() {
-        handleOptionSelection(0);
+        dialogueController.handleOptionSelection(0);
     }
 
     @FXML
     private void handleOption2() {
-        handleOptionSelection(1);
+        dialogueController.handleOptionSelection(1);
     }
 
     @FXML
     private void handleOption3() {
-        handleOptionSelection(2);
+        dialogueController.handleOptionSelection(2);
     }
 
-    private void handleOptionSelection(int optionIndex) {
-        DialogueNode currentNode = currentDialogueNode.get();
-        List<DialogueNode> responses = currentNode.getResponses();
-        if (optionIndex >= 0 && optionIndex < responses.size()) {
-            currentDialogueNode.set(responses.get(optionIndex));
-        }
-    }
-
-    private void updateDialogueUI(DialogueNode node) {
-        dialogueLabel.setText(node.getMessage());
-        List<DialogueNode> responses = node.getResponses();
-
-        optionButton1.setVisible(false);
-        optionButton2.setVisible(false);
-        optionButton3.setVisible(false);
-
-        if (responses.size() > 0) {
-            optionButton1.setText(responses.get(0).getMessage());
-            optionButton1.setVisible(true);
-        }
-        if (responses.size() > 1) {
-            optionButton2.setText(responses.get(1).getMessage());
-            optionButton2.setVisible(true);
-        }
-        if (responses.size() > 2) {
-            optionButton3.setText(responses.get(2).getMessage());
-            optionButton3.setVisible(true);
-        }
-    }
-
-
-class DialogueNode {
-    private String message;
-    private List<DialogueNode> responses;
-
-    public DialogueNode(String message) {
-        this.message = message;
-        this.responses = new ArrayList<>();
-    }
-
-    public void addResponse(DialogueNode response) {
-        responses.add(response);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public List<DialogueNode> getResponses() {
-        return responses;
-    }
-}
     private String currentDirection = null;
 
     @FXML
@@ -304,6 +237,14 @@ class DialogueNode {
                 (ev -> {
                     env.action(temps);
                     vT.afficherTexte();
+
+                    if (dialogueController.onTargetDialogueReached() == false){
+                        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+                        pause.setOnFinished(event -> {
+                            QuizBox.setVisible(false);
+                        });
+                        pause.play();
+                    }
 
 
 

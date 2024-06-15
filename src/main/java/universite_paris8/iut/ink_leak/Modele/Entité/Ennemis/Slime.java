@@ -28,49 +28,6 @@ public class Slime extends Entité {
         }
     }
 
-    @Override
-    public void déplacement(String déplacementDirection) {
-
-                    double x = super.getPosX();
-                    double y = super.getPosY();
-                    //transformer déplacement en int pour le switch
-                    int direction = Integer.parseInt(déplacementDirection);
-
-                    switch (direction) {
-                        case 0:
-                            if (super.peutAller(x, y - super.getVitesse_entite(), super.getMap())) {
-                                super.setPosYProperty(y - super.getVitesse_entite());
-                                super.setOrientationProperty("S");
-
-                            }
-                            break;
-                        case 1:
-                            if (super.peutAller(x, y + super.getVitesse_entite(), super.getMap())) {
-                                super.setPosYProperty(y + super.getVitesse_entite());
-                                super.setOrientationProperty("N");
-
-                            }
-                            break;
-                        case 2:
-
-                            if (super.peutAller(x - super.getVitesse_entite(), y, super.getMap())) {
-                                super.setPosXProperty(x - super.getVitesse_entite());
-                                super.setOrientationProperty("O");
-
-                            }
-                            break;
-                        case 3:
-                            if (super.peutAller(x + super.getVitesse_entite(), y, super.getMap())) {
-                                super.setPosXProperty(x + super.getVitesse_entite());
-                                super.setOrientationProperty("E");
-                            }
-                            break;
-                        default:
-                            break;
-
-                    }
-                    attaque();
-    }
 
 
 

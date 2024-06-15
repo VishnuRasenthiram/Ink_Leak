@@ -3,28 +3,28 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.Group?>
 <BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.ink_leak.Controller.Controller">
     <padding>
         <Insets top="32.0" />
     </padding>
-   <center>
-
-       <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER">
-
-            <Label fx:id="txt" />
-            <Pane fx:id="mainPane" focusTraversable="true" maxHeight="384.0" maxWidth="640.0" onKeyPressed="#action" BorderPane.alignment="TOP_CENTER">
-               <TilePane fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
-
-               </TilePane>
+    <center>
+        <StackPane>
+            <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0">
+                <Label fx:id="txt" />
+                <Pane fx:id="mainPane" focusTraversable="true" maxHeight="384.0" maxWidth="640.0" onKeyPressed="#action">
+                    <TilePane fx:id="tuileMap" prefColumns="20" prefHeight="364.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0">
+                    </TilePane>
+                </Pane>
             </Pane>
-           <Label fx:id="dialogueLabel" layoutX="50" layoutY="20" />
-           <Button fx:id="optionButton1" layoutX="50" layoutY="50" onAction="#handleOption1" />
-           <Button fx:id="optionButton2" layoutX="50" layoutY="100" onAction="#handleOption2" />
-           <Button fx:id="optionButton3" layoutX="50" layoutY="150" onAction="#handleOption3" />
 
-       </Pane>
-
-   </center>
-
+            <VBox fx:id="QuizBox" alignment="CENTER" spacing="20" maxWidth="500" maxHeight="450" styleClass="quiz-box">
+                <Label fx:id="dialogueLabel" text="Question" styleClass="quiz-label"/>
+                <VBox spacing="10">
+                    <Button fx:id="optionButton1" text="Option 1" onAction="#handleOption1" styleClass="quiz-button"/>
+                    <Button fx:id="optionButton2" text="Option 2" onAction="#handleOption2" styleClass="quiz-button"/>
+                    <Button fx:id="optionButton3" text="Option 3" onAction="#handleOption3" styleClass="quiz-button"/>
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
 </BorderPane>

@@ -1,6 +1,9 @@
 package universite_paris8.iut.ink_leak.Modele;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.HeadLess;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Puddle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Faker;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
@@ -23,11 +26,12 @@ public class GenerateurEnnemis {
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
                 int startX = mob.coorDansLeTableauX(mob.getPosX());
+                if (mob.getOrientation().equals("O")) startX = startX + 1;
                 int startY = mob.coorDansLeTableauY(mob.getPosY());
-                int targetX = joueur.coorDansLeTableauX(joueur.getPosX());
-                int targetY = joueur.coorDansLeTableauY(joueur.getPosY());
+                int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
+                int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+4);
 
-                List<Integer> path = Dijkstra.dijkstra(map.getMap(), startX, startY, targetX, targetY);
+                List<Integer> path = Dijkstra.dijkstraAstar(map.getMap(), startX, startY, targetX, targetY);
 
                 if (path != null && !path.isEmpty()) {
 
@@ -59,17 +63,26 @@ public class GenerateurEnnemis {
         switch (map.getNumMap()){
 
             case 1:
-
+                Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
+                listeEntite.add(slime);
+                setEnnemisPos(slime);
                 break;
             case 2:
                 break;
             case 3:
-
+                Faker Faker = new Faker(this,map, joueur); // Créer un nouveau slime
+                listeEntite.add(Faker);
+                setEnnemisPos(Faker);
+                break;
+            case 4:
+                Puddle Puddle = new Puddle(this,map, joueur); // Créer un nouveau slime
+                listeEntite.add(Puddle);
+                setEnnemisPos(Puddle);
                 break;
             default:
-                Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
-                listeEntite.add(slime);
-                setEnnemisPos(slime);
+                HeadLess HeadLess = new HeadLess(this,map, joueur); // Créer un nouveau slime
+                listeEntite.add(HeadLess);
+                setEnnemisPos(HeadLess);
                 break;
         }
 

@@ -25,7 +25,7 @@ public class VueEnnemis extends VueEntite {
     public void créeSprite(Entité entité) {
         Pane ennemis = new Pane();
         ennemis.setId(entité.getNom_entite());
-
+        System.out.println(entité.getNom_entite());
         ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
@@ -47,7 +47,7 @@ public class VueEnnemis extends VueEntite {
         vieRect.setId(entité.getNom_entite() + "vie");
         vieRect.setStyle("-fx-fill: #990e0e; -fx-stroke: rgba(0,0,0,0.56); -fx-stroke-width: 1; -fx-arc-height: 50; -fx-arc-width: 10;");
 
-        vieRect.widthProperty().bind(entité.getVie_entiteProperty().multiply(32).divide(2));
+        vieRect.widthProperty().bind(entité.getVie_entiteProperty().multiply(32).divide(entité.getmaxVie()));
         Rectangle.translateXProperty().bind(entité.posXProperty());
         Rectangle.translateYProperty().bind(entité.posYProperty());
 

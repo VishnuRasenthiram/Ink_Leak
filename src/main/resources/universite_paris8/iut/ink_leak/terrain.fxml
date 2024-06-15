@@ -9,7 +9,8 @@
         <Insets top="32.0" />
     </padding>
    <center>
-         <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER">
+
+       <Pane fx:id="interfacePane" maxHeight="384.0" maxWidth="640.0" BorderPane.alignment="TOP_CENTER">
 
             <Label fx:id="txt" />
             <Pane fx:id="mainPane" focusTraversable="true" maxHeight="384.0" maxWidth="640.0" onKeyPressed="#action" BorderPane.alignment="TOP_CENTER">
@@ -17,7 +18,13 @@
 
                </TilePane>
             </Pane>
-         </Pane>
+           <Label fx:id="dialogueLabel" layoutX="50" layoutY="20" />
+           <Button fx:id="optionButton1" layoutX="50" layoutY="50" onAction="#handleOption1" />
+           <Button fx:id="optionButton2" layoutX="50" layoutY="100" onAction="#handleOption2" />
+           <Button fx:id="optionButton3" layoutX="50" layoutY="150" onAction="#handleOption3" />
+
+       </Pane>
+
    </center>
 
 </BorderPane>

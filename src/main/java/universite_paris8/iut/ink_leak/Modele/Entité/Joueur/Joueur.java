@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Joueur;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -108,10 +109,14 @@ public class Joueur extends Entité {
                                         int dx = i/2;
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
                                             if (super.peutAller(x, y - dx, super.getMap())){
+                                                if (dx > 32){
+                                                    if (super.verifierInteractionEnFace(x, y-dx) == 0) {
+                                                        stopDeplacement(timeline);
+                                                    }
+                                                }
                                                 super.setPosYProperty(y - dx);
                                             } else {
-                                                timeline.stop();
-                                                setBougable(true);
+                                                stopDeplacement(timeline);
                                             }
 
                                         });
@@ -136,10 +141,14 @@ public class Joueur extends Entité {
                                         int dx = i/2;
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
                                             if (super.peutAller(x, y + dx, super.getMap())){
+                                                if (dx > 32){
+                                                    if (super.verifierInteractionEnFace(x, y + dx) == 0) {
+                                                        stopDeplacement(timeline);
+                                                    }
+                                                }
                                                 super.setPosYProperty(y + dx);
                                             }else {
-                                                timeline.stop();
-                                                setBougable(true);
+                                                stopDeplacement(timeline);
 
                                             }
                                         });
@@ -166,11 +175,16 @@ public class Joueur extends Entité {
 
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
                                             if (super.peutAller(x - dx, y, super.getMap())){
+                                                if (dx > 32){
+                                                    if (super.verifierInteractionEnFace(x-dx, y) == 0) {
+                                                        stopDeplacement(timeline);
+                                                        stopDeplacement(timeline);
+                                                    }
+                                                }
                                                 super.setPosXProperty(x - dx);
 
                                             }else {
-                                                timeline.stop();
-                                                setBougable(true);
+                                                stopDeplacement(timeline);
 
                                             }
                                         });
@@ -196,11 +210,16 @@ public class Joueur extends Entité {
                                         int dx = i/2;
 
                                         KeyFrame keyFrame = new KeyFrame(Duration.millis(i), e -> {
+                                            System.out.println((super.verifierInteractionEnFace(x + 16, y) != 0));
                                            if (super.peutAller(x + dx, y, super.getMap())){
-                                                super.setPosXProperty(x + dx);
+                                               if (dx > 32){
+                                                   if (super.verifierInteractionEnFace(x+dx, y) == 0) {
+                                                       stopDeplacement(timeline);
+                                                   }
+                                               }
+                                               super.setPosXProperty(x + dx);
                                             }else {
-                                                timeline.stop();
-                                                setBougable(true);
+                                                stopDeplacement(timeline);
                                             }
                                         });
 
@@ -223,7 +242,10 @@ public class Joueur extends Entité {
             System.out.println(ex);
         }
     }
-
+    public void stopDeplacement(Timeline tl) {
+        tl.stop();
+        setBougable(true);
+    }
     public void stop() {
         if (timeline != null) {
             timeline.stop();

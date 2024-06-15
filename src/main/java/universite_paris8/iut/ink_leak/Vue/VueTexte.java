@@ -40,6 +40,7 @@ public class VueTexte {
         txt.setTranslateX(x);
         txt.setTranslateY(y);
         txt.setWrapText(true);
+        txt.setId("texte");
 
         TextWithCoords textWithCoords = new TextWithCoords(txt, posX, posY);
         this.textes.add(textWithCoords);
@@ -51,14 +52,12 @@ public class VueTexte {
             textWithCoords.text.setVisible(false);
             if (verifierPositionJoueur(textWithCoords.posX, textWithCoords.posY)) {
                 textWithCoords.text.setVisible(true);
-                System.out.println("x: " + textWithCoords.posX + " y: " + textWithCoords.posY);
 
             }
         }
     }
 
     public boolean verifierPositionJoueur(int x, int y) {
-        System.out.println("x: " + env.getJoueur().coordEnIndiceGauche_Haut(env.getJoueur().getPosX()) + " y: " + env.getJoueur().coordEnIndiceGauche_Haut(env.getJoueur().getPosY()));
         return env.getJoueur().coordEnIndiceGauche_Haut(env.getJoueur().getPosX()) == x && env.getJoueur().coordEnIndiceGauche_Haut(env.getJoueur().getPosY()) == y;
     }
 }

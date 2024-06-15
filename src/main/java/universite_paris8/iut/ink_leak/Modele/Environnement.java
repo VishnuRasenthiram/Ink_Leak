@@ -59,7 +59,7 @@ public class Environnement {
         }
         if (temps % 100 == 0) {
             generateurEnnemis.genererEnnemis(map,joueur); }
-        if (temps % 10 == 0) {
+        if (temps % 2 == 0) {
             generateurEnnemis.activerMob(joueur, map);
         }
         generateurObjets.activerObjet();

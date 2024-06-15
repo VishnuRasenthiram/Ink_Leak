@@ -17,6 +17,7 @@ public abstract class Entité {
     private long dernier_degat;
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
+    private int maxVie;
     private Map map;
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
@@ -38,6 +39,7 @@ public abstract class Entité {
         this.generateurEnnemis = generateurEnnemis;
         this.generateurObjets = generateurObjets;
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
+        this.maxVie = vie_entiteProperty.getValue();
 
     }
 
@@ -90,7 +92,7 @@ public abstract class Entité {
         }else if(verifCaseSurCoord(1,x,y)){
             return 1;
         }
-        return 0;
+            return 0;
     }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
         x = x +2;
@@ -256,5 +258,8 @@ public abstract class Entité {
 
     public GenerateurObjets getGenerateurObjets() {
         return generateurObjets;
+    }
+    public int getmaxVie(){
+        return maxVie;
     }
 }

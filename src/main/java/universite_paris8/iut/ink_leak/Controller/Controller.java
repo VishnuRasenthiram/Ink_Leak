@@ -2,9 +2,11 @@ package universite_paris8.iut.ink_leak.Controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,6 +37,8 @@ import universite_paris8.iut.ink_leak.Vue.VueMap;
 import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -44,33 +48,40 @@ public class Controller implements Initializable {
     private int temps;
     private Map map;
     private Environnement env;
-    @FXML
-    private Label txt;
     private VueTexte vT;
+    private Joueur joueur;
+    private GenerateurEnnemis generateurEnnemis;
+    private GenerateurObjets generateurObjets;
+    private VueJoueur ink;
+    private VueMap vueMap;
+
+    @FXML
+    private Label dialogueLabel;
+    @FXML
+    private Button optionButton1;
+    @FXML
+    private Button optionButton2;
+    @FXML
+    private Button optionButton3;
     @FXML
     private TilePane tuileMap;
-    private Joueur joueur;
     @FXML
     public BorderPane mainBorderPane;
     @FXML
     private Pane mainPane;
     @FXML
     private Pane interfacePane;
-    private GenerateurEnnemis generateurEnnemis;
-    private GenerateurObjets generateurObjets;
-    private VueJoueur ink;
 
-    private VueMap vueMap;
-
+    private SimpleObjectProperty<DialogueNode> currentDialogueNode = new SimpleObjectProperty<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.tempsDeRechargeJ =true;
-        this.tempsDeRechargeK =true;
-        this.map= new Map();
+        this.tempsDeRechargeJ = true;
+        this.tempsDeRechargeK = true;
+        this.map = new Map();
 
-        vueMap= new VueMap(tuileMap, interfacePane, mainBorderPane);
-        ink= new VueJoueur(mainPane, interfacePane);
+        vueMap = new VueMap(tuileMap, interfacePane, mainBorderPane);
+        ink = new VueJoueur(mainPane, interfacePane);
 
         vueMap.initMap(map, joueur);
         gameLoop();
@@ -78,54 +89,135 @@ public class Controller implements Initializable {
 
         generateurEnnemis = new GenerateurEnnemis();
 
-        this.joueur = new Joueur("Entity",map, generateurEnnemis);
-        joueur.setEmplacement(12,10);
+        this.joueur = new Joueur("Entity", map, generateurEnnemis);
+        joueur.setEmplacement(12, 10);
 
-
-
-        joueur.getOrientationProperty().addListener(new OrientationObs(mainPane,ink,joueur));
-
+        joueur.getOrientationProperty().addListener(new OrientationObs(mainPane, ink, joueur));
         generateurObjets = new GenerateurObjets(map, joueur);
 
-
-        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets,vueMap);
-
-
+        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets, vueMap);
 
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
-
-
-            if (nouv != Joueur.MovementState.WALK){
+            if (nouv != Joueur.MovementState.WALK) {
                 ink.stopAnimation(joueur);
-            }
-            else{
+            } else {
                 ink.walkAnimation(joueur);
             }
-
         });
-        ListChangeListener<Entité> listenerEnnemis=new ListeEnnemieObs(mainPane,joueur,map);
+
+        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         vT = new VueTexte(env, mainPane);
-       // mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
         vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
         vT.ajouterTexte("Vous avez trouvé un objet magique !", 400, 200, 120, 265, 1, 2);
         vT.ajouterTexte("Les lumière on été cassé dans cette salle... attention des monstre ont peut-être tendu des pièges...", 400, 200, 120, 315, 1, 3);
 
-
-        ListChangeListener<Pouvoirs> airpods=new ListePouvoirsObs(interfacePane,joueur);
+        ListChangeListener<Pouvoirs> airpods = new ListePouvoirsObs(interfacePane, joueur);
         joueur.getListePouvoirs().addListener(airpods);
 
-        PouvoirEnCoursObs pv= new PouvoirEnCoursObs(joueur,interfacePane);
+        PouvoirEnCoursObs pv = new PouvoirEnCoursObs(joueur, interfacePane);
         joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
 
-        ListChangeListener<Objets> Buds= new ListeObjetsObs(mainPane);
+        ListChangeListener<Objets> Buds = new ListeObjetsObs(mainPane);
         generateurObjets.getListeObjets().addListener(Buds);
 
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
-        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
+
+        // Initialisation de l'arbre de dialogue
+        initDialogueTree();
+        currentDialogueNode.addListener((obs, oldNode, newNode) -> updateDialogueUI(newNode));
+        currentDialogueNode.set(rootNode); // Définir le nœud de dialogue initial
     }
+
+    private DialogueNode rootNode;
+
+    private void initDialogueTree() {
+        rootNode = new DialogueNode("Bienvenue dans le jeu. Que voulez-vous faire ?");
+        DialogueNode option1 = new DialogueNode("Explorer la forêt");
+        DialogueNode option2 = new DialogueNode("Visiter le village");
+        DialogueNode option3 = new DialogueNode("Quitter le jeu");
+
+        rootNode.addResponse(option1);
+        rootNode.addResponse(option2);
+        rootNode.addResponse(option3);
+
+        option1.addResponse(new DialogueNode("Vous trouvez un trésor caché !"));
+        option1.addResponse(new DialogueNode("Un loup apparaît !"));
+
+        option2.addResponse(new DialogueNode("Vous rencontrez un marchand."));
+        option2.addResponse(new DialogueNode("Vous trouvez une auberge."));
+    }
+
+    @FXML
+    private void handleOption1() {
+        handleOptionSelection(0);
+    }
+
+    @FXML
+    private void handleOption2() {
+        handleOptionSelection(1);
+    }
+
+    @FXML
+    private void handleOption3() {
+        handleOptionSelection(2);
+    }
+
+    private void handleOptionSelection(int optionIndex) {
+        DialogueNode currentNode = currentDialogueNode.get();
+        List<DialogueNode> responses = currentNode.getResponses();
+        if (optionIndex >= 0 && optionIndex < responses.size()) {
+            currentDialogueNode.set(responses.get(optionIndex));
+        }
+    }
+
+    private void updateDialogueUI(DialogueNode node) {
+        dialogueLabel.setText(node.getMessage());
+        List<DialogueNode> responses = node.getResponses();
+
+        optionButton1.setVisible(false);
+        optionButton2.setVisible(false);
+        optionButton3.setVisible(false);
+
+        if (responses.size() > 0) {
+            optionButton1.setText(responses.get(0).getMessage());
+            optionButton1.setVisible(true);
+        }
+        if (responses.size() > 1) {
+            optionButton2.setText(responses.get(1).getMessage());
+            optionButton2.setVisible(true);
+        }
+        if (responses.size() > 2) {
+            optionButton3.setText(responses.get(2).getMessage());
+            optionButton3.setVisible(true);
+        }
+    }
+
+
+class DialogueNode {
+    private String message;
+    private List<DialogueNode> responses;
+
+    public DialogueNode(String message) {
+        this.message = message;
+        this.responses = new ArrayList<>();
+    }
+
+    public void addResponse(DialogueNode response) {
+        responses.add(response);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<DialogueNode> getResponses() {
+        return responses;
+    }
+}
     private String currentDirection = null;
 
     @FXML

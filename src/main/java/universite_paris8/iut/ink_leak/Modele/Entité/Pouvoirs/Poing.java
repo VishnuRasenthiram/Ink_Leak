@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
@@ -27,7 +28,10 @@ public class Poing extends Pouvoirs {
                                 sl.prendre_degat(super.getAttaque_entite());
                             }
                         }
-                        setEstEnVie(false);
+                        PauseTransition pause = new PauseTransition(Duration.millis(200));
+                        pause.setOnFinished(event -> setEstEnVie(false));
+                        pause.play();
+
 
 
                     }

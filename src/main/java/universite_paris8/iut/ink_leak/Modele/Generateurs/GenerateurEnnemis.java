@@ -79,12 +79,14 @@ public class GenerateurEnnemis {
                 if (mob.getVie() == 0) {
                     listeMort.add(mob);
                 }
-                for (Entité mobMort : listeMort) {
-                    listeEntite.remove(mobMort);
-                }
+
 
             }
         }
+        for(Entité ennemisMort: listeMort){
+            listeEntite.remove(ennemisMort);
+        }
+
     }
     public void TuerToutLesEnnemis(){
         listeEntite.clear();

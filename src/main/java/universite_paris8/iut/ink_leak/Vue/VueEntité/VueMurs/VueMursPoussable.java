@@ -20,7 +20,7 @@ public class VueMursPoussable extends VueEntite {
         ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
-        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_1.png").toURI().toString()));
+        imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/crate.png").toURI().toString()));
         mursPoussables.getChildren().add(imageview);
         mursPoussables.translateXProperty().bind(entité.posXProperty());
         mursPoussables.translateYProperty().bind(entité.posYProperty());

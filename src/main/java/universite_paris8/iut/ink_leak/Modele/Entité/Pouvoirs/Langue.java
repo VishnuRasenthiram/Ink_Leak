@@ -20,7 +20,7 @@ public class Langue extends Pouvoirs{
     public void déplacement(String déplacementDirection) {
         super.setPosition();
         setEstEnVie(true);
-        super.setOrientationProperty(déplacementDirection);
+        super.setOrientation(déplacementDirection);
         i=11;
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {

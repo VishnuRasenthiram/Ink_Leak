@@ -1,13 +1,10 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Objets;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class ObjetBulle extends Objets {
-
-
 
     public ObjetBulle(Map map, GenerateurObjets generateurObjets, Joueur joueur) {
         super("ObjetBulle", map, generateurObjets, joueur);

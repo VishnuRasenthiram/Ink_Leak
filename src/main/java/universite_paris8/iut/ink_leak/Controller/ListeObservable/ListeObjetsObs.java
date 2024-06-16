@@ -7,9 +7,9 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.*;
 
 public class ListeObjetsObs implements ListChangeListener<Objets> {
+
     @FXML
     private Pane mainPane;
-
 
     public ListeObjetsObs(Pane mainPane){ this.mainPane = mainPane; }
 

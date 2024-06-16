@@ -15,10 +15,13 @@ import java.io.File;
 import java.util.List;
 
 public class VueLangue extends VueAttaque {
+
     private Timeline animationTimeline;
     private Timeline animationTimeline2;
+
     private double currentIndex = 1;
-    private         ImageView imageview = new ImageView();
+
+    private ImageView imageview = new ImageView();
     private ImageView imageview2 = new ImageView();
 
     public VueLangue(Pane mainPane, Joueur joueur) {
@@ -89,8 +92,6 @@ public class VueLangue extends VueAttaque {
         animationTimeline2.setCycleCount(61);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.0023), e -> {
-
-
 
             currentIndex = currentIndex + 0.11;
             imageview2.setScaleX(currentIndex);

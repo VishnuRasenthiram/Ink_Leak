@@ -12,10 +12,10 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
 import java.io.File;
 
 public class VuePouvoirs  {
+
     private Pane interfacePane;
 
     public VuePouvoirs(Pane interfacePane){
-
         this.interfacePane = interfacePane;
     }
 
@@ -36,9 +36,6 @@ public class VuePouvoirs  {
         hBox.getChildren().add(pouvoir);
 
         interfacePane.getChildren().add(hBox);
-
-
-
 
     }
 
@@ -63,7 +60,5 @@ public class VuePouvoirs  {
         hbox.getChildren().add(pouvoir);
 
     }
-
-
 
 }

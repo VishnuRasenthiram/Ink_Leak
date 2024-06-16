@@ -1,9 +1,11 @@
-package universite_paris8.iut.ink_leak.Modele;
+package universite_paris8.iut.ink_leak.Modele.Generateurs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import universite_paris8.iut.ink_leak.Modele.Dijkstra;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,9 @@ import java.util.Random;
 
 
 public class GenerateurEnnemis {
-    private ObservableList<Entité> listeEntite ; // Liste pour stocker tous les slimes
+
+    private ObservableList<Entité> listeEntite;
+
     public GenerateurEnnemis(){
         listeEntite= FXCollections.observableArrayList();
     }

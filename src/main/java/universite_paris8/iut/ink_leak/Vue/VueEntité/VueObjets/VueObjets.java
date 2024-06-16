@@ -11,18 +11,19 @@ import java.io.File;
 public abstract class VueObjets {
 
     private Pane mainPane;
+
     public VueObjets(Pane mainPane) {
         this.mainPane = mainPane;
+    }
+
+    public void supprimerSpriteObjet(Objets objet){
+        Pane objetPane = (Pane) mainPane.lookup("#"+objet.getNom_entite());
+        mainPane.getChildren().remove(objetPane);
     }
 
     public abstract void créeSprite(Objets objet);
 
     public Pane getMainPane() {
         return mainPane;
-    }
-
-    public void supprimerSpriteObjet(Objets objet){
-        Pane objetPane = (Pane) mainPane.lookup("#"+objet.getNom_entite());
-        mainPane.getChildren().remove(objetPane);
     }
 }

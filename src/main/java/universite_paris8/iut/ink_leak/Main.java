@@ -22,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage Stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("launch.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuDemarrage.fxml"));
         Pane root = loader.load();
         Stage.setTitle("Game Launcher");
         Stage.setScene(new Scene(root,700,700));
@@ -34,28 +34,5 @@ public class Main extends Application {
         launch();
     }
 
-    private void showDialog(String message, Stage stage) {
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(stage);
-        dialog.initStyle(StageStyle.UNDECORATED);
 
-        VBox dialogVBox = new VBox();
-        dialogVBox.setStyle("-fx-background-color: black; -fx-border-color: white; -fx-padding: 20;");
-        Label label = new Label(message);
-        label.setTextFill(Color.WHITE);
-        label.setFont(new Font(16));
-        label.setWrapText(true);
-
-        dialogVBox.getChildren().add(label);
-        Scene dialogScene = new Scene(dialogVBox, 400, 200);
-        dialogScene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                dialog.close();
-            }
-        });
-
-        dialog.setScene(dialogScene);
-        dialog.show();
-    }
 }

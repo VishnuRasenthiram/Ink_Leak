@@ -18,7 +18,7 @@ public class Poing extends Pouvoirs {
     public void déplacement(String déplacementDirection) {
         super.setPosition();
         setEstEnVie(true);
-        super.setOrientationProperty(déplacementDirection);
+        super.setOrientation(déplacementDirection);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
                     if(this.getEstEnVie()) {

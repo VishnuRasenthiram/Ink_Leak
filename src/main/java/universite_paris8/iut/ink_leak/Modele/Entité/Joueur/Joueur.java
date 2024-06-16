@@ -13,8 +13,6 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 public class Joueur extends Entité {
 
     private Timeline timeline;
@@ -89,7 +87,6 @@ public class Joueur extends Entité {
 
 
     public void déplacement(String direction) {
-        try {
 
             double vitesseJoueur = super.getVitesse_entite()-0.2;
             setMovementState(Joueur.MovementState.WALK);
@@ -104,7 +101,6 @@ public class Joueur extends Entité {
                     double y = super.getPosY();
                     switch (direction) {
                         case "N":
-                            super.setOrientationProperty("N");
                             if (super.peutAller(x, y - vitesseJoueur, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x,y - vitesseJoueur) == 1) {
                                     Timeline timeline = new Timeline();
@@ -131,7 +127,6 @@ public class Joueur extends Entité {
                             }
                             break;
                         case "S":
-                            super.setOrientationProperty("S");
                             if (super.peutAller(x, y + vitesseJoueur, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x,y + vitesseJoueur) == 1) {
                                     Timeline timeline = new Timeline();
@@ -160,7 +155,6 @@ public class Joueur extends Entité {
                             }
                             break;
                         case "O":
-                            super.setOrientationProperty("O");
                             if (super.peutAller(x - vitesseJoueur, y, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x - vitesseJoueur, y) == 1) {
                                     Timeline timeline = new Timeline();
@@ -191,7 +185,6 @@ public class Joueur extends Entité {
                             }
                             break;
                         case "E":
-                            super.setOrientationProperty("E");
                             if (super.peutAller(x + vitesseJoueur, y, super.getMap())) {
                                 if (super.verifierInteractionEnFace(x + vitesseJoueur, y) == 1) {
                                     Timeline timeline = new Timeline();
@@ -219,14 +212,16 @@ public class Joueur extends Entité {
                                 }
                             }
                             break;
+
+
                     }
+                    super.setOrientation(direction);
                 });
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+
+
     }
 
     public void stop() {
@@ -287,6 +282,10 @@ public class Joueur extends Entité {
     }
     public void ajoutPouvoir(Pouvoirs p){
         listePouvoirs.add(p);
+    }
+
+    public String getOrientation(){
+        return super.getOrientation();
     }
 
 }

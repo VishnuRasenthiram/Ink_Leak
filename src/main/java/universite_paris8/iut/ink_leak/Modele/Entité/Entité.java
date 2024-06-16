@@ -190,8 +190,8 @@ public abstract class Entité {
         return orientationProperty;
     }
 
-    public void setOrientationProperty(String orientationProperty) {
-        this.orientationProperty.set(orientationProperty);
+    public void setOrientation(String orientation) {
+        this.orientationProperty.setValue(orientation);
     }
 
     public void setPosXProperty(double posXProperty) {

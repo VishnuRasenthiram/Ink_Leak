@@ -18,7 +18,7 @@ public class AttaqueDeBase extends Pouvoirs{
         double x = super.getPosX();
         double y = super.getPosY();
         int vitesse_joueur = super.getVitesse_entite();
-        super.setOrientationProperty(déplacementDirection);
+        super.setOrientation(déplacementDirection);
         switch (déplacementDirection) {
             case "N":
                 if (super.peutAller(x, y - vitesse_joueur, super.getMap())) {

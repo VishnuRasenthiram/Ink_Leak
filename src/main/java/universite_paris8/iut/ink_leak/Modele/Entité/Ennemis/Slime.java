@@ -36,14 +36,14 @@ public class Slime extends Entité {
                         case 0:
                             if (super.peutAller(x, y - super.getVitesse_entite(), super.getMap())) {
                                 super.setPosYProperty(y - super.getVitesse_entite());
-                                super.setOrientationProperty("S");
+                                super.setOrientation("S");
 
                             }
                             break;
                         case 1:
                             if (super.peutAller(x, y + super.getVitesse_entite(), super.getMap())) {
                                 super.setPosYProperty(y + super.getVitesse_entite());
-                                super.setOrientationProperty("N");
+                                super.setOrientation("N");
 
                             }
                             break;
@@ -51,14 +51,14 @@ public class Slime extends Entité {
 
                             if (super.peutAller(x - super.getVitesse_entite(), y, super.getMap())) {
                                 super.setPosXProperty(x - super.getVitesse_entite());
-                                super.setOrientationProperty("O");
+                                super.setOrientation("O");
 
                             }
                             break;
                         case 3:
                             if (super.peutAller(x + super.getVitesse_entite(), y, super.getMap())) {
                                 super.setPosXProperty(x + super.getVitesse_entite());
-                                super.setOrientationProperty("E");
+                                super.setOrientation("E");
                             }
                             break;
                         default:

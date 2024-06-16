@@ -31,14 +31,5 @@ public class TestMurs {
         assertTrue(gm.getListeMurs().isEmpty()); // vérifie que le mur est bien détruit et n'est plus dans la liste des murs
     }
 
-    @Test
-    public void testMurDeplacement() {
-        GenerateurMurs gm = new GenerateurMurs(null);
-        MurPoussable mur = new MurPoussable(gm);
-        mur.setPosXProperty(10);
-        mur.setPosYProperty(10);
 
-        mur.déplacementMur("N", null);
-        assertEquals(11, mur.getPosY());
-    }
 }

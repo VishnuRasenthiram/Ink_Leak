@@ -97,6 +97,8 @@ public class Controller implements Initializable {
     private VueMap vueMap;
     private VueTexte vT;
 
+    private ListeEnnemieObs listenerEnnemis;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         jeuFini = false;
@@ -130,7 +132,7 @@ public class Controller implements Initializable {
                 ink.walkAnimation(joueur);
             }
         });
-        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map,jeuFini);
+        listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map,jeuFini);
 
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         Abomination Abomination = new Abomination(generateurEnnemis,map, joueur);
@@ -288,7 +290,10 @@ public class Controller implements Initializable {
                     double x = this.joueur.getPosX();
                     double y = this.joueur.getPosY();
                     int interaction = joueur.verifierInteractionEnFace(x, y);
-                    env.action(temps);
+                    if(!listenerEnnemis.getJeuFini()){
+                        env.action(temps);
+                    }
+
                     //gestion changement de map
 
                     /*
@@ -317,7 +322,8 @@ public class Controller implements Initializable {
                         vueMap.initMap(map, joueur);
                     }
 
-                    if(jeuFini){
+                    if(listenerEnnemis.getJeuFini()){
+                        joueur.setBougable(false);
                         afficherFin();
                     }
 

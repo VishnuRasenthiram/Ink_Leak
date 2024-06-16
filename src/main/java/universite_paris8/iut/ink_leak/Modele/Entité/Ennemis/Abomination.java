@@ -67,7 +67,7 @@ public class Abomination extends Entité {
     }
 
     public void déplacement(String direction) {
-        return;
+
     }
 
     public void setPhaseProperty(int phase) {

@@ -56,7 +56,7 @@ public class GenerateurEnnemis {
 
                 } else if (mob instanceof Abomination) {
                     int startX = mob.coorDansLeTableauX(mob.getPosX()+128);
-                    int startY = mob.coorDansLeTableauY(mob.getPosY()+100);
+                    int startY = mob.coorDansLeTableauY(mob.getPosY()+150);
                     int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
                     int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+16);
 
@@ -64,7 +64,7 @@ public class GenerateurEnnemis {
 
 
                     if (path != null && !path.isEmpty()) {
-                        if (path.size() > 5){
+                        if (path.size() > 6){
                             ((Abomination) mob).attaque_proche();
                         } else {
                             ((Abomination) mob).attaque_loin();

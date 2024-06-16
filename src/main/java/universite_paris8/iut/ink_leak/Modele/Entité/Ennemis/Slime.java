@@ -69,9 +69,7 @@ public class Slime extends Entité {
     }
 
     @Override
-    public void gagner_vie(int nb_vie_gagnee) {
-        System.out.println("aaaa");
-    }
+    public void gagner_vie(int nb_vie_gagnee) { System.out.println("aaaa"); }
 }
 
 

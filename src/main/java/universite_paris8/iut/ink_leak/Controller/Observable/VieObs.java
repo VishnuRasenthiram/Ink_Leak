@@ -1,13 +1,12 @@
 package universite_paris8.iut.ink_leak.Controller.Observable;
+
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -47,7 +46,7 @@ public class VieObs implements ChangeListener<Number> {
 
         }
 
-        else { new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/regen.wav", 1.0f, 0);}
+        else if ((int)nouv > (int)old) { new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/regen.wav", 1.0f, 0);}
 
         imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/health/health_"+ entité.getVie_entiteProperty().getValue()+".png").toURI().toString()));
 

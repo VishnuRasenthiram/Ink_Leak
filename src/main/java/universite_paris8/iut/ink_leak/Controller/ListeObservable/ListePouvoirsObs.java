@@ -8,8 +8,8 @@ import universite_paris8.iut.ink_leak.Vue.VueEntité.VuePouvoirs.VuePouvoirs;
 
 public class ListePouvoirsObs implements ListChangeListener<Pouvoirs> {
 
-
     private VuePouvoirs vP;
+
     public ListePouvoirsObs(Pane interfacePane, Joueur j){
         vP= new VuePouvoirs(interfacePane);
         vP.créeSpriteListeAttaque(j);

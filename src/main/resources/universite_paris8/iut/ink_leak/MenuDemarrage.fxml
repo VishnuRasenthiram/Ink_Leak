@@ -7,11 +7,11 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPaneDebut" prefHeight="700.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.ink_leak.Controller.LaunchController">
+<BorderPane fx:id="borderPaneDebut" prefHeight="700.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.ink_leak.Controller.ControllerMenuDemarrage">
 
     <center>
 
-        <Button fx:id="button" onAction="#startGame" prefHeight="67.0" prefWidth="195.0" styleClass="root" text="Démarrer la partie" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+        <Button fx:id="button" onAction="#debutJeu" prefHeight="67.0" prefWidth="195.0" styleClass="root" text="Démarrer la partie" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="Ink Free" size="20.0" />
          </font>

@@ -9,13 +9,11 @@ public abstract class VueEntite {
 
     private Pane mainPane;
 
-
     public VueEntite(Pane mainPane){
         this.mainPane=mainPane;
-
     }
 
-    public abstract void créeSprite(Entité entité);
+
     public File orientationToFile(String orientation, Entité entité, String action){
         String nom = entité.getNom_entite().replaceAll("\\d","");
         switch (orientation){
@@ -53,6 +51,8 @@ public abstract class VueEntite {
 
         return new File(basePath + nom+"_"+action.toLowerCase()+"_" + orientation + "_" + nFrame + ".png");
     }
+
+    public abstract void créeSprite(Entité entité);
 
     public Pane getMainPane() {
         return mainPane;

@@ -18,13 +18,7 @@ public class VueAttaque {
         this.joueur = joueur;
 
     }
-    public Pane getMainPane() {
-        return mainPane;
-    }
 
-    public Joueur getJoueur() {
-        return joueur;
-    }
 
     public void afficheAttaque(Pouvoirs pouvoirs) {
         if(pouvoirs instanceof AttaqueDeBase){
@@ -56,5 +50,13 @@ public class VueAttaque {
 
         }
         mainPane.getChildren().removeAll(nodesToRemove);
+    }
+
+    public Pane getMainPane() {
+        return mainPane;
+    }
+
+    public Joueur getJoueur() {
+        return joueur;
     }
 }

@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele;
 
 public class Position {
+
     private double x;
     private double y;
 

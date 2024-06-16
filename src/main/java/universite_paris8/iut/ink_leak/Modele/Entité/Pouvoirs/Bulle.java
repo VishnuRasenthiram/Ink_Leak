@@ -4,32 +4,19 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Bulle extends Pouvoirs{
 
-        private int portée;
-
-        public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-
-            super("bulle", 1, 32, 32, 3,true, map, generateurEnnemis,joueur);
-            this.portée = 12;
-
-        }
-
-        public int getPortée() {
-            return portée;
-        }
-
-        public void setPortée(int portée) {
-            this.portée = portée;
-        }
-
+    public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
+        super("bulle", 1, 32, 32, 3,true, map, generateurEnnemis,joueur);
+    }
 
     @Override
     public void déplacement(String déplacementDirection) {
         super.setPosition();
+        super.setOrientationProperty(déplacementDirection);
         setEstEnVie(true);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), ev -> {
@@ -68,12 +55,15 @@ public class Bulle extends Pouvoirs{
 
                             }
                         }
+
                     }})
         );
 
         timeline.setCycleCount(30);
         timeline.play();
+
         timeline.setOnFinished(e -> {
+            super.attaque();
             setEstEnVie(false);
         });
     }

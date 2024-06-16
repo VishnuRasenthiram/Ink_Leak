@@ -1,27 +1,33 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.*;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Entité {
+
     private double largeur;
     private double longueur;
     private String nom_entite;
-    private IntegerProperty vie_entiteProperty;
-    private StringProperty orientationProperty;
     private int attaque_entite;
     private int vitesse_entite;
     private long invincibilite;
     private long dernier_degat;
+
+    private IntegerProperty vie_entiteProperty;
+    private StringProperty orientationProperty;
+
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
+
     private Map map;
+
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
     private GenerateurMurs generateurMurs;
+
     private final ObjectProperty<MovementState> movementStateProperty;
 
     public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, GenerateurMurs generateurMurs) {
@@ -48,18 +54,11 @@ public abstract class Entité {
         this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets,null);
 
     }
-
-
     public enum MovementState {
         IDLE,
         WALK,
     }
-    public ObjectProperty<MovementState> getMovementStateProperty() {
-        return movementStateProperty;
-    }
-    public void setMovementState(MovementState movementState) {
-        movementStateProperty.set(movementState);
-    }
+
     public boolean peutAller(double x, double y, Map map) {
 
         if (!estDansMap(x, y,  map)) {
@@ -84,25 +83,34 @@ public abstract class Entité {
         return true;
     }
     public int verifierInteractionEnFace(double x, double y) {
-        if(verifCaseSurCoord(22,x,y)){
-            return 22;
-        } else if(verifCaseSurCoord(6,x,y)){
-            return 6;
-        }else if(verifCaseSurCoord(2,x,y)){
-            return 2;
-        }else if(verifCaseSurCoord(1,x,y)){
+        if(verifCaseSurCoord(1,x,y)){
             return 1;
+        }else if(verifCaseSurCoord(2,x,y)) {
+            return 2;
+        }else if(verifCaseSurCoord(6,x,y)){
+                return 6;
+        }else if(verifCaseSurCoord(22,x,y)){
+            return 22;
+        } else if(verifCaseSurCoord(24,x,y)){
+            return 24;
+        }else if(verifCaseSurCoord(25,x,y)){
+            return 25;
+        }else if(verifCaseSurCoord(26,x,y)){
+            return 26;
+        } else if (verifCaseSurCoord(23,x,y)) {
+            return 23;
         }
+
         return 0;
     }
     private boolean verifCaseSurCoord(int cases, double x, double y) {
-        x = x +2;
+        x = x +10;
         int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
-        x = x -4;
+        x = x -20;
         int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
-        y = y + 3;
+        y = y +10;
         int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
-        y = y -6;
+        y = y -20;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
 
@@ -132,10 +140,6 @@ public abstract class Entité {
                 y<(map.getMap().length*32)-32);
     }
 
-
-    public abstract void attaque();
-    public abstract void déplacement(String déplacementDirection);
-
     public boolean enContact(Entité entite2) {
         for (int i = (int) getPosX(); i < (int) getPosX() + getLongueur(); i++) {
             for (int j = (int) getPosY(); j < (int) getPosY() + getLargeur(); j++) {
@@ -164,6 +168,9 @@ public abstract class Entité {
             this.dernier_degat = System.currentTimeMillis();
         }
     }
+
+    public abstract void attaque();
+    public abstract void déplacement(String déplacementDirection);
 
     public abstract void gagner_vie(int nb_vie_gagnee);
 
@@ -204,8 +211,23 @@ public abstract class Entité {
     }
 
     public void setEmplacement(int x , int y ){
-        setPosXProperty(x*32);
-        setPosYProperty(y*32);
+        if(x==19){
+            setPosXProperty((x*32)-2);
+        } else if (x==0) {
+            setPosXProperty((x*32)+2);
+        }
+        else {
+            setPosXProperty(x*32);
+        }
+        if(y==19){
+            setPosYProperty((y*32)-2);
+        } else if (y==0) {
+            setPosYProperty((y*32)+2);
+        }
+        else {
+            setPosYProperty(y*32);
+        }
+
     }
 
     public int getVitesse_entite() {
@@ -263,5 +285,27 @@ public abstract class Entité {
 
     public GenerateurMurs getGenerateurMurs() {
         return generateurMurs;
+    }
+
+    public long getDernier_degat() {
+        return dernier_degat;
+    }
+
+    public void setDernier_degat(long dernier_degat) {
+        this.dernier_degat = dernier_degat;
+    }
+
+    public long getInvincibilite() {
+        return invincibilite;
+    }
+
+    public void setInvincibilite(long invincibilite) {
+        this.invincibilite = invincibilite;
+    }
+    public ObjectProperty<MovementState> getMovementStateProperty() {
+        return movementStateProperty;
+    }
+    public void setMovementState(MovementState movementState) {
+        movementStateProperty.set(movementState);
     }
 }

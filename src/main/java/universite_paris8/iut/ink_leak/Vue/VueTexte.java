@@ -14,12 +14,10 @@ public class VueTexte {
         this.env = env;
         this.txt = txt;
         this.mainPane = mainPane;
-
         this.mainPane.getChildren().add(txt);
     }
 
     public boolean verifierPositionJoueur(int x, int y) {
-
         return env.getJoueur().getPosX() == x && env.getJoueur().getPosY() == y;
     }
 

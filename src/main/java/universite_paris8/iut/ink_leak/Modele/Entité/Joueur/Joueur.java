@@ -7,7 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -15,29 +16,32 @@ import javafx.util.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class Joueur extends Entité {
-        private static ScheduledExecutorService executorService;
-        private ObservableList<Pouvoirs> listePouvoirs;
-        private IntegerProperty pouvoirEnCoursProperty;
-        private boolean bougable;
-        private IntegerProperty oppacitéProperty;
-        private IntegerProperty indicePouvoirEnCoursProperty;
-        private Bulle bulle;
-        private Poing poing;
-        private Langue langue;
-        private AttaqueDeBase attaqueDeBase;
-        private Timeline timeline;
 
-        public Joueur(String nom_joueur,Map map, GenerateurEnnemis generateurEnnemis) {
-            super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,null);
-            this.listePouvoirs= FXCollections.observableArrayList();
-            this.bougable = true;
-            this.oppacitéProperty = new SimpleIntegerProperty(1);
-            attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getGenerateurEnnemis(),this);
-            bulle =new Bulle( super.getMap(),super.getGenerateurEnnemis(),this);
-            poing = new Poing(super.getMap(), super.getGenerateurEnnemis(), this);
-            langue = new Langue(super.getMap(), super.getGenerateurEnnemis(), this);
-            this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
-        }
+    private Timeline timeline;
+
+    private boolean bougable;
+
+    private ObservableList<Pouvoirs> listePouvoirs;
+    private IntegerProperty indicePouvoirEnCoursProperty;
+    private IntegerProperty oppacitéProperty;
+
+    private Bulle bulle;
+    private Poing poing;
+    private Langue langue;
+    private AttaqueDeBase attaqueDeBase;
+
+
+    public Joueur(String nom_joueur, Map map, GenerateurEnnemis generateurEnnemis,GenerateurMurs generateurMurs ) {
+        super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
+        this.listePouvoirs= FXCollections.observableArrayList();
+        this.bougable = true;
+        this.oppacitéProperty = new SimpleIntegerProperty(1);
+        attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getGenerateurEnnemis(),this);
+        bulle =new Bulle( super.getMap(),super.getGenerateurEnnemis(),this);
+        poing = new Poing(super.getMap(), super.getGenerateurEnnemis(), this);
+        langue = new Langue(super.getMap(), super.getGenerateurEnnemis(), this);
+        this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
+    }
 
     public void setPouvoir(int a){
             if(a>0){
@@ -66,6 +70,7 @@ public class Joueur extends Entité {
 
     @Override
     public void attaque() {
+            attaqueDeBase.setEstEnVie(true);
         attaqueDeBase.déplacement(getOrientation());
     }
 

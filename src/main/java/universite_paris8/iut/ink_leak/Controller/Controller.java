@@ -210,7 +210,6 @@ public class Controller implements Initializable {
         tempsEcoulé = 0;
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-        System.out.println("time line ");
         KeyFrame kf = new KeyFrame(
                 Duration.millis(17),
                 (ev -> {

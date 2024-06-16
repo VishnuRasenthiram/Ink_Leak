@@ -45,7 +45,7 @@ public class VueTexte {
                 break;
             case 3:
                 afficherTexteBulle();
-                if (verifierPositionJoueur(8, 8)) {
+                if (verifierPositionJoueur(7, 8)) {
                     this.txt.setVisible(true);
                 }
                 break;
@@ -55,11 +55,11 @@ public class VueTexte {
     }
 
     private void afficherTextePoing(){
-        this.txt.setText("Avec ces gros Poings de Liane, on ne pourrait pas détruire ces murs qui bloquent la sortie?!");
+        this.txt.setText("Avec ces gros Poings de Liane, on ne pourrait pas détruire ces murs qui bloquent la sortie?! Appuyez sur K pour l'activer");
     }
 
     private void afficherTexteBulle(){
-        this.txt.setText("Ces bulles devraient permettre de déplacer des caisses en bois !");
+        this.txt.setText("Ces bulles devraient permettre de déplacer des caisses en bois ! Appuyez sur A ou E pour choisir le pouvoir que vous voulez utiliser.");
 
     }
 

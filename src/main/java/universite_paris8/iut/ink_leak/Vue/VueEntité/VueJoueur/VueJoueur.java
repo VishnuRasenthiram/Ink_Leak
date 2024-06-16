@@ -20,18 +20,18 @@ import java.util.List;
 public class VueJoueur extends VueEntite {
     private Pane interfacePane;
     private Timeline animationTimeline;
-    private Timeline torcheTimeline;
     private Timeline punchTimeline;
 
     private Joueur joueur;
     private Pane Joueur;
     private int punchIndex = 0;
     private int walkIndex = 0;
-    private int torcheIndex = 0;
+
 
     public VueJoueur(Pane mainPane, Pane interfacePane){
         super(mainPane);
-        this.interfacePane = interfacePane;
+        this.interfacePane=interfacePane;
+
     }
 
     @Override
@@ -51,27 +51,6 @@ public class VueJoueur extends VueEntite {
 
         super.getMainPane().getChildren().add(Joueur);
 
-        ImageView Torche = new ImageView();
-        Torche.setFitHeight(24);
-        Torche.setFitWidth(24);
-        Torche.setId("torche");
-        Torche.translateXProperty().bind(Bindings.add(entité.posXProperty(), -4));
-        Torche.translateYProperty().bind(Bindings.add(entité.posYProperty(), 4));
-        interfacePane.getChildren().add(Torche);
-
-        torcheTimeline = new Timeline();
-        torcheTimeline.setCycleCount(Timeline.INDEFINITE);
-
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.12), e -> {
-            List<Image> images = getTorchesImages();
-            Torche.setImage(images.get(1));
-            torcheIndex = torcheIndex + 1;
-            if (torcheIndex >= images.size()) torcheIndex = 0;
-            Torche.setImage(images.get(torcheIndex));
-        });
-
-        torcheTimeline.getKeyFrames().add(keyFrame);
-        torcheTimeline.play();
 
     }
 

@@ -51,10 +51,10 @@ public class VueEnnemis extends VueEntite {
         vieRect.widthProperty().bind(entité.getVie_entiteProperty().multiply(32).divide(2));
         Rectangle.translateXProperty().bind(entité.posXProperty());
         Rectangle.translateYProperty().bind(entité.posYProperty());
-
+        Rectangle.getChildren().add(vieRect);
         super.getMainPane().getChildren().add(ennemis);
         super.getMainPane().getChildren().add(Rectangle);
-        Rectangle.getChildren().add(vieRect);
+
 
         entité.getVie_entiteProperty().addListener(new VieEnnemisObs(ennemis, entité, joueur,map));
     }

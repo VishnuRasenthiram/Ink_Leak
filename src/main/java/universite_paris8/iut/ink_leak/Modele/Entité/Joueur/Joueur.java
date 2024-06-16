@@ -30,7 +30,7 @@ public class Joueur extends Entité {
 
 
     public Joueur(String nom_joueur, Map map, GenerateurEnnemis generateurEnnemis,GenerateurMurs generateurMurs ) {
-        super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
+        super(nom_joueur,  1, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
         this.listePouvoirs= FXCollections.observableArrayList();
         this.bougable = true;
         this.oppacitéProperty = new SimpleIntegerProperty(1);

@@ -25,8 +25,8 @@ public class OrientationObs implements ChangeListener<String> {
         Pane p = (Pane) mainPane.lookup("#"+entité.getNom_entite());
         p.getChildren().remove(0);
         ImageView imageview= new ImageView();
-        imageview.setFitHeight(32);
-        imageview.setFitWidth(32);
+        imageview.setFitHeight(entité.getLargeur());
+        imageview.setFitWidth(entité.getLongueur());
         imageview.setImage(new Image(vE.orientationToFile(nouv,entité,"Idle").toURI().toString()));
         p.getChildren().add(imageview);
     }

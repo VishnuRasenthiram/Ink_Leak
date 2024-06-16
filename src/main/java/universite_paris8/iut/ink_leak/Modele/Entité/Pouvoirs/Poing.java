@@ -27,6 +27,8 @@ public class Poing extends Pouvoirs {
                                 sl.prendre_degat(super.getAttaque_entite());
                             }
                         }
+                        setEstEnVie(false);
+
 
                     }
                 })

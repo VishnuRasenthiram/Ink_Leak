@@ -1,8 +1,10 @@
 package universite_paris8.iut.ink_leak.Controller;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,11 +12,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeEnnemieObs;
 import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListeMursObs;
@@ -23,6 +30,7 @@ import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListePouvoirsOb
 import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
 import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.*;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Murs.Mur;
@@ -34,6 +42,7 @@ import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Vue.Musique;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueBoss;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -41,6 +50,8 @@ import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -56,8 +67,19 @@ public class Controller implements Initializable {
     private Environnement env;
     private Joueur joueur;
 
+    private DialogueController dialogueController;
+
     @FXML
     private Label txt;
+    private Label dialogueLabel;
+    @FXML
+    private Button optionButton1;
+    @FXML
+    private Button optionButton2;
+    @FXML
+    private Button optionButton3;
+    @FXML
+    private VBox QuizBox;
     @FXML
     private TilePane tuileMap;
     @FXML
@@ -107,12 +129,27 @@ public class Controller implements Initializable {
             } else {
                 ink.walkAnimation(joueur);
             }
-
         });
         ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
+
+        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
-        vT = new VueTexte(env, txt, mainPane);
-        mainPane.getChildren().get(mainPane.getChildren().indexOf(txt)).toFront();
+        Abomination Abomination = new Abomination(generateurEnnemis,map, joueur);
+        VueBoss VB = new VueBoss(mainPane, joueur, map);
+        Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
+            if (nouv.intValue() == 2) {
+                VB.créeAttaque1(Abomination);
+            } else {
+                VB.créeAttaque2(Abomination);
+                System.out.println("attaque loin");
+            }
+        });
+        generateurEnnemis.genererEnnemis(map,joueur, Abomination);
+
+        vT = new VueTexte(env, mainPane);
+        vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
+        vT.ajouterTexte("Vous avez trouvé un objet magique !", 400, 200, 120, 265, 1, 2);
+        vT.ajouterTexte("Les lumière on été cassé dans cette salle... attention des monstre ont peut-être tendu des pièges...", 400, 200, 120, 315, 1, 3);
 
         ListChangeListener<Pouvoirs> airpods = new ListePouvoirsObs(interfacePane, joueur);
         joueur.getListePouvoirs().addListener(airpods);
@@ -127,9 +164,36 @@ public class Controller implements Initializable {
         generateurMurs.getListeMurs().addListener(oreille);
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
+        Musique musique = new Musique();
+        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
+
+
+        /* FONCTIONNEL MAIS PAS IMPLEMENTE
+        dialogueController = new DialogueController(dialogueLabel, optionButton1, optionButton2, optionButton3);
+        dialogueController.initDialogueTree();
+        dialogueController.setInitialDialogueNode();
+        */
+
+
+    }
+
+    @FXML
+    private void handleOption1() {
+        dialogueController.handleOptionSelection(0);
 //        Musique musique = new Musique();
 //        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
 
+    }
+
+
+    @FXML
+    private void handleOption2() {
+        dialogueController.handleOptionSelection(1);
+    }
+
+    @FXML
+    private void handleOption3() {
+        dialogueController.handleOptionSelection(2);
     }
 
     private String currentDirection = null;
@@ -231,6 +295,17 @@ public class Controller implements Initializable {
                     env.action(temps);
                     //gestion changement de map
                     if (interaction == 22 || interaction == 6 || interaction == 24 || interaction == 25 || interaction == 26) {
+                    /*
+                    if (dialogueController.onTargetDialogueReached() == false){
+                        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+                        pause.setOnFinished(event -> {
+                            QuizBox.setVisible(false);
+                        });
+                        pause.play();
+                    }
+                    */
+                    if (interaction == 22 || interaction == 6 ||interaction == 24 || interaction == 25 || interaction == 26 ) {
+
 
                         env.changementDeMap(interaction);
                         vueMap.supprimerAffichageMap();
@@ -247,6 +322,10 @@ public class Controller implements Initializable {
                         vueMap.supprimerAffichageMap();
                         vueMap.initMap(map, joueur);
 
+
+                    if (temps == 1000000) {
+                        System.out.println("fini");
+                        gameLoop.stop();
                     }
 
                     if(jeuFini){

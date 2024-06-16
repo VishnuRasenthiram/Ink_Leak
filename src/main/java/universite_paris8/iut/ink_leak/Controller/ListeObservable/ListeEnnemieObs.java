@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Map;
@@ -29,7 +30,9 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
         while(change.next()){
             for(Entité ennemisAjouté: change.getAddedSubList()){
                 vueEnnemis.créeSprite(ennemisAjouté);
-                ennemisAjouté.getOrientationProperty().addListener(new OrientationObs(mainPane,vueEnnemis,ennemisAjouté));
+                if (!(ennemisAjouté instanceof Abomination)){
+                    ennemisAjouté.getOrientationProperty().addListener(new OrientationObs(mainPane,vueEnnemis,ennemisAjouté));
+                }
             }
 
             for(Entité ennemisEnlevé : change.getRemoved()){

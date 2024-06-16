@@ -72,7 +72,7 @@ public class AEtoile {
     }
 
     private static boolean estValide(int x, int y, int cols, int rows, int[][] grid) {
-        return (x >= 0 && x < cols && y >= 0 && y < rows && grid[y][x] == 0);
+        return (x >= 0 && x < cols && y >= 0 && y < rows && (grid[y][x] == 0 || grid[y][x] == 1));
     }
 
     private static List<Integer> reconstituerTrajet(Sommet sommet) {

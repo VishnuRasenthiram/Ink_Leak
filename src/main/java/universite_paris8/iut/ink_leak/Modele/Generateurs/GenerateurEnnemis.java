@@ -30,7 +30,6 @@ public class GenerateurEnnemis {
         ArrayList<Entité> listeMort= new ArrayList<>();
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
-
                 if (mob instanceof HeadLess) {
                 int startX = mob.coorDansLeTableauX(mob.getPosX());
                 int startY = mob.coorDansLeTableauY(mob.getPosY());
@@ -43,7 +42,6 @@ public class GenerateurEnnemis {
                     if (path != null && !path.isEmpty()) {
 
                         if (path.get(0) == 1) {
-
                             mob.déplacement("0");
                         } else if (path.get(0) == 2) {
                             mob.déplacement("1");
@@ -62,9 +60,8 @@ public class GenerateurEnnemis {
 
                     List<Integer> path = chercherChemin(map.getMap(), startX, startY, targetX, targetY);
 
-
                     if (path != null && !path.isEmpty()) {
-                        if (path.size() > 6){
+                        if (path.size() > 8){
                             ((Abomination) mob).attaque_proche();
                         } else {
                             ((Abomination) mob).attaque_loin();

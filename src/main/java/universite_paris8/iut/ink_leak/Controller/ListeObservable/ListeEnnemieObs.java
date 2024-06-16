@@ -48,6 +48,8 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
                         Node spriteVieEnnemi=this.mainPane.getChildren().get(i);
                         this.mainPane.getChildren().remove(spriteVieEnnemi);
                     }
+
+                }
                     if(ennemisEnlevé instanceof Abomination){
                         jeuFini=true;
                     }
@@ -57,4 +59,4 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
             }
         }
     }
-}
+

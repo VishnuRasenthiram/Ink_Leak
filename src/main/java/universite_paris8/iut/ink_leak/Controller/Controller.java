@@ -302,7 +302,6 @@ public class Controller implements Initializable {
                     */
                     if (interaction == 22 || interaction == 6 ||interaction == 24 || interaction == 25 || interaction == 26 ) {
 
-
                         env.changementDeMap(interaction);
                         vueMap.supprimerAffichageMap();
                         vueMap.initMap(map, joueur);

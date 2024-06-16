@@ -14,6 +14,7 @@ public class VueTexte {
         this.env = env;
         this.mainPane = mainPane;
         this.txt = new Label("Texte");
+        txt.setId("txt");
         this.mainPane.getChildren().add(txt);
     }
 

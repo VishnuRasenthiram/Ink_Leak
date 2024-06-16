@@ -140,7 +140,7 @@ public class Controller implements Initializable {
                 VB.créeAttaque1(Abomination);
             } else {
                 VB.créeAttaque2(Abomination);
-                System.out.println("attaque loin");
+
             }
         });
         generateurEnnemis.genererEnnemis(map,joueur, Abomination);
@@ -316,11 +316,6 @@ public class Controller implements Initializable {
                         }
                         vueMap.supprimerAffichageMap();
                         vueMap.initMap(map, joueur);
-                    }
-
-                    if (temps == 1000000) {
-                        System.out.println("fini");
-                        gameLoop.stop();
                     }
 
                     if(jeuFini){

@@ -32,9 +32,9 @@ public class Environnement {
             generateurObjets.genererObjets();
         }
 
-        if (temps % 100 == 0) {
+        if (temps % 200 == 0) {
             generateurEnnemis.genererEnnemis(map,joueur, null); }
-        if (temps % 2 == 0) {
+        if (temps % 10 == 0) {
             generateurEnnemis.activerMob(joueur, map);
         }
 

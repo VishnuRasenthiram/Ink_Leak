@@ -34,7 +34,6 @@ public class VueEnnemis extends VueEntite {
     public void créeSprite(Entité entité) {
         Pane ennemis = new Pane();
         ennemis.setId(entité.getNom_entite());
-        System.out.println(entité.getNom_entite());
         ImageView imageview = new ImageView();
         imageview.setFitWidth(entité.getLargeur());
         imageview.setFitWidth(entité.getLongueur());
@@ -53,7 +52,6 @@ public class VueEnnemis extends VueEntite {
             imageview.setImage(new Image(orientationToFile(entité.getOrientation(),entité,"Idle").toURI().toString()));
 
         }
-        System.out.println(imageview.getFitWidth());
         ennemis.getChildren().add(imageview);
 
         ennemis.translateXProperty().bind(entité.posXProperty());

@@ -61,7 +61,7 @@ public class GenerateurEnnemis {
                     int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+16);
 
                     List<Integer> path = chercherChemin(map.getMap(), startX, startY, targetX, targetY);
-                    System.out.println(path.size());
+
 
                     if (path != null && !path.isEmpty()) {
                         if (path.size() > 5){

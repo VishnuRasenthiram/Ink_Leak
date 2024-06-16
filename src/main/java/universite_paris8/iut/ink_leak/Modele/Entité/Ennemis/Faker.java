@@ -27,7 +27,7 @@ public class Faker extends Entité {
 
     @Override
     public void gagner_vie(int nb_vie_gagnee) {
-        System.out.println("aaaa");
+
     }
 }
 

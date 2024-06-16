@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import universite_paris8.iut.ink_leak.Vue.Musique;
 
 public class ControllerMenuDemarrage {
 
@@ -31,6 +32,7 @@ public class ControllerMenuDemarrage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void showDialog(String message, Stage stage) {

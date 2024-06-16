@@ -9,9 +9,11 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEntite;
 
 public class OrientationObs implements ChangeListener<String> {
+
     private Pane mainPane;
     private Entité entité;
     private VueEntite vE;
+
     public OrientationObs(Pane mainPane, VueEntite vE, Entité entité) {
         this.mainPane = mainPane;
         this.entité=entité;

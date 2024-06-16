@@ -15,6 +15,7 @@ public class VueEnnemis extends VueEntite {
 
     private Joueur joueur;
     private Map map;
+
     public VueEnnemis(Pane mainPane, Joueur joueur, Map map) {
         super(mainPane);
         this.joueur = joueur;
@@ -57,7 +58,5 @@ public class VueEnnemis extends VueEntite {
 
         entité.getVie_entiteProperty().addListener(new VieEnnemisObs(ennemis, entité, joueur,map));
     }
-
-
 
 }

@@ -1,12 +1,14 @@
-package universite_paris8.iut.ink_leak.Modele;
+package universite_paris8.iut.ink_leak.Modele.Generateurs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import universite_paris8.iut.ink_leak.Modele.Dijkstra;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.HeadLess;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Puddle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Faker;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,11 @@ import java.util.Random;
 
 
 public class GenerateurEnnemis {
-    private ObservableList<Entité> listeEntite ; // Liste pour stocker tous les slimes
+
+    private ObservableList<Entité> listeEntite;
+
     public GenerateurEnnemis(){
         listeEntite= FXCollections.observableArrayList();
-
     }
 
     public void activerMob(Joueur joueur, Map map){
@@ -32,6 +35,10 @@ public class GenerateurEnnemis {
                     int startY = mob.coorDansLeTableauY(mob.getPosY());
                     int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
                     int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 4);
+                int startX = mob.coorDansLeTableauX(mob.getPosX());
+                int startY = mob.coorDansLeTableauY(mob.getPosY());
+                int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
+                int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+16);
 
                     List<Integer> path = Dijkstra.dijkstraAstar(map.getMap(), startX, startY, targetX, targetY);
 

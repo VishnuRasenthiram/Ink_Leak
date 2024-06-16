@@ -5,6 +5,7 @@ module universite_paris8.iut.ink_leak {
     requires org.controlsfx.controls;
     requires java.sql;
     requires java.desktop;
+    requires junit;
 
     opens universite_paris8.iut.ink_leak to javafx.fxml;
     exports universite_paris8.iut.ink_leak;
@@ -16,4 +17,5 @@ module universite_paris8.iut.ink_leak {
     opens universite_paris8.iut.ink_leak.Controller.ListeObservable to javafx.fxml;
     exports universite_paris8.iut.ink_leak.Controller.Observable;
     opens universite_paris8.iut.ink_leak.Controller.Observable to javafx.fxml;
+    exports universite_paris8.iut.ink_leak.Modele.TestJunit to junit;
 }

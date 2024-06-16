@@ -14,6 +14,7 @@ public class VueBulle extends VueAttaque{
     public VueBulle(Pane mainPane, Joueur joueur) {
         super(mainPane, joueur);
     }
+
     public void afficheAttaqueBulle( Bulle bulle) {
 
         Pane attaquePane=new Pane();
@@ -30,9 +31,7 @@ public class VueBulle extends VueAttaque{
         attaquePane.setId("attaque");
         super.getMainPane().getChildren().add(attaquePane);
 
-
         bulle.getEstEnVieProperty().addListener(new PouvoirObs(this));
-
 
     }
 }

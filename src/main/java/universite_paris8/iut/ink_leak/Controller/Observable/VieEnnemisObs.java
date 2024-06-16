@@ -18,29 +18,25 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public class VieEnnemisObs implements ChangeListener<Number> {
 
     public Entité entité;
-
-
     public Pane ennemisView;
     public Joueur joueur;
     private Map map;
-    public VieEnnemisObs(Pane ennemis, Entité entité, Joueur joueur, Map map) {
+    private ColorAdjust colorAdjust;
 
+    public VieEnnemisObs(Pane ennemis, Entité entité, Joueur joueur, Map map) {
         this.entité = entité;
         this.ennemisView = ennemis;
         this.joueur = joueur;
         this.map = map;
-
-
     }
-    private ColorAdjust colorAdjust;
 
     @Override
     public void changed(ObservableValue<? extends Number> observable, Number old, Number nouv) {
         colorAdjust = new ColorAdjust();
 
         if ((int) nouv < (int) old) {
-                String direction = joueur.getOrientation().toString();
 
+                String direction = joueur.getOrientation().toString();
 
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);

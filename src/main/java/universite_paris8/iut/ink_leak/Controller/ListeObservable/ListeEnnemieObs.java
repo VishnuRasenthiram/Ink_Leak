@@ -31,16 +31,17 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
                 vueEnnemis.créeSprite(ennemisAjouté);
                 ennemisAjouté.getOrientationProperty().addListener(new OrientationObs(mainPane,vueEnnemis,ennemisAjouté));
             }
+
             for(Entité ennemisEnlevé : change.getRemoved()){
                 for(int i= this.mainPane.getChildren().size()-1; i >= 0; i--){
 
-
                     if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite())){
-                        Node nod= this.mainPane.getChildren().get(i);
-                        this.mainPane.getChildren().remove(nod);
-                    } else if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite()+"vie")){
-                        Node nod=this.mainPane.getChildren().get(i);
-                        this.mainPane.getChildren().remove(nod);
+                        Node spriteEnnemi=this.mainPane.getChildren().get(i);
+                        this.mainPane.getChildren().remove(spriteEnnemi);
+                    }
+                    else if(mainPane.getChildren().get(i).getId().equals(ennemisEnlevé.getNom_entite()+"vie")){
+                        Node spriteVieEnnemi=this.mainPane.getChildren().get(i);
+                        this.mainPane.getChildren().remove(spriteVieEnnemi);
                     }
 
                 }

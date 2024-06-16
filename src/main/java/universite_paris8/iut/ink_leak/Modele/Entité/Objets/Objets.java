@@ -4,13 +4,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.GenerateurObjets;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Objets extends Entité {
+
     private Joueur joueur;
     private IntegerProperty nbFoisRecuperable;
+
     public Objets(String idPouvoir, Map map, GenerateurObjets generateurObjets, Joueur joueur) {
         super(idPouvoir, map, generateurObjets);
         this.joueur = joueur;
@@ -18,22 +19,14 @@ public abstract class Objets extends Entité {
 
 
     }
-    @Override
-    public void attaque() {}
-
     public abstract void action();
 
     @Override
-    public void gagner_vie(int nb_vie_gagnee) {
-
-    }
-
+    public void attaque() {}
     @Override
-    public void déplacement(String déplacementDirection) {
-
-    }
-
-
+    public void gagner_vie(int nb_vie_gagnee) {}
+    @Override
+    public void déplacement(String déplacementDirection) {}
 
     public Joueur getJoueur() { return this.joueur; }
 

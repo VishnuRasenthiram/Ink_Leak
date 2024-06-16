@@ -1,7 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 
@@ -11,13 +11,10 @@ public class HeadLess extends Entité {
 
     public HeadLess(GenerateurEnnemis generateurEnnemis, Map map, Joueur joueur){
 
-        super("Headless"+cpt, 3, 1,32, 32,2,200,map, generateurEnnemis,null);
+        super("Headless"+cpt, 2, 1,32, 32,2,200,map, generateurEnnemis,null, null);
         this.joueur = joueur;
         cpt++;
-
     }
-
-
 
     @Override
     public void attaque() {
@@ -25,7 +22,6 @@ public class HeadLess extends Entité {
             joueur.prendre_degat(1);
         }
     }
-
 
 
 

@@ -55,7 +55,7 @@ public class GenerateurObjets {
         switch (map.getNumMap()){
 
 
-            case 2:
+            case 1:
                 if(objetPoing.getNbFoisRecuperable() !=0){
                     objetPoing.setEmplacement(1, 0);
                     listeObjets.add(objetPoing);
@@ -75,7 +75,10 @@ public class GenerateurObjets {
                 break;
             case 0:
 
-
+                if(objetPoing.getNbFoisRecuperable() !=0){
+                    objetPoing.setEmplacement(1, 6);
+                    listeObjets.add(objetPoing);
+                }
                 if(tube.getNbFoisRecuperable() !=0) {
                     tube.setEmplacement(19,19);
                     listeObjets.add(tube);

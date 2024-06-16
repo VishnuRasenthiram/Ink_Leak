@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class TestsJoueur {
@@ -41,6 +44,27 @@ public class TestsJoueur {
         j.prendre_degat(1);
         assertEquals(0,j.getVie());
 
+    }
+    @Test
+    public void testSetPouvoir() {
+        Map map = new Map();
+        map.setMap(0);
+        Joueur j = new Joueur("s",map, null ,null);
+        j.ajoutPouvoir(new Bulle(map, null, j));
+        j.ajoutPouvoir(new Poing(map, null, j));
+        j.ajoutPouvoir(new Langue(map, null, j));
+
+        j.setPouvoir(1);
+        assertEquals(1, j.getIndicePouvoirEnCours());
+
+        j.setPouvoir(1);
+        assertEquals(2, j.getIndicePouvoirEnCours());
+
+        j.setPouvoir(1);
+        assertEquals(0, j.getIndicePouvoirEnCours());
+
+        j.setPouvoir(-1);
+        assertEquals(2, j.getIndicePouvoirEnCours());
     }
 
 }

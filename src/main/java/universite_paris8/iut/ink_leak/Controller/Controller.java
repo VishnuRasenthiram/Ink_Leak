@@ -56,7 +56,6 @@ public class Controller implements Initializable {
     private Joueur joueur;
 
     private VueTexte vT;
-    private Joueur joueur;
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
     private VueJoueur ink;
@@ -83,13 +82,8 @@ public class Controller implements Initializable {
     @FXML
     private Pane interfacePane;
 
-    private GenerateurEnnemis generateurEnnemis;
-    private GenerateurObjets generateurObjets;
     private GenerateurMurs generateurMurs;
 
-    private VueJoueur ink;
-    private VueMap vueMap;
-    private VueTexte vT;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

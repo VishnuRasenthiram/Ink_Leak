@@ -15,6 +15,7 @@ public abstract class Entité {
     private int vitesse_entite;
     private long invincibilite;
     private long dernier_degat;
+    private int maxVie;
 
     private IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
@@ -22,7 +23,6 @@ public abstract class Entité {
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
 
-    private int maxVie;
     private Map map;
 
     private GenerateurEnnemis generateurEnnemis;
@@ -48,7 +48,7 @@ public abstract class Entité {
         this.generateurObjets = generateurObjets;
         this.generateurMurs = generateurMurs;
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
-        this.maxVie = vie_entiteProperty.getValue();
+        this.maxVie = vie_entite;
 
     }
 
@@ -90,7 +90,7 @@ public abstract class Entité {
         }else if(verifCaseSurCoord(2,x,y)) {
             return 2;
         }else if(verifCaseSurCoord(6,x,y)){
-                return 6;
+            return 6;
         }else if(verifCaseSurCoord(22,x,y)){
             return 22;
         } else if(verifCaseSurCoord(24,x,y)){
@@ -137,57 +137,9 @@ public abstract class Entité {
 
         return (x>0 && y>0)
                 &&
-               (x<(map.getMap().length*32)-32
-                &&
-                y<(map.getMap().length*32)-32);
-    }
-
-
-    public abstract void attaque();
-
-    public void déplacement(String déplacementDirection) {
-
-        double x = getPosX();
-        double y = getPosY();
-        //transformer déplacement en int pour le switch
-        int direction = Integer.parseInt(déplacementDirection);
-        if (direction == 4){
-            direction = (int) (Math.random() * 9);
-        }
-        switch (direction) {
-            case 0:
-                if (peutAller(x, y - getVitesse_entite(), getMap())) {
-                    setPosYProperty(y - getVitesse_entite());
-                    setOrientationProperty("S");
-
-                }
-                break;
-            case 1:
-                if (peutAller(x, y + getVitesse_entite(), getMap())) {
-                    setPosYProperty(y + getVitesse_entite());
-                    setOrientationProperty("N");
-
-                }
-                break;
-            case 2:
-
-                if (peutAller(x - getVitesse_entite(), y, getMap())) {
-                    setPosXProperty(x - getVitesse_entite());
-                    setOrientationProperty("O");
-
-                }
-                break;
-            case 3:
-                if (peutAller(x + getVitesse_entite(), y, getMap())) {
-                    setPosXProperty(x + getVitesse_entite());
-                    setOrientationProperty("E");
-                }
-                break;
-            default:
-                break;
-
-        }
-        attaque();
+                (x<(map.getMap().length*32)-32
+                        &&
+                        y<(map.getMap().length*32)-32);
     }
 
     public boolean enContact(Entité entite2) {
@@ -220,7 +172,51 @@ public abstract class Entité {
     }
 
     public abstract void attaque();
-    public abstract void déplacement(String déplacementDirection);
+    public void déplacement(String déplacementDirection){
+
+            double x = getPosX();
+            double y = getPosY();
+            //transformer déplacement en int pour le switch
+            int direction = Integer.parseInt(déplacementDirection);
+            if (direction == 4){
+                direction = (int) (Math.random() * 9);
+            }
+            switch (direction) {
+                case 0:
+                    if (peutAller(x, y - getVitesse_entite(), getMap())) {
+                        setPosYProperty(y - getVitesse_entite());
+                        setOrientation("S");
+
+                    }
+                    break;
+                case 1:
+                    if (peutAller(x, y + getVitesse_entite(), getMap())) {
+                        setPosYProperty(y + getVitesse_entite());
+                        setOrientation("N");
+
+                    }
+                    break;
+                case 2:
+
+                    if (peutAller(x - getVitesse_entite(), y, getMap())) {
+                        setPosXProperty(x - getVitesse_entite());
+                        setOrientation("O");
+
+                    }
+                    break;
+                case 3:
+                    if (peutAller(x + getVitesse_entite(), y, getMap())) {
+                        setPosXProperty(x + getVitesse_entite());
+                        setOrientation("E");
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+            attaque();
+        }
+
 
     public abstract void gagner_vie(int nb_vie_gagnee);
 
@@ -358,7 +354,8 @@ public abstract class Entité {
     public void setMovementState(MovementState movementState) {
         movementStateProperty.set(movementState);
     }
-    public int getmaxVie(){
+    public int getmaxVie() {
         return maxVie;
     }
+
 }

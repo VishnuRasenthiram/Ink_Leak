@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Main;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import javafx.animation.KeyFrame;
@@ -40,7 +41,13 @@ public class VieEnnemisObs implements ChangeListener<Number> {
 
                 colorAdjust.setBrightness(5);
                 ennemisView.setEffect(colorAdjust);
-
+                if (entité instanceof Abomination){
+                    colorAdjust.setBrightness(10);
+                    PauseTransition pause = new PauseTransition(Duration.millis(500));
+                    pause.setOnFinished(event -> colorAdjust.setBrightness(0));
+                    pause.play();
+                    return;
+                }
                 Timeline timeline = new Timeline();
 
                 switch (direction) {

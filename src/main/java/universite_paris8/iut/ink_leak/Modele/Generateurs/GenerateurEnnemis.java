@@ -5,6 +5,7 @@ import universite_paris8.iut.ink_leak.Modele.Dijkstra;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.HeadLess;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Puddle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Faker;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
@@ -19,6 +20,7 @@ import java.util.Random;
 public class GenerateurEnnemis {
 
     private ObservableList<Entité> listeEntite;
+    Abomination Abomination = null;
 
     public GenerateurEnnemis(){
         listeEntite= FXCollections.observableArrayList();
@@ -29,16 +31,11 @@ public class GenerateurEnnemis {
         if(!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
                 if (mob instanceof HeadLess) {
-
-                    int startX = mob.coorDansLeTableauX(mob.getPosX());
-                    if (mob.getOrientation().equals("O")) startX = startX + 1;
-                    int startY = mob.coorDansLeTableauY(mob.getPosY());
-                    int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
-                    int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 4);
                 int startX = mob.coorDansLeTableauX(mob.getPosX());
                 int startY = mob.coorDansLeTableauY(mob.getPosY());
                 int targetX = joueur.coorDansLeTableauX(joueur.getPosX()+16);
                 int targetY = joueur.coorDansLeTableauY(joueur.getPosY()+16);
+                    if (mob.getOrientation().equals("O")) startX = startX + 1;
 
                     List<Integer> path = Dijkstra.dijkstraAstar(map.getMap(), startX, startY, targetX, targetY);
 
@@ -55,16 +52,19 @@ public class GenerateurEnnemis {
                             mob.déplacement("3");
                         }
                     }
-                    if (mob.getVie() == 0) {
-                        listeMort.add(mob);
-                    }
-                } else {
-                    mob.déplacement("4");
 
+                } else if (!(mob instanceof Abomination)) {
+                    mob.déplacement("4");
+                } else {
+                    mob.attaque();
+                }
+                if (mob.getVie() == 0) {
+                    listeMort.add(mob);
                 }
                 for (Entité mobMort : listeMort) {
                     listeEntite.remove(mobMort);
                 }
+
             }
         }
     }
@@ -72,9 +72,8 @@ public class GenerateurEnnemis {
         listeEntite.clear();
     }
     public void genererEnnemis( Map map, Joueur joueur){
-         // Ajouter le slime à la liste
-        switch (map.getNumMap()){
 
+        switch (map.getNumMap()){
             case 1:
                 Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(slime);
@@ -92,13 +91,29 @@ public class GenerateurEnnemis {
                 listeEntite.add(Puddle);
                 setEnnemisPos(Puddle);
                 break;
+            case 5:
+                if (Abomination != null){
+                    break;
+                } else{
+                    Abomination = new Abomination(this,map, joueur); // Créer un nouveau slime
+                    listeEntite.add(Abomination);
+                    Abomination.setPosXProperty(200);
+                    Abomination.setPosYProperty(0);
+                }
+
+                break;
             default:
+                if (Abomination != null){
+                    break;
+                } else{
+                    Abomination = new Abomination(this,map, joueur); // Créer un nouveau slime
+                    listeEntite.add(Abomination);
+                    Abomination.setPosXProperty(200);
+                    Abomination.setPosYProperty(0);
+                }
                 HeadLess HeadLess = new HeadLess(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(HeadLess);
                 setEnnemisPos(HeadLess);
-                Slime slimde = new Slime(this,map, joueur); // Créer un nouveau slime
-                listeEntite.add(slimde);
-                setEnnemisPos(slimde);
                 break;
         }
 

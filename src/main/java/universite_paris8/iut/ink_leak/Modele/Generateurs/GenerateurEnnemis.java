@@ -69,6 +69,10 @@ public class GenerateurEnnemis {
             case 3:
 
                 break;
+            case 4:
+                break;
+            case 5:
+                break;
             default:
                 Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(slime);

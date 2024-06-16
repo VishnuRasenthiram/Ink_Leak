@@ -16,7 +16,7 @@ public abstract class Mur extends Entité {
     }
 
     public abstract ArrayList<Mur> déplacementMur(String déplacementDirection, Joueur joueur);
-
+    //Verifie tous les mers qui sont cassé et les stock pour les supprimer une fois l'action effectué
     public ArrayList<Mur> verifMurCassé(){
         ArrayList<Mur> listeEnleve= new ArrayList<>();
         if(!super.getGenerateurMurs().getListeMurs().isEmpty()) {

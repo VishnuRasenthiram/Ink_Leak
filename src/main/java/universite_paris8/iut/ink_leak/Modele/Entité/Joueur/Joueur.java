@@ -30,7 +30,7 @@ public class Joueur extends Entité {
 
 
     public Joueur(String nom_joueur, Map map, GenerateurEnnemis generateurEnnemis,GenerateurMurs generateurMurs ) {
-        super(nom_joueur,  1, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
+        super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
         this.listePouvoirs= FXCollections.observableArrayList();
         this.bougable = true;
         this.oppacitéProperty = new SimpleIntegerProperty(1);
@@ -41,6 +41,7 @@ public class Joueur extends Entité {
         this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
     }
 
+    //Change l'indice du pouvoir en cours et permet de revenir à 0 si on dépasse le nombre de pouvoir débloqué
     public void setPouvoir(int a){
             if(a>0){
                 if(getIndicePouvoirEnCours()+1>getListePouvoirs().size()-1){
@@ -68,7 +69,7 @@ public class Joueur extends Entité {
 
     @Override
     public void attaque() {
-            attaqueDeBase.setEstEnVie(true);
+        attaqueDeBase.setEstEnVie(true);
         attaqueDeBase.déplacement(getOrientation());
     }
 
@@ -85,7 +86,7 @@ public class Joueur extends Entité {
     }
 
 
-
+    //Déplacement du personnage avec un timeline pour avoir de la fluidité dans les mouvements
     public void déplacement(String direction) {
 
             double vitesseJoueur = super.getVitesse_entite()-0.2;
@@ -233,7 +234,7 @@ public class Joueur extends Entité {
     }
 
 
-
+    //gains de pv et limitation à 6
     public void gagner_vie(int nb_vie_gagnee) {
         if (this.getVie() + nb_vie_gagnee > 6) { this.setVie_entite(6); }
         else this.setVie_entite(this.getVie() + nb_vie_gagnee);

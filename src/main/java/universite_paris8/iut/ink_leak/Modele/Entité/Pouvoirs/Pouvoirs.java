@@ -20,6 +20,7 @@ public abstract class Pouvoirs extends Entité {
         this.estEnVieProperty = new SimpleBooleanProperty(estEnVie);
     }
 
+    //Active les murs dès qu'un pouvoir est utilisé et enleve les murs qui sont cassé par le pouvoir
     @Override
     public void attaque() {
         ArrayList<Mur> mursEnleve= new ArrayList<>();

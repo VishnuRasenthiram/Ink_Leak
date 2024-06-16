@@ -20,6 +20,7 @@ public class OrientationObs implements ChangeListener<String> {
         this.vE=vE;
     }
 
+    //Permet en fonction de l'orientation de récupérer le sprite de l'entité qui regarde dans ce sens et le met a jour
     @Override
     public void changed(ObservableValue<? extends String> observableValue, String old, String nouv) {
         Pane p = (Pane) mainPane.lookup("#"+entité.getNom_entite());

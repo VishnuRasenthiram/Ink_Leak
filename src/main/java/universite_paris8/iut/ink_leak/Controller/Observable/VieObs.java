@@ -27,7 +27,7 @@ public class VieObs implements ChangeListener<Number> {
         this.joueurView = joueur;
 
     }
-
+        //Permet de mettre a jour la barre de vie en haut a gauche, et de clignoter lorsque le joueur prend des dégats
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number old, Number nouv) {
         if ((int) nouv < (int) old) {

@@ -12,7 +12,7 @@ public class MurCassable extends Mur{
         super("MurCassable"+cpt,  1, 1, 32, 32,1,1,generateurMurs.getMap(),null,null,generateurMurs);
         cpt++;
     }
-
+    //Verifie si c'est bien le poing qui l'attaque et si c'est le cas, casse le mur
     public ArrayList<Mur> déplacementMur(String déplacementDirection, Joueur joueur) {
         if (joueur.getPoing().enContact(this)) {
             this.prendre_degat(1);

@@ -23,7 +23,7 @@ public class Slime extends Entité {
             joueur.prendre_degat(1);
         }
     }
-
+    //déplacement aléatoire du slime
     @Override
     public void déplacement(String déplacementDirection) {
 

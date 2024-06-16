@@ -16,6 +16,7 @@ public class ListeMursObs implements ListChangeListener<Mur> {
     public ListeMursObs(Pane mainPane){
         this.mainPane = mainPane;
     }
+    //crée/supprime les sprite murs qui peuvent etre cassé ou déplacé
     @Override
     public void onChanged(Change<? extends Mur> change) {
         VueMursCassable vueMursCassable = new VueMursCassable(mainPane);

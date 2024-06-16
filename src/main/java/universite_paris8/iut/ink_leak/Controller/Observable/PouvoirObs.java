@@ -12,7 +12,7 @@ public class PouvoirObs implements ChangeListener<Boolean> {
             this.vueAttaque = vA;
 
     }
-
+    //Enleve le sprite de la vue dès qu'une attaque a fini d'etre utilisé
     @Override
     public void changed(ObservableValue<? extends Boolean  > observable, Boolean old,Boolean nouv) {
 

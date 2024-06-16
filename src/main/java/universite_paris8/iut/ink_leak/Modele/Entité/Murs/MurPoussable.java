@@ -13,7 +13,7 @@ public class MurPoussable extends Mur {
         super("MurPoussable"+cpt,  1, 1, 32, 32,1,1,generateurMurs.getMap(),null,null,generateurMurs);
         cpt++;
     }
-
+    //gere les déplacement du mur lorsque la bulle touche ce mur
     public ArrayList<Mur> déplacementMur(String déplacementDirection, Joueur joueur) {
         double newX = this.getPosX();
         double newY = this.getPosY();
@@ -43,6 +43,7 @@ public class MurPoussable extends Mur {
         return super.verifMurCassé();
     }
 
+    //permet de faire les vérification si le mur peut aller a un endroit et si cette endroit n'est pas occupé par le joueur
     private void changementSurLaMap(double newX, double newY) {
         boolean peutAller = this.peutAller(newX, newY, getGenerateurMurs().getMap());
         boolean differentX = (int) (newX+16 )/ 32 != (int) (this.getPosX()+16) / 32;

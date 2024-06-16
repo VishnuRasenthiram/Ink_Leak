@@ -21,7 +21,7 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
         this.map = map;
 
     }
-
+    //Crée ou supprime le sprite de chaque ennemis ajouté/enlève dans la listeEnnemis et lie l'orientation au listener qui s'occupe de changer de sprite en fonction de l'orientation
     @Override
     public void onChanged(Change<? extends Entité> change) {
         VueEnnemis vueEnnemis = new VueEnnemis(mainPane,joueur,map);

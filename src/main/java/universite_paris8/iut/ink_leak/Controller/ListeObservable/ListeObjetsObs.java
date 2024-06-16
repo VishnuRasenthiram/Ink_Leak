@@ -13,6 +13,8 @@ public class ListeObjetsObs implements ListChangeListener<Objets> {
 
     public ListeObjetsObs(Pane mainPane){ this.mainPane = mainPane; }
 
+
+    //crée/supprime les sprites des objets récupérable sur la map
     @Override
     public void onChanged(Change<? extends Objets> change) {
         VueObjets vueObjetBulle = new VueObjetBulle(mainPane);

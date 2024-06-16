@@ -74,6 +74,7 @@ public class Environnement {
                 joueur.setEmplacement(10,19);
                 return 5;
             default:
+                joueur.setEmplacement(8,10);
                 return 0;
         }
     }

@@ -14,7 +14,7 @@ public class ListePouvoirsObs implements ListChangeListener<Pouvoirs> {
         vP= new VuePouvoirs(interfacePane);
         vP.créeSpriteListeAttaque(j);
     }
-
+    //Permet de rajouté le sprite d'icone de chaque pouvoir récupéré dans la lise en haut a droite
     @Override
     public void onChanged(Change<? extends Pouvoirs> change) {
         while(change.next()){

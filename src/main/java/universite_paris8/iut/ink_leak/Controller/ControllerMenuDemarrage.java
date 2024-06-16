@@ -5,14 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.File;
 
 public class ControllerMenuDemarrage {
 
@@ -24,7 +29,7 @@ public class ControllerMenuDemarrage {
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root,700,700));
 
-            showDialog("AAAA",stage);
+            showCommande(stage);
 
             stage.show();
 
@@ -33,21 +38,27 @@ public class ControllerMenuDemarrage {
         }
     }
 
-    private void showDialog(String message, Stage stage) {
+    private void showCommande(Stage stage) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(stage);
-        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.initStyle(StageStyle.TRANSPARENT);
+
+        ImageView imageView = new ImageView();
+        imageView.setStyle("-fx-background-color: transparent;");
+        imageView.setId("imageView");
+        imageView.setFitHeight(400);
+        imageView.setFitWidth(400);
+        imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/commandes.png").toURI().toString()));
 
         VBox dialogVBox = new VBox();
-        dialogVBox.setStyle("-fx-background-color: black; -fx-border-color: white; -fx-padding: 20;");
-        Label label = new Label(message);
-        label.setTextFill(Color.WHITE);
-        label.setFont(new Font(16));
-        label.setWrapText(true);
+        dialogVBox.setStyle("-fx-background-color: transparent;");
 
-        dialogVBox.getChildren().add(label);
-        Scene dialogScene = new Scene(dialogVBox, 400, 200);
+        dialogVBox.getChildren().add(imageView);
+
+        Scene dialogScene = new Scene(dialogVBox, 400, 400);
+        dialogScene.setFill(null);
+
         dialogScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 dialog.close();
@@ -57,4 +68,35 @@ public class ControllerMenuDemarrage {
         dialog.setScene(dialogScene);
         dialog.show();
     }
+
+    private void showPouvoirs(Stage stage) {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(stage);
+        dialog.initStyle(StageStyle.TRANSPARENT);
+
+        ImageView imageView = new ImageView();
+        imageView.setStyle("-fx-background-color: transparent;");
+        imageView.setId("imageView");
+        imageView.setFitHeight(400);
+        imageView.setFitWidth(400);
+        imageView.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/UI/commandes.png").toURI().toString()));
+
+        VBox dialogVBox = new VBox();
+        dialogVBox.setStyle("-fx-background-color: transparent;");
+
+        dialogVBox.getChildren().add(imageView);
+
+        Scene dialogScene = new Scene(dialogVBox, 400, 400);
+        dialogScene.setFill(null);
+        dialogScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                dialog.close();
+            }
+        });
+
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
 }

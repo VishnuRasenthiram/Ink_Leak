@@ -30,6 +30,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
         this.map = map;
     }
 
+    //permet aux ennemis de se faire pousser en arrière quand ils prennent des dégats et rajoute un effet de brillance
     @Override
     public void changed(ObservableValue<? extends Number> observable, Number old, Number nouv) {
         colorAdjust = new ColorAdjust();

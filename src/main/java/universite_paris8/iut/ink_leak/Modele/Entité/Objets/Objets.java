@@ -19,6 +19,7 @@ public abstract class Objets extends Entité {
 
 
     }
+    //Fait la vérification si le joueur est en contact et si oui ajouté le pouvoir dans la liste ou donne des pv
     public abstract void action();
 
     @Override

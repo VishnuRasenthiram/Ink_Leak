@@ -15,11 +15,13 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
     private Pane mainPane;
     private Joueur joueur;
     private Map map;
+    private boolean jeuFini;
 
-    public ListeEnnemieObs(Pane mainPane, Joueur j, Map map){
+    public ListeEnnemieObs(Pane mainPane, Joueur j, Map map, boolean jeuFini){
         this.mainPane = mainPane;
         this.joueur = j;
         this.map = map;
+        this.jeuFini = jeuFini;
 
     }
     //Crée ou supprime le sprite de chaque ennemis ajouté/enlève dans la listeEnnemis et lie l'orientation au listener qui s'occupe de changer de sprite en fonction de l'orientation
@@ -46,6 +48,10 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
                         Node spriteVieEnnemi=this.mainPane.getChildren().get(i);
                         this.mainPane.getChildren().remove(spriteVieEnnemi);
                     }
+                    if(ennemisEnlevé instanceof Abomination){
+                        jeuFini=true;
+                    }
+
 
                 }
             }

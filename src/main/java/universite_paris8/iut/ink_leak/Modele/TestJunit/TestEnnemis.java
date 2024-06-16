@@ -14,7 +14,7 @@ public class TestEnnemis {
         map.setMap(0);
         GenerateurEnnemis ge = new GenerateurEnnemis();
 
-        ge.genererEnnemis(map , null);
+        ge.genererEnnemis(map , null,null);
         assertFalse(ge.getListeEntite().isEmpty()); // vérifie qu'un ennemi a bien été généré dans la map par défaut
 
     }

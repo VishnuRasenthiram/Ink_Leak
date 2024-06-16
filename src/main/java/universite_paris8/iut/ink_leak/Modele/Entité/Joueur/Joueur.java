@@ -30,6 +30,7 @@ public class Joueur extends Entité {
     private AttaqueDeBase attaqueDeBase;
 
 
+
     public Joueur(String nom_joueur, Map map, GenerateurEnnemis generateurEnnemis,GenerateurMurs generateurMurs ) {
         super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
         this.listePouvoirs= FXCollections.observableArrayList();

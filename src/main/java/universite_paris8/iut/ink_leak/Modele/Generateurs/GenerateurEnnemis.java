@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static universite_paris8.iut.ink_leak.Model.AEtoile.chercherChemin;
+import static universite_paris8.iut.ink_leak.Modele.AEtoile.chercherChemin;
 
 
 public class GenerateurEnnemis {
@@ -118,10 +118,7 @@ public class GenerateurEnnemis {
                 Abomination.setPosXProperty(198);
                 Abomination.setPosYProperty(0);
                 break;
-            case 4:
-                break;
-            case 5:
-                break;
+
             default:
                 Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
                 listeEntite.add(slime);

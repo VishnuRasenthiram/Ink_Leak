@@ -130,9 +130,8 @@ public class Controller implements Initializable {
                 ink.walkAnimation(joueur);
             }
         });
-        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
+        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map,jeuFini);
 
-        ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
         Abomination Abomination = new Abomination(generateurEnnemis,map, joueur);
         VueBoss VB = new VueBoss(mainPane, joueur, map);
@@ -147,9 +146,6 @@ public class Controller implements Initializable {
         generateurEnnemis.genererEnnemis(map,joueur, Abomination);
 
         vT = new VueTexte(env, mainPane);
-        vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
-        vT.ajouterTexte("Vous avez trouvé un objet magique !", 400, 200, 120, 265, 1, 2);
-        vT.ajouterTexte("Les lumière on été cassé dans cette salle... attention des monstre ont peut-être tendu des pièges...", 400, 200, 120, 315, 1, 3);
 
         ListChangeListener<Pouvoirs> airpods = new ListePouvoirsObs(interfacePane, joueur);
         joueur.getListePouvoirs().addListener(airpods);
@@ -294,7 +290,7 @@ public class Controller implements Initializable {
                     int interaction = joueur.verifierInteractionEnFace(x, y);
                     env.action(temps);
                     //gestion changement de map
-                    if (interaction == 22 || interaction == 6 || interaction == 24 || interaction == 25 || interaction == 26) {
+
                     /*
                     if (dialogueController.onTargetDialogueReached() == false){
                         PauseTransition pause = new PauseTransition(Duration.millis(1000));
@@ -313,15 +309,14 @@ public class Controller implements Initializable {
                     }
                     if (joueur.getVie() == 0) {
                         joueur.setVie_entite(6);
-                        if(map.getNumMap()==0){
+                        if (map.getNumMap() == 0) {
                             env.changementDeMap(0);
-                        }
-                        else {
+                        } else {
                             env.changementDeMap(6);
                         }
                         vueMap.supprimerAffichageMap();
                         vueMap.initMap(map, joueur);
-
+                    }
 
                     if (temps == 1000000) {
                         System.out.println("fini");

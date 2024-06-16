@@ -10,10 +10,10 @@ public class VueTexte {
     private Label txt;
     private Pane mainPane;
 
-    public VueTexte(Environnement env, Label txt, Pane mainPane) {
+    public VueTexte(Environnement env, Pane mainPane) {
         this.env = env;
-        this.txt = txt;
         this.mainPane = mainPane;
+        this.txt = new Label("Texte");
         this.mainPane.getChildren().add(txt);
     }
 

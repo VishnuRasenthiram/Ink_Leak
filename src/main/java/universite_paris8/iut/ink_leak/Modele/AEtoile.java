@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Model;
+package universite_paris8.iut.ink_leak.Modele;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -38,13 +38,14 @@ public class VueEnnemis extends VueEntite {
         ImageView imageview = new ImageView();
         imageview.setFitWidth(entité.getLargeur());
         imageview.setFitWidth(entité.getLongueur());
+
         if (entité instanceof Abomination){
             animationTimeline = new Timeline();
             animationTimeline.setCycleCount(Timeline.INDEFINITE);
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), e -> {
-            imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Entities/Abomination/Idle/abomination_idle_" + iteration + ".png").toURI().toString()));
-            if (iteration == 4) iteration = 1;
-            else iteration++;
+                imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Entities/Abomination/Idle/abomination_idle_" + iteration + ".png").toURI().toString()));
+                if (iteration == 4) iteration = 1;
+                else iteration++;
             });
             animationTimeline.getKeyFrames().add(keyFrame);
             animationTimeline.play();

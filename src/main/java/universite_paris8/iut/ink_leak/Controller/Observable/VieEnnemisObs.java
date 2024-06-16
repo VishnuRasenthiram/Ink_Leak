@@ -43,7 +43,7 @@ public class VieEnnemisObs implements ChangeListener<Number> {
                 ennemisView.setEffect(colorAdjust);
                 if (entité instanceof Abomination){
                     colorAdjust.setBrightness(10);
-                    PauseTransition pause = new PauseTransition(Duration.millis(500));
+                    PauseTransition pause = new PauseTransition(Duration.millis(300));
                     pause.setOnFinished(event -> colorAdjust.setBrightness(0));
                     pause.play();
                     return;

@@ -22,6 +22,7 @@ import universite_paris8.iut.ink_leak.Controller.ListeObservable.ListePouvoirsOb
 import universite_paris8.iut.ink_leak.Controller.Observable.OrientationObs;
 import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.*;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Murs.Mur;
@@ -33,6 +34,7 @@ import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Vue.Musique;
+import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueBoss;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueJoueur;
 import universite_paris8.iut.ink_leak.Vue.VueMap;
@@ -93,7 +95,6 @@ public class Controller implements Initializable {
 
         vueMap = new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink = new VueJoueur(mainPane, interfacePane);
-
         vueMap.initMap(map, joueur);
         gameLoop();
         gameLoop.play();
@@ -120,6 +121,17 @@ public class Controller implements Initializable {
 
         ListChangeListener<Entité> listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map);
         generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
+        Abomination Abomination = new Abomination(generateurEnnemis,map, joueur);
+        VueBoss VB = new VueBoss(mainPane, joueur, map);
+        Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
+            if (nouv.intValue() == 2) {
+                VB.créeAttaque1(Abomination);
+            } else {
+                VB.créeAttaque2(Abomination);
+                System.out.println("attaque loin");
+            }
+        });
+        generateurEnnemis.genererEnnemis(map,joueur, Abomination);
 
         vT = new VueTexte(env, mainPane);
         vT.ajouterTexte("Vous avez récupéré un pouvoir ! Appuyez sur K pour l'utiliser !", 400, 200, 120, 215, 1, 1);
@@ -142,9 +154,13 @@ public class Controller implements Initializable {
         Musique musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
 
+
+        /* FONCTIONNEL MAIS PAS IMPLEMENTE
         dialogueController = new DialogueController(dialogueLabel, optionButton1, optionButton2, optionButton3);
         dialogueController.initDialogueTree();
         dialogueController.setInitialDialogueNode();
+        */
+
 
     }
 
@@ -261,6 +277,7 @@ public class Controller implements Initializable {
                     double y = this.joueur.getPosY();
                     int interaction = joueur.verifierInteractionEnFace(x, y);
                     env.action(temps);
+                    /*
                     if (dialogueController.onTargetDialogueReached() == false){
                         PauseTransition pause = new PauseTransition(Duration.millis(1000));
                         pause.setOnFinished(event -> {
@@ -268,6 +285,7 @@ public class Controller implements Initializable {
                         });
                         pause.play();
                     }
+                    */
                     if (interaction == 22 || interaction == 6 ||interaction == 24 || interaction == 25 || interaction == 26 ) {
 
 

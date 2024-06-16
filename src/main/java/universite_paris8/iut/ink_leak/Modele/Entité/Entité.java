@@ -181,6 +181,9 @@ public abstract class Entité {
             if (direction == 4){
                 direction = (int) (Math.random() * 9);
             }
+            if (direction == 5){
+                attaque();
+            }
             switch (direction) {
                 case 0:
                     if (peutAller(x, y - getVitesse_entite(), getMap())) {
@@ -312,9 +315,15 @@ public abstract class Entité {
     public double getLongueur() {
         return longueur;
     }
+    public void setLongueur(double longueur) {
+        this.longueur = longueur;
+    }
 
     public double getLargeur() {
         return largeur;
+    }
+    public void setLargeur(double largeur) {
+        this.largeur = largeur;
     }
 
     public GenerateurEnnemis getGenerateurEnnemis(){

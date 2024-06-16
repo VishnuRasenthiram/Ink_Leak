@@ -17,6 +17,7 @@
                 </Pane>
             </Pane>
 
+            <!--
             <VBox fx:id="QuizBox" alignment="CENTER" spacing="20" maxWidth="500" maxHeight="450" styleClass="quiz-box">
                 <Label fx:id="dialogueLabel" text="Question" styleClass="quiz-label"/>
                 <VBox spacing="10">
@@ -24,7 +25,7 @@
                     <Button fx:id="optionButton2" text="Option 2" onAction="#handleOption2" styleClass="quiz-button"/>
                     <Button fx:id="optionButton3" text="Option 3" onAction="#handleOption3" styleClass="quiz-button"/>
                 </VBox>
-            </VBox>
+            </VBox> -->
         </StackPane>
     </center>
 </BorderPane>

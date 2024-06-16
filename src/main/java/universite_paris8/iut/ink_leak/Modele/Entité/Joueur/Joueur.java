@@ -86,7 +86,7 @@ public class Joueur extends Entité {
     }
 
 
-
+    @Override
     public void déplacement(String direction) {
 
             double vitesseJoueur = super.getVitesse_entite()-0.2;

@@ -8,6 +8,14 @@ import universite_paris8.iut.ink_leak.Modele.DialogueNode;
 import java.util.List;
 
 public class DialogueController {
+    /*
+
+
+
+
+
+
+     */
     private Label dialogueLabel;
     private Button optionButton1;
     private Button optionButton2;
@@ -101,7 +109,7 @@ public class DialogueController {
     }
 
     private void checkTargetDialogue(DialogueNode node) {
-        if (node.getQuestion().equals("Vous rencontrez un marchand.")) {
+        if (node.getQuestion().equals("Merci pour votre commande !")) {
             this.targetDialogueReached = true;
         }
     }

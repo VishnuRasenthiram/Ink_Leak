@@ -1,4 +1,5 @@
 package universite_paris8.iut.ink_leak.Vue;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -14,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Map;
+
 import java.io.File;
 
 public class VueMap {
@@ -25,14 +27,14 @@ public class VueMap {
     @FXML
     private Pane interfacePane;
 
-    public VueMap(TilePane tuileMap, Pane InterfacePane, BorderPane mainBorderPane){
+    public VueMap(TilePane tuileMap, Pane InterfacePane, BorderPane mainBorderPane) {
         this.tuileMap = tuileMap;
         this.mainBorderPane = mainBorderPane;
         this.interfacePane = InterfacePane;
     }
 
-    public void initMap(Map map, Joueur entité){
-        if (map.getNumMap() == 4){
+    public void initMap(Map map, Joueur entité) {
+        if (map.getNumMap() == 4) {
             ImageView ObscuritéCache = new ImageView();
             ObscuritéCache.setFitHeight(1800);
             ObscuritéCache.setFitWidth(3000);
@@ -46,15 +48,15 @@ public class VueMap {
         }
         for (int i = 0; i < map.getMap().length; i++) {
             for (int j = 0; j < map.getMap()[i].length; j++) {
-                creerTuile(map.getMap(j,i));
+                creerTuile(map.getMap(j, i));
             }
         }
     }
 
 
-    private void creerTuile(int tuile){
-        Pane pane= new Pane();
-        ImageView imageview= new ImageView();
+    private void creerTuile(int tuile) {
+        Pane pane = new Pane();
+        ImageView imageview = new ImageView();
         imageview.setFitHeight(32);
         imageview.setFitWidth(32);
         if (tuile == 0) {
@@ -126,16 +128,16 @@ public class VueMap {
         } else if (tuile == 22) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("exit2");
-        } else if (tuile==23) {
+        } else if (tuile == 23) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/floors/floor.png").toURI().toString()));
             pane.setId("murCassable");
-        }else if (tuile == 24) {
+        } else if (tuile == 24) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("exit2");
-        }else if (tuile == 25) {
+        } else if (tuile == 25) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("exit2");
-        }else if (tuile == 26) {
+        } else if (tuile == 26) {
             imageview.setImage(new Image(new File("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_SPRITES/Background/walls/wall_exit.png").toURI().toString()));
             pane.setId("exit2");
         }
@@ -145,7 +147,7 @@ public class VueMap {
 
     }
 
-    public void supprimerAffichageMap(){
+    public void supprimerAffichageMap() {
         fonduAuNoir(mainBorderPane);
         tuileMap.getChildren().clear();
         new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/changement_salle.wav", 1.0f, 0);

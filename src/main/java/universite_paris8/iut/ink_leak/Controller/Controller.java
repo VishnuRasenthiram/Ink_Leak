@@ -166,11 +166,11 @@ public class Controller implements Initializable {
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
 
 
-        /* FONCTIONNEL MAIS PAS IMPLEMENTE
+        // FONCTIONNEL MAIS PAS IMPLEMENTE
         dialogueController = new DialogueController(dialogueLabel, optionButton1, optionButton2, optionButton3);
         dialogueController.initDialogueTree();
         dialogueController.setInitialDialogueNode();
-        */
+
 
 
     }

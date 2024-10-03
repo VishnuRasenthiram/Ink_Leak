@@ -4,6 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetLangue;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetPoing;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
@@ -23,16 +27,16 @@ public class GenerateurObjets {
 
     private Imprimante imprimante,imprimante2;
 
-    public GenerateurObjets(Map map, Joueur joueur){
+    public GenerateurObjets(Environnement environnement){
         listeObjets= FXCollections.observableArrayList();
-        this.map=map;
-        objetBulle= new ObjetBulle(map,this,joueur);
-        objetPoing= new ObjetPoing(map,this,joueur);
-        objetLangue= new ObjetLangue(map,this,joueur);
-        tube= new Tube(map, this,joueur);
-        tube2= new Tube(map, this,joueur);
-        imprimante = new Imprimante(map, this,joueur);
-        imprimante2 = new Imprimante(map, this,joueur);
+        this.map=environnement.getMap();
+        objetBulle= new ObjetBulle(environnement);
+        objetPoing= new ObjetPoing(environnement);
+        objetLangue= new ObjetLangue(environnement);
+        tube= new Tube(environnement);
+        tube2= new Tube(environnement);
+        imprimante = new Imprimante(environnement);
+        imprimante2 = new Imprimante(environnement);
     }
     public void activerObjet(){
         ArrayList<Objets> listeEnleve= new ArrayList<>();

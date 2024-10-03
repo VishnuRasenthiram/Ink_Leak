@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.*;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
@@ -23,15 +24,15 @@ public abstract class Entité {
     private DoubleProperty posXProperty;
     private DoubleProperty posYProperty;
 
-    private Map map;
+    private Environnement environnement;
 
-    private GenerateurEnnemis generateurEnnemis;
-    private GenerateurObjets generateurObjets;
-    private GenerateurMurs generateurMurs;
+
+
 
     private final ObjectProperty<MovementState> movementStateProperty;
 
-    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, GenerateurMurs generateurMurs) {
+
+    public Entité(String nom_entite, int vie_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, long invincibilite, Environnement environnement) {
         this.nom_entite = nom_entite;
         this.vie_entiteProperty = new SimpleIntegerProperty(vie_entite);
         this.attaque_entite = attaque_entite;
@@ -43,17 +44,16 @@ public abstract class Entité {
         this.orientationProperty = new SimpleStringProperty("S");
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
-        this.map = map;
-        this.generateurEnnemis = generateurEnnemis;
-        this.generateurObjets = generateurObjets;
-        this.generateurMurs = generateurMurs;
+
+        this.environnement=environnement;
+
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
         this.maxVie = vie_entite;
 
     }
 
-    public Entité(String nom_entite, Map map, GenerateurObjets generateurObjets) {
-        this(nom_entite,1,0,32,32,0,0,map,null,generateurObjets,null);
+    public Entité(String nom_entite,Environnement environnement) {
+        this(nom_entite,1,0,32,32,0,0,environnement);
 
     }
     public enum MovementState {
@@ -115,7 +115,7 @@ public abstract class Entité {
         y = y -20;
         int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
-
+        Map map= getMap();
         return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
                 map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||
@@ -326,21 +326,25 @@ public abstract class Entité {
         this.largeur = largeur;
     }
 
-    public GenerateurEnnemis getGenerateurEnnemis(){
-        return generateurEnnemis;
-    }
+
 
     public Map getMap(){
-        return map;
+        return environnement.getMap();
     }
 
+
+    public GenerateurEnnemis getGenerateurEnnemis() { return environnement.getGenerateurEnnemis(); }
+
+
+
     public GenerateurObjets getGenerateurObjets() {
-        return generateurObjets;
+        return environnement.getGenerateurObjets();
     }
 
     public GenerateurMurs getGenerateurMurs() {
-        return generateurMurs;
+        return environnement.getGenerateurMurs();
     }
+
 
     public long getDernier_degat() {
         return dernier_degat;
@@ -366,5 +370,9 @@ public abstract class Entité {
     public int getmaxVie() {
         return maxVie;
     }
+    public Environnement getEnvironnement() {
+        return environnement;
+    }
+
 
 }

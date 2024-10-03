@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Murs;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 
 import java.util.ArrayList;
@@ -9,16 +10,16 @@ public class MurPoussable extends Mur {
 
     private static int cpt =0;
 
-    public MurPoussable(GenerateurMurs generateurMurs) {
-        super("MurPoussable"+cpt,  1, 1, 32, 32,1,1,generateurMurs.getMap(),null,null,generateurMurs);
+    public MurPoussable(Environnement environnement) {
+        super("MurPoussable"+cpt,  1, 1, 32, 32,1,1,environnement);
         cpt++;
     }
     //gere les déplacement du mur lorsque la bulle touche ce mur
-    public ArrayList<Mur> déplacementMur(String déplacementDirection, Joueur joueur) {
+    public ArrayList<Mur> déplacementMur(String déplacementDirection) {
         double newX = this.getPosX();
         double newY = this.getPosY();
 
-        if (joueur.getBulle().enContact(this)) {
+        if (getEnvironnement().getBulle().enContact(this)) {
 
             switch (déplacementDirection) {
                 case "N":

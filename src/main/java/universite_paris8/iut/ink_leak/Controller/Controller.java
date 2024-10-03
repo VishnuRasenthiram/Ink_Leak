@@ -67,7 +67,7 @@ public class Controller implements Initializable {
     private Environnement env;
     private Joueur joueur;
 
-    private DialogueController dialogueController;
+
 
     @FXML
     private Label txt;
@@ -89,9 +89,7 @@ public class Controller implements Initializable {
     @FXML
     private Pane interfacePane;
 
-    private GenerateurEnnemis generateurEnnemis;
-    private GenerateurObjets generateurObjets;
-    private GenerateurMurs generateurMurs;
+
 
     private VueJoueur ink;
     private VueMap vueMap;
@@ -113,16 +111,12 @@ public class Controller implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        generateurEnnemis = new GenerateurEnnemis();
-        generateurMurs = new GenerateurMurs(map);
-        this.joueur = new Joueur("Entity", map, generateurEnnemis, generateurMurs);
-        joueur.setEmplacement(8, 10);
+        this.
 
+
+                env = new Environnement(map);
+        joueur = env.getJoueur();
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane, ink, joueur));
-
-        generateurObjets = new GenerateurObjets(map, joueur);
-
-        env = new Environnement(joueur, map, generateurEnnemis, generateurObjets, generateurMurs);
 
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {
 
@@ -132,10 +126,10 @@ public class Controller implements Initializable {
                 ink.walkAnimation(joueur);
             }
         });
-        listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map,jeuFini);
+        listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map, jeuFini);
 
-        generateurEnnemis.getListeEntite().addListener(listenerEnnemis);
-        Abomination Abomination = new Abomination(generateurEnnemis,map, joueur);
+        env.getGenerateurEnnemis().getListeEntite().addListener(listenerEnnemis);
+        Abomination Abomination = new Abomination(env);
         VueBoss VB = new VueBoss(mainPane, joueur, map);
         Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
             if (nouv.intValue() == 2) {
@@ -145,7 +139,7 @@ public class Controller implements Initializable {
 
             }
         });
-        generateurEnnemis.genererEnnemis(map,joueur, Abomination);
+        env.getGenerateurEnnemis().genererEnnemis(map, joueur, Abomination);
 
         vT = new VueTexte(env, mainPane);
 
@@ -156,44 +150,17 @@ public class Controller implements Initializable {
         joueur.getIndicePouvoirEnCoursProperty().addListener(pv);
 
         ListChangeListener<Objets> Buds = new ListeObjetsObs(mainPane);
-        generateurObjets.getListeObjets().addListener(Buds);
+        env.getGenerateurObjets().getListeObjets().addListener(Buds);
 
         ListChangeListener<Mur> oreille = new ListeMursObs(mainPane);
-        generateurMurs.getListeMurs().addListener(oreille);
+        env.getGenerateurMurs().getListeMurs().addListener(oreille);
         ink.créeSprite(joueur);
         ink.créeSpriteVie(joueur);
         Musique musique = new Musique();
         musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav", 1.0f, -1);
 
 
-        // FONCTIONNEL MAIS PAS IMPLEMENTE
-        dialogueController = new DialogueController(dialogueLabel, optionButton1, optionButton2, optionButton3);
-        dialogueController.initDialogueTree();
-        dialogueController.setInitialDialogueNode();
-
-
-
     }
-
-    @FXML
-    private void handleOption1() {
-        dialogueController.handleOptionSelection(0);
-//        Musique musique = new Musique();
-//        musique.jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/Main_theme_(pseudomorph_0z).wav",1.0f, -1);
-
-    }
-
-
-    @FXML
-    private void handleOption2() {
-        dialogueController.handleOptionSelection(1);
-    }
-
-    @FXML
-    private void handleOption3() {
-        dialogueController.handleOptionSelection(2);
-    }
-
     private String currentDirection = null;
 
     @FXML

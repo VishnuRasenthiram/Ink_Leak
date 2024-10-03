@@ -1,6 +1,7 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
@@ -10,9 +11,9 @@ public class Slime extends Entité {
     public static int cpt=0;
     public final Joueur joueur;
 
-    public Slime(GenerateurEnnemis generateurEnnemis, Map map, Joueur joueur){
-        super("Slime"+cpt, 2, 1,32, 32,2,200,map, generateurEnnemis,null,null);
-        this.joueur = joueur;
+    public Slime(Environnement environnement){
+        super("Slime"+cpt, 2, 1,32, 32,2,200, environnement);
+        this.joueur = environnement.getJoueur();
         cpt++;
 
     }

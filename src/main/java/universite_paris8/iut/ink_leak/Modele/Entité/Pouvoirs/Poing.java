@@ -6,13 +6,14 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Poing extends Pouvoirs {
 
-    public Poing(Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super("poing",2, 64, 64, 1,true, map, generateurEnnemis,joueur);
+    public Poing(Environnement environnement) {
+        super("poing",2, 64, 64, 1,true,environnement);
     }
 
     @Override

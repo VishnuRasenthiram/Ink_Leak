@@ -50,9 +50,10 @@ public class ListeEnnemieObs implements ListChangeListener<Entité> {
                     }
 
                 }
+                
                     if(ennemisEnlevé instanceof Abomination){
                         jeuFini=true;
-                        break;
+                        return;
                     }
 
 

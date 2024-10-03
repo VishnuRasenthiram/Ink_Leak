@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Map;
@@ -24,22 +25,16 @@ public class Joueur extends Entité {
     private IntegerProperty indicePouvoirEnCoursProperty;
     private IntegerProperty oppacitéProperty;
 
-    private Bulle bulle;
-    private Poing poing;
-    private Langue langue;
-    private AttaqueDeBase attaqueDeBase;
 
 
 
-    public Joueur(String nom_joueur, Map map, GenerateurEnnemis generateurEnnemis,GenerateurMurs generateurMurs ) {
-        super(nom_joueur,  6, 1, 30, 32,1,1000,map,generateurEnnemis,null,generateurMurs);
+
+    public Joueur(String nom_joueur, Environnement environnement) {
+        super(nom_joueur,  6, 1, 30, 32,1,1000,environnement);
         this.listePouvoirs= FXCollections.observableArrayList();
         this.bougable = true;
         this.oppacitéProperty = new SimpleIntegerProperty(1);
-        attaqueDeBase= new AttaqueDeBase(super.getMap(),super.getGenerateurEnnemis(),this);
-        bulle =new Bulle( super.getMap(),super.getGenerateurEnnemis(),this);
-        poing = new Poing(super.getMap(), super.getGenerateurEnnemis(), this);
-        langue = new Langue(super.getMap(), super.getGenerateurEnnemis(), this);
+
         this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
     }
 
@@ -71,19 +66,20 @@ public class Joueur extends Entité {
 
     @Override
     public void attaque() {
-        attaqueDeBase.setEstEnVie(true);
-        attaqueDeBase.déplacement(getOrientation());
+
+        getAttaqueDeBase().setEstEnVie(true);
+        getAttaqueDeBase().déplacement(getOrientation());
     }
 
     public void attaqueAvecPouvoir(){
         int indice=getIndicePouvoirEnCours();
         if(listePouvoirs.get(indice) instanceof Bulle){
-            bulle.déplacement(getOrientation());
+            getBulle().déplacement(getOrientation());
         }
         else if (listePouvoirs.get(indice) instanceof Poing) {
-            poing.déplacement(getOrientation());
+            getPoing().déplacement(getOrientation());
         } else if (listePouvoirs.get(indice) instanceof  Langue) {
-            langue.déplacement(getOrientation());
+            getLangue().déplacement(getOrientation());
         }
     }
 
@@ -275,13 +271,13 @@ public class Joueur extends Entité {
 
     }
     public Bulle getBulle() {
-        return bulle;
+        return getEnvironnement().getBulle();
     }
-    public Poing getPoing() { return poing; }
-    public Langue getLangue() { return langue; }
+    public Poing getPoing() { return getEnvironnement().getPoing(); }
+    public Langue getLangue() { return getEnvironnement().getLangue(); }
 
     public AttaqueDeBase getAttaqueDeBase() {
-        return attaqueDeBase;
+        return getEnvironnement().getAttaqueDeBase();
     }
 
     public void setBougable(boolean bougable){

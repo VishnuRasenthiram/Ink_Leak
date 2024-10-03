@@ -2,13 +2,14 @@ package universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class AttaqueDeBase extends Pouvoirs{
 
-    public AttaqueDeBase(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super("attBase",  1, 32, 32, 1, true,map, generateurEnnemis,joueur);
+    public AttaqueDeBase(Environnement environnement) {
+        super("attBase",  1, 32, 32, 1, true,environnement);
     }
 
     @Override

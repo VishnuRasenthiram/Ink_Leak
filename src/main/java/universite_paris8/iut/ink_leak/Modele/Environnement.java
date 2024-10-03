@@ -3,6 +3,10 @@ package universite_paris8.iut.ink_leak.Modele;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
+import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
@@ -18,12 +22,24 @@ public class Environnement {
 
     private Map map;
 
-    public Environnement(Joueur joueur, Map map, GenerateurEnnemis generateurEnnemis, GenerateurObjets generateurObjets, GenerateurMurs generateurMurs) {
-        this.joueur = joueur;
-        this.generateurEnnemis = generateurEnnemis;
-        this.generateurObjets = generateurObjets;
-        this.generateurMurs = generateurMurs;
+    private Bulle bulle;
+    private Poing poing;
+    private Langue langue;
+    private AttaqueDeBase attaqueDeBase;
+
+    public Environnement(Map map) {
+        this.joueur = new Joueur("Entity",this);
+        joueur.setEmplacement(8, 10);
         this.map = map;
+        this.generateurEnnemis = new GenerateurEnnemis(this);
+        this.generateurObjets = new GenerateurObjets(this);
+        this.generateurMurs =new GenerateurMurs(this);
+
+
+        attaqueDeBase= new AttaqueDeBase(this);
+        bulle =new Bulle( this);
+        poing = new Poing(this);
+        langue = new Langue(this);
     }
 
     public void action(int temps) {
@@ -82,9 +98,34 @@ public class Environnement {
     private void TuerToutLesEnnemis(){
         generateurEnnemis.TuerToutLesEnnemis();
     }
+    public Joueur getJoueur() { return this.joueur; }
 
     public GenerateurEnnemis getGenerateurEnnemis() { return this.generateurEnnemis; }
 
-    public Joueur getJoueur() { return this.joueur; }
+    public GenerateurObjets getGenerateurObjets() {
+        return generateurObjets;
+    }
+    public GenerateurMurs getGenerateurMurs() {
+        return generateurMurs;
+    }
 
+    public Bulle getBulle() {
+        return bulle;
+    }
+
+    public Poing getPoing() {
+        return poing;
+    }
+
+    public Langue getLangue() {
+        return langue;
+    }
+
+    public AttaqueDeBase getAttaqueDeBase() {
+        return attaqueDeBase;
+    }
+
+    public Map getMap() {
+        return map;
+    }
 }

@@ -8,6 +8,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ public class GenerateurEnnemis {
 
     private ObservableList<Entité> listeEntite;
     Abomination Abomination = null;
-
-    public GenerateurEnnemis(){
+    private Environnement environnement;
+    public GenerateurEnnemis(Environnement environnement){
         listeEntite= FXCollections.observableArrayList();
+        this.environnement = environnement;
     }
 
     public void activerMob(Joueur joueur, Map map){
@@ -42,6 +44,7 @@ public class GenerateurEnnemis {
                     if (path != null && !path.isEmpty()) {
 
                         if (path.get(0) == 1) {
+
                             mob.déplacement("0");
                         } else if (path.get(0) == 2) {
                             mob.déplacement("1");
@@ -60,8 +63,9 @@ public class GenerateurEnnemis {
 
                     List<Integer> path = chercherChemin(map.getMap(), startX, startY, targetX, targetY);
 
+
                     if (path != null && !path.isEmpty()) {
-                        if (path.size() > 8){
+                        if (path.size() > 6){
                             ((Abomination) mob).attaque_proche();
                         } else {
                             ((Abomination) mob).attaque_loin();
@@ -98,17 +102,17 @@ public class GenerateurEnnemis {
 
                 break;
             case 2:
-                HeadLess HeadLess = new HeadLess(this,map, joueur); // Créer un nouveau slime
+                HeadLess HeadLess = new HeadLess(environnement); // Créer un nouveau slime
                 listeEntite.add(HeadLess);
                 setEnnemisPos(HeadLess);
                 break;
             case 3:
-                Faker Faker = new Faker(this,map, joueur); // Créer un nouveau slime
+                Faker Faker = new Faker(environnement); // Créer un nouveau slime
                 listeEntite.add(Faker);
                 setEnnemisPos(Faker);
                 break;
             case 4:
-                Puddle Puddle = new Puddle(this,map, joueur); // Créer un nouveau slime
+                Puddle Puddle = new Puddle(environnement); // Créer un nouveau slime
                 listeEntite.add(Puddle);
                 setEnnemisPos(Puddle);
                 break;
@@ -119,7 +123,7 @@ public class GenerateurEnnemis {
                 break;
 
             default:
-                Slime slime = new Slime(this,map, joueur); // Créer un nouveau slime
+                Slime slime = new Slime(environnement); // Créer un nouveau slime
                 listeEntite.add(slime);
                 setEnnemisPos(slime);
 

@@ -4,6 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
@@ -12,9 +13,9 @@ public abstract class Objets extends Entité {
     private Joueur joueur;
     private IntegerProperty nbFoisRecuperable;
 
-    public Objets(String idPouvoir, Map map, GenerateurObjets generateurObjets, Joueur joueur) {
-        super(idPouvoir, map, generateurObjets);
-        this.joueur = joueur;
+    public Objets(String idPouvoir, Environnement environnement) {
+        super(idPouvoir,environnement);
+        this.joueur = environnement.getJoueur();
         nbFoisRecuperable=new SimpleIntegerProperty(1);
 
 

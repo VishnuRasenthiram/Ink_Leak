@@ -4,6 +4,9 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.*;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetBulle;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetLangue;
+import universite_paris8.iut.ink_leak.Modele.Entité.Objets.ObjetRecuperable.ObjetPoing;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueObjets.*;
 
 public class ListeObjetsObs implements ListChangeListener<Objets> {

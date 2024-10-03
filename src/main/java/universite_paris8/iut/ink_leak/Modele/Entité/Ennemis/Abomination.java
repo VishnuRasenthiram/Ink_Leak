@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
@@ -20,10 +21,10 @@ public class Abomination extends Entité {
 
     private IntegerProperty phaseProperty;
 
-    public Abomination(GenerateurEnnemis generateurEnnemis, Map map, Joueur joueur) {
+    public Abomination(Environnement environnement) {
 
-        super("Abomination" + cpt, 30, 1, 256, 256, 2, 200, map, generateurEnnemis, null, null);
-        this.joueur = joueur;
+        super("Abomination" + cpt, 30, 1, 256, 256, 2, 200, environnement);
+        this.joueur = environnement.getJoueur();
         this.phaseProperty = new SimpleIntegerProperty(1);
         cpt++;
     }

@@ -4,13 +4,14 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Bulle extends Pouvoirs{
 
-    public Bulle(Map map,GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super("bulle", 1, 32, 32, 3,true, map, generateurEnnemis,joueur);
+    public Bulle(Environnement environnement) {
+        super("bulle", 1, 32, 32, 3,true,environnement);
     }
 
     @Override

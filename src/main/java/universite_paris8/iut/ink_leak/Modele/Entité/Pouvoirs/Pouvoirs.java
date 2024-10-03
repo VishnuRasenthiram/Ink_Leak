@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Murs.Mur;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
@@ -14,9 +15,9 @@ public abstract class Pouvoirs extends Entité {
     private Joueur joueur;
     private BooleanProperty estEnVieProperty;
 
-    public Pouvoirs(String nom_entite, int attaque_entite, double largeur,double longueur, int vitesse_entite,boolean estEnVie, Map map, GenerateurEnnemis generateurEnnemis, Joueur joueur) {
-        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0, map, generateurEnnemis,null,null);
-        this.joueur = joueur;
+    public Pouvoirs(String nom_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, boolean estEnVie, Environnement environnement) {
+        super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0,environnement);
+        this.joueur=environnement.getJoueur();
         this.estEnVieProperty = new SimpleBooleanProperty(estEnVie);
     }
 
@@ -24,9 +25,9 @@ public abstract class Pouvoirs extends Entité {
     @Override
     public void attaque() {
         ArrayList<Mur> mursEnleve= new ArrayList<>();
-        for(Mur mur :joueur.getGenerateurMurs().getListeMurs()){
+        for(Mur mur :super.getGenerateurMurs().getListeMurs()){
             if(mur.enContact(this)){
-                mursEnleve=mur.déplacementMur(this.getOrientation(),joueur);
+                mursEnleve=mur.déplacementMur(this.getOrientation());
                 this.setEstEnVie(false);
             }
         }

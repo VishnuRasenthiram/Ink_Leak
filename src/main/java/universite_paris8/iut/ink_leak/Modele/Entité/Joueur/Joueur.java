@@ -264,12 +264,6 @@ public class Joueur extends Entité {
         else this.setVie_entite(this.getVie() + nb_vie_gagnee);
     }
 
-    public IntegerProperty getOppacitéProperty() {
-        return oppacitéProperty;
-    }
-    public void setOppacitéProperty(int oppacité) {
-        this.oppacitéProperty.set(oppacité);
-    }
     public boolean getBougable(){
         return bougable;
 

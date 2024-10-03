@@ -287,10 +287,6 @@ public abstract class Entité {
         return nom_entite;
     }
 
-    public void setNom_entite(String nom_entite) {
-        this.nom_entite = nom_entite;
-    }
-
     public IntegerProperty getVie_entiteProperty() {
         return vie_entiteProperty;
     }
@@ -305,12 +301,6 @@ public abstract class Entité {
     public int getAttaque_entite() {
         return attaque_entite;
     }
-
-    public void setAttaque_entite(int attaque_entite) {
-        this.attaque_entite = attaque_entite;
-    }
-
-    public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
 
     public double getLongueur() {
         return longueur;
@@ -334,29 +324,10 @@ public abstract class Entité {
         return map;
     }
 
-    public GenerateurObjets getGenerateurObjets() {
-        return generateurObjets;
-    }
-
     public GenerateurMurs getGenerateurMurs() {
         return generateurMurs;
     }
 
-    public long getDernier_degat() {
-        return dernier_degat;
-    }
-
-    public void setDernier_degat(long dernier_degat) {
-        this.dernier_degat = dernier_degat;
-    }
-
-    public long getInvincibilite() {
-        return invincibilite;
-    }
-
-    public void setInvincibilite(long invincibilite) {
-        this.invincibilite = invincibilite;
-    }
     public ObjectProperty<MovementState> getMovementStateProperty() {
         return movementStateProperty;
     }

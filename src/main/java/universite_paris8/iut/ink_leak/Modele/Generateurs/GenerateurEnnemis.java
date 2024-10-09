@@ -92,44 +92,60 @@ public class GenerateurEnnemis {
     public void TuerToutLesEnnemis(){
         listeEntite.clear();
     }
-    public void genererEnnemis( Map map, Joueur joueur, Abomination Boss){
-        if (Abomination == null && Boss != null){
-            Abomination = Boss;
+    public void creeEnnemis(String nomEnnemi) {
+        Entité nouvelEnnemi = null;
 
+        switch (nomEnnemi) {
+            case "Slime":
+                nouvelEnnemi = new Slime(this, map, joueur);
+                break;
+            case "HeadLess":
+                nouvelEnnemi = new HeadLess(this, map, joueur);
+                break;
+            case "Faker":
+                nouvelEnnemi = new Faker(this, map, joueur);
+                break;
+            case "Puddle":
+                nouvelEnnemi = new Puddle(this, map, joueur);
+                break;
+            default:
+                System.err.println("Type d'ennemi inconnu : " + nomEnnemi);
+                return;
         }
-        switch (map.getNumMap()){
-            case 1:
 
+        if (nouvelEnnemi != null) {
+            listeEntite.add(nouvelEnnemi);
+            setEnnemisPos(nouvelEnnemi);
+        }
+    }
+
+
+    public void genererEnnemis(Abomination Boss) {
+        if (Abomination == null && Boss != null) {
+            Abomination = Boss;
+        }
+        switch (environnement.getMap().getNumMap()) {
+            case 1:
+                creeEnnemis("Slime", map, joueur);
                 break;
             case 2:
-                HeadLess HeadLess = new HeadLess(environnement); // Créer un nouveau slime
-                listeEntite.add(HeadLess);
-                setEnnemisPos(HeadLess);
+                creeEnnemis("HeadLess", map, joueur);
                 break;
             case 3:
-                Faker Faker = new Faker(environnement); // Créer un nouveau slime
-                listeEntite.add(Faker);
-                setEnnemisPos(Faker);
+                creeEnnemis("Faker", map, joueur);
                 break;
             case 4:
-                Puddle Puddle = new Puddle(environnement); // Créer un nouveau slime
-                listeEntite.add(Puddle);
-                setEnnemisPos(Puddle);
+                creeEnnemis("Puddle", map, joueur);
                 break;
             case 5:
                 listeEntite.add(Abomination);
                 Abomination.setPosXProperty(198);
                 Abomination.setPosYProperty(0);
                 break;
-
             default:
-                Slime slime = new Slime(environnement); // Créer un nouveau slime
-                listeEntite.add(slime);
-                setEnnemisPos(slime);
-
+                creeEnnemis("Slime", map, joueur);
                 break;
         }
-
     }
 
     private void setEnnemisPos(Entité enti){

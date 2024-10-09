@@ -32,15 +32,12 @@ import universite_paris8.iut.ink_leak.Controller.Observable.PouvoirEnCoursObs;
 import universite_paris8.iut.ink_leak.Modele.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.*;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Murs.Mur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Objets.Objets;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Pouvoirs;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
+
 import universite_paris8.iut.ink_leak.Vue.Musique;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueEnnemis.VueBoss;
 import universite_paris8.iut.ink_leak.Vue.VueEntité.VueJoueur.VueAttaque.VueAttaque;
@@ -50,8 +47,7 @@ import universite_paris8.iut.ink_leak.Vue.VueTexte;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -67,19 +63,6 @@ public class Controller implements Initializable {
     private Environnement env;
     private Joueur joueur;
 
-
-
-    @FXML
-    private Label txt;
-    private Label dialogueLabel;
-    @FXML
-    private Button optionButton1;
-    @FXML
-    private Button optionButton2;
-    @FXML
-    private Button optionButton3;
-    @FXML
-    private VBox QuizBox;
     @FXML
     private TilePane tuileMap;
     @FXML
@@ -111,10 +94,7 @@ public class Controller implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        this.
-
-
-                env = new Environnement(map);
+        this.env = new Environnement(map);
         joueur = env.getJoueur();
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane, ink, joueur));
 

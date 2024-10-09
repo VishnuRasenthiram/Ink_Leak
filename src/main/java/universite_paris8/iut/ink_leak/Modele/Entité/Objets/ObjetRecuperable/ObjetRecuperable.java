@@ -16,7 +16,7 @@ public abstract class ObjetRecuperable extends Objets {
     public void action() {
         if(super.getJoueur().enContact(this) && super.getNbFoisRecuperable()>0){
             super.setNbFoisRecuperable(super.getNbFoisRecuperable()-1);
-            super.getJoueur().ajoutPouvoir(pouvoirs);
+            super.getEnvironnement().getJoueur().ajoutPouvoir(this.pouvoirs);
         }
     }
 }

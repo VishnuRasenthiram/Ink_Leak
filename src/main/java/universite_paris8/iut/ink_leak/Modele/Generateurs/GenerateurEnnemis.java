@@ -92,21 +92,21 @@ public class GenerateurEnnemis {
     public void TuerToutLesEnnemis(){
         listeEntite.clear();
     }
-    public void creeEnnemis(String nomEnnemi) {
+    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
         Entité nouvelEnnemi = null;
 
         switch (nomEnnemi) {
             case "Slime":
-                nouvelEnnemi = new Slime(this, map, joueur);
+                nouvelEnnemi = new Slime( environnement);
                 break;
             case "HeadLess":
-                nouvelEnnemi = new HeadLess(this, map, joueur);
+                nouvelEnnemi = new HeadLess(environnement);
                 break;
             case "Faker":
-                nouvelEnnemi = new Faker(this, map, joueur);
+                nouvelEnnemi = new Faker(environnement);
                 break;
             case "Puddle":
-                nouvelEnnemi = new Puddle(this, map, joueur);
+                nouvelEnnemi = new Puddle( environnement);
                 break;
             default:
                 System.err.println("Type d'ennemi inconnu : " + nomEnnemi);
@@ -126,16 +126,16 @@ public class GenerateurEnnemis {
         }
         switch (environnement.getMap().getNumMap()) {
             case 1:
-                creeEnnemis("Slime", map, joueur);
+                creeEnnemis("Slime", environnement);
                 break;
             case 2:
-                creeEnnemis("HeadLess", map, joueur);
+                creeEnnemis("HeadLess", environnement);
                 break;
             case 3:
-                creeEnnemis("Faker", map, joueur);
+                creeEnnemis("Faker", environnement);
                 break;
             case 4:
-                creeEnnemis("Puddle", map, joueur);
+                creeEnnemis("Puddle", environnement);
                 break;
             case 5:
                 listeEntite.add(Abomination);
@@ -143,7 +143,7 @@ public class GenerateurEnnemis {
                 Abomination.setPosYProperty(0);
                 break;
             default:
-                creeEnnemis("Slime", map, joueur);
+                creeEnnemis("Slime", environnement);
                 break;
         }
     }

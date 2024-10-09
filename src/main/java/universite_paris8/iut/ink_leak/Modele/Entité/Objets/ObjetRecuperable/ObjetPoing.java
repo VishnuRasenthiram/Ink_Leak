@@ -8,6 +8,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public class ObjetPoing extends ObjetRecuperable {
 
     public ObjetPoing( Environnement environnement) {
+
         super("ObjetPoing",  environnement,environnement.getPoing());
 
     }

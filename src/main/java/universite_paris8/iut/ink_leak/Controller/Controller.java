@@ -82,11 +82,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         jeuFini = false;
         this.tempsDeRechargeJ = 0;
         this.tempsDeRechargeK = 0;
         this.map = new Map();
-
+        this.env = new Environnement(map);
         vueMap = new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink = new VueJoueur(mainPane, interfacePane);
 
@@ -94,7 +95,7 @@ public class Controller implements Initializable {
         gameLoop();
         gameLoop.play();
 
-        this.env = new Environnement(map);
+
         joueur = env.getJoueur();
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane, ink, joueur));
 
@@ -119,7 +120,7 @@ public class Controller implements Initializable {
 
             }
         });
-        env.getGenerateurEnnemis().genererEnnemis(map, joueur, Abomination);
+        env.getGenerateurEnnemis().genererEnnemis(Abomination);
 
         vT = new VueTexte(env, mainPane);
 

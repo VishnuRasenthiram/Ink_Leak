@@ -31,15 +31,16 @@ public class Environnement {
         this.joueur = new Joueur("Entity",this);
         joueur.setEmplacement(8, 10);
         this.map = map;
+
+        this.attaqueDeBase= new AttaqueDeBase(this);
+        this.bulle =new Bulle( this);
+        this.poing = new Poing(this);
+        this.langue = new Langue(this);
+
         this.generateurEnnemis = new GenerateurEnnemis(this);
         this.generateurObjets = new GenerateurObjets(this);
         this.generateurMurs =new GenerateurMurs(this);
 
-
-        attaqueDeBase= new AttaqueDeBase(this);
-        bulle =new Bulle( this);
-        poing = new Poing(this);
-        langue = new Langue(this);
     }
 
     public void action(int temps) {
@@ -49,7 +50,7 @@ public class Environnement {
         }
 
         if (temps % 200 == 0) {
-            generateurEnnemis.genererEnnemis(map,joueur, null); }
+            generateurEnnemis.genererEnnemis(null); }
         if (temps % 10 == 0) {
             generateurEnnemis.activerMob(joueur, map);
         }

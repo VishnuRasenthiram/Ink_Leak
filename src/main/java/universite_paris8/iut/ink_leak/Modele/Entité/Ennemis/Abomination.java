@@ -42,12 +42,6 @@ public class Abomination extends Ennemi {
         setPhaseProperty(2);
     }
 
-
-    @Override
-    public void gagner_vie(int nb_vie_gagnee) {
-
-    }
-
     public void déplacement(String direction) {
 
     }

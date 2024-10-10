@@ -5,16 +5,9 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Map;
 
-
-public class Abomination extends Entité {
-    public static int cpt = 0;
-    public final Joueur joueur;
+public class Abomination extends Ennemi {
 
     private Timeline animationTimeline;
     private int iteration = 1;
@@ -23,10 +16,8 @@ public class Abomination extends Entité {
 
     public Abomination(Environnement environnement) {
 
-        super("Abomination" + cpt, 30, 1, 256, 256, 2, 200, environnement);
-        this.joueur = environnement.getJoueur();
+        super("Abomination" + cpt, 30, 256, environnement, environnement.getJoueur());
         this.phaseProperty = new SimpleIntegerProperty(1);
-        cpt++;
     }
 
     @Override

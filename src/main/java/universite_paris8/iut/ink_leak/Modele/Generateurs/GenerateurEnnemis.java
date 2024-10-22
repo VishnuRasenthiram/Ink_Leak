@@ -9,10 +9,7 @@ import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-
-import static universite_paris8.iut.ink_leak.Modele.AEtoile.chercherChemin;
 
 
 public class GenerateurEnnemis {
@@ -30,7 +27,7 @@ public class GenerateurEnnemis {
         ArrayList<Entité> listeMort = new ArrayList<>();
         if (!listeEntite.isEmpty()) {
             for (Entité mob : listeEntite) {
-                if (mob instanceof HeadLess) {
+                /*if (mob instanceof HeadLess) {
                     int startX = mob.coorDansLeTableauX(mob.getPosX());
                     int startY = mob.coorDansLeTableauY(mob.getPosY());
                     int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
@@ -53,7 +50,8 @@ public class GenerateurEnnemis {
                         }
                     }
 
-                } else if (mob instanceof Abomination) {
+                } else */
+                /*if (mob instanceof Abomination) {
                     int startX = mob.coorDansLeTableauX(mob.getPosX() + 128);
                     int startY = mob.coorDansLeTableauY(mob.getPosY() + 150);
                     int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
@@ -70,11 +68,11 @@ public class GenerateurEnnemis {
                         }
 
                     }
-                } else if (mob instanceof Slime) {
+                } *//*else if (mob instanceof Slime) {
                     mob.déplacement("4");
-                } else {
-                    mob.déplacement("5");
-                }
+                }*/
+                mob.déplacement("5");
+
                 if (mob.getVie() == 0) {
                     listeMort.add(mob);
                 }

@@ -7,6 +7,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 
+import java.util.List;
+
+import static universite_paris8.iut.ink_leak.Modele.AEtoile.chercherChemin;
+
 public class Abomination extends Ennemi {
 
     private Timeline animationTimeline;
@@ -34,6 +38,26 @@ public class Abomination extends Ennemi {
         animationTimeline.play();
     }
 
+    public void déplacement(String direction) {
+        int startX = coorDansLeTableauX(getPosX() + 128);
+        int startY = coorDansLeTableauY(getPosY() + 150);
+        int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
+        int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 16);
+
+        List<Integer> path = chercherChemin(getEnvironnement().getMap().getMap(), startX, startY, targetX, targetY);
+
+
+        if (path != null && !path.isEmpty()) {
+            if (path.size() > 6) {
+                attaque_proche();
+            } else {
+                attaque_loin();
+            }
+
+        }
+
+    }
+
     public void attaque_proche() {
         setPhaseProperty(1);
     }
@@ -42,9 +66,6 @@ public class Abomination extends Ennemi {
         setPhaseProperty(2);
     }
 
-    public void déplacement(String direction) {
-
-    }
 
     public void setPhaseProperty(int phase) {
         this.phaseProperty.set(phase);

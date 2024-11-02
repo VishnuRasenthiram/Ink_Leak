@@ -23,68 +23,6 @@ public class GenerateurEnnemis {
         this.environnement = environnement;
     }
 
-    public void activerMob(Joueur joueur, Map map) {
-        ArrayList<Entité> listeMort = new ArrayList<>();
-        if (!listeEntite.isEmpty()) {
-            for (Entité mob : listeEntite) {
-                /*if (mob instanceof HeadLess) {
-                    int startX = mob.coorDansLeTableauX(mob.getPosX());
-                    int startY = mob.coorDansLeTableauY(mob.getPosY());
-                    int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
-                    int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 16);
-                    if (mob.getOrientation().equals("O")) startX = startX + 1;
-
-                    List<Integer> path = chercherChemin(map.getMap(), startX, startY, targetX, targetY);
-
-                    if (path != null && !path.isEmpty()) {
-
-                        if (path.get(0) == 1) {
-
-                            mob.déplacement("0");
-                        } else if (path.get(0) == 2) {
-                            mob.déplacement("1");
-                        } else if (path.get(0) == 3) {
-                            mob.déplacement("2");
-                        } else if (path.get(0) == 4) {
-                            mob.déplacement("3");
-                        }
-                    }
-
-                } else */
-                /*if (mob instanceof Abomination) {
-                    int startX = mob.coorDansLeTableauX(mob.getPosX() + 128);
-                    int startY = mob.coorDansLeTableauY(mob.getPosY() + 150);
-                    int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
-                    int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 16);
-
-                    List<Integer> path = chercherChemin(map.getMap(), startX, startY, targetX, targetY);
-
-
-                    if (path != null && !path.isEmpty()) {
-                        if (path.size() > 6) {
-                            ((Abomination) mob).attaque_proche();
-                        } else {
-                            ((Abomination) mob).attaque_loin();
-                        }
-
-                    }
-                } *//*else if (mob instanceof Slime) {
-                    mob.déplacement("4");
-                }*/
-                mob.déplacement("5");
-
-                if (mob.getVie() == 0) {
-                    listeMort.add(mob);
-                }
-
-
-            }
-        }
-        for (Entité ennemisMort : listeMort) {
-            listeEntite.remove(ennemisMort);
-        }
-
-    }
 
     public void TuerToutLesEnnemis() {
         listeEntite.clear();

@@ -19,7 +19,7 @@ public class Environnement {
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
     private GenerateurMurs generateurMurs;
-
+    private ActiveurMob ActiveurMob;
     private Map map;
 
     private Bulle bulle;
@@ -40,7 +40,7 @@ public class Environnement {
         this.generateurEnnemis = new GenerateurEnnemis(this);
         this.generateurObjets = new GenerateurObjets(this);
         this.generateurMurs =new GenerateurMurs(this);
-
+        this.ActiveurMob = new ActiveurMob(this.generateurEnnemis);
     }
 
     public void action(int temps) {
@@ -51,8 +51,8 @@ public class Environnement {
 
         if (temps % 200 == 0) {
             generateurEnnemis.genererEnnemis(null); }
-        if (temps % 10 == 0) {
-            generateurEnnemis.activerMob(joueur, map);
+        if (temps % 2 == 0) {
+           ActiveurMob.activerMob();
         }
 
         if(generateurObjets.getListeObjets()!=null){

@@ -5,7 +5,7 @@ module universite_paris8.iut.ink_leak {
     requires org.controlsfx.controls;
     requires java.sql;
     requires java.desktop;
-    requires org.apache.logging.log4j;
+    //requires org.apache.logging.log4j;
 
     opens universite_paris8.iut.ink_leak to javafx.fxml;
     exports universite_paris8.iut.ink_leak;

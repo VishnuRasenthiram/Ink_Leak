@@ -37,22 +37,29 @@ public abstract class Pouvoirs extends Entité {
     }
 
     public void setPosition(){
-        if (joueur.getOrientation() == "N") {
-            super.setPosXProperty(joueur.getPosX());
-            super.setPosYProperty(joueur.getPosY() - 32);
+        int[] liste=orientationToPosition(joueur.getOrientation());
+
+        super.setPosXProperty(joueur.getPosX()+liste[0]);
+        super.setPosYProperty(joueur.getPosY()+liste[1]);
+
+    }
+
+    private int[] orientationToPosition(String orientation){
+
+        switch (orientation){
+            case "N":
+                return new int[]{0,-32};
+            case "S":
+                return new int[]{0,32};
+            case "E":
+                return new int[]{32,0};
+            case "W":
+                return new int[]{-32,0};
+            default:
+                return new int[]{0,0};
         }
-        else if (joueur.getOrientation() == "S") {
-            super.setPosXProperty(joueur.getPosX());
-            super.setPosYProperty(joueur.getPosY() + 32);
-        }
-        else if (joueur.getOrientation() == "E") {
-            super.setPosXProperty(joueur.getPosX() + 32);
-            super.setPosYProperty(joueur.getPosY());
-        }
-        else {
-            super.setPosXProperty(joueur.getPosX() - 32);
-            super.setPosYProperty(joueur.getPosY());
-        }
+
+
     }
 
     @Override

@@ -13,7 +13,7 @@ import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 
 
 public class Environnement {
-
+    private static Environnement uniqueInstance=null;
     private Joueur joueur;
 
     private GenerateurEnnemis generateurEnnemis;
@@ -27,8 +27,8 @@ public class Environnement {
     private Langue langue;
     private AttaqueDeBase attaqueDeBase;
 
-    public Environnement(Map map) {
-        this.joueur = new Joueur("Entity",this);
+    private Environnement(Map map) {
+        this.joueur =  Joueur.getInstance("Entity",this);
         joueur.setEmplacement(8, 10);
         this.map = map;
 
@@ -41,6 +41,13 @@ public class Environnement {
         this.generateurObjets = new GenerateurObjets(this);
         this.generateurMurs =new GenerateurMurs(this);
         this.ActiveurMob = new ActiveurMob(this.generateurEnnemis);
+    }
+
+    public static Environnement getInstance(Map map) {
+        if(uniqueInstance==null) {
+            uniqueInstance= new Environnement(map);
+        }
+        return uniqueInstance;
     }
 
     public void action(int temps) {

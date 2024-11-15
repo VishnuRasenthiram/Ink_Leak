@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class GenerateurEnnemis {
+public abstract class GenerateurEnnemis {
 
     private ObservableList<Entité> listeEntite;
     Abomination Abomination = null;
@@ -28,32 +28,7 @@ public class GenerateurEnnemis {
         listeEntite.clear();
     }
 
-    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
-        Entité nouvelEnnemi = null;
-
-        switch (nomEnnemi) {
-            case "Slime":
-                nouvelEnnemi = new Slime(environnement);
-                break;
-            case "HeadLess":
-                nouvelEnnemi = new HeadLess(environnement);
-                break;
-            case "Faker":
-                nouvelEnnemi = new Faker(environnement);
-                break;
-            case "Puddle":
-                nouvelEnnemi = new Puddle(environnement);
-                break;
-            default:
-                System.err.println("Type d'ennemi inconnu : " + nomEnnemi);
-                return;
-        }
-
-        if (nouvelEnnemi != null) {
-            listeEntite.add(nouvelEnnemi);
-            setEnnemisPos(nouvelEnnemi);
-        }
-    }
+    public abstract void creeEnnemis(String nomEnnemi, Environnement environnement);
 
 
     public void genererEnnemis(Abomination Boss) {
@@ -81,7 +56,7 @@ public class GenerateurEnnemis {
         }
     }
 
-    private void setEnnemisPos(Entité enti) {
+    public void setEnnemisPos(Entité enti) {
 
         int random = new Random().nextInt(3);
         switch (random) {

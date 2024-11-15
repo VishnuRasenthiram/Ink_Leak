@@ -7,6 +7,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.GenMap1;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
@@ -37,7 +38,7 @@ public class Environnement {
         this.poing = new Poing(this);
         this.langue = new Langue(this);
 
-        this.generateurEnnemis = new GenerateurEnnemis(this);
+        this.generateurEnnemis = new GenMap1(this);
         this.generateurObjets = new GenerateurObjets(this);
         this.generateurMurs =new GenerateurMurs(this);
         this.ActiveurMob = new ActiveurMob(this.generateurEnnemis);

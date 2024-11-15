@@ -1,34 +1,39 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Ennemis;
-import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
+
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Map;
 
+import java.util.List;
 
-public class HeadLess extends Entité {
-    public static int cpt=0;
-    public final Joueur joueur;
+import static universite_paris8.iut.ink_leak.Modele.AEtoile.chercherChemin;
 
-    public HeadLess(Environnement environnement){
+public class HeadLess extends Ennemi {
 
-        super("Headless"+cpt, 2, 1,32, 32,2,200, environnement);
-        this.joueur = environnement.getJoueur();
-        cpt++;
+    public HeadLess(Environnement environnement) {
+        super("Headless" + cpt, 2, 32, environnement, environnement.getJoueur());
     }
 
-    @Override
-    public void attaque() {
-        if(this.enContact(joueur)){
-            joueur.prendre_degat(1);
+    public void déplacement(String direction) {
+        int startX = coorDansLeTableauX(getPosX());
+        int startY = coorDansLeTableauY(getPosY());
+        int targetX = joueur.coorDansLeTableauX(joueur.getPosX() + 16);
+        int targetY = joueur.coorDansLeTableauY(joueur.getPosY() + 16);
+        if (getOrientation().equals("O")) startX = startX + 1;
+
+        List<Integer> path = chercherChemin(getEnvironnement().getMap().getMap(), startX, startY, targetX, targetY);
+
+        if (path != null && !path.isEmpty()) {
+
+            if (path.get(0) == 1) {
+
+                super.déplacement("0");
+            } else if (path.get(0) == 2) {
+                super.déplacement("1");
+            } else if (path.get(0) == 3) {
+                super.déplacement("2");
+            } else if (path.get(0) == 4) {
+                super.déplacement("3");
+            }
         }
-    }
-
-
-
-    @Override
-    public void gagner_vie(int nb_vie_gagnee) {
-
     }
 }
 

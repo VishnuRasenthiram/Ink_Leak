@@ -27,8 +27,6 @@ public abstract class Entité {
     private Environnement environnement;
 
 
-
-
     private final ObjectProperty<MovementState> movementStateProperty;
 
 
@@ -41,10 +39,10 @@ public abstract class Entité {
         this.longueur=longueur;
         this.position=new Position();
         this.orientationProperty = new SimpleStringProperty("S");
-        this.invincibilite =invincibilite;
+        this.invincibilite = invincibilite;
         this.dernier_degat = 0;
 
-        this.environnement=environnement;
+        this.environnement = environnement;
 
         this.movementStateProperty = new SimpleObjectProperty<>(MovementState.IDLE);
         this.maxVie = vie_entite;
@@ -62,83 +60,89 @@ public abstract class Entité {
 
     public boolean peutAller(double x, double y, Map map) {
 
-        if (!estDansMap(x, y,  map)) {
+        if (!estDansMap(x, y, map)) {
             return false;
-        }
-        else {
+        } else {
 
-            int[] mur={2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23};
-            int solDegat=3;
+            int[] mur = {2, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23};
+            int solDegat = 3;
 
 
-            for(int i : mur){
-                if(verifCaseSurCoord(i,x,y)){
+            for (int i : mur) {
+                if (verifCaseSurCoord(i, x, y)) {
                     return false;
                 }
             }
-            if(verifCaseSurCoord(solDegat,x,y)){
+            if (verifCaseSurCoord(solDegat, x, y)) {
                 this.prendre_degat(1);
             }
         }
 
         return true;
     }
+
     public int verifierInteractionEnFace(double x, double y) {
-        if(verifCaseSurCoord(1,x,y)){
+        if (verifCaseSurCoord(1, x, y)) {
             return 1;
-        }else if(verifCaseSurCoord(2,x,y)) {
+        } else if (verifCaseSurCoord(2, x, y)) {
             return 2;
-        }else if(verifCaseSurCoord(6,x,y)){
+        } else if (verifCaseSurCoord(6, x, y)) {
             return 6;
-        }else if(verifCaseSurCoord(22,x,y)){
+        } else if (verifCaseSurCoord(22, x, y)) {
             return 22;
-        } else if(verifCaseSurCoord(24,x,y)){
+        } else if (verifCaseSurCoord(24, x, y)) {
             return 24;
-        }else if(verifCaseSurCoord(25,x,y)){
+        } else if (verifCaseSurCoord(25, x, y)) {
             return 25;
-        }else if(verifCaseSurCoord(26,x,y)){
+        } else if (verifCaseSurCoord(26, x, y)) {
             return 26;
-        } else if (verifCaseSurCoord(23,x,y)) {
+        } else if (verifCaseSurCoord(23, x, y)) {
             return 23;
         }
 
         return 0;
     }
-    private boolean verifCaseSurCoord(int cases, double x, double y) {
-        x = x +10;
-        int coord_Mur_GaucheX =coordEnIndiceGauche_Haut(x);
-        x = x -20;
-        int coord_Mur_DroitX =coordEnIndiceDroit_Bas(x);
-        y = y +10;
-        int coord_Mur_HautY =coordEnIndiceGauche_Haut(y);
-        y = y -20;
-        int coord_Mur_BasY =coordEnIndiceDroit_Bas(y);
 
-        Map map= getMap();
-        return map.getMap(coord_Mur_GaucheX,coord_Mur_HautY)==cases ||
-                map.getMap(coord_Mur_DroitX,coord_Mur_HautY)==cases ||
-                map.getMap(coord_Mur_GaucheX,coord_Mur_BasY)==cases ||
-                map.getMap(coord_Mur_DroitX,coord_Mur_BasY)==cases;
+    private boolean verifCaseSurCoord(int cases, double x, double y) {
+        x = x + 10;
+        int coord_Mur_GaucheX = coordEnIndiceGauche_Haut(x);
+        x = x - 20;
+        int coord_Mur_DroitX = coordEnIndiceDroit_Bas(x);
+        y = y + 10;
+        int coord_Mur_HautY = coordEnIndiceGauche_Haut(y);
+        y = y - 20;
+        int coord_Mur_BasY = coordEnIndiceDroit_Bas(y);
+
+        Map map = getMap();
+        return map.getMap(coord_Mur_GaucheX, coord_Mur_HautY) == cases ||
+                map.getMap(coord_Mur_DroitX, coord_Mur_HautY) == cases ||
+                map.getMap(coord_Mur_GaucheX, coord_Mur_BasY) == cases ||
+                map.getMap(coord_Mur_DroitX, coord_Mur_BasY) == cases;
     }
-    public int coorDansLeTableauY(double coord){
-        return (int)Math.ceil(coord)/32;
+
+    public int coorDansLeTableauY(double coord) {
+        return (int) Math.ceil(coord) / 32;
     }
-    public int coorDansLeTableauX(double coord){
-        return (int)Math.ceil(coord)/32;
+
+    public int coorDansLeTableauX(double coord) {
+        return (int) Math.ceil(coord) / 32;
     }
-    public int coordEnIndiceGauche_Haut(double coord){
-        return (int)Math.ceil(coord)/32;
+
+    public int coordEnIndiceGauche_Haut(double coord) {
+        return (int) Math.ceil(coord) / 32;
     }
-    public int coordEnIndiceDroit_Bas(double coord){
-        return (int)Math.ceil(coord+32)/32;
+
+    public int coordEnIndiceDroit_Bas(double coord) {
+        return (int) Math.ceil(coord + 32) / 32;
     }
+
     private boolean estDansMap(double x, double y, Map map) {
 
-        return (x>0 && y>0)
+        return (x > 0 && y > 0)
                 &&
-                (x<(map.getMap().length*32)-32
+                (x < (map.getMap().length * 32) - 32
                         &&
-                        y<(map.getMap().length*32)-32);
+                        y < (map.getMap().length * 32) - 32);
     }
 
     public boolean enContact(Entité entite2) {
@@ -152,18 +156,18 @@ public abstract class Entité {
         return false;
 
     }
+
     public boolean contientPixel(int x, int y) {
         return x >= getPosX() && x < getPosX() + getLongueur() &&
                 y >= getPosY() && y < getPosY() + getLargeur();
     }
 
-    public void prendre_degat(int degat){
+    public void prendre_degat(int degat) {
 
         if (this.getVie() - degat < 0) {
             this.setVie_entite(0);
 
-        }
-        else if (System.currentTimeMillis() - dernier_degat > invincibilite) {
+        } else if (System.currentTimeMillis() - dernier_degat > invincibilite) {
 
             this.setVie_entite(this.getVie() - degat);
             this.dernier_degat = System.currentTimeMillis();
@@ -171,53 +175,54 @@ public abstract class Entité {
     }
 
     public abstract void attaque();
-    public void déplacement(String déplacementDirection){
 
-            double x = getPosX();
-            double y = getPosY();
-            //transformer déplacement en int pour le switch
-            int direction = Integer.parseInt(déplacementDirection);
-            if (direction == 4){
-                direction = (int) (Math.random() * 9);
-            }
-            if (direction == 5){
-                attaque();
-            }
-            switch (direction) {
-                case 0:
-                    if (peutAller(x, y - getVitesse_entite(), getMap())) {
-                        setPosYProperty(y - getVitesse_entite());
-                        setOrientation("S");
+    public void déplacement(String déplacementDirection) {
 
-                    }
-                    break;
-                case 1:
-                    if (peutAller(x, y + getVitesse_entite(), getMap())) {
-                        setPosYProperty(y + getVitesse_entite());
-                        setOrientation("N");
-
-                    }
-                    break;
-                case 2:
-
-                    if (peutAller(x - getVitesse_entite(), y, getMap())) {
-                        setPosXProperty(x - getVitesse_entite());
-                        setOrientation("O");
-
-                    }
-                    break;
-                case 3:
-                    if (peutAller(x + getVitesse_entite(), y, getMap())) {
-                        setPosXProperty(x + getVitesse_entite());
-                        setOrientation("E");
-                    }
-                    break;
-                default:
-                    break;
-
-            }
+        double x = getPosX();
+        double y = getPosY();
+        //transformer déplacement en int pour le switch
+        int direction = Integer.parseInt(déplacementDirection);
+        if (direction == 4) {
+            direction = (int) (Math.random() * 9);
+        }
+        if (direction == 5) {
             attaque();
         }
+        switch (direction) {
+            case 0:
+                if (peutAller(x, y - getVitesse_entite(), getMap())) {
+                    setPosYProperty(y - getVitesse_entite());
+                    setOrientation("S");
+
+                }
+                break;
+            case 1:
+                if (peutAller(x, y + getVitesse_entite(), getMap())) {
+                    setPosYProperty(y + getVitesse_entite());
+                    setOrientation("N");
+
+                }
+                break;
+            case 2:
+
+                if (peutAller(x - getVitesse_entite(), y, getMap())) {
+                    setPosXProperty(x - getVitesse_entite());
+                    setOrientation("O");
+
+                }
+                break;
+            case 3:
+                if (peutAller(x + getVitesse_entite(), y, getMap())) {
+                    setPosXProperty(x + getVitesse_entite());
+                    setOrientation("E");
+                }
+                break;
+            default:
+                break;
+
+        }
+        attaque();
+    }
 
 
     public abstract void gagner_vie(int nb_vie_gagnee);
@@ -258,22 +263,20 @@ public abstract class Entité {
         position.setPosY(posY);
     }
 
-    public void setEmplacement(int x , int y ){
-        if(x==19){
-            setPosXProperty((x*32)-2);
-        } else if (x==0) {
-            setPosXProperty((x*32)+2);
+    public void setEmplacement(int x, int y) {
+        if (x == 19) {
+            setPosXProperty((x * 32) - 2);
+        } else if (x == 0) {
+            setPosXProperty((x * 32) + 2);
+        } else {
+            setPosXProperty(x * 32);
         }
-        else {
-            setPosXProperty(x*32);
-        }
-        if(y==19){
-            setPosYProperty((y*32)-2);
-        } else if (y==0) {
-            setPosYProperty((y*32)+2);
-        }
-        else {
-            setPosYProperty(y*32);
+        if (y == 19) {
+            setPosYProperty((y * 32) - 2);
+        } else if (y == 0) {
+            setPosYProperty((y * 32) + 2);
+        } else {
+            setPosYProperty(y * 32);
         }
 
     }
@@ -290,7 +293,8 @@ public abstract class Entité {
     public IntegerProperty getVie_entiteProperty() {
         return vie_entiteProperty;
     }
-    public int getVie(){
+
+    public int getVie() {
         return vie_entiteProperty.getValue();
     }
 
@@ -306,6 +310,7 @@ public abstract class Entité {
     public double getLongueur() {
         return longueur;
     }
+
     public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
@@ -313,6 +318,7 @@ public abstract class Entité {
     public double getLargeur() {
         return largeur;
     }
+
     public void setLargeur(double largeur) {
         this.largeur = largeur;
     }
@@ -329,12 +335,15 @@ public abstract class Entité {
     public ObjectProperty<MovementState> getMovementStateProperty() {
         return movementStateProperty;
     }
+
     public void setMovementState(MovementState movementState) {
         movementStateProperty.set(movementState);
     }
+
     public int getmaxVie() {
         return maxVie;
     }
+
     public Environnement getEnvironnement() {
         return environnement;
     }

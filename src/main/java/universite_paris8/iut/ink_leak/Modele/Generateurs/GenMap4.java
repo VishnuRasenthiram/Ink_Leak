@@ -11,8 +11,8 @@ public class GenMap4 extends GenerateurEnnemis {
     }
 
     @Override
-    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
-        Ennemi nouvelEnnemi = new Puddle(environnement);
+    public void creeEnnemis() {
+        Ennemi nouvelEnnemi = new Puddle(super.getEnvironnement());
         super.getListeEntite().add(nouvelEnnemi);
         super.setEnnemisPos(nouvelEnnemi);
     }

@@ -61,7 +61,7 @@ public abstract class Entité {
     }
 
     public boolean peutAller(double x, double y, Map map) {
-
+        return true;
         if (!estDansMap(x, y, map)) {
             return false;
         } else {

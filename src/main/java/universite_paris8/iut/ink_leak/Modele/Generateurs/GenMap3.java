@@ -11,8 +11,8 @@ public class GenMap3 extends GenerateurEnnemis {
     }
 
     @Override
-    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
-        Ennemi nouvelEnnemi = new Faker(environnement);
+    public void creeEnnemis() {
+        Ennemi nouvelEnnemi = new Faker(super.getEnvironnement());
         super.getListeEntite().add(nouvelEnnemi);
         super.setEnnemisPos(nouvelEnnemi);
     }

@@ -11,8 +11,8 @@ public class GenBossMap extends GenerateurEnnemis {
     }
 
     @Override
-    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
-        Ennemi nouvelEnnemi = new Abomination(environnement);
+    public void creeEnnemis() {
+        Ennemi nouvelEnnemi = new Abomination(super.getEnvironnement());
         super.getListeEntite().add(nouvelEnnemi);
         super.setEnnemisPos(nouvelEnnemi);
     }

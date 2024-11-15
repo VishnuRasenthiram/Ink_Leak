@@ -7,10 +7,7 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenMap1;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.*;
 
 
 public class Environnement {
@@ -70,6 +67,7 @@ public class Environnement {
     }
     public void changementDeMap(int interaction){
         map.setMap(porteToMap(interaction));
+
         joueur.setBougable(false);
         TuerToutLesEnnemis();
         generateurMurs.EnleverToutLesMurs();
@@ -85,18 +83,25 @@ public class Environnement {
         switch (interaction){
             case 6:
                 joueur.setEmplacement(9,11);
+                System.out.println(generateurEnnemis);
+                generateurEnnemis = new GenMap2(this);
+                System.out.println(generateurEnnemis);
                 return 1;
             case 22:
                 joueur.setEmplacement(0,19);
+                generateurEnnemis = new GenMap2(this);
                 return 2;
             case 24:
                 joueur.setEmplacement(19,0);
+                generateurEnnemis = new GenMap3(this);
                 return 3;
             case 25:
                 joueur.setEmplacement(19,19);
+                generateurEnnemis = new GenMap4(this);
                 return 4;
             case 26:
                 joueur.setEmplacement(10,19);
+                generateurEnnemis = new GenBossMap(this);
                 return 5;
             default:
                 joueur.setEmplacement(8,10);

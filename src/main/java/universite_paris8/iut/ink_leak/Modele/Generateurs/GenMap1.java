@@ -12,9 +12,10 @@ public class GenMap1 extends GenerateurEnnemis {
     }
 
     @Override
-    public void creeEnnemis(String nomEnnemi, Environnement environnement) {
-        Ennemi nouvelEnnemi = new Slime(environnement);
+    public void creeEnnemis() {
+        Ennemi nouvelEnnemi = new Slime(super.getEnvironnement());
         super.getListeEntite().add(nouvelEnnemi);
         super.setEnnemisPos(nouvelEnnemi);
+        System.out.println("ldfjdsfslkf");
     }
 }

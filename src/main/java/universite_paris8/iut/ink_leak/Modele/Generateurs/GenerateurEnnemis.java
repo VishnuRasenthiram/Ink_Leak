@@ -28,33 +28,10 @@ public abstract class GenerateurEnnemis {
         listeEntite.clear();
     }
 
-    public abstract void creeEnnemis(String nomEnnemi, Environnement environnement);
+    public abstract void creeEnnemis();
 
 
-    public void genererEnnemis(Abomination Boss) {
-        if (Abomination == null && Boss != null) {
-            Abomination = Boss;
-        }
-        switch (environnement.getMap().getNumMap()) {
-            case 2:
-                creeEnnemis("HeadLess", environnement);
-                break;
-            case 3:
-                creeEnnemis("Faker", environnement);
-                break;
-            case 4:
-                creeEnnemis("Puddle", environnement);
-                break;
-            case 5:
-                listeEntite.add(Abomination);
-                Abomination.setPosXProperty(198);
-                Abomination.setPosYProperty(0);
-                break;
-            default:
-                creeEnnemis("Slime", environnement);
-                break;
-        }
-    }
+    public void genererEnnemis(Abomination Boss) {creeEnnemis();}
 
     public void setEnnemisPos(Entité enti) {
 
@@ -81,5 +58,7 @@ public abstract class GenerateurEnnemis {
     public ObservableList<Entité> getListeEntite() {
         return listeEntite;
     }
+
+    public Environnement getEnvironnement() { return environnement; }
 
 }

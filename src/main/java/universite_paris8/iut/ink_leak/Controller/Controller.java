@@ -87,16 +87,17 @@ public class Controller implements Initializable {
         this.tempsDeRechargeJ = 0;
         this.tempsDeRechargeK = 0;
         this.map = new Map();
-        this.env = new Environnement(map);
+        this.env = Environnement.getInstance(map);
         vueMap = new VueMap(tuileMap, interfacePane, mainBorderPane);
         ink = new VueJoueur(mainPane, interfacePane);
 
-        vueMap.initMap(map, joueur);
+
         gameLoop();
         gameLoop.play();
 
 
         joueur = env.getJoueur();
+        vueMap.initMap(map, joueur);
         joueur.getOrientationProperty().addListener(new OrientationObs(mainPane, ink, joueur));
 
         joueur.getMovementStateProperty().addListener((obs, old, nouv) -> {

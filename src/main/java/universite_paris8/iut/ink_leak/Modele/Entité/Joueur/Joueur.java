@@ -15,7 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 
 public class Joueur extends Entité {
-
+    private static Joueur uniqueInstance=null;
     private Timeline timeline;
 
     private boolean bougable;
@@ -25,7 +25,7 @@ public class Joueur extends Entité {
     private IntegerProperty oppacitéProperty;
 
 
-    public Joueur(String nom_joueur, Environnement environnement) {
+    private Joueur(String nom_joueur, Environnement environnement) {
         super(nom_joueur, 6, 1, 30, 32, 1, 1000, environnement);
         this.listePouvoirs = FXCollections.observableArrayList();
         this.bougable = true;
@@ -33,6 +33,13 @@ public class Joueur extends Entité {
 
         this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
     }
+    public static Joueur getInstance(String nom_joueur, Environnement environnement) {
+        if(uniqueInstance==null) {
+            uniqueInstance= new Joueur(nom_joueur,environnement);
+        }
+        return uniqueInstance;
+    }
+
 
     //Change l'indice du pouvoir en cours et permet de revenir à 0 si on dépasse le nombre de pouvoir débloqué
     public void setPouvoir(int a) {

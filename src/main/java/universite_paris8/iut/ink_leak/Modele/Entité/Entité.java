@@ -8,6 +8,8 @@ import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Position;
 
+import java.util.ArrayList;
+
 public abstract class Entité {
 
     private double largeur;
@@ -69,11 +71,11 @@ public abstract class Entité {
 
 
             for (int i : mur) {
-                if (verifCaseSurCoord(i, x, y)) {
+                if (verifCaseSurCoord(i, x, y)==i) {
                     return false;
                 }
             }
-            if (verifCaseSurCoord(solDegat, x, y)) {
+            if (verifCaseSurCoord(solDegat, x, y)==solDegat) {
                 this.prendre_degat(1);
             }
         }
@@ -82,28 +84,18 @@ public abstract class Entité {
     }
 
     public int verifierInteractionEnFace(double x, double y) {
-        if (verifCaseSurCoord(1, x, y)) {
-            return 1;
-        } else if (verifCaseSurCoord(2, x, y)) {
-            return 2;
-        } else if (verifCaseSurCoord(6, x, y)) {
-            return 6;
-        } else if (verifCaseSurCoord(22, x, y)) {
-            return 22;
-        } else if (verifCaseSurCoord(24, x, y)) {
-            return 24;
-        } else if (verifCaseSurCoord(25, x, y)) {
-            return 25;
-        } else if (verifCaseSurCoord(26, x, y)) {
-            return 26;
-        } else if (verifCaseSurCoord(23, x, y)) {
-            return 23;
+        int[] liste= {1,2,6,22,24,25,26};
+
+        for (int i : liste) {
+            if(verifCaseSurCoord(i, x, y)==i){
+                return i;
+            }
         }
 
         return 0;
     }
 
-    private boolean verifCaseSurCoord(int cases, double x, double y) {
+    private int verifCaseSurCoord(int cases, double x, double y) {
         x = x + 10;
         int coord_Mur_GaucheX = coordEnIndiceGauche_Haut(x);
         x = x - 20;
@@ -114,10 +106,15 @@ public abstract class Entité {
         int coord_Mur_BasY = coordEnIndiceDroit_Bas(y);
 
         Map map = getMap();
-        return map.getMap(coord_Mur_GaucheX, coord_Mur_HautY) == cases ||
+        if(map.getMap(coord_Mur_GaucheX, coord_Mur_HautY) == cases ||
                 map.getMap(coord_Mur_DroitX, coord_Mur_HautY) == cases ||
                 map.getMap(coord_Mur_GaucheX, coord_Mur_BasY) == cases ||
-                map.getMap(coord_Mur_DroitX, coord_Mur_BasY) == cases;
+                map.getMap(coord_Mur_DroitX, coord_Mur_BasY) == cases)
+        {
+            return cases;
+        }
+        return 0;
+
     }
 
     public int coorDansLeTableauY(double coord) {

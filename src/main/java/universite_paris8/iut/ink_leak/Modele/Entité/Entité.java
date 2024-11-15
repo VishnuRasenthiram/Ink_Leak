@@ -6,6 +6,7 @@ import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
+import universite_paris8.iut.ink_leak.Modele.Position;
 
 public abstract class Entité {
 
@@ -21,8 +22,7 @@ public abstract class Entité {
     private IntegerProperty vie_entiteProperty;
     private StringProperty orientationProperty;
 
-    private DoubleProperty posXProperty;
-    private DoubleProperty posYProperty;
+    private Position position;
 
     private Environnement environnement;
 
@@ -39,8 +39,7 @@ public abstract class Entité {
         this.vitesse_entite = vitesse_entite;
         this.largeur = largeur;
         this.longueur=longueur;
-        this.posXProperty = new SimpleDoubleProperty();
-        this.posYProperty = new SimpleDoubleProperty();
+        this.position=new Position();
         this.orientationProperty = new SimpleStringProperty("S");
         this.invincibilite =invincibilite;
         this.dernier_degat = 0;
@@ -51,11 +50,11 @@ public abstract class Entité {
         this.maxVie = vie_entite;
 
     }
-
     public Entité(String nom_entite,Environnement environnement) {
         this(nom_entite,1,0,32,32,0,0,environnement);
 
     }
+
     public enum MovementState {
         IDLE,
         WALK,
@@ -224,11 +223,11 @@ public abstract class Entité {
     public abstract void gagner_vie(int nb_vie_gagnee);
 
     public double getPosX() {
-        return posXProperty.getValue();
+        return position.getPosX();
     }
 
     public DoubleProperty posXProperty() {
-        return posXProperty;
+        return position.posXPropertyProperty();
     }
 
     public String getOrientation() {
@@ -243,20 +242,20 @@ public abstract class Entité {
         this.orientationProperty.setValue(orientation);
     }
 
-    public void setPosXProperty(double posXProperty) {
-        this.posXProperty.setValue(posXProperty);
+    public void setPosXProperty(double posX) {
+        position.setPosX(posX);
     }
 
     public double getPosY() {
-        return posYProperty.getValue();
+        return position.getPosY();
     }
 
     public DoubleProperty posYProperty() {
-        return posYProperty;
+        return position.posYPropertyProperty();
     }
 
-    public void setPosYProperty(double posYProperty) {
-        this.posYProperty.set(posYProperty);
+    public void setPosYProperty(double posY) {
+        position.setPosY(posY);
     }
 
     public void setEmplacement(int x , int y ){
@@ -287,9 +286,6 @@ public abstract class Entité {
         return nom_entite;
     }
 
-    public void setNom_entite(String nom_entite) {
-        this.nom_entite = nom_entite;
-    }
 
     public IntegerProperty getVie_entiteProperty() {
         return vie_entiteProperty;
@@ -306,11 +302,6 @@ public abstract class Entité {
         return attaque_entite;
     }
 
-    public void setAttaque_entite(int attaque_entite) {
-        this.attaque_entite = attaque_entite;
-    }
-
-    public void setVitesse_entite(int speed) { this.vitesse_entite = speed; }
 
     public double getLongueur() {
         return longueur;
@@ -326,41 +317,15 @@ public abstract class Entité {
         this.largeur = largeur;
     }
 
-
-
     public Map getMap(){
         return environnement.getMap();
     }
 
-
-    public GenerateurEnnemis getGenerateurEnnemis() { return environnement.getGenerateurEnnemis(); }
-
-
-
-    public GenerateurObjets getGenerateurObjets() {
-        return environnement.getGenerateurObjets();
-    }
-
-    public GenerateurMurs getGenerateurMurs() {
+    public GenerateurMurs getGenerateurMurs(){
         return environnement.getGenerateurMurs();
     }
+    public GenerateurEnnemis getGenerateurEnnemis() { return environnement.getGenerateurEnnemis(); }
 
-
-    public long getDernier_degat() {
-        return dernier_degat;
-    }
-
-    public void setDernier_degat(long dernier_degat) {
-        this.dernier_degat = dernier_degat;
-    }
-
-    public long getInvincibilite() {
-        return invincibilite;
-    }
-
-    public void setInvincibilite(long invincibilite) {
-        this.invincibilite = invincibilite;
-    }
     public ObjectProperty<MovementState> getMovementStateProperty() {
         return movementStateProperty;
     }

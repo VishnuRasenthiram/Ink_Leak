@@ -111,6 +111,7 @@ public class Controller implements Initializable {
 
         env.getGenerateurEnnemis().getListeEntite().addListener(listenerEnnemis);
         Abomination Abomination = new Abomination(env);
+
         VueBoss VB = new VueBoss(mainPane, joueur, map);
         Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
             if (nouv.intValue() == 2) {
@@ -244,15 +245,7 @@ public class Controller implements Initializable {
 
                     //gestion changement de map
 
-                    /*
-                    if (dialogueController.onTargetDialogueReached() == false){
-                        PauseTransition pause = new PauseTransition(Duration.millis(1000));
-                        pause.setOnFinished(event -> {
-                            QuizBox.setVisible(false);
-                        });
-                        pause.play();
-                    }
-                    */
+
                     if (interaction == 22 || interaction == 6 ||interaction == 24 || interaction == 25 || interaction == 26 ) {
 
                         env.changementDeMap(interaction);

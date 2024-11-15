@@ -9,9 +9,6 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.Map;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 

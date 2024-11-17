@@ -35,10 +35,10 @@ public class Environnement {
         this.poing = new Poing(this);
         this.langue = new Langue(this);
 
-        this.generateurEnnemis = new GenMap1(this);
+        this.generateurEnnemis = new GenMapDepart(this);
         this.generateurObjets = new GenerateurObjets(this);
         this.generateurMurs =new GenerateurMurs(this);
-        this.ActiveurMob = new ActiveurMob(this.generateurEnnemis);
+        this.ActiveurMob = new ActiveurMob(this);
     }
 
     public static Environnement getInstance(Map map) {
@@ -55,7 +55,7 @@ public class Environnement {
         }
 
         if (temps % 200 == 0) {
-            generateurEnnemis.genererEnnemis(null); }
+            generateurEnnemis.genererEnnemis(); }
         if (temps % 2 == 0) {
            ActiveurMob.activerMob();
         }
@@ -66,10 +66,11 @@ public class Environnement {
 
     }
     public void changementDeMap(int interaction){
+        TuerToutLesEnnemis();
         map.setMap(porteToMap(interaction));
 
         joueur.setBougable(false);
-        TuerToutLesEnnemis();
+
         generateurMurs.EnleverToutLesMurs();
         generateurMurs.genererMurs();
         generateurObjets.EnleverToutLesObjets();
@@ -83,21 +84,18 @@ public class Environnement {
         switch (interaction){
             case 6:
                 joueur.setEmplacement(9,11);
-                System.out.println(generateurEnnemis);
-                generateurEnnemis = new GenMap2(this);
-                System.out.println(generateurEnnemis);
                 return 1;
             case 22:
                 joueur.setEmplacement(0,19);
-                generateurEnnemis = new GenMap2(this);
+                generateurEnnemis = new GenMapEau(this);
                 return 2;
             case 24:
                 joueur.setEmplacement(19,0);
-                generateurEnnemis = new GenMap3(this);
+                generateurEnnemis = new GenMapGlace(this);
                 return 3;
             case 25:
                 joueur.setEmplacement(19,19);
-                generateurEnnemis = new GenMap4(this);
+                generateurEnnemis = new GenMapLabyrinthe(this);
                 return 4;
             case 26:
                 joueur.setEmplacement(10,19);

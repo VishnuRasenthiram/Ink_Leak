@@ -2,18 +2,30 @@ package universite_paris8.iut.ink_leak.Modele.Generateurs;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Ennemi;
+import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
+
+import java.util.Random;
 
 public class GenBossMap extends GenerateurEnnemis {
 
     public GenBossMap(Environnement env) {
         super(env);
+
     }
 
     @Override
-    public void creeEnnemis() {
-        Ennemi nouvelEnnemi = new Abomination(super.getEnvironnement());
-        super.getListeEntite().add(nouvelEnnemi);
-        super.setEnnemisPos(nouvelEnnemi);
+    public Ennemi creeEnnemis() {
+        setBossDejaGenere(true);
+        return new Abomination(super.getEnvironnement());
+
     }
+    public void setEnnemisPos(Entité entity) {
+
+        entity.setPosYProperty(entity.getPosY() + 200);
+        entity.setPosXProperty(entity.getPosX() + 100);
+
+    }
+
+
 }

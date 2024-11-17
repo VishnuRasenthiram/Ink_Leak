@@ -122,7 +122,7 @@ public class Controller implements Initializable {
 
             }
         });
-        env.getGenerateurEnnemis().genererEnnemis(Abomination);
+        env.getGenerateurEnnemis().genererEnnemis();
 
         vT = new VueTexte(env, mainPane);
 

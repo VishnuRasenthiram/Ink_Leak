@@ -13,45 +13,37 @@ import java.util.Random;
 
 
 public abstract class GenerateurEnnemis {
-
-    private ObservableList<Entité> listeEntite;
-    Abomination Abomination = null;
+    private static GenerateurEnnemis uniqueInstance=null;
+    private static ObservableList<Entité> listeEntite=FXCollections.observableArrayList();;
     private Environnement environnement;
+    private Boolean bossDejaGenere =false;
 
     public GenerateurEnnemis(Environnement environnement) {
-        listeEntite = FXCollections.observableArrayList();
         this.environnement = environnement;
     }
 
+    public static GenerateurEnnemis getInstance() {
+        return uniqueInstance;
+    }
+    public static void setInstance(GenerateurEnnemis generateur) {
+        if (generateur != null) {
+            uniqueInstance = generateur;
+        }
+    }
 
     public void TuerToutLesEnnemis() {
         listeEntite.clear();
     }
 
-    public abstract void creeEnnemis();
+    public abstract Ennemi creeEnnemis();
+    public abstract void setEnnemisPos(Entité entity);
 
-
-    public void genererEnnemis(Abomination Boss) {creeEnnemis();}
-
-    public void setEnnemisPos(Entité enti) {
-
-        int random = new Random().nextInt(3);
-        switch (random) {
-            case 0:
-                enti.setPosYProperty(enti.getPosY() + 200);
-                enti.setPosXProperty(enti.getPosX() + 100);
-                break;
-            case 1:
-                enti.setPosYProperty(enti.getPosY() + 100);
-                enti.setPosXProperty(enti.getPosX() + 520);
-                break;
-
-            case 2:
-                enti.setPosYProperty(enti.getPosY() + 580);
-                enti.setPosXProperty(enti.getPosX() + 100);
-
+    public void genererEnnemis() {
+        if(!bossDejaGenere){
+            Ennemi ennemi= creeEnnemis();
+            setEnnemisPos(ennemi);
+            listeEntite.add(ennemi);
         }
-
 
     }
 
@@ -60,5 +52,7 @@ public abstract class GenerateurEnnemis {
     }
 
     public Environnement getEnvironnement() { return environnement; }
-
+    public void setBossDejaGenere(Boolean bossDejaGenere) {
+        this.bossDejaGenere = bossDejaGenere;
+    }
 }

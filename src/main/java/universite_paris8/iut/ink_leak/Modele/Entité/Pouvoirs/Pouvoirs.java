@@ -53,10 +53,8 @@ public abstract class Pouvoirs extends Entité {
                 return new int[]{0,32};
             case "E":
                 return new int[]{32,0};
-            case "W":
-                return new int[]{-32,0};
             default:
-                return new int[]{0,0};
+                return new int[]{-32,0};
         }
 
 

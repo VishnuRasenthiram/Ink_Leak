@@ -264,14 +264,14 @@ public abstract class Entité {
         if (x == 19) {
             setPosXProperty((x * 32) - 2);
         } else if (x == 0) {
-            setPosXProperty((x * 32) + 2);
+            setPosXProperty(2);
         } else {
             setPosXProperty(x * 32);
         }
         if (y == 19) {
             setPosYProperty((y * 32) - 2);
         } else if (y == 0) {
-            setPosYProperty((y * 32) + 2);
+            setPosYProperty(2);
         } else {
             setPosYProperty(y * 32);
         }

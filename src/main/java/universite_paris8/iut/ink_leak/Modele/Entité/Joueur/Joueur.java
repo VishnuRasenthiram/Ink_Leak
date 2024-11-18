@@ -64,7 +64,7 @@ public class Joueur extends Entité {
     }
 
     @Override
-    public void attaque() {
+    public void action() {
 
         getAttaqueDeBase().setEstEnVie(true);
         getAttaqueDeBase().déplacement(getOrientation());

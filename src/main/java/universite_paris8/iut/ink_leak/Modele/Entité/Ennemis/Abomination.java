@@ -25,7 +25,7 @@ public class Abomination extends Ennemi {
     }
 
     @Override
-    public void attaque() {
+    public void action() {
         animationTimeline = new Timeline();
         animationTimeline.setCycleCount(100);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), e -> {

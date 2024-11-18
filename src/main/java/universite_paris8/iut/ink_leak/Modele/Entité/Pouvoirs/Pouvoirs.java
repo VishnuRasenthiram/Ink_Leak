@@ -23,7 +23,7 @@ public abstract class Pouvoirs extends Entité {
 
     //Active les murs dès qu'un pouvoir est utilisé et enleve les murs qui sont cassé par le pouvoir
     @Override
-    public void attaque() {
+    public void action() {
         ArrayList<Mur> mursEnleve= new ArrayList<>();
         for(Mur mur :super.getGenerateurMurs().getListeMurs()){
             if(mur.enContact(this)){

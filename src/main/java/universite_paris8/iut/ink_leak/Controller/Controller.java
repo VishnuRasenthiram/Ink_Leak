@@ -1,17 +1,12 @@
 package universite_paris8.iut.ink_leak.Controller;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -178,7 +173,7 @@ public class Controller implements Initializable {
                     tempsDeRechargeJ = 1;
                     vA.afficheAttaque(joueur.getAttaqueDeBase());
                     ink.punchAnimation();
-                    joueur.attaque();
+                    joueur.action();
                     new Musique().jouer("src/main/resources/universite_paris8/iut/ink_leak/INK_LEAK_MUSIC/attaque.wav", 0.7f, 0);
                 }
             } else if (e.getCode() == KeyCode.K) {//attaque avec pouvoirs

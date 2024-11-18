@@ -18,7 +18,7 @@ public abstract class Ennemi extends Entité {
 
 
     @Override
-    public void attaque() {
+    public void action() {
         if (this.enContact(joueur)) {
             joueur.prendre_degat(1);
         }

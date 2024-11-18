@@ -22,8 +22,8 @@ public class GenBossMap extends GenerateurEnnemis {
     }
     public void setEnnemisPos(Entité entity) {
 
-        entity.setPosYProperty(entity.getPosY() + 200);
-        entity.setPosXProperty(entity.getPosX() + 100);
+        entity.setPosYProperty(entity.getPosY() );
+        entity.setPosXProperty(entity.getPosX()+200 );
 
     }
 

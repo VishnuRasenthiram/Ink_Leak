@@ -4,11 +4,8 @@ import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Position;
-
-import java.util.ArrayList;
 
 public abstract class Entité {
 
@@ -81,6 +78,8 @@ public abstract class Entité {
         }
 
         return true;
+
+
     }
 
     public int verifierInteractionEnFace(double x, double y) {
@@ -171,7 +170,7 @@ public abstract class Entité {
         }
     }
 
-    public abstract void attaque();
+    public abstract void action();
 
     public void déplacement(String déplacementDirection) {
 
@@ -183,7 +182,7 @@ public abstract class Entité {
             direction = (int) (Math.random() * 9);
         }
         if (direction == 5) {
-            attaque();
+            action();
         }
         switch (direction) {
             case 0:
@@ -218,7 +217,7 @@ public abstract class Entité {
                 break;
 
         }
-        attaque();
+        action();
     }
 
 

@@ -32,7 +32,7 @@ public abstract class Mur extends Entité {
     }
 
     @Override
-    public void attaque() {}
+    public void action() {}
     @Override
     public void déplacement(String déplacementDirection) {}
     @Override

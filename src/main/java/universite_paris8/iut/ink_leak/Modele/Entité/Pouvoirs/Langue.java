@@ -4,10 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Map;
 
 public class Langue extends Pouvoirs{
 
@@ -67,7 +64,7 @@ public class Langue extends Pouvoirs{
         timeline.play();
 
         timeline.setOnFinished(e -> {
-            super.attaque();
+            super.action();
             setEstEnVie(false);
         });
     }

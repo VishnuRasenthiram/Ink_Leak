@@ -4,11 +4,8 @@ import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
 import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Position;
-
-import java.util.ArrayList;
 
 public abstract class Entité {
 
@@ -38,8 +35,8 @@ public abstract class Entité {
         this.attaque_entite = attaque_entite;
         this.vitesse_entite = vitesse_entite;
         this.largeur = largeur;
-        this.longueur=longueur;
-        this.position=new Position();
+        this.longueur = longueur;
+        this.position = new Position();
         this.orientationProperty = new SimpleStringProperty("S");
         this.invincibilite = invincibilite;
         this.dernier_degat = 0;
@@ -50,8 +47,9 @@ public abstract class Entité {
         this.maxVie = vie_entite;
 
     }
-    public Entité(String nom_entite,Environnement environnement) {
-        this(nom_entite,1,0,32,32,0,0,environnement);
+
+    public Entité(String nom_entite, Environnement environnement) {
+        this(nom_entite, 1, 0, 32, 32, 0, 0, environnement);
 
     }
 
@@ -61,8 +59,8 @@ public abstract class Entité {
     }
 
     public boolean peutAller(double x, double y, Map map) {
-
-        if (!estDansMap(x, y, map)) {
+        return true;
+       /* if (!estDansMap(x, y, map)) {
             return false;
         } else {
 
@@ -71,23 +69,23 @@ public abstract class Entité {
 
 
             for (int i : mur) {
-                if (verifCaseSurCoord(i, x, y)==i) {
+                if (verifCaseSurCoord(i, x, y) == i) {
                     return false;
                 }
             }
-            if (verifCaseSurCoord(solDegat, x, y)==solDegat) {
+            if (verifCaseSurCoord(solDegat, x, y) == solDegat) {
                 this.prendre_degat(1);
             }
         }
 
-        return true;
+        return true;*/
     }
 
     public int verifierInteractionEnFace(double x, double y) {
-        int[] liste= {1,2,6,22,24,25,26};
+        int[] liste = {1, 2, 6, 22, 24, 25, 26};
 
         for (int i : liste) {
-            if(verifCaseSurCoord(i, x, y)==i){
+            if (verifCaseSurCoord(i, x, y) == i) {
                 return i;
             }
         }
@@ -106,11 +104,10 @@ public abstract class Entité {
         int coord_Mur_BasY = coordEnIndiceDroit_Bas(y);
 
         Map map = getMap();
-        if(map.getMap(coord_Mur_GaucheX, coord_Mur_HautY) == cases ||
+        if (map.getMap(coord_Mur_GaucheX, coord_Mur_HautY) == cases ||
                 map.getMap(coord_Mur_DroitX, coord_Mur_HautY) == cases ||
                 map.getMap(coord_Mur_GaucheX, coord_Mur_BasY) == cases ||
-                map.getMap(coord_Mur_DroitX, coord_Mur_BasY) == cases)
-        {
+                map.getMap(coord_Mur_DroitX, coord_Mur_BasY) == cases) {
             return cases;
         }
         return 0;
@@ -320,14 +317,17 @@ public abstract class Entité {
         this.largeur = largeur;
     }
 
-    public Map getMap(){
+    public Map getMap() {
         return environnement.getMap();
     }
 
-    public GenerateurMurs getGenerateurMurs(){
+    public GenerateurMurs getGenerateurMurs() {
         return environnement.getGenerateurMurs();
     }
-    public GenerateurEnnemis getGenerateurEnnemis() { return environnement.getGenerateurEnnemis(); }
+
+    public GenerateurEnnemis getGenerateurEnnemis() {
+        return environnement.getGenerateurEnnemis();
+    }
 
     public ObjectProperty<MovementState> getMovementStateProperty() {
         return movementStateProperty;

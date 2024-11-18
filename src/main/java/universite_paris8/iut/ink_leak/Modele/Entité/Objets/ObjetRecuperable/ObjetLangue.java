@@ -8,7 +8,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public class ObjetLangue extends ObjetRecuperable {
 
     public ObjetLangue(Environnement environnement) {
-        super("ObjetLangue", environnement,environnement.getLangue());
+        super("ObjetLangue", environnement,environnement.getJoueur().getLangue());
 
     }
 

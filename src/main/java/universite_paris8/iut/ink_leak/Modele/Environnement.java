@@ -20,20 +20,14 @@ public class Environnement {
     private ActiveurMob ActiveurMob;
     private Map map;
 
-    private Bulle bulle;
-    private Poing poing;
-    private Langue langue;
-    private AttaqueDeBase attaqueDeBase;
+
 
     private Environnement(Map map) {
         this.joueur =  Joueur.getInstance("Entity",this);
         joueur.setEmplacement(8, 10);
         this.map = map;
 
-        this.attaqueDeBase= new AttaqueDeBase(this);
-        this.bulle =new Bulle( this);
-        this.poing = new Poing(this);
-        this.langue = new Langue(this);
+
 
         this.generateurEnnemis = new GenMapDepart(this);
         this.generateurObjets = new GenerateurObjets(this);
@@ -121,21 +115,7 @@ public class Environnement {
         return generateurMurs;
     }
 
-    public Bulle getBulle() {
-        return bulle;
-    }
 
-    public Poing getPoing() {
-        return poing;
-    }
-
-    public Langue getLangue() {
-        return langue;
-    }
-
-    public AttaqueDeBase getAttaqueDeBase() {
-        return attaqueDeBase;
-    }
 
     public Map getMap() {
         return map;

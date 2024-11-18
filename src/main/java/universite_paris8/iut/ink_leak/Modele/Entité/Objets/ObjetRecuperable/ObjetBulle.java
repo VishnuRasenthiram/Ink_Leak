@@ -8,7 +8,7 @@ import universite_paris8.iut.ink_leak.Modele.Map;
 public class ObjetBulle extends ObjetRecuperable {
 
     public ObjetBulle(Environnement environnement) {
-        super("ObjetBulle", environnement, environnement.getBulle());
+        super("ObjetBulle", environnement, environnement.getJoueur().getBulle());
 
     }
 

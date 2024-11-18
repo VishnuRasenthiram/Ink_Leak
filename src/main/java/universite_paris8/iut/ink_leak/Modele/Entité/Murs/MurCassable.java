@@ -14,7 +14,7 @@ public class MurCassable extends Mur{
     }
     //Verifie si c'est bien le poing qui l'attaque et si c'est le cas, casse le mur
     public ArrayList<Mur> déplacementMur(String déplacementDirection) {
-        if (getEnvironnement().getPoing().enContact(this)) {
+        if (getEnvironnement().getJoueur().getPoing().enContact(this)) {
             this.prendre_degat(1);
             super.getGenerateurMurs().getMap().setMap((int) this.getPosX() / 32, (int) this.getPosY() / 32, 0);
         }

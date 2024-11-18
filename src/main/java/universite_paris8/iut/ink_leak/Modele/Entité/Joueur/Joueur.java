@@ -24,6 +24,10 @@ public class Joueur extends Entité {
     private IntegerProperty indicePouvoirEnCoursProperty;
     private IntegerProperty oppacitéProperty;
 
+    private Bulle bulle;
+    private Poing poing;
+    private Langue langue;
+    private AttaqueDeBase attaqueDeBase;
 
     private Joueur(String nom_joueur, Environnement environnement) {
         super(nom_joueur, 6, 1, 30, 32, 1, 1000, environnement);
@@ -32,6 +36,11 @@ public class Joueur extends Entité {
         this.oppacitéProperty = new SimpleIntegerProperty(1);
 
         this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
+
+        this.attaqueDeBase= new AttaqueDeBase(super.getEnvironnement());
+        this.bulle =new Bulle( super.getEnvironnement());
+        this.poing = new Poing(super.getEnvironnement());
+        this.langue = new Langue(super.getEnvironnement());
     }
     public static Joueur getInstance(String nom_joueur, Environnement environnement) {
         if(uniqueInstance==null) {
@@ -184,19 +193,19 @@ public class Joueur extends Entité {
     }
 
     public Bulle getBulle() {
-        return getEnvironnement().getBulle();
+        return bulle;
     }
 
     public Poing getPoing() {
-        return getEnvironnement().getPoing();
+        return poing;
     }
 
     public Langue getLangue() {
-        return getEnvironnement().getLangue();
+        return langue;
     }
 
     public AttaqueDeBase getAttaqueDeBase() {
-        return getEnvironnement().getAttaqueDeBase();
+        return attaqueDeBase;
     }
 
     public void setBougable(boolean bougable) {

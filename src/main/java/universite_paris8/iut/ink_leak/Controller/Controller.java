@@ -73,6 +73,7 @@ public class Controller implements Initializable {
     private VueMap vueMap;
     private VueTexte vT;
 
+    private boolean vueBossDejaCree;
     private ListeEnnemieObs listenerEnnemis;
 
     @Override
@@ -105,19 +106,9 @@ public class Controller implements Initializable {
         });
         listenerEnnemis = new ListeEnnemieObs(mainPane, joueur, map, jeuFini);
 
+
         env.getGenerateurEnnemis().getListeEntite().addListener(listenerEnnemis);
-        Abomination Abomination = new Abomination(env);
 
-        VueBoss VB = new VueBoss(mainPane, joueur, map);
-        Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
-            if (nouv.intValue() == 2) {
-                VB.créeAttaque1(Abomination);
-            } else {
-                VB.créeAttaque2(Abomination);
-
-            }
-        });
-        env.getGenerateurEnnemis().genererEnnemis();
 
         vT = new VueTexte(env, mainPane);
 
@@ -217,6 +208,7 @@ public class Controller implements Initializable {
         tempsEcoulé = 0;
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
+        vueBossDejaCree= false;
         KeyFrame kf = new KeyFrame(
                 Duration.millis(17),
                 (ev -> {
@@ -257,6 +249,22 @@ public class Controller implements Initializable {
                         }
                         vueMap.supprimerAffichageMap();
                         vueMap.initMap(map, joueur);
+                    }
+                    if(env.getGenerateurEnnemis().getAbomination()!=null && !vueBossDejaCree){
+
+                        Abomination Abomination = env.getGenerateurEnnemis().getAbomination();
+
+                        VueBoss VB = new VueBoss(mainPane, joueur, map);
+                        Abomination.getPhaseProperty().addListener((obs, old, nouv) -> {
+                            if (nouv.intValue() == 2) {
+                                VB.créeAttaque1(Abomination);
+                            } else {
+                                VB.créeAttaque2(Abomination);
+
+                            }
+                        });
+
+                        vueBossDejaCree=true;
                     }
 
                     if(listenerEnnemis.getJeuFini()){

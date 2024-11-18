@@ -12,12 +12,11 @@ import java.util.ArrayList;
 
 public abstract class Pouvoirs extends Entité {
 
-    private Joueur joueur;
+
     private BooleanProperty estEnVieProperty;
 
     public Pouvoirs(String nom_entite, int attaque_entite, double largeur, double longueur, int vitesse_entite, boolean estEnVie, Environnement environnement) {
         super(nom_entite, 0, attaque_entite, largeur,longueur, vitesse_entite, 0,environnement);
-        this.joueur=environnement.getJoueur();
         this.estEnVieProperty = new SimpleBooleanProperty(estEnVie);
     }
 
@@ -32,15 +31,15 @@ public abstract class Pouvoirs extends Entité {
             }
         }
         for(Mur mur : mursEnleve){
-            joueur.getGenerateurMurs().getListeMurs().remove(mur);
+            getJoueur().getGenerateurMurs().getListeMurs().remove(mur);
         }
     }
 
     public void setPosition(){
-        int[] liste=orientationToPosition(joueur.getOrientation());
+        int[] liste=orientationToPosition(getJoueur().getOrientation());
 
-        super.setPosXProperty(joueur.getPosX()+liste[0]);
-        super.setPosYProperty(joueur.getPosY()+liste[1]);
+        super.setPosXProperty(getJoueur().getPosX()+liste[0]);
+        super.setPosYProperty(getJoueur().getPosY()+liste[1]);
 
     }
 
@@ -66,7 +65,7 @@ public abstract class Pouvoirs extends Entité {
     public void gagner_vie(int nb_vie_gagnee) {}
 
     public Joueur getJoueur() {
-        return joueur;
+        return getEnvironnement().getJoueur();
     }
     public BooleanProperty getEstEnVieProperty() {
         return estEnVieProperty;

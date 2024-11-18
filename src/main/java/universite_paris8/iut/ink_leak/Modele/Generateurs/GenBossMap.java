@@ -17,7 +17,9 @@ public class GenBossMap extends GenerateurEnnemis {
     @Override
     public Ennemi creeEnnemis() {
         setBossDejaGenere(true);
-        return new Abomination(super.getEnvironnement());
+        Abomination abomination=new Abomination(super.getEnvironnement());
+        super.setAbomination(abomination);
+        return abomination;
 
     }
     public void setEnnemisPos(Entité entity) {

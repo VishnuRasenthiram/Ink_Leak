@@ -9,7 +9,7 @@ public class ObjetPoing extends ObjetRecuperable {
 
     public ObjetPoing( Environnement environnement) {
 
-        super("ObjetPoing",  environnement,environnement.getPoing());
+        super("ObjetPoing",  environnement,environnement.getJoueur().getPoing());
 
     }
 

@@ -18,6 +18,8 @@ public abstract class GenerateurEnnemis {
     private Environnement environnement;
     private Boolean bossDejaGenere =false;
 
+    private Abomination abomination=null;
+
     public GenerateurEnnemis(Environnement environnement) {
         this.environnement = environnement;
     }
@@ -54,5 +56,17 @@ public abstract class GenerateurEnnemis {
     public Environnement getEnvironnement() { return environnement; }
     public void setBossDejaGenere(Boolean bossDejaGenere) {
         this.bossDejaGenere = bossDejaGenere;
+    }
+
+    public void setAbomination(Abomination abomination) {
+        this.abomination = abomination;
+    }
+
+    public Abomination getAbomination() {
+        return abomination;
+    }
+
+    public boolean getBossDejaGenere() {
+        return bossDejaGenere;
     }
 }

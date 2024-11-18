@@ -19,7 +19,7 @@ public class MurPoussable extends Mur {
         double newX = this.getPosX();
         double newY = this.getPosY();
 
-        if (getEnvironnement().getBulle().enContact(this)) {
+        if (getEnvironnement().getJoueur().getBulle().enContact(this)) {
 
             switch (déplacementDirection) {
                 case "N":

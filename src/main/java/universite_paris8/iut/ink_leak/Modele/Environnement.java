@@ -3,11 +3,11 @@ package universite_paris8.iut.ink_leak.Modele;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.AttaqueDeBase;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Bulle;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Langue;
-import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.Poing;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.*;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Activeur.ActiveurMob;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Activeur.ActiveurObjets;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis.*;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Murs.GenerateurMurs;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Objets.*;
 
 
 public class Environnement {
@@ -17,7 +17,8 @@ public class Environnement {
     private GenerateurEnnemis generateurEnnemis;
     private GenerateurObjets generateurObjets;
     private GenerateurMurs generateurMurs;
-    private ActiveurMob ActiveurMob;
+    private ActiveurMob activeurMob;
+    private ActiveurObjets activeurObjet;
     private Map map;
 
 
@@ -30,9 +31,10 @@ public class Environnement {
 
 
         this.generateurEnnemis = new GenMapDepart(this);
-        this.generateurObjets = new GenerateurObjets(this);
+        this.generateurObjets = new GenObjMapDepart(this);
         this.generateurMurs =new GenerateurMurs(this);
-        this.ActiveurMob = new ActiveurMob(this);
+        this.activeurMob = new ActiveurMob(this);
+        this.activeurObjet = new ActiveurObjets(this);
     }
 
     public static Environnement getInstance(Map map) {
@@ -51,23 +53,23 @@ public class Environnement {
         if (temps % 200 == 0) {
             generateurEnnemis.genererEnnemis(); }
         if (temps % 2 == 0) {
-           ActiveurMob.activerMob();
+           activeurMob.activerMob();
         }
 
         if(generateurObjets.getListeObjets()!=null){
-            generateurObjets.activerObjet();
+            activeurObjet.activerObjets();
         }
 
     }
     public void changementDeMap(int interaction){
-        TuerToutLesEnnemis();
+        tuerToutLesEnnemis();
+        enleverTousLesObjets();
         map.setMap(porteToMap(interaction));
 
         joueur.setBougable(false);
 
         generateurMurs.EnleverToutLesMurs();
         generateurMurs.genererMurs();
-        generateurObjets.EnleverToutLesObjets();
         generateurObjets.genererObjets();
         PauseTransition pause = new PauseTransition(Duration.millis(500));
         pause.setOnFinished(event -> joueur.setBougable(true));
@@ -78,18 +80,22 @@ public class Environnement {
         switch (interaction){
             case 6:
                 joueur.setEmplacement(9,11);
+
                 return 1;
             case 22:
                 joueur.setEmplacement(0,19);
                 generateurEnnemis = new GenMapEau(this);
+                generateurObjets= new GenObjMapEau(this);
                 return 2;
             case 24:
                 joueur.setEmplacement(19,0);
                 generateurEnnemis = new GenMapGlace(this);
+                generateurObjets = new GenObjMapGlace(this);
                 return 3;
             case 25:
                 joueur.setEmplacement(19,19);
                 generateurEnnemis = new GenMapLabyrinthe(this);
+                generateurObjets = new GenObjMapLabyrinthe(this);
                 return 4;
             case 26:
                 joueur.setEmplacement(10,19);
@@ -101,8 +107,11 @@ public class Environnement {
         }
     }
 
-    private void TuerToutLesEnnemis(){
+    private void tuerToutLesEnnemis(){
         generateurEnnemis.TuerToutLesEnnemis();
+    }
+    private void enleverTousLesObjets(){
+        generateurObjets.EnleverToutLesObjets();
     }
     public Joueur getJoueur() { return this.joueur; }
 

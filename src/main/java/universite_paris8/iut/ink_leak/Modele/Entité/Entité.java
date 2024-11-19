@@ -2,8 +2,8 @@ package universite_paris8.iut.ink_leak.Modele.Entité;
 
 import javafx.beans.property.*;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Generateurs.Murs.GenerateurMurs;
 import universite_paris8.iut.ink_leak.Modele.Map;
 import universite_paris8.iut.ink_leak.Modele.Position;
 

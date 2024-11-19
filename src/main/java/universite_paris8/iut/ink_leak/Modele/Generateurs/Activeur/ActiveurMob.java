@@ -1,7 +1,7 @@
-package universite_paris8.iut.ink_leak.Modele;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Activeur;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
+import universite_paris8.iut.ink_leak.Modele.Environnement;
 
 import java.util.ArrayList;
 

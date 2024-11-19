@@ -1,11 +1,9 @@
-package universite_paris8.iut.ink_leak.Modele.Generateurs;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Abomination;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Ennemi;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-
-import java.util.Random;
 
 public class GenBossMap extends GenerateurEnnemis {
 

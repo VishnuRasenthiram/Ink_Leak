@@ -1,8 +1,6 @@
 package universite_paris8.iut.ink_leak.Modele.Entité.Murs;
 
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurMurs;
 
 import java.util.ArrayList;
 

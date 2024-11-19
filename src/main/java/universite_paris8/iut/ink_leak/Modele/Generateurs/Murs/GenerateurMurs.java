@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Modele.Generateurs;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Murs;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

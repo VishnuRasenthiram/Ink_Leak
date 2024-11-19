@@ -1,4 +1,4 @@
-package universite_paris8.iut.ink_leak.Modele.Generateurs;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Ennemi;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Puddle;

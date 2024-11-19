@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurObjets;
-import universite_paris8.iut.ink_leak.Modele.Map;
 
 public abstract class Objets extends Entité {
 

@@ -1,21 +1,16 @@
-package universite_paris8.iut.ink_leak.Modele.Generateurs;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.*;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
-import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Map;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 
 public abstract class GenerateurEnnemis {
     private static GenerateurEnnemis uniqueInstance=null;
-    private static ObservableList<Entité> listeEntite=FXCollections.observableArrayList();;
-    private Environnement environnement;
+    private static ObservableList<Entité> listeEntite=FXCollections.observableArrayList();
+    private final Environnement environnement;
     private Boolean bossDejaGenere =false;
 
     private Abomination abomination=null;
@@ -66,7 +61,4 @@ public abstract class GenerateurEnnemis {
         return abomination;
     }
 
-    public boolean getBossDejaGenere() {
-        return bossDejaGenere;
-    }
 }

@@ -1,25 +1,25 @@
-package universite_paris8.iut.ink_leak.Modele.Generateurs;
+package universite_paris8.iut.ink_leak.Modele.Generateurs.Ennemis;
 
 import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Ennemi;
-import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.HeadLess;
+import universite_paris8.iut.ink_leak.Modele.Entité.Ennemis.Slime;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
 
 import java.util.Random;
 
-public class GenMapEau extends GenerateurEnnemis{
+public class GenMapDepart extends GenerateurEnnemis {
 
-    public GenMapEau(Environnement env) {
+    public GenMapDepart(Environnement env) {
         super(env);
         GenerateurEnnemis.setInstance(this);
     }
 
     @Override
     public Ennemi creeEnnemis() {
-        return new HeadLess(super.getEnvironnement());
+        return new Slime(super.getEnvironnement());
+
 
     }
-
     public void setEnnemisPos(Entité entity) {
 
         int random = new Random().nextInt(3);
@@ -41,4 +41,5 @@ public class GenMapEau extends GenerateurEnnemis{
 
 
     }
+
 }

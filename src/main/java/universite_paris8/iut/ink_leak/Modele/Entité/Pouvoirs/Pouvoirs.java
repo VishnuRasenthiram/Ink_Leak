@@ -5,8 +5,6 @@ import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Joueur.Joueur;
 import universite_paris8.iut.ink_leak.Modele.Entité.Murs.Mur;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import universite_paris8.iut.ink_leak.Modele.Generateurs.GenerateurEnnemis;
-import universite_paris8.iut.ink_leak.Modele.Map;
 
 import java.util.ArrayList;
 

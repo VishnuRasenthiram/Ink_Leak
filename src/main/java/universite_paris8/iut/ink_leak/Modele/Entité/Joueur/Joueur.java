@@ -11,11 +11,11 @@ import javafx.util.Duration;
 import universite_paris8.iut.ink_leak.Modele.Entité.Entité;
 import universite_paris8.iut.ink_leak.Modele.Entité.Pouvoirs.*;
 import universite_paris8.iut.ink_leak.Modele.Environnement;
-import javafx.animation.KeyFrame;
-import javafx.util.Duration;
 
 public class Joueur extends Entité {
-    private static Joueur uniqueInstance=null;
+    private Pouvoirs pouvoirActif;
+
+    private static Joueur uniqueInstance = null;
     private Timeline timeline;
 
     private boolean bougable;
@@ -34,7 +34,6 @@ public class Joueur extends Entité {
         this.listePouvoirs = FXCollections.observableArrayList();
         this.bougable = true;
         this.oppacitéProperty = new SimpleIntegerProperty(1);
-
         this.indicePouvoirEnCoursProperty = new SimpleIntegerProperty(0);
 
         this.attaqueDeBase= new AttaqueDeBase(super.getEnvironnement());
@@ -42,9 +41,10 @@ public class Joueur extends Entité {
         this.poing = new Poing(super.getEnvironnement());
         this.langue = new Langue(super.getEnvironnement());
     }
+
     public static Joueur getInstance(String nom_joueur, Environnement environnement) {
-        if(uniqueInstance==null) {
-            uniqueInstance= new Joueur(nom_joueur,environnement);
+        if (uniqueInstance == null) {
+            uniqueInstance = new Joueur(nom_joueur, environnement);
         }
         return uniqueInstance;
     }
@@ -55,18 +55,23 @@ public class Joueur extends Entité {
         if (a > 0) {
             if (getIndicePouvoirEnCours() + 1 > getListePouvoirs().size() - 1) {
                 setIndicePouvoirEnCours(0);
+                setPouvoirActif(getListePouvoirs().get(0));
             } else {
                 setIndicePouvoirEnCours(getIndicePouvoirEnCours() + 1);
+                setPouvoirActif(getListePouvoirs().get(getIndicePouvoirEnCours()));
             }
         } else {
             if (getIndicePouvoirEnCours() - 1 < 0) {
                 if (getListePouvoirs().isEmpty()) {
                     setIndicePouvoirEnCours(0);
+                    setPouvoirActif(null);
                 } else {
                     setIndicePouvoirEnCours(getListePouvoirs().size() - 1);
+                    setPouvoirActif(getListePouvoirs().get(getListePouvoirs().size() - 1));
                 }
             } else {
                 setIndicePouvoirEnCours(getIndicePouvoirEnCours() - 1);
+                setPouvoirActif(getListePouvoirs().get(getIndicePouvoirEnCours()));
             }
         }
 
@@ -79,14 +84,13 @@ public class Joueur extends Entité {
         getAttaqueDeBase().déplacement(getOrientation());
     }
 
+    public void setPouvoirActif(Pouvoirs pouvoirActif) {
+        this.pouvoirActif = pouvoirActif;
+    }
+
     public void attaqueAvecPouvoir() {
-        int indice = getIndicePouvoirEnCours();
-        if (listePouvoirs.get(indice) instanceof Bulle) {
-            getBulle().déplacement(getOrientation());
-        } else if (listePouvoirs.get(indice) instanceof Poing) {
-            getPoing().déplacement(getOrientation());
-        } else if (listePouvoirs.get(indice) instanceof Langue) {
-            getLangue().déplacement(getOrientation());
+        if (pouvoirActif != null) {
+            pouvoirActif.déplacement(getOrientation());
         }
     }
 
